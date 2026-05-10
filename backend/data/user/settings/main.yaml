@@ -1,0 +1,43 @@
+system:
+  language: en
+logging:
+  level: WARNING
+  save_to_file: true
+  console_output: true
+personalization:
+  auto_update: true
+  max_react_rounds: 6
+  agents:
+    reflection: true
+    summary: true
+    weakness: true
+tools:
+  run_code:
+    allowed_roots:
+    - ./data/user
+  web_search:
+    enabled: true
+capabilities:
+  question:
+    rag_query_count: 3
+    max_parallel_questions: 1
+    idea_loop:
+      max_rounds: 3
+      ideas_per_round: 5
+    generation:
+      max_retries: 2
+  solve:
+    max_react_iterations: 10
+    max_plan_steps: 10
+    max_replans: 2
+    observation_max_tokens: 2000
+    enable_citations: true
+    save_intermediate_results: true
+    detailed_answer: true
+  research:
+    researching:
+      note_agent_mode: auto
+      tool_timeout: 60
+      tool_max_retries: 2
+      paper_search_years_limit: 3
+    rag: {}
