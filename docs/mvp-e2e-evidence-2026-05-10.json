@@ -1,0 +1,74 @@
+{
+  "user_id": "e2e-b1156d41-9714-45d2-9072-03a4de731b1a",
+  "steps": [
+    {
+      "step": "start",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_1",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_2",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_3",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_4",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_5",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_6",
+      "phase": "chat",
+      "weak_topic": null
+    },
+    {
+      "step": "diagnostic_answer_7",
+      "phase": "explanation",
+      "weak_topic": {
+        "grade": 1,
+        "topic_id": "g1_t01",
+        "topic": "ПОДГОТОВКА",
+        "source_question_id": "g1_t01_q01"
+      }
+    },
+    {
+      "step": "practice_submit",
+      "phase": "report",
+      "report": {
+        "summary": "Практика по теме 'ПОДГОТОВКА' успешна",
+        "weak_topic": {
+          "grade": 1,
+          "topic_id": "g1_t01",
+          "topic": "ПОДГОТОВКА",
+          "source_question_id": "g1_t01_q01"
+        },
+        "practice_result": "success",
+        "recommendations": [
+          "Переходи к следующему шагу"
+        ]
+      }
+    }
+  ],
+  "weak_topic": {
+    "grade": 1,
+    "topic_id": "g1_t01",
+    "topic": "ПОДГОТОВКА",
+    "source_question_id": "g1_t01_q01"
+  },
+  "final_phase": "report"
+}

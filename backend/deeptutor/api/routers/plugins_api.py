@@ -168,13 +168,16 @@ def get_diagnostic_question(user_id: str, question_num: int = 1, grade: int = No
         idx = (question_num - 1) % len(questions)
         q = questions[idx]
         return {
+            "id": q.get("id"),
+            "topic_id": q.get("topic_id"),
             "question": q["question"],
             "answer": q["answer"],
             "alternatives": q.get("alternatives", []),
             "topic": q["topic"],
             "level": q.get("difficulty", 1),
             "grade": q.get("grade", grade or 1),
-            "CPA": q.get("CPA", {})
+            "CPA": q.get("CPA", {}),
+            "practice_ref": q.get("practice_ref"),
         }
     
     return {"question": "Сколько будет 2 + 2?", "answer": "4", "topic": "addition", "level": 1, "grade": grade or 1}
@@ -773,15 +776,19 @@ def _levenshtein_distance(a: str, b: str) -> int:
     return prev_row[-1]
 
 
+def _extract_single_number(text: str) -> str | None:
+    """Extract a single integer token from text if there is exactly one."""
+    nums = re.findall(r'-?\d+', text)
+    if len(nums) == 1:
+        return nums[0]
+    return None
+
+
 def _is_numeric_match(user_ans: str, correct_ans: str) -> bool:
-    """Check if both answers are numeric and match."""
-    # Try to extract numbers from both answers
-    import re
-    user_nums = re.findall(r'-?\d+', user_ans)
-    correct_nums = re.findall(r'-?\d+', correct_ans)
-    if user_nums and correct_nums:
-        return user_nums[-1] == correct_nums[-1]
-    return False
+    """Check if both answers contain a single numeric value and match."""
+    user_num = _extract_single_number(user_ans)
+    correct_num = _extract_single_number(correct_ans)
+    return user_num is not None and correct_num is not None and user_num == correct_num
 
 
 def check_answer_fuzzy(user_answer: str, correct_answer: str, alternatives: list[str] = None, max_typos: int = 1) -> tuple[bool, float]:
@@ -809,6 +816,13 @@ def check_answer_fuzzy(user_answer: str, correct_answer: str, alternatives: list
         # Strategy 3: Numeric match (5 == пять, "ответ: 5" == "5")
         if _is_numeric_match(user_norm, var_norm):
             return True, 0.95
+
+        # If both sides contain a single number, require exact numeric equality.
+        # Prevents Levenshtein false positives like "6" vs "5".
+        user_num = _extract_single_number(user_norm)
+        var_num = _extract_single_number(var_norm)
+        if user_num is not None and var_num is not None:
+            continue
         
         # Strategy 4: Levenshtein distance for typos
         if len(var_norm) > 0 and len(user_norm) > 0:
@@ -837,6 +851,21 @@ def check_gatekeeper(text: str) -> str | None:
 
 # Import new diagnostic engine
 from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_engine
+from deeptutor.services.practice_engine import PracticeEngine
+from deeptutor.services.report_service import build_report
+
+practice_engine = PracticeEngine()
+
+
+def _panda_response(text: str, state: dict, visual: dict | None = None) -> dict:
+    # Keep API contract stable for MVP state machine.
+    normalized_state = dict(state or {})
+    normalized_state.setdefault("phase", "chat")
+    normalized_state.setdefault("weak_topic", None)
+    normalized_state.setdefault("current_practice", None)
+    normalized_state.setdefault("practice_feedback", None)
+    normalized_state.setdefault("report", None)
+    return {"text": text, "visual": visual, "state": normalized_state}
 
 @router.post("/panda/chat")
 async def panda_chat(request: ChatRequest):
@@ -851,11 +880,18 @@ async def panda_chat(request: ChatRequest):
     
     state = get_user_state(user_id)
     diag = dict(state.get("diagnostic_progress", {}))
+
+    # Stage-0 MVP frontend contract: keep minimal deterministic state fields.
+    state.setdefault("phase", "chat")
+    state.setdefault("weak_topic", None)
+    state.setdefault("current_practice", None)
+    state.setdefault("practice_feedback", None)
+    state.setdefault("report", None)
     
     # === PHASE 2: Gatekeeper check ===
     gatekeeper_response = check_gatekeeper(msg)
     if gatekeeper_response:
-        return {"text": gatekeeper_response, "state": state}
+        return _panda_response(gatekeeper_response, state)
     
     # Normalize input (typos, layout)
     original_msg = msg
@@ -876,160 +912,163 @@ async def panda_chat(request: ChatRequest):
         state["grade"] = grade
     
     if not state.get("name"):
-        return {"text": "Привет, мой юный друг! Я твой наставник Панда. 🐼\n\nКак мне называть тебя в нашем зале математических искусств?", "state": state}
+        return _panda_response("Привет, мой юный друг! Я твой наставник Панда. 🐼\n\nКак мне называть тебя в нашем зале математических искусств?", state)
     
     if not state.get("grade"):
-        return {"text": f"Отлично, {state['name']}! 🥋\n\nВ каком классе ты оттачиваешь свое мастерство? (1-9)", "state": state}
+        return _panda_response(f"Отлично, {state['name']}! 🥋\n\nВ каком классе ты оттачиваешь свое мастерство? (1-9)", state)
     
     if not state.get("path_choice"):
         # Process user choice for path
         msg_lower = msg.lower()
-        if any(w in msg_lower for w in ["курс", "полный", "мастер", "да", "1"]):
-            update_user_state(user_id, {"path_choice": "course"})
-            state["path_choice"] = "course"
-        elif any(w in msg_lower for w in ["тему", "конкретную", "учить", "2"]):
-            update_user_state(user_id, {"path_choice": "topic"})
-            state["path_choice"] = "topic"
-        else:
-            return {"text": f"{state['name']}, мы начнем Полный Путь Мастера (курс) или тебе нужно укрепить конкретную тему сегодня? 📜\n\nНапиши 'курс' или 'тему'.", "state": state}
-    
-    if pending_confirm:
-        update_user_state(user_id, {"pending_confirmation": False})
-        correct_ans = state.get("last_correct_answer", "")
-        correct_alts = state.get("last_correct_alternatives", [])
-        user_ans_raw = normalize_input(msg)
-        grade = state.get("grade", 1)
-        
-        is_correct, confidence = check_answer_fuzzy(user_ans_raw, correct_ans, correct_alts)
-        
-        # === Track answers for diagnostic engine ===
-        diag_answers = state.get("diag_answers", [])
-        current_q = state.get("current_question", {})
-        diag_answers.append({
-            "question_id": current_q.get("id", ""),
-            "grade": current_q.get("grade", 1),
-            "user_answer": user_ans_raw,
-            "is_correct": is_correct
-        })
-        update_user_state(user_id, {"diag_answers": diag_answers})
-        
-        # Get current diagnostic state
-        diag = state.get("diagnostic_progress", {})
-        current_grade_in_diag = diag.get("current_check_grade", 1)
-        questions_in_current_grade = diag.get("questions_in_grade", 0) + 1
-        errors_in_current_grade = diag.get("errors_in_grade", 0) + (0 if is_correct else 1)
-        
-        # Get sequence to know how many questions per grade
-        sequence = state.get("diag_sequence", [])
-        if not sequence:
-            sequence = diagnostic_engine.build_diagnostic_sequence(grade)
-            update_user_state(user_id, {"diag_sequence": sequence})
-        
-        # Count questions for current grade in sequence
-        questions_for_this_grade = len([q for q in sequence if q["grade"] == current_grade_in_diag])
-        
-        # Check if we completed this grade
-        grade_completed = questions_in_current_grade >= questions_for_this_grade
-        
-        # Feedback
-        if is_correct:
-            response = "Правильно! +5 Энергии Ци! 🔥\n\n"
-        else:
-            response = f"Почти! Правильный ответ: {correct_ans}\n\n"
-        
-        # If grade completed - check threshold
-        if grade_completed:
-            if errors_in_current_grade >= diagnostic_engine.FAIL_THRESHOLD:
-                # FAIL - stop diagnostic, start from this grade
-                result = diagnostic_engine.run_diagnostic(grade, diag_answers)
-                actual_grade = result.actual_grade
-                
-                update_user_state(user_id, {
-                    "in_learning": True,
-                    "diagnostic_progress": {},
-                    "actual_grade": actual_grade,
-                    "current_topic_id": 1,
-                    "diag_answers": [],
-                    "diag_sequence": [],
-                    "pending_confirmation": False
-                })
-                
-                starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
-                
-                response += f"📊 Проверка {current_grade_in_diag} класса завершена.\n"
-                response += f"Обнаружено ошибок: {errors_in_current_grade} из {questions_for_this_grade}\n\n"
-                response += result._generate_message()
-                response += f"\n\n📚 Начинаем с: {starting_topic['title']}"
-                response += f"\n\nНапиши 'начать' чтобы приступить к уроку!"
-                
-                return {"text": response, "state": state}
-            else:
-                # PASS - move to next grade
-                next_grade = current_grade_in_diag + 1
-                if next_grade > grade:
-                    # All grades passed!
-                    result = diagnostic_engine.run_diagnostic(grade, diag_answers)
-                    actual_grade = grade  # Start from claimed grade
-                    
-                    update_user_state(user_id, {
-                        "in_learning": True,
-                        "diagnostic_progress": {},
-                        "actual_grade": actual_grade,
-                        "current_topic_id": 1,
-                        "diag_answers": [],
-                        "diag_sequence": [],
-                        "pending_confirmation": False
-                    })
-                    
-                    starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
-                    
-                    response += f"🎉 Все классы пройдены успешно!\n"
-                    response += f"Твой уровень: {actual_grade} КЛАСС\n\n"
-                    response += f"📚 Начинаем с: {starting_topic['title']}"
-                    response += f"\n\nНапиши 'начать' чтобы приступить к уроку!"
-                    
-                    return {"text": response, "state": state}
-                else:
-                    # Move to next grade
-                    diag["current_check_grade"] = next_grade
-                    diag["questions_in_grade"] = 0
-                    diag["errors_in_grade"] = 0
-                    update_user_state(user_id, {
-                        "diagnostic_progress": diag,
-                        "in_learning": False
-                    })
-                    
-                    response += f"✅ {current_grade_in_diag} класс пройден! Отличная база!\n\n"
-                    response += f"Переходим к {next_grade} классу...\n\n"
-        else:
-            # Continue current grade
+        if "диагностика" in msg_lower:
+            start_level = grade if grade else 1
+            diag = {"in_diagnostic": True, "questions_answered": 0, "current_diag_level": start_level, "correct_in_row": 0}
+            update_user_state(user_id, {"diagnostic_progress": diag})
+            q = get_diagnostic_question(user_id, 1, grade)
+            response = f"Отлично, {name or 'друг'}! Начнём!\n\n{q['question']}"
+            return _panda_response(response, state)
+        if diag.get("in_diagnostic"):
+            next_q_num = diag.get("questions_answered", 0) + 1
+            q = get_diagnostic_question(user_id, next_q_num, grade)
+
+            is_correct, confidence = check_answer_fuzzy(msg, q["answer"], q.get("alternatives", []))
+            diag_answers = state.get("diag_answers", [])
+            diag_answers.append(
+                {
+                    "question_id": q.get("id", ""),
+                    "grade": q.get("grade", 1),
+                    "user_answer": msg,
+                    "is_correct": is_correct,
+                }
+            )
+
+            current_grade_in_diag = diag.get("current_diag_level", 1)
+            questions_in_current_grade = diag.get("questions_in_grade", 0) + 1
+            errors_in_current_grade = diag.get("errors_in_grade", 0) + (0 if is_correct else 1)
+
+            sequence = state.get("diag_sequence", [])
+            if not sequence:
+                sequence = diagnostic_engine.build_diagnostic_sequence(grade)
+                update_user_state(user_id, {"diag_sequence": sequence})
+            questions_for_this_grade = len([item for item in sequence if item["grade"] == current_grade_in_diag])
+
+            diag["questions_answered"] = next_q_num
             diag["questions_in_grade"] = questions_in_current_grade
             diag["errors_in_grade"] = errors_in_current_grade
-            update_user_state(user_id, {"diagnostic_progress": diag})
-        
-        # Get next question
-        next_q_idx = len(diag_answers)
-        if next_q_idx < len(sequence):
-            next_q = sequence[next_q_idx]
-            update_user_state(user_id, {
-                "pending_confirmation": True,
-                "last_correct_answer": next_q["answer"],
-                "last_correct_alternatives": next_q.get("alternatives", []),
-                "current_question": next_q
-            })
-            
-            grade_label = f"{next_q['grade']} КЛАСС"
-            question_in_grade = questions_in_current_grade if not grade_completed else 1
-            total_in_grade = questions_for_this_grade if not grade_completed else len([q for q in sequence if q["grade"] == next_q["grade"]])
-            
-            response += f"{grade_label} — Вопрос {question_in_grade + 1 if not grade_completed else 1} из {total_in_grade}:\n"
-            response += f"{next_q['question']}\n\n"
-            response += "Ты уверен?"
-        else:
-            # Shouldn't happen if logic is correct
-            response += "Диагностика завершена! Напиши 'начать'"
-        
-        return {"text": response, "state": state}
+
+            if is_correct:
+                response = "Правильно! +5 Энергии Ци! 🔥\n\n"
+            else:
+                response = f"Почти! Правильный ответ: {q['answer']}\n\n"
+
+            if questions_in_current_grade >= questions_for_this_grade:
+                if errors_in_current_grade >= diagnostic_engine.FAIL_THRESHOLD:
+                    result = diagnostic_engine.run_diagnostic(grade, diag_answers)
+                    actual_grade = result.actual_grade
+                    weak_topic = diagnostic_engine.select_weak_topic(result)
+                    update_user_state(
+                        user_id,
+                        {
+                            "in_learning": True,
+                            "diagnostic_progress": {},
+                            "actual_grade": actual_grade,
+                            "current_topic_id": 1,
+                            "diag_answers": [],
+                            "diag_sequence": [],
+                            "pending_confirmation": False,
+                            "weak_topic": weak_topic,
+                        },
+                    )
+                    if weak_topic is None:
+                        starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
+                        weak_topic = {
+                            "grade": actual_grade,
+                            "topic_id": str(starting_topic.get("topic_id")),
+                            "topic": starting_topic.get("title", "Тема 1"),
+                            "source_question_id": "fallback",
+                        }
+                    explanation_state = {
+                        "phase": "explanation",
+                        "weak_topic": weak_topic,
+                        "current_practice": None,
+                        "practice_feedback": None,
+                        "report": None,
+                    }
+                    update_user_state(user_id, explanation_state)
+                    state = get_user_state(user_id)
+                    response += f"📊 Проверка {current_grade_in_diag} класса завершена.\n"
+                    response += f"Обнаружено ошибок: {errors_in_current_grade} из {questions_for_this_grade}\n\n"
+                    response += result._generate_message()
+                    response += f"\n\n📚 Слабая тема: {weak_topic['topic']}"
+                    response += "\nКоротко объясню и затем дам практику. Напиши 'начать', чтобы перейти к практике."
+                    return _panda_response(response, state)
+
+                next_grade = current_grade_in_diag + 1
+                if next_grade > grade:
+                    result = diagnostic_engine.run_diagnostic(grade, diag_answers)
+                    actual_grade = grade
+                    update_user_state(
+                        user_id,
+                        {
+                            "in_learning": True,
+                            "diagnostic_progress": {},
+                            "actual_grade": actual_grade,
+                            "current_topic_id": 1,
+                            "diag_answers": [],
+                            "diag_sequence": [],
+                            "pending_confirmation": False,
+                        },
+                    )
+                    starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
+                    practice_state = {
+                        "phase": "practice",
+                        "current_practice": {
+                            "topic_id": starting_topic.get("topic_id"),
+                            "title": starting_topic.get("title", "MVP Practice"),
+                        },
+                    }
+                    update_user_state(user_id, practice_state)
+                    state = get_user_state(user_id)
+                    response += "🎉 Все классы пройдены успешно!\n"
+                    response += f"Твой уровень: {actual_grade} КЛАСС\n\n"
+                    response += f"📚 Начинаем с: {starting_topic['title']}"
+                    response += "\n\nНапиши 'начать' чтобы приступить к уроку!"
+                    return _panda_response(response, state)
+
+                diag["current_diag_level"] = next_grade
+                diag["questions_in_grade"] = 0
+                diag["errors_in_grade"] = 0
+                update_user_state(user_id, {"diagnostic_progress": diag, "in_learning": False})
+                response += f"✅ {current_grade_in_diag} класс пройден! Отличная база!\n\n"
+                response += f"Переходим к {next_grade} классу...\n\n"
+                state = get_user_state(user_id)
+                return _panda_response(response, state)
+
+            diag["correct_in_row"] = diag.get("correct_in_row", 0) + (1 if is_correct else 0)
+            update_user_state(
+                user_id,
+                {
+                    "diagnostic_progress": diag,
+                    "diag_answers": diag_answers,
+                    "pending_confirmation": True,
+                    "last_correct_answer": q.get("answer", ""),
+                    "last_correct_alternatives": q.get("alternatives", []),
+                    "current_question": q,
+                },
+            )
+            state = get_user_state(user_id)
+            next_q = get_diagnostic_question(user_id, next_q_num + 1, grade)
+            question_in_grade = questions_in_current_grade
+            total_in_grade = questions_for_this_grade
+            if next_q_num < len(sequence):
+                response += f"Вопрос {question_in_grade + 1}: {next_q['question']}"
+            else:
+                response += (
+                    "Диагностика завершена!\n\n"
+                    f"Твой уровень: {current_grade_in_diag} КЛАСС\n"
+                    "Теперь будем учиться! Напиши 'хочу учиться' или 'веди меня'!"
+                )
+            return _panda_response(response, state)
     
     if "давай" in msg.lower() or "тест" in msg.lower() or "диагностика" in msg.lower():
         start_level = state.get("grade", 1)
@@ -1079,7 +1118,7 @@ async def panda_chat(request: ChatRequest):
                 "state": state
             }
         else:
-            return {"text": "Ой, что-то пошло не так с вопросами. Давай попробуем ещё раз! 🐼", "state": state}
+            return _panda_response("Ой, что-то пошло не так с вопросами. Давай попробуем ещё раз! 🐼", state)
     
     # Check for topic request
     topic_request = find_topic_class(msg)
@@ -1087,7 +1126,63 @@ async def panda_chat(request: ChatRequest):
     if in_learning:
         actual_grade = state.get("actual_grade", state.get("grade", 1))
         current_topic_id = state.get("current_topic_id", 1)
-        
+        phase = state.get("phase", "chat")
+
+        if phase == "explanation":
+            weak_topic = state.get("weak_topic")
+            if weak_topic is None:
+                starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
+                weak_topic = {
+                    "grade": actual_grade,
+                    "topic_id": str(starting_topic.get("topic_id")),
+                    "topic": starting_topic.get("title", "Тема 1"),
+                    "source_question_id": "fallback",
+                }
+            practice_item = practice_engine.create_practice(weak_topic)
+            update_user_state(
+                user_id,
+                {
+                    "phase": "practice",
+                    "weak_topic": weak_topic,
+                    "current_practice": practice_item,
+                    "practice_feedback": None,
+                    "report": None,
+                },
+            )
+            state = get_user_state(user_id)
+            return _panda_response(
+                f"Практика по теме: {practice_item.get('title', weak_topic.get('topic'))}\n{practice_item['question']}",
+                state,
+            )
+
+        if phase == "practice":
+            current_practice = state.get("current_practice") or {}
+            if current_practice.get("answer"):
+                practice_feedback = practice_engine.check_practice_answer(current_practice, request.message)
+                report = build_report(state.get("weak_topic"), practice_feedback)
+                update_user_state(
+                    user_id,
+                    {
+                        "phase": "report",
+                        "current_practice": current_practice,
+                        "practice_feedback": practice_feedback,
+                        "report": report,
+                    },
+                )
+                state = get_user_state(user_id)
+                return _panda_response(report["summary"], state)
+
+        weak_topic = state.get("weak_topic")
+        if weak_topic is None:
+            starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
+            fallback_weak_topic = {
+                "grade": actual_grade,
+                "topic_id": str(starting_topic.get("topic_id")),
+                "topic": starting_topic.get("title", "Тема 1"),
+                "source_question_id": "fallback",
+            }
+            weak_topic = fallback_weak_topic
+
         # User asking about specific topic
         if topic_request > 0:
             msg_lower = msg.lower()
@@ -1114,14 +1209,14 @@ async def panda_chat(request: ChatRequest):
                 response += "Пример: 1 + 1 = 2🍎"
             
             response += _build_visual_tag(topic_request, detected_topic, True)
-            return {"text": response, "state": state}
+            return _panda_response(response, state)
         
         # Continue learning from actual grade
-        starting_topic = diagnostic_engine.get_starting_topic(actual_grade)
-        
+        current_practice = state.get("current_practice", {})
+
         response = f"Продолжаем обучение! 🎯\n"
         response += f"Твой уровень: {actual_grade} КЛАСС\n"
-        response += f"Текущая тема: {starting_topic['title']}\n\n"
+        response += f"Текущая тема: {current_practice.get('title', 'Тема')}\n\n"
         
         if current_topic_id == 1:
             response += "Начнём с самого начала! Возьми 4 конфеты, потом ещё 3. Сколько конфет? 🍬"
@@ -1129,18 +1224,10 @@ async def panda_chat(request: ChatRequest):
             response += "Продолжим изучение! Какое задание хочешь решить?"
         
         response += _build_visual_tag(actual_grade, "addition", True)
-        return {"text": response, "state": state}
+        return _panda_response(response, state)
     
-    return {"text": f"Привет, {state.get('name', 'друг')}! 🐼\nНапиши 'давай' чтобы начать!", "state": state}
-
-    # === NEW USER WITH GRADE, ASK FOR PATH ===
-    if state.get("name") and state.get("grade") and not state.get("path_choice"):
-        return {"text": f"{state['name']}, мы начнем Полный Путь Мастера (курс) или тебе нужно укрепить конкретную тему сегодня? 📜", "state": state}
 
 
-
-
-    
     state = get_user_state(user_id)
     # Get fresh diagnostic progress each time
     diag = dict(state.get("diagnostic_progress", {}))
@@ -1153,14 +1240,14 @@ async def panda_chat(request: ChatRequest):
     if grade > 0:
         update_user_state(user_id, {"grade": grade})
     
-    if "давай" in msg.lower() or "начать" in msg.lower():
+    if "давай" in msg.lower() or "начать" in msg.lower() or "диагностика" in msg.lower():
         start_level = grade if grade else 1
         diag = {"in_diagnostic": True, "questions_answered": 0, "current_diag_level": start_level, "correct_in_row": 0}
         update_user_state(user_id, {"diagnostic_progress": diag})
         q = get_diagnostic_question(user_id, 1, grade)
         response = f"Отлично, {name or 'друг'}! Начнём!\n\n{q['question']}"
-        return {"text": response, "state": state}
-    
+        return _panda_response(response, state)
+
     if diag.get("in_diagnostic"):
         # Use questions_answered from state + 1 to get next question
         next_q_num = diag.get("questions_answered", 0) + 1
@@ -1200,13 +1287,13 @@ async def panda_chat(request: ChatRequest):
             update_user_state(user_id, {"diagnostic_progress": diag})
             response = f"Ой-ой! Наш фундамент задрожал! 🐾\n\nПравильный ответ: {q['answer']}\n\n🎯 Твой уровень: {current_level} КЛАСС\nДиагностика завершена. Теперь учимся! Напиши 'хочу учиться'!"
         
-        return {"text": response, "state": state}
+        return _panda_response(response, state)
     
     # Check if user wants teaching
     if "хочу учиться" in msg.lower() or "веди меня" in msg.lower() or "учиться" in msg.lower():
         current_level = diag.get("current_diag_level", grade if grade else 1)
         response = f"Отлично! Начинаем обучение!\n\nТвой уровень: {current_level} КЛАСС\n\nПогнали!"
-        return {"text": response, "state": state}
+        return _panda_response(response, state)
     
     response = f"Привет, {name or 'друг'}! Я DeepTutor 🐼\nНапиши 'давай' чтобы начать диагностику!"
-    return {"text": response, "state": state}
+    return _panda_response(response, state)
