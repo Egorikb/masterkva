@@ -16,6 +16,7 @@ Diagnostic Engine for Master Kwat
 
 import json
 import random
+import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 from dataclasses import dataclass, field
@@ -104,20 +105,63 @@ class DiagnosticEngine:
     
     def __init__(self):
         self.questions = diagnostic_pool.get("questions", [])
+
+    @staticmethod
+    def _synthetic_topic_id(grade: int, topic_index: int) -> str:
+        return f"g{grade}_t{topic_index:02d}"
+
+    @staticmethod
+    def _synthetic_question_id(topic_id: str, question_index: int) -> str:
+        return f"{topic_id}_q{question_index:02d}"
     
     def get_questions_for_grade(self, grade: int) -> List[Dict]:
         """Получает все вопросы для конкретного класса"""
         grade_questions = [q for q in self.questions if q.get("grade") == grade]
-        return [{
-            "id": q.get("id"),
-            "grade": grade,
-            "topic": q.get("topic"),
-            "question": q.get("question"),
-            "answer": q.get("answer"),
-            "alternatives": q.get("alternatives", []),
-            "difficulty": q.get("difficulty", 1),
-            "CPA": q.get("CPA", {})
-        } for q in grade_questions]
+        topic_order: Dict[str, int] = {}
+        topic_counts: Dict[str, int] = {}
+        normalized = []
+        for idx, q in enumerate(grade_questions, start=1):
+            topic_name = q.get("topic") or "unknown"
+            if topic_name not in topic_order:
+                topic_order[topic_name] = len(topic_order) + 1
+            topic_idx = topic_order[topic_name]
+            topic_id = q.get("topic_id") or self._synthetic_topic_id(grade, topic_idx)
+            topic_counts[topic_id] = topic_counts.get(topic_id, 0) + 1
+            question_id = q.get("id") or self._synthetic_question_id(topic_id, topic_counts[topic_id])
+            fallback_id = f"g{grade}-q{idx}"
+            normalized.append({
+                "id": question_id,
+                "fallback_id": fallback_id,
+                "grade": grade,
+                "topic_id": topic_id,
+                "topic": topic_name,
+                "question": q.get("question"),
+                "answer": q.get("answer"),
+                "answer_type": q.get("answer_type", "text"),
+                "practice_ref": q.get("practice_ref") or topic_id,
+                "alternatives": q.get("alternatives", []),
+                "difficulty": q.get("difficulty", 1),
+                "CPA": q.get("CPA", {})
+            })
+        return normalized
+
+    def _find_question_by_id(self, question_id: str | None, answer_grade: int | None = None) -> Dict | None:
+        if not question_id:
+            return None
+        direct = next((q for q in self.questions if q.get("id") == question_id), None)
+        if direct:
+            grade = direct.get("grade", answer_grade or 1)
+            normalized = self.get_questions_for_grade(grade)
+            return next((q for q in normalized if q.get("id") == question_id), None)
+
+        match = re.match(r"^g(\d+)-q(\d+)$", str(question_id))
+        if match:
+            grade = int(match.group(1))
+            index = int(match.group(2))
+            grade_questions = self.get_questions_for_grade(grade)
+            if 1 <= index <= len(grade_questions):
+                return grade_questions[index - 1]
+        return None
     
     def build_diagnostic_sequence(self, claimed_grade: int) -> List[Dict]:
         """
@@ -179,11 +223,13 @@ class DiagnosticEngine:
         
         for ans in answers:
             if not ans.get("is_correct", False):
-                q = next((q for q in self.questions if q.get("id") == ans.get("question_id")), None)
+                q = self._find_question_by_id(ans.get("question_id"), ans.get("grade"))
                 if q:
                     weak_topics_list.append({
                         "grade": q.get("grade", 1),
+                        "topic_id": q.get("topic_id"),
                         "topic": q.get("topic", "unknown"),
+                        "source_question_id": q.get("id"),
                         "question": q.get("question", ""),
                         "user_answer": ans.get("user_answer", "")
                     })
@@ -202,6 +248,17 @@ class DiagnosticEngine:
             weak_grades=sorted(weak_grades),
             grade_stats=grade_stats
         )
+
+    def select_weak_topic(self, result: DiagnosticResult) -> Dict | None:
+        for weak in result.weak_topics:
+            if weak.get("topic_id") and weak.get("source_question_id"):
+                return {
+                    "grade": weak.get("grade"),
+                    "topic_id": weak.get("topic_id"),
+                    "topic": weak.get("topic"),
+                    "source_question_id": weak.get("source_question_id"),
+                }
+        return None
     
     def get_starting_topic(self, grade: int) -> Dict:
         """Возвращает Тему 1 для указанного класса"""
