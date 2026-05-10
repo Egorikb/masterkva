@@ -1,0 +1,1534 @@
+{
+  "version": 2,
+  "description": "Full diagnostic pool by curriculum topic coverage (review topics excluded).",
+  "questions_per_grade": {
+    "1": 7,
+    "2": 4,
+    "3": 4,
+    "4": 4,
+    "5": 4,
+    "6": 4,
+    "7": 16,
+    "8": 16,
+    "9": 20
+  },
+  "total_questions": 79,
+  "questions": [
+    {
+      "grade": 1,
+      "topic": "ПОДГОТОВКА",
+      "question": "Посмотри на 3 красных и 2 синих кружка. Сколько всего кружков?",
+      "answer": "5",
+      "alternatives": [
+        "5",
+        "пять"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "кружки",
+        "visual": "counting"
+      },
+      "topic_id": "g1_t01",
+      "id": "g1_t01_q01",
+      "practice_ref": "g1_t01",
+      "answer_type": "number"
+    },
+    {
+      "grade": 1,
+      "topic": "ПОЗИЦИИ",
+      "question": "Если мяч лежит под столом, где он находится относительно стола?",
+      "answer": "под столом",
+      "alternatives": [
+        "снизу",
+        "под"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "мяч и стол",
+        "visual": "position"
+      },
+      "topic_id": "g1_t02",
+      "id": "g1_t02_q01",
+      "practice_ref": "g1_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 1,
+      "topic": "СЛОЖЕНИЕ С ПЕРЕХОДОМ",
+      "question": "8 + 5 = ?",
+      "answer": "13",
+      "alternatives": [
+        "13",
+        "тринадцать"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "carry"
+      },
+      "topic_id": "g1_t03",
+      "id": "g1_t03_q01",
+      "practice_ref": "g1_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 1,
+      "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10",
+      "question": "7 - 4 = ?",
+      "answer": "3",
+      "alternatives": [
+        "3",
+        "три"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "number_line"
+      },
+      "topic_id": "g1_t04",
+      "id": "g1_t04_q01",
+      "practice_ref": "g1_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 1,
+      "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 5",
+      "question": "2 + 3 = ?",
+      "answer": "5",
+      "alternatives": [
+        "5",
+        "пять"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "addition"
+      },
+      "topic_id": "g1_t05",
+      "id": "g1_t05_q01",
+      "practice_ref": "g1_t05",
+      "answer_type": "number"
+    },
+    {
+      "grade": 1,
+      "topic": "ФИГУРЫ",
+      "question": "Какая фигура имеет 4 равные стороны?",
+      "answer": "квадрат",
+      "alternatives": [
+        "квадрат"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "фигуры",
+        "visual": "shapes"
+      },
+      "topic_id": "g1_t06",
+      "id": "g1_t06_q01",
+      "practice_ref": "g1_t06",
+      "answer_type": "text"
+    },
+    {
+      "grade": 1,
+      "topic": "ЧАСЫ",
+      "question": "Если на часах 6:00, сколько это часов?",
+      "answer": "6",
+      "alternatives": [
+        "6",
+        "шесть"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "часы",
+        "visual": "clock"
+      },
+      "topic_id": "g1_t07",
+      "id": "g1_t07_q01",
+      "practice_ref": "g1_t07",
+      "answer_type": "number"
+    },
+    {
+      "grade": 2,
+      "topic": "ДЕЛЕНИЕ",
+      "question": "18 ÷ 6 = ?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "группы",
+        "visual": "division"
+      },
+      "topic_id": "g2_t01",
+      "id": "g2_t01_q01",
+      "practice_ref": "g2_t01",
+      "answer_type": "number"
+    },
+    {
+      "grade": 2,
+      "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ",
+      "question": "46 + 13 = ?",
+      "answer": "59",
+      "alternatives": [
+        "59"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "addition"
+      },
+      "topic_id": "g2_t02",
+      "id": "g2_t02_q01",
+      "practice_ref": "g2_t02",
+      "answer_type": "number"
+    },
+    {
+      "grade": 2,
+      "topic": "СМЕШАННЫЕ ОПЕРАЦИИ",
+      "question": "12 - 4 + 6 = ?",
+      "answer": "14",
+      "alternatives": [
+        "14"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "mixed_ops"
+      },
+      "topic_id": "g2_t03",
+      "id": "g2_t03_q01",
+      "practice_ref": "g2_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 2,
+      "topic": "УМНОЖЕНИЕ",
+      "question": "3 × 5 = ?",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "группы",
+        "visual": "array"
+      },
+      "topic_id": "g2_t04",
+      "id": "g2_t04_q01",
+      "practice_ref": "g2_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 3,
+      "topic": "ДРОБИ",
+      "question": "Что больше: 1/2 или 1/4?",
+      "answer": "1/2",
+      "alternatives": [
+        "половина",
+        "1/2"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "полоса",
+        "visual": "fraction_bar"
+      },
+      "topic_id": "g3_t01",
+      "id": "g3_t01_q01",
+      "practice_ref": "g3_t01",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 3,
+      "topic": "ПЛОЩАДЬ",
+      "question": "Площадь прямоугольника 4 см × 3 см = ?",
+      "answer": "12 см²",
+      "alternatives": [
+        "12",
+        "12 см²"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "клетки",
+        "visual": "area"
+      },
+      "topic_id": "g3_t02",
+      "id": "g3_t02_q01",
+      "practice_ref": "g3_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 3,
+      "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ",
+      "question": "83 - 27 = ?",
+      "answer": "56",
+      "alternatives": [
+        "56"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "column_subtraction"
+      },
+      "topic_id": "g3_t03",
+      "id": "g3_t03_q01",
+      "practice_ref": "g3_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 3,
+      "topic": "УМНОЖЕНИЕ",
+      "question": "6 × 8 = ?",
+      "answer": "48",
+      "alternatives": [
+        "48"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "фишки",
+        "visual": "array"
+      },
+      "topic_id": "g3_t04",
+      "id": "g3_t04_q01",
+      "practice_ref": "g3_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 4,
+      "topic": "БОЛЬШИЕ ЧИСЛА",
+      "question": "4 305 + 270 = ?",
+      "answer": "4 575",
+      "alternatives": [
+        "4575",
+        "4 575"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "place_value"
+      },
+      "topic_id": "g4_t01",
+      "id": "g4_t01_q01",
+      "practice_ref": "g4_t01",
+      "answer_type": "text"
+    },
+    {
+      "grade": 4,
+      "topic": "ПЛОЩАДЬ",
+      "question": "Площадь прямоугольника 7 см × 8 см = ?",
+      "answer": "56 см²",
+      "alternatives": [
+        "56",
+        "56 см²"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "плитки",
+        "visual": "area"
+      },
+      "topic_id": "g4_t02",
+      "id": "g4_t02_q01",
+      "practice_ref": "g4_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 4,
+      "topic": "УМНОЖЕНИЕ/ДЕЛЕНИЕ",
+      "question": "96 ÷ 8 = ?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "division"
+      },
+      "topic_id": "g4_t03",
+      "id": "g4_t03_q01",
+      "practice_ref": "g4_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 4,
+      "topic": "УРАВНЕНИЯ",
+      "question": "Реши: x + 9 = 17",
+      "answer": "8",
+      "alternatives": [
+        "x = 8",
+        "8"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "буквы",
+        "visual": "balance"
+      },
+      "topic_id": "g4_t04",
+      "id": "g4_t04_q01",
+      "practice_ref": "g4_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 5,
+      "topic": "ДРОБИ",
+      "question": "2/5 + 1/5 = ?",
+      "answer": "3/5",
+      "alternatives": [
+        "3/5",
+        "три пятых"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "полоса",
+        "visual": "fraction_bar"
+      },
+      "topic_id": "g5_t01",
+      "id": "g5_t01_q01",
+      "practice_ref": "g5_t01",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 5,
+      "topic": "ПЛОЩАДЬ",
+      "question": "Площадь треугольника с основанием 10 см и высотой 6 см = ?",
+      "answer": "30 см²",
+      "alternatives": [
+        "30",
+        "30 см²"
+      ],
+      "difficulty": 3,
+      "CPA": {
+        "type": "Concrete",
+        "objects": "треугольник",
+        "visual": "triangle_area"
+      },
+      "topic_id": "g5_t02",
+      "id": "g5_t02_q01",
+      "practice_ref": "g5_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 5,
+      "topic": "ПРОЦЕНТЫ",
+      "question": "15% от 200 = ?",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "полоса",
+        "visual": "percent_bar"
+      },
+      "topic_id": "g5_t03",
+      "id": "g5_t03_q01",
+      "practice_ref": "g5_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 5,
+      "topic": "УМНОЖЕНИЕ/ДЕЛЕНИЕ ДРОБЕЙ",
+      "question": "1/2 × 1/3 = ?",
+      "answer": "1/6",
+      "alternatives": [
+        "1/6",
+        "одна шестая"
+      ],
+      "difficulty": 3,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "полоса",
+        "visual": "fraction_multiplication"
+      },
+      "topic_id": "g5_t04",
+      "id": "g5_t04_q01",
+      "practice_ref": "g5_t04",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 6,
+      "topic": "ОТРИЦАТЕЛЬНЫЕ ЧИСЛА",
+      "question": "-3 + 7 = ?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "числовая прямая",
+        "visual": "number_line"
+      },
+      "topic_id": "g6_t01",
+      "id": "g6_t01_q01",
+      "practice_ref": "g6_t01",
+      "answer_type": "number"
+    },
+    {
+      "grade": 6,
+      "topic": "ПРОПОРЦИИ",
+      "question": "Если 3 тетради стоят 45 ₽, сколько стоит 1 тетрадь?",
+      "answer": "15 ₽",
+      "alternatives": [
+        "15",
+        "15 ₽"
+      ],
+      "difficulty": 3,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "тетради",
+        "visual": "ratio"
+      },
+      "topic_id": "g6_t02",
+      "id": "g6_t02_q01",
+      "practice_ref": "g6_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 6,
+      "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ",
+      "question": "45 - 18 = ?",
+      "answer": "27",
+      "alternatives": [
+        "27"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "column_subtraction"
+      },
+      "topic_id": "g6_t03",
+      "id": "g6_t03_q01",
+      "practice_ref": "g6_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 6,
+      "topic": "УМНОЖЕНИЕ/ДЕЛЕНИЕ",
+      "question": "56 ÷ 7 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 2,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "division"
+      },
+      "topic_id": "g6_t04",
+      "id": "g6_t04_q01",
+      "practice_ref": "g6_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "ВЕЩЕСТВЕННЫЕ ЧИСЛА",
+      "question": "Вычисли: √49",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t01",
+      "id": "g7_t01_q01",
+      "practice_ref": "g7_t01",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "ГЕОМЕТРИЧЕСКИЕ ФИГУРЫ",
+      "question": "Сколько граней у куба?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g7_t02",
+      "id": "g7_t02_q01",
+      "practice_ref": "g7_t02",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "ЛИНЕЙНЫЕ УРАВНЕНИЯ",
+      "question": "Реши: x + 7 = 19",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t03",
+      "id": "g7_t03_q01",
+      "practice_ref": "g7_t03",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "НЕРАВЕНСТВА",
+      "question": "Что означает знак ≤?",
+      "answer": "меньше или равно",
+      "alternatives": [
+        "меньше или равно"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t04",
+      "id": "g7_t04_q01",
+      "practice_ref": "g7_t04",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "ПЕРЕСЕКАЮЩИЕСЯ И ПАРАЛЛЕЛЬНЫЕ ПРЯМЫЕ",
+      "question": "Чему равны вертикальные углы?",
+      "answer": "они равны",
+      "alternatives": [
+        "они равны"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g7_t05",
+      "id": "g7_t05_q01",
+      "practice_ref": "g7_t05",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "ПРЯМАЯ, ЛУЧ, ОТРЕЗОК",
+      "question": "Что имеет начало, но не имеет конца: прямая, луч или отрезок?",
+      "answer": "луч",
+      "alternatives": [
+        "луч"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g7_t06",
+      "id": "g7_t06_q01",
+      "practice_ref": "g7_t06",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "ПРЯМОУГОЛЬНАЯ СИСТЕМА КООРДИНАТ",
+      "question": "Как называется точка пересечения осей?",
+      "answer": "начало координат",
+      "alternatives": [
+        "начало координат"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g7_t07",
+      "id": "g7_t07_q01",
+      "practice_ref": "g7_t07",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "РАЦИОНАЛЬНЫЕ ЧИСЛА",
+      "question": "Назови, какие из чисел −7, 0, 2,5, −0,8 являются положительными, отрицательными и нулём",
+      "answer": "положительные: 2,5; отрицательные: −7, −0,8; ноль: 0",
+      "alternatives": [
+        "положительные: 2,5; отрицательные: −7, −0,8; ноль: 0"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t08",
+      "id": "g7_t08_q01",
+      "practice_ref": "g7_t08",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "СБОР И ОПИСАНИЕ ДАННЫХ",
+      "question": "Найди среднее чисел 2, 4 и 6",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g7_t09",
+      "id": "g7_t09_q01",
+      "practice_ref": "g7_t09",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "СИСТЕМЫ ЛИНЕЙНЫХ УРАВНЕНИЙ",
+      "question": "Какая пара чисел является решением системы, если подходит обоим уравнениям?",
+      "answer": "та, которая удовлетворяет обоим уравнениям",
+      "alternatives": [
+        "та, которая удовлетворяет обоим уравнениям"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t10",
+      "id": "g7_t10_q01",
+      "practice_ref": "g7_t10",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ РАЦИОНАЛЬНЫХ",
+      "question": "Вычисли: (−7) + 12",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g7_t11",
+      "id": "g7_t11_q01",
+      "practice_ref": "g7_t11",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ",
+      "question": "Упрости: 3x + 5x",
+      "answer": "8x",
+      "alternatives": [
+        "8x"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t12",
+      "id": "g7_t12_q01",
+      "practice_ref": "g7_t12",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "СТЕПЕНЬ РАЦИОНАЛЬНЫХ",
+      "question": "Вычисли: 2³",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g7_t13",
+      "id": "g7_t13_q01",
+      "practice_ref": "g7_t13",
+      "answer_type": "number"
+    },
+    {
+      "grade": 7,
+      "topic": "УГЛЫ",
+      "question": "Как называется угол в 90°?",
+      "answer": "прямой",
+      "alternatives": [
+        "прямой"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g7_t14",
+      "id": "g7_t14_q01",
+      "practice_ref": "g7_t14",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "УМНОЖЕНИЕ И ДЕЛЕНИЕ РАЦИОНАЛЬНЫХ",
+      "question": "Вычисли: (−3)·4",
+      "answer": "−12",
+      "alternatives": [
+        "−12"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g7_t15",
+      "id": "g7_t15_q01",
+      "practice_ref": "g7_t15",
+      "answer_type": "text"
+    },
+    {
+      "grade": 7,
+      "topic": "ЦЕЛЫЕ ВЫРАЖЕНИЯ",
+      "question": "Определи коэффициент одночлена −7x²y",
+      "answer": "−7",
+      "alternatives": [
+        "−7"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g7_t16",
+      "id": "g7_t16_q01",
+      "practice_ref": "g7_t16",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "АНАЛИЗ ДАННЫХ",
+      "question": "Найди среднее арифметическое чисел 2, 4, 6 и 8",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g8_t01",
+      "id": "g8_t01_q01",
+      "practice_ref": "g8_t01",
+      "answer_type": "number"
+    },
+    {
+      "grade": 8,
+      "topic": "БИССЕКТРИСА УГЛА",
+      "question": "Если ∠AOB = 80° и OC — биссектриса, чему равны ∠AOC и ∠COB?",
+      "answer": "по 40°",
+      "alternatives": [
+        "по 40°"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t02",
+      "id": "g8_t02_q01",
+      "practice_ref": "g8_t02",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "ДРОБИ",
+      "question": "Сократи дробь: (x² - 9)/(x - 3)",
+      "answer": "x + 3, x ≠ 3",
+      "alternatives": [
+        "x + 3, x ≠ 3"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g8_t03",
+      "id": "g8_t03_q01",
+      "practice_ref": "g8_t03",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 8,
+      "topic": "КВАДРАТНЫЕ КОРНИ",
+      "question": "Вычисли: √81",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g8_t04",
+      "id": "g8_t04_q01",
+      "practice_ref": "g8_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 8,
+      "topic": "ЛИНЕЙНЫЕ ФУНКЦИИ",
+      "question": "Найди k и b в функции y = 3x - 2",
+      "answer": "k = 3, b = -2",
+      "alternatives": [
+        "k = 3, b = -2"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g8_t05",
+      "id": "g8_t05_q01",
+      "practice_ref": "g8_t05",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 8,
+      "topic": "МНОГОУГОЛЬНИКИ",
+      "question": "Найди сумму внутренних углов пятиугольника",
+      "answer": "540°",
+      "alternatives": [
+        "540°"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g8_t06",
+      "id": "g8_t06_q01",
+      "practice_ref": "g8_t06",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "ОСЕВАЯ СИММЕТРИЯ",
+      "question": "Как называется прямая, относительно которой выполняется отражение фигуры?",
+      "answer": "ось симметрии",
+      "alternatives": [
+        "ось симметрии"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t07",
+      "id": "g8_t07_q01",
+      "practice_ref": "g8_t07",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "ПАРАЛЛЕЛОГРАММЫ",
+      "question": "Чему равен угол, соседний с углом 70° в параллелограмме?",
+      "answer": "110°",
+      "alternatives": [
+        "110°"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t08",
+      "id": "g8_t08_q01",
+      "practice_ref": "g8_t08",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК",
+      "question": "Если боковые стороны равнобедренного треугольника равны, что можно сказать об углах при основании?",
+      "answer": "они равны",
+      "alternatives": [
+        "они равны"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t09",
+      "id": "g8_t09_q01",
+      "practice_ref": "g8_t09",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "РАВНЫЕ ТРЕУГОЛЬНИКИ",
+      "question": "Какой признак равенства треугольников использует равенство трёх сторон?",
+      "answer": "по трём сторонам",
+      "alternatives": [
+        "по трём сторонам"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t10",
+      "id": "g8_t10_q01",
+      "practice_ref": "g8_t10",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "РАЗЛОЖЕНИЕ НА МНОЖИТЕЛИ",
+      "question": "Разложи на множители: 6x + 12",
+      "answer": "6(x + 2)",
+      "alternatives": [
+        "6(x + 2)"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g8_t11",
+      "id": "g8_t11_q01",
+      "practice_ref": "g8_t11",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 8,
+      "topic": "ТЕОРЕМА ПИФАГОРА",
+      "question": "Найди гипотенузу, если катеты равны 6 и 8",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g8_t12",
+      "id": "g8_t12_q01",
+      "practice_ref": "g8_t12",
+      "answer_type": "number"
+    },
+    {
+      "grade": 8,
+      "topic": "ТРЕУГОЛЬНИКИ",
+      "question": "Назови стороны треугольника ABC, если a = BC, b = CA, c = AB",
+      "answer": "BC, CA, AB",
+      "alternatives": [
+        "BC, CA, AB"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t13",
+      "id": "g8_t13_q01",
+      "practice_ref": "g8_t13",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "УГЛЫ ТРЕУГОЛЬНИКА",
+      "question": "В треугольнике два угла равны 45° и 65°. Найди третий",
+      "answer": "70°",
+      "alternatives": [
+        "70°"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g8_t14",
+      "id": "g8_t14_q01",
+      "practice_ref": "g8_t14",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "УМНОЖЕНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ",
+      "question": "Упрости: 3x · 4x",
+      "answer": "12x²",
+      "alternatives": [
+        "12x²"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g8_t15",
+      "id": "g8_t15_q01",
+      "practice_ref": "g8_t15",
+      "answer_type": "text"
+    },
+    {
+      "grade": 8,
+      "topic": "ФОРМУЛЫ УМНОЖЕНИЯ",
+      "question": "Раскрой скобки: (a + b)²",
+      "answer": "a² + 2ab + b²",
+      "alternatives": [
+        "a² + 2ab + b²"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g8_t16",
+      "id": "g8_t16_q01",
+      "practice_ref": "g8_t16",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "ВЕРОЯТНОСТЬ",
+      "question": "Что такое случайное событие?",
+      "answer": "Событие, которое может произойти, а может и не произойти",
+      "alternatives": [
+        "Событие, которое может произойти, а может и не произойти"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g9_t01",
+      "id": "g9_t01_q01",
+      "practice_ref": "g9_t01",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ВЫЧИСЛЕНИЕ ВЕРОЯТНОСТИ",
+      "question": "Сколько исходов у броска одной монеты?",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g9_t02",
+      "id": "g9_t02_q01",
+      "practice_ref": "g9_t02",
+      "answer_type": "number"
+    },
+    {
+      "grade": 9,
+      "topic": "ДЛИНА ДУГИ И ПЛОЩАДЬ СЕКТОРА",
+      "question": "Какую часть круга составляет угол 90°?",
+      "answer": "1/4",
+      "alternatives": [
+        "1/4"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g9_t03",
+      "id": "g9_t03_q01",
+      "practice_ref": "g9_t03",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "ЗАДАЧИ С КВАДРАТИЧНЫМИ ФУНКЦИЯМИ",
+      "question": "Найди максимум функции y = -x² + 4x + 1",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t04",
+      "id": "g9_t04_q01",
+      "practice_ref": "g9_t04",
+      "answer_type": "number"
+    },
+    {
+      "grade": 9,
+      "topic": "ЗАДАЧИ С КВАДРАТНЫМИ УРАВНЕНИЯМИ",
+      "question": "Два последовательных числа дают произведение 72. Найди числа",
+      "answer": "8 и 9",
+      "alternatives": [
+        "8 и 9"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t05",
+      "id": "g9_t05_q01",
+      "practice_ref": "g9_t05",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "КВАДРАТИЧНАЯ ФУНКЦИЯ И УРАВНЕНИЕ",
+      "question": "Сколько корней у уравнения x² - 4x + 4 = 0?",
+      "answer": "Один двойной корень",
+      "alternatives": [
+        "Один двойной корень"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t06",
+      "id": "g9_t06_q01",
+      "practice_ref": "g9_t06",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "КВАДРАТИЧНЫЕ ФУНКЦИИ",
+      "question": "Является ли y = 3x² - x + 1 квадратичной функцией?",
+      "answer": "Да",
+      "alternatives": [
+        "Да"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t07",
+      "id": "g9_t07_q01",
+      "practice_ref": "g9_t07",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "КВАДРАТНЫЕ УРАВНЕНИЯ",
+      "question": "Приведи к стандартному виду: x(x - 5) = 0",
+      "answer": "x² - 5x = 0",
+      "alternatives": [
+        "x² - 5x = 0"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t08",
+      "id": "g9_t08_q01",
+      "practice_ref": "g9_t08",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "ОБРАТНАЯ ПРОПОРЦИОНАЛЬНОСТЬ",
+      "question": "Запиши формулу обратной пропорциональности",
+      "answer": "y = k/x",
+      "alternatives": [
+        "y = k/x"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g9_t09",
+      "id": "g9_t09_q01",
+      "practice_ref": "g9_t09",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "ОКРУЖНОСТЬ",
+      "question": "Что называется радиусом окружности?",
+      "answer": "Отрезок от центра до точки окружности",
+      "alternatives": [
+        "Отрезок от центра до точки окружности"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t10",
+      "id": "g9_t10_q01",
+      "practice_ref": "g9_t10",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ОСТРЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ",
+      "question": "Чему равен sin острого угла?",
+      "answer": "Отношению противолежащего катета к гипотенузе",
+      "alternatives": [
+        "Отношению противолежащего катета к гипотенузе"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t11",
+      "id": "g9_t11_q01",
+      "practice_ref": "g9_t11",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ПОВОРОТ",
+      "question": "Сохраняется ли длина отрезков при повороте?",
+      "answer": "Да",
+      "alternatives": [
+        "Да"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t12",
+      "id": "g9_t12_q01",
+      "practice_ref": "g9_t12",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ПОДОБИЕ",
+      "question": "Что такое коэффициент подобия?",
+      "answer": "Число, показывающее отношение соответствующих сторон",
+      "alternatives": [
+        "Число, показывающее отношение соответствующих сторон"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t13",
+      "id": "g9_t13_q01",
+      "practice_ref": "g9_t13",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ПОЛОЖЕНИЕ ПРЯМОЙ И ОКРУЖНОСТИ",
+      "question": "Как называется прямая, имеющая с окружностью одну общую точку?",
+      "answer": "Касательная",
+      "alternatives": [
+        "Касательная"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t14",
+      "id": "g9_t14_q01",
+      "practice_ref": "g9_t14",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ПРАВИЛЬНЫЕ МНОГОУГОЛЬНИКИ И ОКРУЖНОСТЬ",
+      "question": "Чему равен центральный угол правильного шестиугольника?",
+      "answer": "60°",
+      "alternatives": [
+        "60°"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t15",
+      "id": "g9_t15_q01",
+      "practice_ref": "g9_t15",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "ПРОЕКЦИИ И ВИДЫ",
+      "question": "Что называют видом сверху?",
+      "answer": "Изображение предмета при взгляде сверху",
+      "alternatives": [
+        "Изображение предмета при взгляде сверху"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "таблица",
+        "visual": "data"
+      },
+      "topic_id": "g9_t16",
+      "id": "g9_t16_q01",
+      "practice_ref": "g9_t16",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "РЕШЕНИЕ КВАДРАТНЫХ УРАВНЕНИЙ",
+      "question": "Реши: x² = 81",
+      "answer": "x = ±9",
+      "alternatives": [
+        "x = ±9"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "algebra"
+      },
+      "topic_id": "g9_t17",
+      "id": "g9_t17_q01",
+      "practice_ref": "g9_t17",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "СВОЙСТВА ОКРУЖНОСТИ",
+      "question": "Как расположен радиус относительно касательной в точке касания?",
+      "answer": "Перпендикулярно",
+      "alternatives": [
+        "Перпендикулярно"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t18",
+      "id": "g9_t18_q01",
+      "practice_ref": "g9_t18",
+      "answer_type": "text"
+    },
+    {
+      "grade": 9,
+      "topic": "СВОЙСТВА ПАРАБОЛЫ",
+      "question": "Найди c в функции y = 2x² - 7x + c, если график проходит через точку (0, 5)",
+      "answer": "c = 5",
+      "alternatives": [
+        "c = 5"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Abstract",
+        "objects": "числа",
+        "visual": "formula"
+      },
+      "topic_id": "g9_t19",
+      "id": "g9_t19_q01",
+      "practice_ref": "g9_t19",
+      "answer_type": "expression"
+    },
+    {
+      "grade": 9,
+      "topic": "ЦЕНТРАЛЬНАЯ СИММЕТРИЯ",
+      "question": "Найди образ точки (3, -5) относительно начала координат",
+      "answer": "(-3, 5)",
+      "alternatives": [
+        "(-3, 5)"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "type": "Pictorial",
+        "objects": "геометрия",
+        "visual": "geometry"
+      },
+      "topic_id": "g9_t20",
+      "id": "g9_t20_q01",
+      "practice_ref": "g9_t20",
+      "answer_type": "expression"
+    }
+  ]
+}
