@@ -10,6 +10,11 @@
 
 ---
 
+## Status update
+- Task 1 is now implemented in the assembled workspace.
+- Verified with: `pytest tests/services/test_diagnostic_engine.py tests/services/test_practice_engine.py tests/services/test_report_service.py tests/api/test_panda_chat_mvp_contract.py -q`
+- Result: `11 passed`
+
 ## Task 1: Strengthen the learning backend cycle
 
 **Objective:** make the diagnostic/explanation/practice/report loop deterministic and testable.

@@ -1,0 +1,54 @@
+{
+  "questions": [
+    {
+      "id": "g1_t01_q01",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Счёт до 10",
+      "question": "Сколько будет 3 + 2?",
+      "answer": "5",
+      "alternatives": ["пять"],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q01",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "question": "Какое число идёт после 6?",
+      "answer": "7",
+      "alternatives": ["семь"],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q01",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "question": "4 + 3 = ?",
+      "answer": "7",
+      "alternatives": ["семь"],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q01",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание",
+      "question": "7 - 4 = ?",
+      "answer": "3",
+      "alternatives": ["три"],
+      "difficulty": 1
+    },
+    {
+      "id": "g2_t01_q01",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "question": "12 + 5 = ?",
+      "answer": "17",
+      "alternatives": ["семнадцать"],
+      "difficulty": 2
+    }
+  ]
+}
