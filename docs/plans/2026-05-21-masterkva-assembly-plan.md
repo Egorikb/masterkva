@@ -14,6 +14,10 @@
 - Task 1 is now implemented in the assembled workspace.
 - Verified with: `pytest tests/services/test_diagnostic_engine.py tests/services/test_practice_engine.py tests/services/test_report_service.py tests/api/test_panda_chat_mvp_contract.py -q`
 - Result: `11 passed`
+- Task 2 is now implemented in the assembled workspace.
+- Frontend sources copied into `frontend/` from the stabilized MasterKva frontend.
+- Verified with: `npm install` and `npm run build`
+- Result: production build passed; only the pre-existing Turbopack NFT trace warning remains.
 
 ## Task 1: Strengthen the learning backend cycle
 
