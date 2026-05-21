@@ -11,6 +11,7 @@ from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_en
 from deeptutor.services.learning_rag import learning_rag
 from deeptutor.services.practice_engine import PracticeEngine
 from deeptutor.services.report_service import ReportService
+from deeptutor.services.teacher_llm import generate_teacher_explanation
 
 router = APIRouter()
 STATE_FILE = Path(__file__).resolve().parents[3] / "data" / "user_states.json"
@@ -39,6 +40,7 @@ DEFAULT_STATE: dict[str, Any] = {
     "diag_sequence": [],
     "weak_topic": None,
     "learning_context": None,
+    "teacher_explanation": None,
     "current_practice": None,
     "practice_feedback": None,
     "report": None,
@@ -144,6 +146,7 @@ def _panda_response(text: str, state: dict[str, Any], visual: dict[str, Any] | N
     normalized_state.setdefault("phase", "chat")
     normalized_state.setdefault("weak_topic", None)
     normalized_state.setdefault("learning_context", None)
+    normalized_state.setdefault("teacher_explanation", None)
     normalized_state.setdefault("current_practice", None)
     normalized_state.setdefault("practice_feedback", None)
     normalized_state.setdefault("report", None)
@@ -200,6 +203,7 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
             "diagnostic_progress": {},
             "weak_topic": weak_topic,
             "learning_context": _learning_context_for_topic(result.actual_grade, weak_topic),
+            "teacher_explanation": None,
             "current_practice": None,
             "practice_feedback": None,
             "report": None,
@@ -209,14 +213,22 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         update_user_state(user_id, explanation_state)
         state = get_user_state(user_id)
         topic_name = weak_topic["topic"] if weak_topic else "тема"
-        context_text = learning_rag.format_context(list(state.get("learning_context", [])))
+        context_items = list(state.get("learning_context", []))
+        teacher_text = generate_teacher_explanation(
+            grade=result.actual_grade,
+            weak_topic=weak_topic,
+            learning_context=context_items,
+            user_message="диагностика завершена",
+        )
+        context_text = learning_rag.format_context(context_items)
         text = (
             "🎯 Диагностика завершена.\n\n"
-            f"Слабая тема: {topic_name}.\n"
-            "Сейчас коротко объясню, потом начнём практику.\n\n"
+            f"Слабая тема: {topic_name}.\n\n"
+            f"{teacher_text}\n\n"
             f"{context_text}\n\n"
             "Напиши 'начать'."
         )
+        state = update_user_state(user_id, {"teacher_explanation": teacher_text})
         return _panda_response(text, state, visual={"type": "weak_topic", "topic": weak_topic})
 
     starting_topic = diagnostic_engine.get_starting_topic(result.actual_grade)
@@ -228,6 +240,7 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         "diagnostic_progress": {},
         "weak_topic": starting_topic,
         "learning_context": learning_context,
+        "teacher_explanation": None,
         "current_practice": practice,
         "practice_feedback": None,
         "report": None,
@@ -237,9 +250,17 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     update_user_state(user_id, practice_state)
     state = get_user_state(user_id)
     context_text = learning_rag.format_context(list(state.get("learning_context", [])))
+    teacher_text = generate_teacher_explanation(
+        grade=result.actual_grade,
+        weak_topic=starting_topic,
+        learning_context=learning_context,
+        user_message="диагностика завершена без пробелов",
+    )
+    state = update_user_state(user_id, {"teacher_explanation": teacher_text})
     text = (
         "🎉 Диагностика завершена.\n\n"
-        f"Начинаем с темы: {starting_topic['topic']}.\n"
+        f"Начинаем с темы: {starting_topic['topic']}.\n\n"
+        f"{teacher_text}\n\n"
         f"{context_text}\n\n"
         "Давай сразу к практике."
     )

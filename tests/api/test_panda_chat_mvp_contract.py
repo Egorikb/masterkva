@@ -44,6 +44,7 @@ def test_diagnostic_failure_routes_to_explanation_phase_with_weak_topic(tmp_path
 
 def test_explanation_phase_uses_grade_specific_learning_context(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
+    monkeypatch.setattr(plugins_api, "generate_teacher_explanation", lambda **kwargs: "TEACHER_OK")
     user_id = f"mvp-rag-context-{uuid.uuid4()}"
 
     with TestClient(_build_app()) as client:
@@ -67,7 +68,8 @@ def test_explanation_phase_uses_grade_specific_learning_context(tmp_path, monkey
     assert state["learning_context"]
     assert all(item["grade"] == 1 for item in state["learning_context"])
     assert any(item["source_file"].startswith("grade_1") for item in state["learning_context"])
-    assert "Учебный контекст" in payload["text"]
+    assert state["teacher_explanation"] == "TEACHER_OK"
+    assert "TEACHER_OK" in payload["text"]
 
 
 
