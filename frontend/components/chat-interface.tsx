@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, User, Bot } from "lucide-react";
 import { useChatStore } from "@/lib/chat-store";
 import { useAuthStore } from "@/lib/auth-store";
+import { postPandaChat } from "@/lib/api/panda-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { VoiceInput } from "./voice-input";
 import { AchievementPopup } from "./achievement-popup";
 import type { ChatMessage, ApiResponse } from "@/lib/types";
+import type { PandaChatResponse } from "@/contracts/panda";
 
 export function ChatInterface() {
   const [input, setInput] = useState("");
@@ -25,11 +27,11 @@ export function ChatInterface() {
     setIsLoading,
     mode,
     addQiEnergy,
-    setCurrentVisualData
+    setCurrentVisualData,
+    clearMessages,
   } = useChatStore();
 
-  // Also update auth store for persistent Qi tracking
-  const { addQiEnergy: addAuthQiEnergy, isAuthenticated } = useAuthStore();
+  const { user, studentProfile, addQiEnergy: addAuthQiEnergy, updateStudentProfile } = useAuthStore();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,10 +44,11 @@ export function ChatInterface() {
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim() || isLoading) return;
 
+    const trimmed = content.trim();
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: "user",
-      content: content.trim(),
+      content: trimmed,
       timestamp: new Date(),
     };
 
@@ -54,58 +57,60 @@ export function ChatInterface() {
     setIsLoading(true);
 
     try {
-      // Mock API response for demo - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Simulate different responses based on content
-      const mockResponse: ApiResponse = generateMockResponse(content, mode);
-      
+      const profile = studentProfile;
+      const grade = profile?.lastSessionGrade ?? profile?.currentGrade ?? null;
+      const response: PandaChatResponse = await postPandaChat({
+        user_id: user?.id ?? profile?.userId ?? "anonymous-student",
+        message: trimmed,
+        name: user?.name ?? null,
+        grade,
+      });
+
+      const visualData = normalizePandaVisual(response.visual);
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: mockResponse.text,
-        audioUrl: mockResponse.audio_url,
-        visualData: mockResponse.visual_data,
+        content: response.text,
+        audioUrl: undefined,
+        visualData,
         timestamp: new Date(),
       };
 
       addMessage(assistantMessage);
 
-      // Update visual data if present
-      if (mockResponse.visual_data) {
-        setCurrentVisualData(mockResponse.visual_data);
+      if (visualData) {
+        setCurrentVisualData(visualData);
       }
 
-      // Handle correct answer bonus
-      if (mockResponse.is_correct && mockResponse.qi_bonus) {
-        addQiEnergy(mockResponse.qi_bonus);
-        // Also update auth store if user is logged in
-        if (isAuthenticated) {
-          addAuthQiEnergy(mockResponse.qi_bonus);
-        }
-        setAchievementText(`+${mockResponse.qi_bonus} Ци`);
-        setShowAchievement(true);
-        setTimeout(() => setShowAchievement(false), 2000);
+      const state = response.state;
+      if (state?.actual_grade && profile && !profile.lastSessionGrade) {
+        updateStudentProfile({ lastSessionGrade: state.actual_grade });
       }
 
-      // Play audio if available
-      if (mockResponse.audio_url && audioRef.current) {
-        audioRef.current.src = mockResponse.audio_url;
-        audioRef.current.play().catch(() => {});
+      if (state?.weak_topic) {
+        updateStudentProfile({
+          weakTopics: Array.from(new Set([...(profile?.weakTopics ?? []), state.weak_topic.topic])),
+          lastSessionGrade: state.actual_grade ?? profile?.lastSessionGrade,
+        });
+      }
+
+      if (state?.report?.practice_result === "success") {
+        addQiEnergy(5);
+        addAuthQiEnergy(5);
       }
     } catch (error) {
-      console.error("[v0] Error sending message:", error);
+      console.error("[chat] Error sending message:", error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Простите, произошла ошибка. Попробуйте ещё раз.",
+        content: "Не удалось связаться с учителем. Проверь, запущен ли backend на 8001.",
         timestamp: new Date(),
       };
       addMessage(errorMessage);
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, addMessage, setIsLoading, mode, addQiEnergy, setCurrentVisualData, isAuthenticated, addAuthQiEnergy]);
+  }, [isLoading, addMessage, setIsLoading, setCurrentVisualData, user, studentProfile, updateStudentProfile, addQiEnergy, addAuthQiEnergy]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,6 +122,32 @@ export function ChatInterface() {
       e.preventDefault();
       sendMessage(input);
     }
+  };
+
+  const normalizePandaVisual = (visual: any): ChatMessage["visualData"] => {
+    if (!visual || typeof visual !== "object") return undefined;
+    if (visual.type === "number_bond" && typeof visual.total === "number" && Array.isArray(visual.parts)) {
+      return {
+        type: "number_bond",
+        total: visual.total,
+        parts: visual.parts,
+      };
+    }
+    if (visual.type === "bar_model" && typeof visual.total === "number" && Array.isArray(visual.segments)) {
+      return {
+        type: "bar_model",
+        total: visual.total,
+        segments: visual.segments,
+      };
+    }
+    if (visual.type === "ten_frame" && typeof visual.filled === "number") {
+      return {
+        type: "ten_frame",
+        filled: visual.filled,
+        total: typeof visual.total === "number" ? visual.total : undefined,
+      };
+    }
+    return undefined;
   };
 
   return (
@@ -135,12 +166,12 @@ export function ChatInterface() {
               </div>
               <h3 className="mb-2 text-xl font-semibold text-foreground">
                 {mode === "kungfu" 
-                  ? "Добро пожаловать в додзё!" 
+                  ? "Добро пожаловать в кабинет учителя!" 
                   : "Чем могу помочь?"}
               </h3>
               <p className="max-w-sm text-muted-foreground">
                 {mode === "kungfu"
-                  ? "Я научу тебя математике по методу Кунг-фу. Начни с простого вопроса!"
+                  ? "Задай вопрос или напиши 'диагностика' — учитель ответит по нашим материалам 1–9 класса."
                   : "Задай вопрос по любому предмету, и я помогу тебе разобраться."}
               </p>
             </motion.div>

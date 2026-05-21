@@ -69,7 +69,24 @@ function SessionContent() {
     clearMessages();
   };
 
-  if (!studentProfile) return null;
+  if (!studentProfile) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center p-6 text-center">
+        <h1 className="mb-2 text-2xl font-bold text-foreground">Кабинет ещё не готов</h1>
+        <p className="mb-6 max-w-md text-muted-foreground">
+          Сначала войди или зарегистрируйся, чтобы открыть личный кабинет и диалог с учителем.
+        </p>
+        <div className="flex gap-3">
+          <Link href="/login">
+            <Button>Войти</Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="outline">Создать аккаунт</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // Mode selection screen
   if (!selectedMode && !mode) {
