@@ -1,0 +1,25 @@
+{
+  "total_grades": 9,
+  "grades": [
+    "1 КЛАСС",
+    "2 КЛАСС",
+    "3 КЛАСС",
+    "4 КЛАСС",
+    "5 КЛАСС",
+    "6 КЛАСС",
+    "7 КЛАСС",
+    "8 КЛАСС",
+    "9 КЛАСС"
+  ],
+  "files": [
+    "grade_1.json",
+    "grade_2.json",
+    "grade_3.json",
+    "grade_4.json",
+    "grade_5.json",
+    "grade_6.json",
+    "grade_7.json",
+    "grade_8.json",
+    "grade_9.json"
+  ]
+}

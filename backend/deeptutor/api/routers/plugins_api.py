@@ -8,6 +8,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_engine
+from deeptutor.services.learning_rag import learning_rag
 from deeptutor.services.practice_engine import PracticeEngine
 from deeptutor.services.report_service import ReportService
 
@@ -37,6 +38,7 @@ DEFAULT_STATE: dict[str, Any] = {
     "diag_answers": [],
     "diag_sequence": [],
     "weak_topic": None,
+    "learning_context": None,
     "current_practice": None,
     "practice_feedback": None,
     "report": None,
@@ -123,10 +125,25 @@ def _is_answer_correct(answer: str, question: dict[str, Any]) -> bool:
     return False
 
 
+
+def _learning_context_for_topic(grade: int, topic: dict[str, Any] | None) -> list[dict[str, Any]]:
+    if not topic:
+        return []
+    query_parts = [str(topic.get("topic") or ""), str(topic.get("topic_id") or "")]
+    query = " ".join(part for part in query_parts if part).strip()
+    return learning_rag.retrieve(
+        grade=grade,
+        query=query or str(topic.get("topic") or "тема"),
+        topic_id=str(topic.get("topic_id")) if topic.get("topic_id") is not None else None,
+        top_k=3,
+    )
+
+
 def _panda_response(text: str, state: dict[str, Any], visual: dict[str, Any] | None = None) -> dict[str, Any]:
     normalized_state = _ensure_state_defaults(state)
     normalized_state.setdefault("phase", "chat")
     normalized_state.setdefault("weak_topic", None)
+    normalized_state.setdefault("learning_context", None)
     normalized_state.setdefault("current_practice", None)
     normalized_state.setdefault("practice_feedback", None)
     normalized_state.setdefault("report", None)
@@ -182,6 +199,7 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
             "in_learning": True,
             "diagnostic_progress": {},
             "weak_topic": weak_topic,
+            "learning_context": _learning_context_for_topic(result.actual_grade, weak_topic),
             "current_practice": None,
             "practice_feedback": None,
             "report": None,
@@ -191,21 +209,25 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         update_user_state(user_id, explanation_state)
         state = get_user_state(user_id)
         topic_name = weak_topic["topic"] if weak_topic else "тема"
+        context_text = learning_rag.format_context(list(state.get("learning_context", [])))
         text = (
             "🎯 Диагностика завершена.\n\n"
             f"Слабая тема: {topic_name}.\n"
-            "Сейчас коротко объясню, потом начнём практику.\n"
+            "Сейчас коротко объясню, потом начнём практику.\n\n"
+            f"{context_text}\n\n"
             "Напиши 'начать'."
         )
         return _panda_response(text, state, visual={"type": "weak_topic", "topic": weak_topic})
 
     starting_topic = diagnostic_engine.get_starting_topic(result.actual_grade)
+    learning_context = _learning_context_for_topic(result.actual_grade, starting_topic)
     practice = practice_engine.create_practice(starting_topic)
     practice_state = {
         "phase": "practice",
         "in_learning": True,
         "diagnostic_progress": {},
         "weak_topic": starting_topic,
+        "learning_context": learning_context,
         "current_practice": practice,
         "practice_feedback": None,
         "report": None,
@@ -214,9 +236,11 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     }
     update_user_state(user_id, practice_state)
     state = get_user_state(user_id)
+    context_text = learning_rag.format_context(list(state.get("learning_context", [])))
     text = (
         "🎉 Диагностика завершена.\n\n"
         f"Начинаем с темы: {starting_topic['topic']}.\n"
+        f"{context_text}\n\n"
         "Давай сразу к практике."
     )
     return _panda_response(text, state, visual={"type": "practice", "practice": practice})

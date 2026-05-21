@@ -18,6 +18,11 @@
 - Frontend sources copied into `frontend/` from the stabilized MasterKva frontend.
 - Verified with: `npm install` and `npm run build`
 - Result: production build passed; only the pre-existing Turbopack NFT trace warning remains.
+- Task 3 is now implemented in the assembled workspace.
+- RAG is limited to the educational corpus in `backend/data/{lessons,curriculum,curriculum_detailed}` and is attached only to the learning flow.
+- Verified with: `pytest tests/services/test_learning_rag.py tests/api/test_panda_chat_mvp_contract.py -q`
+- Result: `7 passed`
+- Task 4 is now partially implemented with an added RAG-specific contract test in `tests/api/test_panda_chat_mvp_contract.py`.
 
 ## Task 1: Strengthen the learning backend cycle
 
@@ -51,11 +56,13 @@
 **Objective:** allow teacher-style answers from curriculum/materials without turning the app into a generic chat bot.
 
 **Files to create/modify:**
-- `backend/deeptutor/services/rag/*`
-- `backend/deeptutor/services/search/*`
-- `backend/deeptutor/api/routers/knowledge.py`
-- `backend/deeptutor/api/routers/chat.py`
-- `frontend/components/chat-interface.tsx`
+- `backend/deeptutor/services/learning_rag.py`
+- `backend/deeptutor/api/routers/plugins_api.py`
+- `backend/data/lessons/`
+- `backend/data/curriculum/`
+- `backend/data/curriculum_detailed/`
+- `tests/services/test_learning_rag.py`
+- `tests/api/test_panda_chat_mvp_contract.py`
 
 **Why third:** RAG should enrich learning, not become a separate product path.
 
