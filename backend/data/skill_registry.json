@@ -6,7 +6,12 @@
       "skill_id": "g1_early_arithmetic_core",
       "grade": 1,
       "domain": "arithmetic",
-      "topic_ids": ["g1_t02", "g1_t03", "g1_t04", "g1_t07"],
+      "topic_ids": [
+        "g1_t02",
+        "g1_t03",
+        "g1_t04",
+        "g1_t07"
+      ],
       "topic_names": [
         "Следующее число",
         "Сложение с переходом",
@@ -14,86 +19,166 @@
         "СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"
       ],
       "prerequisites": [],
-      "next_skills": ["g2_addition_core"],
+      "next_skills": [
+        "g2_addition_core"
+      ],
       "contract_id": "g1_early_arithmetic_core.v1"
     },
     {
       "skill_id": "g2_addition_core",
       "grade": 2,
       "domain": "arithmetic",
-      "topic_ids": ["g2_t01"],
-      "topic_names": ["Сложение двузначных чисел"],
-      "prerequisites": ["g1_early_arithmetic_core"],
-      "next_skills": ["g3_time_measurement_core"],
+      "topic_ids": [
+        "g2_t01"
+      ],
+      "topic_names": [
+        "Сложение двузначных чисел"
+      ],
+      "prerequisites": [
+        "g1_early_arithmetic_core"
+      ],
+      "next_skills": [
+        "g3_time_measurement_core"
+      ],
       "contract_id": "g2_addition_core.v1"
+    },
+    {
+      "skill_id": "g2_subtraction_core",
+      "grade": 2,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g2_t02"
+      ],
+      "topic_names": [
+        "Сложение и вычитание до 100"
+      ],
+      "prerequisites": [
+        "g1_early_arithmetic_core"
+      ],
+      "next_skills": [],
+      "contract_id": "g2_subtraction_core.v1"
     },
     {
       "skill_id": "g3_time_measurement_core",
       "grade": 3,
       "domain": "measurement",
-      "topic_ids": ["g3_t01"],
-      "topic_names": ["Время (часы, минуты, секунды)"],
-      "prerequisites": ["g2_addition_core"],
-      "next_skills": ["g4_place_value_core"],
+      "topic_ids": [
+        "g3_t01"
+      ],
+      "topic_names": [
+        "Время (часы, минуты, секунды)"
+      ],
+      "prerequisites": [
+        "g2_addition_core"
+      ],
+      "next_skills": [
+        "g4_place_value_core"
+      ],
       "contract_id": "g3_time_measurement_core.v1"
     },
     {
       "skill_id": "g4_place_value_core",
       "grade": 4,
       "domain": "number_sense",
-      "topic_ids": ["g4_t01"],
-      "topic_names": ["Большие числа (до 100 млн)"],
-      "prerequisites": ["g3_time_measurement_core"],
-      "next_skills": ["g5_simple_equations_core"],
+      "topic_ids": [
+        "g4_t01"
+      ],
+      "topic_names": [
+        "Большие числа (до 100 млн)"
+      ],
+      "prerequisites": [
+        "g3_time_measurement_core"
+      ],
+      "next_skills": [
+        "g5_simple_equations_core"
+      ],
       "contract_id": "g4_place_value_core.v1"
     },
     {
       "skill_id": "g5_simple_equations_core",
       "grade": 5,
       "domain": "algebra",
-      "topic_ids": ["g5_t01"],
-      "topic_names": ["Простые уравнения"],
-      "prerequisites": ["g4_place_value_core"],
-      "next_skills": ["g6_percent_core"],
+      "topic_ids": [
+        "g5_t01"
+      ],
+      "topic_names": [
+        "Простые уравнения"
+      ],
+      "prerequisites": [
+        "g4_place_value_core"
+      ],
+      "next_skills": [
+        "g6_percent_core"
+      ],
       "contract_id": "g5_simple_equations_core.v1"
     },
     {
       "skill_id": "g6_percent_core",
       "grade": 6,
       "domain": "fractions_decimals_percents",
-      "topic_ids": ["g6_t01"],
-      "topic_names": ["Проценты"],
-      "prerequisites": ["g5_simple_equations_core"],
-      "next_skills": ["g7_rational_numbers_core"],
+      "topic_ids": [
+        "g6_t01"
+      ],
+      "topic_names": [
+        "Проценты"
+      ],
+      "prerequisites": [
+        "g5_simple_equations_core"
+      ],
+      "next_skills": [
+        "g7_rational_numbers_core"
+      ],
       "contract_id": "g6_percent_core.v1"
     },
     {
       "skill_id": "g7_rational_numbers_core",
       "grade": 7,
       "domain": "number_sense",
-      "topic_ids": ["g7_t01"],
-      "topic_names": ["Рациональные числа"],
-      "prerequisites": ["g6_percent_core"],
-      "next_skills": ["g8_linear_equations_core"],
+      "topic_ids": [
+        "g7_t01"
+      ],
+      "topic_names": [
+        "Рациональные числа"
+      ],
+      "prerequisites": [
+        "g6_percent_core"
+      ],
+      "next_skills": [
+        "g8_linear_equations_core"
+      ],
       "contract_id": "g7_rational_numbers_core.v1"
     },
     {
       "skill_id": "g8_linear_equations_core",
       "grade": 8,
       "domain": "algebra",
-      "topic_ids": ["g8_t01"],
-      "topic_names": ["Линейные уравнения"],
-      "prerequisites": ["g7_rational_numbers_core"],
-      "next_skills": ["g9_quadratic_functions_core"],
+      "topic_ids": [
+        "g8_t01"
+      ],
+      "topic_names": [
+        "Линейные уравнения"
+      ],
+      "prerequisites": [
+        "g7_rational_numbers_core"
+      ],
+      "next_skills": [
+        "g9_quadratic_functions_core"
+      ],
       "contract_id": "g8_linear_equations_core.v1"
     },
     {
       "skill_id": "g9_quadratic_functions_core",
       "grade": 9,
       "domain": "functions_graphs",
-      "topic_ids": ["g9_t01"],
-      "topic_names": ["Квадратные функции"],
-      "prerequisites": ["g8_linear_equations_core"],
+      "topic_ids": [
+        "g9_t01"
+      ],
+      "topic_names": [
+        "Квадратные функции"
+      ],
+      "prerequisites": [
+        "g8_linear_equations_core"
+      ],
       "next_skills": [],
       "contract_id": "g9_quadratic_functions_core.v1"
     }

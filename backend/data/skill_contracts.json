@@ -138,6 +138,75 @@
       }
     },
     {
+      "id": "g2_subtraction_core.v1",
+      "skill_id": "g2_subtraction_core",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "subtraction",
+          "missing_part"
+        ],
+        "detectable_errors": [
+          "missing_part_error",
+          "place_value_error",
+          "procedural_slip"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "missing_part_error",
+          "place_value_error",
+          "procedural_slip"
+        ],
+        "remediation_by_error": {
+          "missing_part_error": "number_bond",
+          "place_value_error": "base_ten_blocks",
+          "procedural_slip": "slow_step_by_step"
+        },
+        "default_remediation": "number_bond"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_bond"
+      },
+      "visual_policy": {
+        "template": "number_bond",
+        "diagnosis": "off",
+        "learning": "limited"
+      },
+      "board_policy": "off",
+      "mastery_gate": {
+        "type": "accuracy_over_n",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
+    },
+    {
       "id": "g3_time_measurement_core.v1",
       "skill_id": "g3_time_measurement_core",
       "coverage": {
