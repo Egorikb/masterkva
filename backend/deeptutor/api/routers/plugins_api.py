@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_engine
 from deeptutor.services.learning_rag import learning_rag
+from deeptutor.services.mastery_evaluator import mastery_evaluator
 from deeptutor.services.practice_engine import PracticeEngine
 from deeptutor.services.report_service import ReportService
 from deeptutor.services.skill_runtime import skill_resolver
@@ -62,6 +63,9 @@ DEFAULT_STATE: dict[str, Any] = {
     "learning_mode_active": False,
     "board_mode": "off",
     "mastery_status_by_skill": {},
+    "mastery_check_pending": False,
+    "mastery_check_result": None,
+    "promotion_eligible": False,
     "registry_resolution": {"source": "fallback", "resolved_at": None, "warnings": []},
     "runtime_audit_log": [],
 }
@@ -166,7 +170,16 @@ def _append_runtime_audit_log(user_id: str, event_type: str, payload: dict[str, 
     update_user_state(user_id, {"runtime_audit_log": runtime_audit_log})
 
 
-def _update_mastery_status(state: dict[str, Any], skill_id: str | None, *, status: str, confidence: float | None = None, attempts_delta: int = 0) -> dict[str, Any]:
+def _update_mastery_status(
+    state: dict[str, Any],
+    skill_id: str | None,
+    *,
+    status: str,
+    confidence: float | None = None,
+    attempts_delta: int = 0,
+    correct: bool | None = None,
+    attempt_record: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     if not skill_id:
         return state
     mastery_status_by_skill = dict(state.get("mastery_status_by_skill") or {})
@@ -176,6 +189,19 @@ def _update_mastery_status(state: dict[str, Any], skill_id: str | None, *, statu
     current["attempts_count"] = int(current.get("attempts_count") or 0) + attempts_delta
     if confidence is not None:
         current["confidence"] = confidence
+
+    if correct is not None:
+        current["correct_count"] = int(current.get("correct_count") or 0) + (1 if correct else 0)
+        current["wrong_count"] = int(current.get("wrong_count") or 0) + (0 if correct else 1)
+        current["correct_streak"] = int(current.get("correct_streak") or 0) + (1 if correct else 0)
+        current["wrong_streak"] = 0 if correct else int(current.get("wrong_streak") or 0) + 1
+        current["last_correct"] = bool(correct)
+
+    attempt_history = list(current.get("attempt_history") or [])
+    if attempt_record is not None:
+        attempt_history.append(dict(attempt_record))
+        current["attempt_history"] = attempt_history[-10:]
+
     mastery_status_by_skill[skill_id] = current
     state["mastery_status_by_skill"] = mastery_status_by_skill
     return state
@@ -557,24 +583,74 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
 
         feedback = practice_engine.check_practice_answer(practice, message)
         report = report_service.build_report(state.get("weak_topic") or practice, feedback)
-        next_phase = "report" if feedback["is_correct"] else "practice"
+        skill_resolution = skill_resolver.resolve(
+            topic_id=str(practice.get("topic_id") or ""),
+            topic_name=str((state.get("weak_topic") or {}).get("topic") or ""),
+        )
         state = update_user_state(
             user_id,
             {
-                "phase": next_phase,
+                "phase": "report" if feedback["is_correct"] else "practice",
                 "practice_feedback": feedback,
                 "report": report,
                 "current_practice": practice,
+                "mastery_check_pending": False,
+                "promotion_eligible": False,
             },
         )
         state = _update_mastery_status(
             state,
-            state.get("current_skill_id"),
+            skill_resolution.skill_id or state.get("current_skill_id"),
             status="practicing" if not feedback["is_correct"] else "learning",
             confidence=feedback.get("confidence"),
             attempts_delta=1,
+            correct=bool(feedback["is_correct"]),
+            attempt_record={
+                "question_id": practice.get("id"),
+                "topic_id": practice.get("topic_id"),
+                "is_correct": bool(feedback["is_correct"]),
+                "confidence": feedback.get("confidence"),
+                "user_answer": feedback.get("user_answer"),
+                "correct_answer": feedback.get("correct_answer"),
+            },
         )
+        mastery_state = (state.get("mastery_status_by_skill") or {}).get(skill_resolution.skill_id or state.get("current_skill_id") or "", {})
+        mastery_decision = mastery_evaluator.evaluate(
+            skill_id=skill_resolution.skill_id or state.get("current_skill_id"),
+            contract=skill_resolution.contract,
+            mastery_state=mastery_state,
+        )
+        mastery_result = {
+            "skill_id": mastery_decision.skill_id,
+            "decision": mastery_decision.decision,
+            "confidence": mastery_decision.confidence,
+            "reasons": list(mastery_decision.reasons),
+            "failed_criteria": list(mastery_decision.failed_criteria),
+            "evidence": dict(mastery_decision.evidence),
+        }
+        state = update_user_state(
+            user_id,
+            {
+                "mastery_check_result": mastery_result,
+                "promotion_eligible": mastery_decision.decision == "mastered",
+                "mastery_check_pending": mastery_decision.decision == "mastered",
+            },
+        )
+        if mastery_decision.decision == "mastered":
+            state = update_user_state(user_id, {"phase": "mastery_check"})
         state = update_user_state(user_id, {"mastery_status_by_skill": state.get("mastery_status_by_skill") or {}})
+        _append_runtime_audit_log(
+            user_id,
+            "mastery_evaluated",
+            {
+                "skill_id": mastery_result["skill_id"],
+                "decision": mastery_result["decision"],
+                "confidence": mastery_result["confidence"],
+                "passed_criteria": [reason for reason in mastery_result["reasons"] if reason not in {"accuracy_threshold_not_met", "streak_not_met", "not_enough_attempts"}],
+                "failed_criteria": mastery_result["failed_criteria"],
+                "source": "backend_mastery_evaluator",
+            },
+        )
         text = generate_teacher_reply(
             stage="practice_result",
             grade=int(state.get("grade") or 1),
@@ -585,7 +661,20 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             practice_feedback=feedback,
             report=report,
         )
+        if mastery_decision.decision == "mastered":
+            text = f"{text}\n\n🎯 Навык этой цепочки пока закрыт по backend-оценке."
         visual = {"type": "report", "practice_result": report["practice_result"]} if feedback["is_correct"] else _question_visual(practice)
+        return _panda_response(text, state, visual=visual)
+
+    if state.get("phase") == "mastery_check":
+        mastery_result = state.get("mastery_check_result") or {}
+        skill_id = mastery_result.get("skill_id") or state.get("current_skill_id")
+        text = (
+            "🎯 Навык подтверждён backend-оценкой.\n\n"
+            f"skill_id: {skill_id}\n"
+            "Сейчас цепочка остаётся в контролируемом hardening-режиме, без расширения ширины."
+        )
+        visual = {"type": "report", "mastery_result": mastery_result}
         return _panda_response(text, state, visual=visual)
 
     if state.get("phase") == "report":
