@@ -29,6 +29,7 @@
 ## Observations
 - The chain is operational and already supported by live QA at the `g2_addition_core` end.
 - Coverage is still partial, so the chain is not yet a fully hardened v2 segment.
+- The backend-owned mastery gate for `g2_addition_core` is now explicitly tracked in state and covered by tests.
 - The strongest next improvement is diagnostic breadth and remediation branching for the prerequisite skill.
 
 ## Recommended gate

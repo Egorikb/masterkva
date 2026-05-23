@@ -198,6 +198,126 @@ def test_wrong_practice_answer_stays_in_live_practice(tmp_path, monkeypatch) -> 
     assert "TEACHER_OK" in payload["text"]
 
 
+def test_mastery_gate_marks_g2_mastered_after_full_window(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
+    user_id = f"mvp-mastery-gate-mastered-{uuid.uuid4()}"
+    weak_topic = {
+        "grade": 2,
+        "topic_id": "g2_t01",
+        "topic": "Сложение двузначных чисел",
+        "source_question_id": "g2_t01_q01",
+    }
+    current_practice = {
+        "id": "g2_t01_p01",
+        "topic_id": "g2_t01",
+        "title": "Сложение двузначных чисел",
+        "question": "12 + 5 = ?",
+        "answer": "17",
+        "attempts": 0,
+    }
+    seed_history = [
+        {"question_id": f"seed-{idx}", "is_correct": True, "confidence": 1.0}
+        for idx in range(1, 5)
+    ]
+    save_user_states(
+        {
+            user_id: {
+                "name": "Алиса",
+                "grade": 2,
+                "phase": "practice",
+                "weak_topic": weak_topic,
+                "current_practice": current_practice,
+                "practice_feedback": None,
+                "report": None,
+                "mastery_status_by_skill": {
+                    "g2_addition_core": {
+                        "status": "learning",
+                        "attempt_history": seed_history,
+                    }
+                },
+            }
+        }
+    )
+
+    with TestClient(_build_app()) as client:
+        response = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "17"},
+        )
+
+    payload = response.json()
+    state = payload["state"]
+    assert state["phase"] == "mastery_check"
+    assert state["mastery_gate_status"] == "mastered"
+    assert state["promotion_eligible"] is True
+    assert state["mastery_check_pending"] is True
+    assert state["mastery_check_result"]["decision"] == "mastered"
+    assert state["mastery_check_result"]["evidence"]["history_length"] == 5
+    assert state["mastery_status_by_skill"]["g2_addition_core"]["last_mastery_decision"] == "mastered"
+    assert "backend-оценке" in payload["text"]
+
+
+def test_mastery_gate_stays_closed_on_insufficient_evidence(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
+    user_id = f"mvp-mastery-gate-insufficient-{uuid.uuid4()}"
+    weak_topic = {
+        "grade": 2,
+        "topic_id": "g2_t01",
+        "topic": "Сложение двузначных чисел",
+        "source_question_id": "g2_t01_q01",
+    }
+    current_practice = {
+        "id": "g2_t01_p01",
+        "topic_id": "g2_t01",
+        "title": "Сложение двузначных чисел",
+        "question": "12 + 5 = ?",
+        "answer": "17",
+        "attempts": 0,
+    }
+    seed_history = [
+        {"question_id": f"seed-{idx}", "is_correct": True, "confidence": 1.0}
+        for idx in range(1, 3)
+    ]
+    save_user_states(
+        {
+            user_id: {
+                "name": "Алиса",
+                "grade": 2,
+                "phase": "practice",
+                "weak_topic": weak_topic,
+                "current_practice": current_practice,
+                "practice_feedback": None,
+                "report": None,
+                "mastery_status_by_skill": {
+                    "g2_addition_core": {
+                        "status": "learning",
+                        "attempt_history": seed_history,
+                    }
+                },
+            }
+        }
+    )
+
+    with TestClient(_build_app()) as client:
+        response = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "17"},
+        )
+
+    payload = response.json()
+    state = payload["state"]
+    assert state["phase"] == "report"
+    assert state["mastery_gate_status"] == "insufficient_evidence"
+    assert state["promotion_eligible"] is False
+    assert state["mastery_check_pending"] is False
+    assert state["mastery_check_result"]["decision"] == "insufficient_evidence"
+    assert state["mastery_check_result"]["evidence"]["history_length"] == 3
+    assert state["mastery_status_by_skill"]["g2_addition_core"]["last_mastery_decision"] == "insufficient_evidence"
+    assert "TEACHER_OK" in payload["text"]
+
+
 def test_report_followup_continues_to_next_practice(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")

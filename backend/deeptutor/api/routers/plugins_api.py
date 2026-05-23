@@ -72,6 +72,7 @@ DEFAULT_STATE: dict[str, Any] = {
     "mastery_status_by_skill": {},
     "mastery_check_pending": False,
     "mastery_check_result": None,
+    "mastery_gate_status": "idle",
     "promotion_eligible": False,
     "registry_resolution": {"source": "fallback", "resolved_at": None, "warnings": []},
     "runtime_audit_log": [],
@@ -234,6 +235,44 @@ def _update_mastery_status(
 
     mastery_status_by_skill[skill_id] = current
     state["mastery_status_by_skill"] = mastery_status_by_skill
+    return state
+
+
+def _record_mastery_gate_result(
+    state: dict[str, Any],
+    *,
+    skill_id: str | None,
+    decision: str,
+    confidence: float,
+    reasons: list[str],
+    failed_criteria: list[str],
+    evidence: dict[str, Any],
+) -> dict[str, Any]:
+    if not skill_id:
+        return state
+    mastery_status_by_skill = dict(state.get("mastery_status_by_skill") or {})
+    current = dict(mastery_status_by_skill.get(skill_id) or {})
+    current["last_mastery_decision"] = decision
+    current["last_mastery_confidence"] = confidence
+    current["last_mastery_reasons"] = list(reasons)
+    current["last_mastery_failed_criteria"] = list(failed_criteria)
+    current["last_mastery_evidence"] = dict(evidence)
+    current["last_mastery_at"] = "now"
+    mastery_status_by_skill[skill_id] = current
+    state["mastery_status_by_skill"] = mastery_status_by_skill
+    state["mastery_gate_status"] = decision
+    state["mastery_check_result"] = {
+        "skill_id": skill_id,
+        "decision": decision,
+        "confidence": confidence,
+        "reasons": list(reasons),
+        "failed_criteria": list(failed_criteria),
+        "evidence": dict(evidence),
+    }
+    state["promotion_eligible"] = decision == "mastered"
+    state["mastery_check_pending"] = decision == "mastered"
+    if decision == "mastered":
+        state["phase"] = "mastery_check"
     return state
 
 
@@ -687,17 +726,26 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             "failed_criteria": list(mastery_decision.failed_criteria),
             "evidence": dict(mastery_decision.evidence),
         }
+        state = _record_mastery_gate_result(
+            state,
+            skill_id=mastery_decision.skill_id or skill_resolution.skill_id or state.get("current_skill_id"),
+            decision=mastery_decision.decision,
+            confidence=mastery_decision.confidence,
+            reasons=mastery_decision.reasons,
+            failed_criteria=mastery_decision.failed_criteria,
+            evidence=mastery_decision.evidence,
+        )
         state = update_user_state(
             user_id,
             {
-                "mastery_check_result": mastery_result,
-                "promotion_eligible": mastery_decision.decision == "mastered",
-                "mastery_check_pending": mastery_decision.decision == "mastered",
+                "mastery_status_by_skill": state.get("mastery_status_by_skill") or {},
+                "mastery_gate_status": state.get("mastery_gate_status") or "idle",
+                "mastery_check_result": state.get("mastery_check_result"),
+                "promotion_eligible": bool(state.get("promotion_eligible")),
+                "mastery_check_pending": bool(state.get("mastery_check_pending")),
+                "phase": state.get("phase") or "report",
             },
         )
-        if mastery_decision.decision == "mastered":
-            state = update_user_state(user_id, {"phase": "mastery_check"})
-        state = update_user_state(user_id, {"mastery_status_by_skill": state.get("mastery_status_by_skill") or {}})
         record_mastery_evaluation(
             user_id,
             skill_id=mastery_decision.skill_id or skill_resolution.skill_id or state.get("current_skill_id"),
@@ -741,11 +789,20 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
     if state.get("phase") == "mastery_check":
         mastery_result = state.get("mastery_check_result") or {}
         skill_id = mastery_result.get("skill_id") or state.get("current_skill_id")
-        text = (
-            "🎯 Навык подтверждён backend-оценкой.\n\n"
-            f"skill_id: {skill_id}\n"
-            "Сейчас цепочка остаётся в контролируемом hardening-режиме, без расширения ширины."
-        )
+        decision = mastery_result.get("decision") or state.get("mastery_gate_status") or "unknown"
+        if decision == "mastered":
+            text = (
+                "🎯 Навык подтверждён backend-оценкой.\n\n"
+                f"skill_id: {skill_id}\n"
+                "Сейчас цепочка остаётся в контролируемом hardening-режиме, без расширения ширины."
+            )
+        else:
+            text = (
+                "🎯 Мастерство пока не подтверждено.\n\n"
+                f"skill_id: {skill_id}\n"
+                f"decision: {decision}\n"
+                "Нужно ещё доказательство по той же цепочке, прежде чем закрывать навык."
+            )
         visual = {"type": "report", "mastery_result": mastery_result}
         return _panda_response(text, state, visual=visual)
 
