@@ -4,7 +4,7 @@
   "description": "Third chain: time measurement, building on g2_addition_core.",
   "baseline_anchor_skill_id": "g3_time_measurement_core",
   "prerequisite_skill_id": "g2_addition_core",
-  "release_stage": "hardening",
+  "release_stage": "frozen",
   "skills": [
     {
       "skill_id": "g2_addition_core",

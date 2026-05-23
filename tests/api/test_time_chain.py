@@ -16,7 +16,7 @@ def _build_app() -> FastAPI:
 
 
 def test_time_chain_hardening_run(tmp_path, monkeypatch) -> None:
-    """Full hardening run for g2 -> g3_time chain."""
+    """Full hardening run for g2 -> g3_time chain: practice -> mastery -> promotion."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"time-chain-hardening-{uuid.uuid4()}"
@@ -79,6 +79,19 @@ def test_time_chain_hardening_run(tmp_path, monkeypatch) -> None:
         assert payload["state"]["mastery_gate_status"] == "mastered"
         assert payload["state"]["promotion_eligible"] is True
         assert payload["state"]["mastery_check_result"]["decision"] == "mastered"
+
+        # Step 2: promotion to g4_place_value_core (next_skill of g3)
+        promote = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "давай"},
+        )
+        assert promote.status_code == 200
+        promote_payload = promote.json()
+        assert promote_payload["state"]["phase"] == "practice"
+        assert promote_payload["state"]["current_skill_id"] == "g4_place_value_core"
+        assert promote_payload["state"]["current_practice"]["topic_id"] == "g4_t01"
+        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g3_time_measurement_core"
+        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g4_place_value_core"
 
 
 def test_time_chain_coverage_passes() -> None:
