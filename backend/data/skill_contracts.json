@@ -247,6 +247,10 @@
         "item_types": [
           "time"
         ],
+        "item_families": [
+          "time_unit_conversion",
+          "clock_reading"
+        ],
         "detectable_errors": [
           "clock_reading_error",
           "unit_conversion_error",
@@ -268,7 +272,12 @@
       },
       "remediation": {
         "required": true,
-        "default_path": "clock_face"
+        "default_path": "clock_face",
+        "blocked_by": ["g2_addition_core"],
+        "targets": {
+          "time_unit_conversion": "time_unit_table",
+          "clock_reading": "clock_face"
+        }
       },
       "visual_policy": {
         "template": "clock_face",

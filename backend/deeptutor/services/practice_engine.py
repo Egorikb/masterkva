@@ -40,6 +40,10 @@ PRACTICE_BY_TOPIC: dict[str, list[dict[str, str]]] = {
         {"question": "15 - 7 = ?", "answer": "8", "item_family": "subtraction_within_10_part_whole"},
         {"question": "13 - 6 = ?", "answer": "7", "item_family": "subtraction_within_10_part_whole"},
     ],
+    "g3_t01": [
+        {"question": "Сколько минут в 2 часах?", "answer": "120", "item_family": "time_unit_conversion"},
+        {"question": "Сколько минут в 3 часах?", "answer": "180", "item_family": "time_unit_conversion"},
+    ],
 }
 
 ITEM_FAMILY_BY_TOPIC = {
@@ -51,6 +55,7 @@ ITEM_FAMILY_BY_TOPIC = {
     "g1_t06": "compose_decompose_10",
     "g1_t07": "addition_within_10_part_whole",
     "g2_t02": "subtraction_within_10_part_whole",
+    "g3_t01": "time_unit_conversion",
 }
 
 

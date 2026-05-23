@@ -26,6 +26,9 @@ ERROR_CODE_BY_ITEM_FAMILY: dict[str, str] = {
     "subtraction_within_10_part_whole": "subtraction_within_10_part_whole_error",
     "number_bond_missing_part": "number_bond_missing_part_error",
     "compose_decompose_10": "compose_decompose_10_error",
+    "addition_carry": "addition_carry_error",
+    "time_unit_conversion": "time_unit_conversion_error",
+    "clock_reading": "clock_reading_error",
 }
 
 REMEDIATION_BY_ITEM_FAMILY: dict[str, str] = {
@@ -35,6 +38,9 @@ REMEDIATION_BY_ITEM_FAMILY: dict[str, str] = {
     "subtraction_within_10_part_whole": "number_bond",
     "number_bond_missing_part": "number_bond",
     "compose_decompose_10": "number_bond",
+    "addition_carry": "base_ten_blocks",
+    "time_unit_conversion": "time_unit_table",
+    "clock_reading": "clock_face",
 }
 
 
