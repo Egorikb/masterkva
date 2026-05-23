@@ -14,6 +14,12 @@ from deeptutor.services.mastery_evaluator import mastery_evaluator
 from deeptutor.services.practice_engine import PracticeEngine
 from deeptutor.services.report_service import ReportService
 from deeptutor.services.skill_runtime import skill_resolver
+from deeptutor.services.student_profile_store import (
+    ensure_student_profile,
+    record_diagnostic_result,
+    record_mastery_evaluation,
+    record_practice_attempt,
+)
 from deeptutor.services.teacher_llm import generate_teacher_reply
 from deeptutor.services.visual_template_service import decorate_question_visual
 
@@ -69,6 +75,29 @@ DEFAULT_STATE: dict[str, Any] = {
     "promotion_eligible": False,
     "registry_resolution": {"source": "fallback", "resolved_at": None, "warnings": []},
     "runtime_audit_log": [],
+    "student_profile": {
+        "profile_schema_version": "v1",
+        "user_id": None,
+        "active_scope": {
+            "chain_id": "g1_to_g2_addition",
+            "allowed_skill_ids": ["g1_early_arithmetic_core", "g2_addition_core"],
+            "current_skill_id": None,
+            "current_topic_id": None,
+            "current_grade": None,
+            "updated_at": None,
+        },
+        "skill_mastery": {},
+        "diagnostic_history": [],
+        "mastery_history": [],
+        "promotion_history": [],
+        "activity_counters": {
+            "diagnostic_sessions": 0,
+            "practice_sessions": 0,
+            "mastery_checks": 0,
+            "promotions": 0,
+        },
+        "last_updated_at": None,
+    },
 }
 
 
@@ -274,6 +303,7 @@ def _question_visual(question: dict[str, Any]) -> dict[str, Any]:
 
 
 def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
+    ensure_student_profile(user_id)
     claimed_grade = int(state.get("grade") or 1)
     sequence = diagnostic_engine.build_diagnostic_sequence(claimed_grade)
     if not sequence:
@@ -385,6 +415,17 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         },
     }
     state = update_user_state(user_id, next_state)
+    record_diagnostic_result(
+        user_id,
+        chain_id="g1_to_g2_addition",
+        current_skill_id=resolution.skill_id,
+        current_topic_id=resolution.topic_id,
+        current_grade=result.actual_grade,
+        diagnosis_result_id=next_state["diagnosis_result_id"],
+        diagnosis_confidence=result.success_rate,
+        weak_topic=start_topic,
+        detected_gaps=list(next_state["detected_gaps"]),
+    )
     _append_runtime_audit_log(
         user_id,
         "skill_resolved",
@@ -590,6 +631,18 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         error_details = error_taxonomy.classify_practice_error(practice, feedback, skill_resolution.contract)
         feedback = {**feedback, **error_details}
         report = report_service.build_report(state.get("weak_topic") or practice, feedback)
+        record_practice_attempt(
+            user_id,
+            skill_id=skill_resolution.skill_id or state.get("current_skill_id"),
+            skill_version=skill_resolution.skill_version,
+            question_id=practice.get("id"),
+            topic_id=practice.get("topic_id"),
+            is_correct=bool(feedback["is_correct"]),
+            confidence=feedback.get("confidence"),
+            error_code=feedback.get("error_code"),
+            error_family=feedback.get("error_family"),
+            remediation_path=feedback.get("remediation_path"),
+        )
         state = update_user_state(
             user_id,
             {
@@ -645,6 +698,19 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         if mastery_decision.decision == "mastered":
             state = update_user_state(user_id, {"phase": "mastery_check"})
         state = update_user_state(user_id, {"mastery_status_by_skill": state.get("mastery_status_by_skill") or {}})
+        record_mastery_evaluation(
+            user_id,
+            skill_id=mastery_decision.skill_id or skill_resolution.skill_id or state.get("current_skill_id"),
+            skill_version=skill_resolution.skill_version,
+            decision=mastery_decision.decision,
+            confidence=mastery_decision.confidence,
+            evidence=mastery_decision.evidence,
+            reasons=mastery_decision.reasons,
+            failed_criteria=mastery_decision.failed_criteria,
+            remediation_path=feedback.get("remediation_path"),
+            error_code=feedback.get("error_code"),
+            error_family=feedback.get("error_family"),
+        )
         _append_runtime_audit_log(
             user_id,
             "mastery_evaluated",
