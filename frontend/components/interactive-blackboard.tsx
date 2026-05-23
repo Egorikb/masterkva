@@ -5,6 +5,7 @@ import { useChatStore } from "@/lib/chat-store";
 import { NumberBondViz } from "./visualizations/number-bond";
 import { BarModelViz } from "./visualizations/bar-model";
 import { TenFrameViz } from "./visualizations/ten-frame";
+import { QuestionVisual } from "./visualizations/question-visual";
 import { PandaSensei } from "./panda-sensei";
 
 export function InteractiveBlackboard() {
@@ -46,6 +47,9 @@ export function InteractiveBlackboard() {
               )}
               {currentVisualData.type === "ten_frame" && (
                 <TenFrameViz data={currentVisualData} />
+              )}
+              {currentVisualData.type === "question" && (
+                <QuestionVisual data={currentVisualData} />
               )}
             </motion.div>
           ) : (

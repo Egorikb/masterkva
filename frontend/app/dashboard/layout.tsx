@@ -15,30 +15,19 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (hasHydrated && !isAuthenticated) {
-      router.push("/login");
+      router.replace("/login");
     }
   }, [hasHydrated, isAuthenticated, router]);
 
-  if (!hasHydrated) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
-
   return (
     <div className="flex min-h-screen bg-background">
-      <DashboardSidebar />
+      {hasHydrated && isAuthenticated ? <DashboardSidebar /> : null}
       <main className="flex-1 overflow-auto">
+        {!hasHydrated && (
+          <div className="border-b border-border bg-muted/30 px-4 py-2 text-sm text-muted-foreground">
+            Загрузка кабинета…
+          </div>
+        )}
         {children}
       </main>
     </div>

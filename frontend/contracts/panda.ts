@@ -62,4 +62,5 @@ export interface PandaChatRequest {
   message: string;
   name: string | null;
   grade: number | null;
+  mode?: 'kungfu' | 'homework' | null;
 }

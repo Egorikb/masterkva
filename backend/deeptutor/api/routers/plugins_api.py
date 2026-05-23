@@ -11,7 +11,11 @@ from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_en
 from deeptutor.services.learning_rag import learning_rag
 from deeptutor.services.practice_engine import PracticeEngine
 from deeptutor.services.report_service import ReportService
-from deeptutor.services.teacher_llm import generate_teacher_explanation
+from deeptutor.services.skill_runtime import skill_resolver
+from deeptutor.services.teacher_llm import generate_teacher_reply
+from deeptutor.services.visual_template_service import decorate_question_visual
+
+generate_teacher_explanation = generate_teacher_reply
 
 router = APIRouter()
 STATE_FILE = Path(__file__).resolve().parents[3] / "data" / "user_states.json"
@@ -25,6 +29,7 @@ class ChatRequest(BaseModel):
     message: str
     name: str | None = None
     grade: int | None = Field(default=None, ge=0)
+    mode: str | None = None
 
 
 DEFAULT_STATE: dict[str, Any] = {
@@ -44,6 +49,21 @@ DEFAULT_STATE: dict[str, Any] = {
     "current_practice": None,
     "practice_feedback": None,
     "report": None,
+    "current_skill_id": None,
+    "current_skill_version": None,
+    "current_skill_mode": None,
+    "current_topic_id": None,
+    "current_lesson_id": None,
+    "diagnosis_result_id": None,
+    "diagnosis_confidence": None,
+    "detected_gaps": [],
+    "explanation_ack_pending": False,
+    "explanation_shown_for_skill_id": None,
+    "learning_mode_active": False,
+    "board_mode": "off",
+    "mastery_status_by_skill": {},
+    "registry_resolution": {"source": "fallback", "resolved_at": None, "warnings": []},
+    "runtime_audit_log": [],
 }
 
 
@@ -65,6 +85,44 @@ def save_user_states(states: dict[str, dict[str, Any]]) -> None:
     STATE_FILE.write_text(json.dumps(states, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _refresh_stale_diagnostic_state(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
+    if not state:
+        return state
+    if state.get("phase") != "diagnostic":
+        return state
+
+    progress = dict(state.get("diagnostic_progress") or {})
+    questions_answered = int(progress.get("questions_answered", 0) or 0)
+    if questions_answered != 0:
+        return state
+
+    claimed_grade = int(progress.get("claimed_grade") or state.get("grade") or 1)
+    fresh_sequence = diagnostic_engine.build_diagnostic_sequence(claimed_grade)
+    if not fresh_sequence:
+        return state
+
+    current_sequence = list(state.get("diag_sequence") or [])
+    current_first = str((current_sequence[0] or {}).get("id") or (current_sequence[0] or {}).get("topic_id") or "") if current_sequence else ""
+    fresh_first = str((fresh_sequence[0] or {}).get("id") or (fresh_sequence[0] or {}).get("topic_id") or "")
+    if current_first == fresh_first:
+        return state
+
+    refreshed_state = dict(state)
+    refreshed_state["diag_sequence"] = fresh_sequence
+    refreshed_state["diag_answers"] = []
+    refreshed_progress = dict(progress)
+    refreshed_progress["questions_answered"] = 0
+    refreshed_progress["correct_in_row"] = 0
+    refreshed_progress["in_diagnostic"] = True
+    refreshed_progress["claimed_grade"] = claimed_grade
+    refreshed_state["diagnostic_progress"] = refreshed_progress
+
+    states = _read_states()
+    states[user_id] = refreshed_state
+    save_user_states(states)
+    return refreshed_state
+
+
 def get_user_state(user_id: str) -> dict[str, Any]:
     states = _read_states()
     state = states.get(user_id)
@@ -76,7 +134,7 @@ def get_user_state(user_id: str) -> dict[str, Any]:
 
     merged = _fresh_state()
     merged.update(state)
-    return merged
+    return _refresh_stale_diagnostic_state(user_id, merged)
 
 
 def update_user_state(user_id: str, updates: dict[str, Any]) -> dict[str, Any]:
@@ -84,7 +142,9 @@ def update_user_state(user_id: str, updates: dict[str, Any]) -> dict[str, Any]:
     state = _fresh_state()
     state.update(states.get(user_id, {}))
     for key, value in updates.items():
-        if value is not None:
+        if value is None:
+            state.pop(key, None)
+        else:
             state[key] = value
     states[user_id] = state
     save_user_states(states)
@@ -97,6 +157,30 @@ def _ensure_state_defaults(state: dict[str, Any]) -> dict[str, Any]:
     return merged
 
 
+def _append_runtime_audit_log(user_id: str, event_type: str, payload: dict[str, Any]) -> None:
+    state = get_user_state(user_id)
+    runtime_audit_log = list(state.get("runtime_audit_log") or [])
+    runtime_audit_log.append({"event_type": event_type, **payload})
+    if len(runtime_audit_log) > 200:
+        runtime_audit_log = runtime_audit_log[-200:]
+    update_user_state(user_id, {"runtime_audit_log": runtime_audit_log})
+
+
+def _update_mastery_status(state: dict[str, Any], skill_id: str | None, *, status: str, confidence: float | None = None, attempts_delta: int = 0) -> dict[str, Any]:
+    if not skill_id:
+        return state
+    mastery_status_by_skill = dict(state.get("mastery_status_by_skill") or {})
+    current = dict(mastery_status_by_skill.get(skill_id) or {})
+    current["status"] = status
+    current["last_seen_at"] = current.get("last_seen_at") or "now"
+    current["attempts_count"] = int(current.get("attempts_count") or 0) + attempts_delta
+    if confidence is not None:
+        current["confidence"] = confidence
+    mastery_status_by_skill[skill_id] = current
+    state["mastery_status_by_skill"] = mastery_status_by_skill
+    return state
+
+
 def _is_diagnostic_start(message: str) -> bool:
     text = message.lower()
     return "диагност" in text or "провер" in text or "старт" in text
@@ -105,6 +189,11 @@ def _is_diagnostic_start(message: str) -> bool:
 def _is_explanation_start(message: str) -> bool:
     text = message.lower()
     return "начать" in text or "практик" in text or "давай" in text
+
+
+def _is_followup_request(message: str) -> bool:
+    text = message.lower()
+    return any(token in text for token in ("что дальше", "дальше", "продолж", "ещё", "еще", "следующ", "потом"))
 
 
 def _is_answer_correct(answer: str, question: dict[str, Any]) -> bool:
@@ -153,6 +242,10 @@ def _panda_response(text: str, state: dict[str, Any], visual: dict[str, Any] | N
     return {"text": text, "visual": visual, "state": normalized_state}
 
 
+def _question_visual(question: dict[str, Any]) -> dict[str, Any]:
+    return decorate_question_visual(question)
+
+
 def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     claimed_grade = int(state.get("grade") or 1)
     sequence = diagnostic_engine.build_diagnostic_sequence(claimed_grade)
@@ -162,6 +255,8 @@ def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         "phase": "diagnostic",
         "path_choice": "diagnostic",
         "in_learning": False,
+        "learning_mode_active": False,
+        "board_mode": "off",
         "diagnostic_progress": {
             "in_diagnostic": True,
             "claimed_grade": claimed_grade,
@@ -174,6 +269,18 @@ def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         "current_practice": None,
         "practice_feedback": None,
         "report": None,
+        "current_skill_id": None,
+        "current_skill_version": None,
+        "current_skill_mode": None,
+        "current_topic_id": None,
+        "current_lesson_id": None,
+        "diagnosis_result_id": None,
+        "diagnosis_confidence": None,
+        "detected_gaps": [],
+        "explanation_ack_pending": False,
+        "explanation_shown_for_skill_id": None,
+        "runtime_audit_log": list(state.get("runtime_audit_log") or []),
+        "registry_resolution": {"source": "shadow", "resolved_at": None, "warnings": []},
     }
     update_user_state(user_id, diag_state)
     return get_user_state(user_id)
@@ -195,76 +302,76 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     answers = list(state.get("diag_answers", []))
     result = diagnostic_engine.run_diagnostic(claimed_grade, answers)
     weak_topic = diagnostic_engine.select_weak_topic(result)
+    start_topic = weak_topic or diagnostic_engine.get_starting_topic(result.actual_grade)
+    resolution = skill_resolver.resolve(
+        topic_id=str(start_topic.get("topic_id") or ""),
+        topic_name=str(start_topic.get("topic") or ""),
+        lesson_id=str(start_topic.get("lesson_id") or "") or None,
+    )
+    contract_summary = skill_resolver.skill_summary(resolution)["contract_summary"]
+    learning_context = _learning_context_for_topic(result.actual_grade, start_topic)
 
+    summary_line = result.get_learning_path()["message"].splitlines()[0]
+    topic_name = str(start_topic.get("topic") or "тема")
     if result.weak_topics:
-        explanation_state = {
-            "phase": "explanation",
-            "in_learning": True,
-            "diagnostic_progress": {},
-            "weak_topic": weak_topic,
-            "learning_context": _learning_context_for_topic(result.actual_grade, weak_topic),
-            "teacher_explanation": None,
-            "current_practice": None,
-            "practice_feedback": None,
-            "report": None,
-            "diag_answers": [],
-            "diag_sequence": [],
-        }
-        update_user_state(user_id, explanation_state)
-        state = get_user_state(user_id)
-        topic_name = weak_topic["topic"] if weak_topic else "тема"
-        context_items = list(state.get("learning_context", []))
-        teacher_text = generate_teacher_explanation(
-            grade=result.actual_grade,
-            weak_topic=weak_topic,
-            learning_context=context_items,
-            user_message="диагностика завершена",
-        )
-        context_text = learning_rag.format_context(context_items)
         text = (
-            "🎯 Диагностика завершена.\n\n"
-            f"Слабая тема: {topic_name}.\n\n"
-            f"{teacher_text}\n\n"
-            f"{context_text}\n\n"
-            "Напиши 'начать'."
+            f"Видна слабая тема — {topic_name}.\n\n"
+            f"{summary_line}\n\n"
+            "Скажи «давай», и я начну объяснение."
         )
-        state = update_user_state(user_id, {"teacher_explanation": teacher_text})
-        return _panda_response(text, state, visual={"type": "weak_topic", "topic": weak_topic})
+    else:
+        text = (
+            "База выглядит крепкой.\n\n"
+            f"{summary_line}\n\n"
+            "Скажи «давай», и я дам следующий шаг."
+        )
 
-    starting_topic = diagnostic_engine.get_starting_topic(result.actual_grade)
-    learning_context = _learning_context_for_topic(result.actual_grade, starting_topic)
-    practice = practice_engine.create_practice(starting_topic)
-    practice_state = {
-        "phase": "practice",
+    next_state = {
+        "phase": "explanation",
         "in_learning": True,
+        "learning_mode_active": True,
+        "board_mode": skill_resolver.apply_board_policy(resolution, default="off"),
         "diagnostic_progress": {},
-        "weak_topic": starting_topic,
+        "weak_topic": start_topic,
         "learning_context": learning_context,
         "teacher_explanation": None,
-        "current_practice": practice,
+        "current_practice": None,
         "practice_feedback": None,
         "report": None,
         "diag_answers": [],
         "diag_sequence": [],
+        "current_skill_id": resolution.skill_id,
+        "current_skill_version": resolution.skill_version,
+        "current_skill_mode": resolution.mode,
+        "current_topic_id": resolution.topic_id,
+        "current_lesson_id": resolution.lesson_id,
+        "diagnosis_result_id": f"diag_{result.actual_grade}_{len(answers)}_{len(result.weak_topics)}",
+        "diagnosis_confidence": result.success_rate,
+        "detected_gaps": [topic.get("skill_id") or topic.get("topic_id") for topic in result.weak_topics],
+        "explanation_ack_pending": True,
+        "explanation_shown_for_skill_id": resolution.skill_id,
+        "registry_resolution": {
+            "source": resolution.source,
+            "resolved_at": "now",
+            "warnings": list(resolution.warnings),
+            "contract_summary": contract_summary,
+        },
     }
-    update_user_state(user_id, practice_state)
-    state = get_user_state(user_id)
-    context_text = learning_rag.format_context(list(state.get("learning_context", [])))
-    teacher_text = generate_teacher_explanation(
-        grade=result.actual_grade,
-        weak_topic=starting_topic,
-        learning_context=learning_context,
-        user_message="диагностика завершена без пробелов",
+    state = update_user_state(user_id, next_state)
+    _append_runtime_audit_log(
+        user_id,
+        "skill_resolved",
+        {
+            "mode": resolution.mode,
+            "topic_id": resolution.topic_id,
+            "skill_id": resolution.skill_id,
+            "skill_version": resolution.skill_version,
+            "decision": "diagnostic_finish_to_explanation",
+            "reason": "diagnostic_completed",
+            "active": resolution.mode == "active",
+        },
     )
-    state = update_user_state(user_id, {"teacher_explanation": teacher_text})
-    text = (
-        "🎉 Диагностика завершена.\n\n"
-        f"Начинаем с темы: {starting_topic['topic']}.\n\n"
-        f"{teacher_text}\n\n"
-        f"{context_text}\n\n"
-        "Давай сразу к практике."
-    )
-    return _panda_response(text, state, visual={"type": "practice", "practice": practice})
+    return _panda_response(text, state)
 
 
 @router.post("/panda/chat")
@@ -297,6 +404,34 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             state,
         )
 
+    if state.get("phase") == "chat" and not state.get("onboarding_complete"):
+        if request.mode == "kungfu":
+            state = _start_diagnostic(user_id, state)
+            state = update_user_state(user_id, {"onboarding_complete": True, "path_choice": "kungfu"})
+            first_question = _current_question(state)
+            if first_question is None:
+                return _panda_response("Диагностика недоступна: нет вопросов.", state)
+            teacher_intro = generate_teacher_reply(
+                stage="diagnostic_start",
+                grade=int(state.get("grade") or 1),
+                weak_topic=None,
+                learning_context=list(state.get("learning_context") or []),
+                user_message=message,
+            )
+            text = (
+                f"{teacher_intro}\n\n"
+                f"{first_question['question']}"
+            )
+            return _panda_response(text, state, visual=_question_visual(first_question))
+
+        if request.mode == "homework":
+            state = update_user_state(user_id, {"onboarding_complete": True, "path_choice": "homework"})
+            text = (
+                f"Привет, {state['name']}! Я помогу с математикой.\n\n"
+                "Какую тему или задачу разбираем прямо сейчас?"
+            )
+            return _panda_response(text, state)
+
     if state.get("phase") == "diagnostic":
         question = _current_question(state)
         if question is None:
@@ -313,6 +448,10 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
                 "topic": question.get("topic"),
                 "user_answer": message,
                 "is_correct": is_correct,
+                "skill_id": question.get("skill_id"),
+                "coverage_status": question.get("coverage_status"),
+                "board_policy": question.get("board_policy"),
+                "skill_contract_id": question.get("skill_contract_id"),
             }
         )
         progress = dict(state.get("diagnostic_progress", {}))
@@ -337,18 +476,25 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             "Верно!" if is_correct else f"Почти. Правильный ответ: {question['answer']}"
         )
         text += f"\n\nСледующий вопрос: {next_question['question']}"
-        return _panda_response(text, state, visual={"type": "question", "topic_id": next_question.get("topic_id")})
+        return _panda_response(text, state, visual=_question_visual(next_question))
 
     if _is_diagnostic_start(message):
         state = _start_diagnostic(user_id, state)
         first_question = _current_question(state)
         if first_question is None:
             return _panda_response("Диагностика недоступна: нет вопросов.", state)
+        teacher_intro = generate_teacher_reply(
+            stage="diagnostic_start",
+            grade=int(state.get("grade") or 1),
+            weak_topic=None,
+            learning_context=list(state.get("learning_context") or []),
+            user_message=message,
+        )
         text = (
-            "Начинаем диагностику.\n\n"
+            f"{teacher_intro}\n\n"
             f"{first_question['question']}"
         )
-        return _panda_response(text, state, visual={"type": "question", "topic_id": first_question.get("topic_id")})
+        return _panda_response(text, state, visual=_question_visual(first_question))
 
     if state.get("phase") == "explanation":
         weak_topic = state.get("weak_topic") or diagnostic_engine.get_starting_topic(int(state.get("grade") or 1))
@@ -361,17 +507,44 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
                     "current_practice": practice,
                     "practice_feedback": None,
                     "report": None,
+                    "learning_mode_active": True,
+                    "explanation_ack_pending": False,
+                    "explanation_shown_for_skill_id": state.get("current_skill_id"),
+                    "board_mode": skill_resolver.apply_board_policy(
+                        skill_resolver.resolve(topic_id=str(weak_topic.get("topic_id") or ""), topic_name=str(weak_topic.get("topic") or "")),
+                        default=str(state.get("board_mode") or "off"),
+                    ),
                 },
             )
-            text = (
-                f"Отлично. Практика по теме '{weak_topic['topic']}'.\n\n"
-                f"{practice['question']}"
+            _append_runtime_audit_log(
+                user_id,
+                "contract_applied",
+                {
+                    "mode": state.get("current_skill_mode") or "shadow",
+                    "topic_id": weak_topic.get("topic_id"),
+                    "skill_id": state.get("current_skill_id"),
+                    "skill_version": state.get("current_skill_version"),
+                    "decision": "explanation_to_practice",
+                    "reason": "student_acknowledged_explanation",
+                    "active": (state.get("current_skill_mode") or "shadow") == "active",
+                },
             )
-            return _panda_response(text, state, visual={"type": "practice", "topic_id": practice.get("topic_id")})
+            text = generate_teacher_reply(
+                stage="practice_intro",
+                grade=int(state.get("grade") or 1),
+                weak_topic=weak_topic,
+                learning_context=list(state.get("learning_context") or []),
+                user_message=message,
+                practice_question=practice["question"],
+            )
+            return _panda_response(text, state, visual=_question_visual(practice))
 
-        text = (
-            f"Разберём тему '{weak_topic['topic']}'.\n"
-            "Напиши 'начать', когда будешь готов к практике."
+        text = generate_teacher_reply(
+            stage="explanation",
+            grade=int(state.get("grade") or 1),
+            weak_topic=weak_topic,
+            learning_context=list(state.get("learning_context") or []),
+            user_message=message,
         )
         return _panda_response(text, state, visual={"type": "explanation", "topic_id": weak_topic.get("topic_id")})
 
@@ -383,25 +556,62 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             state = update_user_state(user_id, {"current_practice": practice})
 
         feedback = practice_engine.check_practice_answer(practice, message)
-        report = report_service.build_report({"weak_topic": state.get("weak_topic") or practice}, feedback)
+        report = report_service.build_report(state.get("weak_topic") or practice, feedback)
+        next_phase = "report" if feedback["is_correct"] else "practice"
         state = update_user_state(
             user_id,
             {
-                "phase": "report",
+                "phase": next_phase,
                 "practice_feedback": feedback,
                 "report": report,
                 "current_practice": practice,
             },
         )
-        text = (
-            "Отлично! " if feedback["is_correct"] else "Почти. "
-        ) + report["summary"]
-        return _panda_response(text, state, visual={"type": "report", "practice_result": report["practice_result"]})
+        state = _update_mastery_status(
+            state,
+            state.get("current_skill_id"),
+            status="practicing" if not feedback["is_correct"] else "learning",
+            confidence=feedback.get("confidence"),
+            attempts_delta=1,
+        )
+        state = update_user_state(user_id, {"mastery_status_by_skill": state.get("mastery_status_by_skill") or {}})
+        text = generate_teacher_reply(
+            stage="practice_result",
+            grade=int(state.get("grade") or 1),
+            weak_topic=state.get("weak_topic") or practice,
+            learning_context=list(state.get("learning_context") or []),
+            user_message=message,
+            practice_question=practice.get("question", ""),
+            practice_feedback=feedback,
+            report=report,
+        )
+        visual = {"type": "report", "practice_result": report["practice_result"]} if feedback["is_correct"] else _question_visual(practice)
+        return _panda_response(text, state, visual=visual)
 
     if state.get("phase") == "report":
         report = state.get("report") or report_service.build_report(state.get("weak_topic"), state.get("practice_feedback"))
-        text = report["summary"]
-        return _panda_response(text, state, visual={"type": "report", "practice_result": report["practice_result"]})
+        topic = report.get("weak_topic") or state.get("weak_topic") or state.get("current_practice") or {}
+        practice_round = int(state.get("practice_round") or 0) + 1
+        next_practice = practice_engine.create_practice(topic, variant=practice_round)
+        state = update_user_state(
+            user_id,
+            {
+                "phase": "practice",
+                "practice_round": practice_round,
+                "current_practice": next_practice,
+                "practice_feedback": None,
+                "report": None,
+            },
+        )
+        text = generate_teacher_reply(
+            stage="practice_intro",
+            grade=int(state.get("grade") or 1),
+            weak_topic=topic,
+            learning_context=list(state.get("learning_context") or []),
+            user_message=message,
+            practice_question=next_practice.get("question", ""),
+        )
+        return _panda_response(text, state, visual=_question_visual(next_practice))
 
     return _panda_response(
         f"Привет, {state['name']}! Напиши 'диагностика', чтобы начать учёбу.",

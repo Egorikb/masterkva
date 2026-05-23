@@ -3,12 +3,31 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-PRACTICE_BY_TOPIC: dict[str, dict[str, str]] = {
-    "g1_t01": {"question": "Сколько всего: 3 и 2?", "answer": "5"},
-    "g1_t02": {"question": "Какое число идёт после 6?", "answer": "7"},
-    "g1_t03": {"question": "4 + 3 = ?", "answer": "7"},
-    "g1_t04": {"question": "7 - 4 = ?", "answer": "3"},
-    "g2_t01": {"question": "12 + 5 = ?", "answer": "17"},
+PRACTICE_BY_TOPIC: dict[str, list[dict[str, str]]] = {
+    "g1_t01": [
+        {"question": "Сколько всего: 3 и 2?", "answer": "5"},
+        {"question": "Сколько всего: 4 и 1?", "answer": "5"},
+    ],
+    "g1_t02": [
+        {"question": "Какое число идёт после 6?", "answer": "7"},
+        {"question": "Какое число идёт после 8?", "answer": "9"},
+    ],
+    "g1_t03": [
+        {"question": "4 + 3 = ?", "answer": "7"},
+        {"question": "2 + 5 = ?", "answer": "7"},
+    ],
+    "g1_t04": [
+        {"question": "7 - 4 = ?", "answer": "3"},
+        {"question": "8 - 5 = ?", "answer": "3"},
+    ],
+    "g1_t07": [
+        {"question": "8 + 5 = ?", "answer": "13"},
+        {"question": "9 + 3 = ?", "answer": "12"},
+    ],
+    "g2_t01": [
+        {"question": "12 + 5 = ?", "answer": "17"},
+        {"question": "14 + 3 = ?", "answer": "17"},
+    ],
 }
 
 
@@ -34,15 +53,15 @@ def _check_answer(user_answer: str, correct_answer: str) -> tuple[bool, float]:
 
 @dataclass(slots=True)
 class PracticeEngine:
-    def create_practice(self, weak_topic: dict) -> dict:
+    def create_practice(self, weak_topic: dict, variant: int = 0) -> dict:
         topic_id = str(weak_topic.get("topic_id") or "unknown_topic")
         title = weak_topic.get("topic") or "Тема"
-        template = PRACTICE_BY_TOPIC.get(
-            topic_id,
+        templates = PRACTICE_BY_TOPIC.get(topic_id) or [
             {"question": f"Реши короткое задание по теме: {title}", "answer": "1"},
-        )
+        ]
+        template = templates[variant % len(templates)]
         return {
-            "id": f"{topic_id}_p01",
+            "id": f"{topic_id}_p{variant + 1:02d}",
             "topic_id": topic_id,
             "title": title,
             "question": template["question"],

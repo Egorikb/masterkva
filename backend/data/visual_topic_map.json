@@ -1,0 +1,2091 @@
+[
+  {
+    "grade": 1,
+    "topic": "ВЫЧИТАНИЕ ДВУЗНАЧНЫХ",
+    "skills": [
+      "вычитание двузначных",
+      "переход через десяток"
+    ],
+    "family": "place_value",
+    "visual_type": "base_ten_blocks",
+    "reason": "Автовыбор по теме \"ВЫЧИТАНИЕ ДВУЗНАЧНЫХ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ВЫЧИТАНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)",
+    "skills": [
+      "вычитание десятков",
+      "вычитание единиц"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ВЫЧИТАНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ВЫЧИТАНИЕ ДО 100 (С ПЕРЕХОДОМ)",
+    "skills": [
+      "переход через десяток",
+      "вычитание"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ВЫЧИТАНИЕ ДО 100 (С ПЕРЕХОДОМ)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ВЫЧИТАНИЕ ЧЕРЕЗ 10",
+    "skills": [
+      "вычитание через 10",
+      "состав числа 10"
+    ],
+    "family": "place_value",
+    "visual_type": "base_ten_blocks",
+    "reason": "Автовыбор по теме \"ВЫЧИТАНИЕ ЧЕРЕЗ 10\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ДЕНЬГИ (РУБЛИ)",
+    "skills": [
+      "рубли",
+      "копейки",
+      "сдача",
+      "покупки"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ДЕНЬГИ (РУБЛИ)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЗАКОНОМЕРНОСТИ",
+    "skills": [
+      "последовательности",
+      "шаблоны",
+      "логика"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЗАКОНОМЕРНОСТИ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "КЛАССИФИКАЦИЯ",
+    "skills": [
+      "группировка",
+      "признаки",
+      "сортировка"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"КЛАССИФИКАЦИЯ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ПОДГОТОВКА",
+    "skills": [
+      "счёт",
+      "сравнение",
+      "позиции"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "ten_frame",
+    "reason": "Перекалибровано по Aymo: ранняя числовая чувствительность лучше поддерживается десятичной рамкой, чем полосовой моделью."
+  },
+  {
+    "grade": 1,
+    "topic": "ПОЗИЦИИ",
+    "skills": [
+      "верх/низ",
+      "лево/право",
+      "перед/сзади"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "spatial_relations",
+    "reason": "Автовыбор по теме \"ПОЗИЦИИ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СЛОЖЕНИЕ ДВУЗНАЧНЫХ",
+    "skills": [
+      "сложение двузначных",
+      "переход через десяток"
+    ],
+    "family": "place_value",
+    "visual_type": "base_ten_blocks",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ ДВУЗНАЧНЫХ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)",
+    "skills": [
+      "сложение десятков",
+      "сложение единиц"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СЛОЖЕНИЕ ДО 100 (С ПЕРЕХОДОМ)",
+    "skills": [
+      "переход через десяток",
+      "сложение"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ ДО 100 (С ПЕРЕХОДОМ)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "числовой ряд"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10",
+    "skills": [
+      "сложение через 10",
+      "состав числа 10"
+    ],
+    "family": "place_value",
+    "visual_type": "base_ten_blocks",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "СМЕШАННЫЕ ЗАДАЧИ ДО 10",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "задачи"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СМЕШАННЫЕ ЗАДАЧИ ДО 10\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ФИГУРЫ",
+    "skills": [
+      "круг",
+      "квадрат",
+      "треугольник",
+      "прямоугольник"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "shape_recognition",
+    "reason": "Автовыбор по теме \"ФИГУРЫ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ФИГУРЫ (ПЛОСКИЕ)",
+    "skills": [
+      "прямоугольник",
+      "квадрат",
+      "треугольник",
+      "круг"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "shape_recognition",
+    "reason": "Автовыбор по теме \"ФИГУРЫ (ПЛОСКИЕ)\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧАСЫ",
+    "skills": [
+      "час",
+      "полчаса",
+      "время"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "clock_face",
+    "reason": "Автовыбор по теме \"ЧАСЫ\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛА 11-20",
+    "skills": [
+      "двузначные числа",
+      "десятки",
+      "единицы"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ЧИСЛА 11-20\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛА 6-7",
+    "skills": [
+      "счёт",
+      "сложение",
+      "вычитание",
+      "состав числа"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЧИСЛА 6-7\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛА 8-9",
+    "skills": [
+      "счёт",
+      "сложение",
+      "вычитание",
+      "состав числа"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЧИСЛА 8-9\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛА ДО 100",
+    "skills": [
+      "счёт до 100",
+      "десятки",
+      "единицы",
+      "сравнение"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ЧИСЛА ДО 100\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛА ДО 5",
+    "skills": [
+      "счёт",
+      "сложение",
+      "вычитание",
+      "состав числа"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "ten_frame",
+    "reason": "Перекалибровано по Aymo: ранняя числовая чувствительность лучше поддерживается десятичной рамкой, чем полосовой моделью."
+  },
+  {
+    "grade": 1,
+    "topic": "ЧИСЛО 10",
+    "skills": [
+      "число 10",
+      "сложение",
+      "вычитание",
+      "состав числа"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЧИСЛО 10\" из учебной программы 1 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ВРЕМЯ (ЧАСЫ И МИНУТЫ)",
+    "skills": [
+      "часы",
+      "минуты",
+      "время",
+      "циферблат"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "clock_face",
+    "reason": "Автовыбор по теме \"ВРЕМЯ (ЧАСЫ И МИНУТЫ)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ДВИЖЕНИЕ ФИГУР",
+    "skills": [
+      "симметрия",
+      "поворот",
+      "сдвиг",
+      "ось"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ДВИЖЕНИЕ ФИГУР\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ДЕЛЕНИЕ (7-9)",
+    "skills": [
+      "деление",
+      "7",
+      "8",
+      "9",
+      "таблица"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "division_groups",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ (7-9)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ДЕЛЕНИЕ (ДО 6)",
+    "skills": [
+      "деление",
+      "равные части",
+      "таблица деления"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "division_groups",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ (ДО 6)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ДЕЛЕНИЕ С ОСТАТКОМ",
+    "skills": [
+      "остаток",
+      "деление",
+      "проверка"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "division_groups",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ С ОСТАТКОМ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ЕДИНИЦЫ ДЛИНЫ",
+    "skills": [
+      "сантиметр",
+      "метр",
+      "измерение",
+      "линейка"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"ЕДИНИЦЫ ДЛИНЫ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ЛОГИКА И РАССУЖДЕНИЯ",
+    "skills": [
+      "логика",
+      "вывод",
+      "таблица истинности"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЛОГИКА И РАССУЖДЕНИЯ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "МАССА (ГРАММЫ И КИЛОГРАММЫ)",
+    "skills": [
+      "грамм",
+      "килограмм",
+      "весы",
+      "измерение"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"МАССА (ГРАММЫ И КИЛОГРАММЫ)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ",
+    "skills": [
+      "вид спереди",
+      "вид сбоку",
+      "вид сверху",
+      "3D"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "СБОР И ОРГАНИЗАЦИЯ ДАННЫХ",
+    "skills": [
+      "таблицы",
+      "диаграммы",
+      "статистика",
+      "опрос"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СБОР И ОРГАНИЗАЦИЯ ДАННЫХ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 100",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "столбик",
+      "переход через десяток"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 100\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "СМЕШАННЫЕ ОПЕРАЦИИ",
+    "skills": [
+      "порядок действий",
+      "скобки",
+      "× и ÷"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СМЕШАННЫЕ ОПЕРАЦИИ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "СОЧЕТАНИЯ",
+    "skills": [
+      "перебор",
+      "комбинации",
+      "логика"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "array_matrix",
+    "reason": "Автовыбор по теме \"СОЧЕТАНИЯ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ТАБЛИЦА УМНОЖЕНИЯ (2-5)",
+    "skills": [
+      "умножение",
+      "таблица",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "array_matrix",
+    "reason": "Автовыбор по теме \"ТАБЛИЦА УМНОЖЕНИЯ (2-5)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ТАБЛИЦА УМНОЖЕНИЯ (6-9)",
+    "skills": [
+      "умножение",
+      "таблица",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "array_matrix",
+    "reason": "Автовыбор по теме \"ТАБЛИЦА УМНОЖЕНИЯ (6-9)\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "УГЛЫ",
+    "skills": [
+      "острый",
+      "прямой",
+      "тупой",
+      "вершина",
+      "стороны"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"УГЛЫ\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 2,
+    "topic": "ЧИСЛА ДО 10 000",
+    "skills": [
+      "тысячи",
+      "разряды",
+      "сравнение",
+      "счёт"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ЧИСЛА ДО 10 000\" из учебной программы 2 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ВРЕМЯ (ЧАСЫ, МИНУТЫ, СЕКУНДЫ)",
+    "skills": [
+      "часы",
+      "минуты",
+      "секунды",
+      "перевод"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "clock_face",
+    "reason": "Автовыбор по теме \"ВРЕМЯ (ЧАСЫ, МИНУТЫ, СЕКУНДЫ)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ГОД, МЕСЯЦ, ДЕНЬ",
+    "skills": [
+      "календарь",
+      "високосный год",
+      "дни недели"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ГОД, МЕСЯЦ, ДЕНЬ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ДЕЛЕНИЕ НА ОДНОЗНАЧНЫЕ",
+    "skills": [
+      "деление",
+      "столбик",
+      "проверка"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "division_groups",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ НА ОДНОЗНАЧНЫЕ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ДЕСЯТИЧНЫЕ ДРОБИ (НАЧАЛЬНЫЕ)",
+    "skills": [
+      "десятичные",
+      "точка",
+      "разряды"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"ДЕСЯТИЧНЫЕ ДРОБИ (НАЧАЛЬНЫЕ)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ДРОБИ (НАЧАЛЬНЫЕ)",
+    "skills": [
+      "дроби",
+      "числитель",
+      "знаменатель",
+      "сравнение"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"ДРОБИ (НАЧАЛЬНЫЕ)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ИЗМЕРЕНИЯ (ММ, КМ, ТОННЫ)",
+    "skills": [
+      "миллиметр",
+      "километр",
+      "тонна",
+      "перевод единиц"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"ИЗМЕРЕНИЯ (ММ, КМ, ТОННЫ)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "КРАТНОСТЬ (ВО СКОЛЬКО РАЗ)",
+    "skills": [
+      "кратность",
+      "сравнение",
+      "умножение"
+    ],
+    "family": "ratios_proportions",
+    "visual_type": "double_number_line",
+    "reason": "Автовыбор по теме \"КРАТНОСТЬ (ВО СКОЛЬКО РАЗ)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "МНОЖЕСТВА",
+    "skills": [
+      "множества",
+      "пересечение",
+      "объединение"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"МНОЖЕСТВА\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "НАПРАВЛЕНИЯ (СЕВЕР, ЮГ, ВОСТОК, ЗАПАД)",
+    "skills": [
+      "север",
+      "юг",
+      "восток",
+      "запад",
+      "карта"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "spatial_relations",
+    "reason": "Автовыбор по теме \"НАПРАВЛЕНИЯ (СЕВЕР, ЮГ, ВОСТОК, ЗАПАД)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ПЛОЩАДЬ",
+    "skills": [
+      "площадь",
+      "квадратный сантиметр",
+      "квадратный метр"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"ПЛОЩАДЬ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "ПРЯМОУГОЛЬНИКИ И КВАДРАТЫ",
+    "skills": [
+      "прямоугольник",
+      "квадрат",
+      "стороны",
+      "углы"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "shape_recognition",
+    "reason": "Автовыбор по теме \"ПРЯМОУГОЛЬНИКИ И КВАДРАТЫ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "СВОДНЫЕ ТАБЛИЦЫ",
+    "skills": [
+      "таблицы",
+      "данные",
+      "анализ"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СВОДНЫЕ ТАБЛИЦЫ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10000 (一)",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "столбик"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10000 (一)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10000 (二)",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "переход через разряд"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10000 (二)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "СОЧЕТАНИЯ (二)",
+    "skills": [
+      "перебор",
+      "комбинации",
+      "логика"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СОЧЕТАНИЯ (二)\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "УМНОЖЕНИЕ ДВУЗНАЧНЫХ НА ДВУЗНАЧНЫЕ",
+    "skills": [
+      "умножение",
+      "столбик",
+      "двузначные"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ ДВУЗНАЧНЫХ НА ДВУЗНАЧНЫЕ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 3,
+    "topic": "УМНОЖЕНИЕ МНОГОЗНАЧНЫХ НА ОДНОЗНАЧНОЕ",
+    "skills": [
+      "умножение",
+      "столбик",
+      "переход"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "array_matrix",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ МНОГОЗНАЧНЫХ НА ОДНОЗНАЧНОЕ\" из учебной программы 3 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "БОЛЬШИЕ ЧИСЛА (ДО 100 МЛН)",
+    "skills": [
+      "разряды",
+      "чтение",
+      "запись",
+      "сравнение"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"БОЛЬШИЕ ЧИСЛА (ДО 100 МЛН)\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ГЕКТАРЫ И КВАДРАТНЫЕ КИЛОМЕТРЫ",
+    "skills": [
+      "гектар",
+      "км²",
+      "площадь"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"ГЕКТАРЫ И КВАДРАТНЫЕ КИЛОМЕТРЫ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ДВИЖЕНИЕ ФИГУР",
+    "skills": [
+      "ось симметрии",
+      "сдвиг",
+      "поворот"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ДВИЖЕНИЕ ФИГУР\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ДЕЛЕНИЕ НА ДВУЗНАЧНЫЕ",
+    "skills": [
+      "деление",
+      "пробное",
+      "проверка"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "division_groups",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ НА ДВУЗНАЧНЫЕ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ЗАДАЧИ НА ПЕРЕБОР",
+    "skills": [
+      "курицы и кролики",
+      "уравнения",
+      "логика"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"ЗАДАЧИ НА ПЕРЕБОР\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ЗАКОНЫ ОПЕРАЦИЙ",
+    "skills": [
+      "переместительный",
+      "сочетательный",
+      "распределительный"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЗАКОНЫ ОПЕРАЦИЙ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ИЗМЕРЕНИЕ УГЛОВ",
+    "skills": [
+      "градус",
+      "транспортир",
+      "типы углов"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ИЗМЕРЕНИЕ УГЛОВ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ",
+    "skills": [
+      "3D",
+      "проекции",
+      "сборка"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ОПТИМИЗАЦИЯ (ЗАДАЧИ)",
+    "skills": [
+      "логика",
+      "планирование",
+      "минимум"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ОПТИМИЗАЦИЯ (ЗАДАЧИ)\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ПАРАЛЛЕЛОГРАММЫ И ТРАПЕЦИИ",
+    "skills": [
+      "параллельные",
+      "перпендикулярные",
+      "высота"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "cut_and_drag_parallelogram",
+    "reason": "Перекалибровано по Aymo: площади и свойства параллелограмма лучше показывать через разрезание и перенос куска."
+  },
+  {
+    "grade": 4,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "СВОЙСТВА ДЕСЯТИЧНЫХ ДРОБЕЙ",
+    "skills": [
+      "десятичные",
+      "разряды",
+      "сравнение"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"СВОЙСТВА ДЕСЯТИЧНЫХ ДРОБЕЙ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДЕСЯТИЧНЫХ",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "переход"
+    ],
+    "family": "place_value",
+    "visual_type": "place_value_chart",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДЕСЯТИЧНЫХ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "СРЕДНЕЕ И ДИАГРАММЫ",
+    "skills": [
+      "среднее",
+      "статистика",
+      "анализ"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СРЕДНЕЕ И ДИАГРАММЫ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "СТОЛБЧАТЫЕ ДИАГРАММЫ",
+    "skills": [
+      "диаграммы",
+      "масштаб",
+      "анализ"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "bar_model_strip_diagram",
+    "reason": "Автовыбор по теме \"СТОЛБЧАТЫЕ ДИАГРАММЫ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ТРЕУГОЛЬНИКИ",
+    "skills": [
+      "виды",
+      "сумма углов",
+      "неравенство"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ТРЕУГОЛЬНИКИ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "УМНОЖЕНИЕ ТРЁХЗНАЧНЫХ НА ДВУЗНАЧНЫЕ",
+    "skills": [
+      "столбик",
+      "нули",
+      "проверка"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ ТРЁХЗНАЧНЫХ НА ДВУЗНАЧНЫЕ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 4,
+    "topic": "ЧЕТЫРЕ ДЕЙСТВИЯ",
+    "skills": [
+      "порядок",
+      "скобки",
+      "сложные выражения"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЧЕТЫРЕ ДЕЙСТВИЯ\" из учебной программы 4 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ВЕРОЯТНОСТЬ",
+    "skills": [
+      "случай",
+      "возможно",
+      "невозможно",
+      "точно"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ВЕРОЯТНОСТЬ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ДЕЛЕНИЕ ДЕСЯТИЧНЫХ ДРОБЕЙ",
+    "skills": [
+      "деление",
+      "переход",
+      "проверка"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ ДЕСЯТИЧНЫХ ДРОБЕЙ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ДЕЛИТЕЛИ И КРАТНЫЕ",
+    "skills": [
+      "НОД",
+      "НОК",
+      "простые",
+      "составные"
+    ],
+    "family": "multiplication_division",
+    "visual_type": "array_matrix",
+    "reason": "Автовыбор по теме \"ДЕЛИТЕЛИ И КРАТНЫЕ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ЗАДАЧИ НА ИНТЕРВАЛЫ",
+    "skills": [
+      "деревья",
+      "отрезки",
+      "забор"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЗАДАЧИ НА ИНТЕРВАЛЫ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "КООРДИНАТЫ (ПОЗИЦИЯ)",
+    "skills": [
+      "ряд",
+      "место",
+      "пара чисел"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "coordinate_plane_plot",
+    "reason": "Автовыбор по теме \"КООРДИНАТЫ (ПОЗИЦИЯ)\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ЛИНЕЙЧАТЫЕ ДИАГРАММЫ",
+    "skills": [
+      "график",
+      "тренд",
+      "анализ"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "bar_model_strip_diagram",
+    "reason": "Автовыбор по теме \"ЛИНЕЙЧАТЫЕ ДИАГРАММЫ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ",
+    "skills": [
+      "3D",
+      "куб",
+      "проекции"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"НАБЛЮДЕНИЕ ЗА ОБЪЕКТАМИ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПАРАЛЛЕЛЕПИПЕДЫ И КУБЫ",
+    "skills": [
+      "рёбра",
+      "грани",
+      "вершины",
+      "объём"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "net_of_solid",
+    "reason": "Автовыбор по теме \"ПАРАЛЛЕЛЕПИПЕДЫ И КУБЫ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПЛОЩАДЬ МНОГОУГОЛЬНИКОВ",
+    "skills": [
+      "параллелограмм",
+      "треугольник",
+      "трапеция"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"ПЛОЩАДЬ МНОГОУГОЛЬНИКОВ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПЛОЩАДЬ ПАРАЛЛЕЛОГРАММА",
+    "skills": [
+      "основание",
+      "высота",
+      "площадь"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "cut_and_drag_parallelogram",
+    "reason": "Добавлено по Aymo как отдельный мостик между площадью прямоугольника и параллелограмма."
+  },
+  {
+    "grade": 5,
+    "topic": "ПОВОРОТЫ ФИГУР",
+    "skills": [
+      "90 градусов",
+      "180 градусов",
+      "центр"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВОРОТЫ ФИГУР\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПОИСК АНОМАЛИЙ",
+    "skills": [
+      "весы",
+      "группы",
+      "минимум"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОИСК АНОМАЛИЙ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "ПРОСТЫЕ УРАВНЕНИЯ",
+    "skills": [
+      "уравнение",
+      "неизвестное",
+      "решение"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"ПРОСТЫЕ УРАВНЕНИЯ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "СВОЙСТВА ДРОБЕЙ",
+    "skills": [
+      "основное свойство",
+      "сокращение",
+      "сравнение"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"СВОЙСТВА ДРОБЕЙ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДРОБЕЙ",
+    "skills": [
+      "общий знаменатель",
+      "сложение",
+      "вычитание"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДРОБЕЙ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 5,
+    "topic": "УМНОЖЕНИЕ ДЕСЯТИЧНЫХ ДРОБЕЙ",
+    "skills": [
+      "умножение",
+      "переход",
+      "запятая"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "area_model_grid",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ ДЕСЯТИЧНЫХ ДРОБЕЙ\" из учебной программы 5 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ДЕЛЕНИЕ ДРОБЕЙ",
+    "skills": [
+      "обратная",
+      "деление",
+      "смешанные"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"ДЕЛЕНИЕ ДРОБЕЙ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "НАПРАВЛЕНИЯ И КООРДИНАТЫ",
+    "skills": [
+      "угол",
+      "расстояние",
+      "карта"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "coordinate_plane_plot",
+    "reason": "Автовыбор по теме \"НАПРАВЛЕНИЯ И КООРДИНАТЫ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ОКРУЖНОСТЬ",
+    "skills": [
+      "радиус",
+      "диаметр",
+      "длина",
+      "площадь"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ОКРУЖНОСТЬ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ОТНОШЕНИЯ",
+    "skills": [
+      "отношение",
+      "пропорция",
+      "масштаб"
+    ],
+    "family": "ratios_proportions",
+    "visual_type": "ratio_table",
+    "reason": "Автовыбор по теме \"ОТНОШЕНИЯ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ОТРИЦАТЕЛЬНЫЕ ЧИСЛА",
+    "skills": [
+      "минус",
+      "числовая прямая",
+      "сравнение"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"ОТРИЦАТЕЛЬНЫЕ ЧИСЛА\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ПРИНЦИП ДИРИХЛЕ",
+    "skills": [
+      "голуби",
+      "ящики",
+      "доказательство"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПРИНЦИП ДИРИХЛЕ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ПРОПОРЦИИ",
+    "skills": [
+      "прямая",
+      "обратная",
+      "задачи"
+    ],
+    "family": "ratios_proportions",
+    "visual_type": "double_number_line_dynamic",
+    "reason": "Перекалибровано по Aymo: пропорции лучше показывать через динамическую привязку двух шкал к общей единице."
+  },
+  {
+    "grade": 6,
+    "topic": "ПРОЦЕНТЫ",
+    "skills": [
+      "процент",
+      "задачи",
+      "увеличение",
+      "уменьшение"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "percent_grid_10x10",
+    "reason": "Перекалибровано по Aymo: проценты точнее всего показывать через сетку 10×10."
+  },
+  {
+    "grade": 6,
+    "topic": "ПРОЦЕНТЫ (ПРИЛОЖЕНИЯ)",
+    "skills": [
+      "налог",
+      "скидка",
+      "прибыль"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "percent_grid_10x10",
+    "reason": "Перекалибровано по Aymo: проценты точнее всего показывать через сетку 10×10."
+  },
+  {
+    "grade": 6,
+    "topic": "УМНОЖЕНИЕ ДРОБЕЙ",
+    "skills": [
+      "умножение",
+      "сокращение",
+      "перемешанные"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ ДРОБЕЙ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ЦИЛИНДРЫ И КОНУСЫ",
+    "skills": [
+      "объём",
+      "площадь",
+      "формулы"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"ЦИЛИНДРЫ И КОНУСЫ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 6,
+    "topic": "ЧИСЛА И ФИГУРЫ",
+    "skills": [
+      "квадраты",
+      "суммы",
+      "ряды"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ЧИСЛА И ФИГУРЫ\" из учебной программы 6 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ВЕЩЕСТВЕННЫЕ ЧИСЛА",
+    "skills": [
+      "квадратный корень",
+      "кубический корень",
+      "иррациональные"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"ВЕЩЕСТВЕННЫЕ ЧИСЛА\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ГЕОМЕТРИЧЕСКИЕ ФИГУРЫ",
+    "skills": [
+      "тело",
+      "поверхность",
+      "ребро",
+      "вершина"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ГЕОМЕТРИЧЕСКИЕ ФИГУРЫ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ЛИНЕЙНЫЕ УРАВНЕНИЯ",
+    "skills": [
+      "решение",
+      "перенос",
+      "применение"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_linear",
+    "reason": "Перекалибровано по Aymo: линейные уравнения лучше объяснять через отдельный линейный шаблон весов."
+  },
+  {
+    "grade": 7,
+    "topic": "НЕРАВЕНСТВА",
+    "skills": [
+      "свойства",
+      "системы",
+      "числовая прямая"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"НЕРАВЕНСТВА\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ПЕРЕСЕКАЮЩИЕСЯ И ПАРАЛЛЕЛЬНЫЕ ПРЯМЫЕ",
+    "skills": [
+      "вертикальные",
+      "смежные",
+      "параллельные",
+      "накрест"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ПЕРЕСЕКАЮЩИЕСЯ И ПАРАЛЛЕЛЬНЫЕ ПРЯМЫЕ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ПРЯМАЯ, ЛУЧ, ОТРЕЗОК",
+    "skills": [
+      "прямая",
+      "луч",
+      "отрезок",
+      "длина"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПРЯМАЯ, ЛУЧ, ОТРЕЗОК\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ПРЯМОУГОЛЬНАЯ СИСТЕМА КООРДИНАТ",
+    "skills": [
+      "ось x",
+      "ось y",
+      "начало",
+      "координаты"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "coordinate_plane_plot",
+    "reason": "Автовыбор по теме \"ПРЯМОУГОЛЬНАЯ СИСТЕМА КООРДИНАТ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "РАЦИОНАЛЬНЫЕ ЧИСЛА",
+    "skills": [
+      "положительные",
+      "отрицательные",
+      "числовая прямая",
+      "сравнение"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"РАЦИОНАЛЬНЫЕ ЧИСЛА\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "СБОР И ОПИСАНИЕ ДАННЫХ",
+    "skills": [
+      "опрос",
+      "таблица",
+      "диаграмма",
+      "гистограмма"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"СБОР И ОПИСАНИЕ ДАННЫХ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "СИСТЕМЫ ЛИНЕЙНЫХ УРАВНЕНИЙ",
+    "skills": [
+      "подстановка",
+      "сложение",
+      "графический"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"СИСТЕМЫ ЛИНЕЙНЫХ УРАВНЕНИЙ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ РАЦИОНАЛЬНЫХ",
+    "skills": [
+      "сложение",
+      "вычитание",
+      "переход через ноль"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ И ВЫЧИТАНИЕ РАЦИОНАЛЬНЫХ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ",
+    "skills": [
+      "приведение",
+      "скобки",
+      "раскрытие"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "algebra_tiles",
+    "reason": "Автовыбор по теме \"СЛОЖЕНИЕ И ВЫЧИТАНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "СТЕПЕНЬ РАЦИОНАЛЬНЫХ",
+    "skills": [
+      "степень",
+      "научная нотация"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"СТЕПЕНЬ РАЦИОНАЛЬНЫХ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "УГЛЫ",
+    "skills": [
+      "вершина",
+      "стороны",
+      "градус",
+      "биссектриса"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"УГЛЫ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "УМНОЖЕНИЕ И ДЕЛЕНИЕ РАЦИОНАЛЬНЫХ",
+    "skills": [
+      "умножение",
+      "деление",
+      "распределительный"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "number_line",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ И ДЕЛЕНИЕ РАЦИОНАЛЬНЫХ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 7,
+    "topic": "ЦЕЛЫЕ ВЫРАЖЕНИЯ",
+    "skills": [
+      "одночлен",
+      "многочлен",
+      "степень"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "algebra_tiles",
+    "reason": "Автовыбор по теме \"ЦЕЛЫЕ ВЫРАЖЕНИЯ\" из учебной программы 7 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "АНАЛИЗ ДАННЫХ",
+    "skills": [
+      "среднее",
+      "медиана",
+      "мода",
+      "дисперсия"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "function_table",
+    "reason": "Автовыбор по теме \"АНАЛИЗ ДАННЫХ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "БИССЕКТРИСА УГЛА",
+    "skills": [
+      "свойства",
+      "расстояние",
+      "доказательство"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"БИССЕКТРИСА УГЛА\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ДРОБИ",
+    "skills": [
+      "сокращение",
+      "сложение",
+      "вычитание",
+      "умножение",
+      "деление"
+    ],
+    "family": "fractions_decimals_percents",
+    "visual_type": "fraction_bars",
+    "reason": "Автовыбор по теме \"ДРОБИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "КВАДРАТНЫЕ КОРНИ",
+    "skills": [
+      "арифметический",
+      "свойства",
+      "упрощение"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"КВАДРАТНЫЕ КОРНИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ЛИНЕЙНЫЕ ФУНКЦИИ",
+    "skills": [
+      "y=kx+b",
+      "график",
+      "пересечение"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph_slider",
+    "reason": "Перекалибровано по Aymo: линейные функции лучше показывать через график со слайдерами параметров."
+  },
+  {
+    "grade": 8,
+    "topic": "МНОГОУГОЛЬНИКИ",
+    "skills": [
+      "n-угольник",
+      "сумма углов",
+      "диагонали"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"МНОГОУГОЛЬНИКИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ОСЕВАЯ СИММЕТРИЯ",
+    "skills": [
+      "ось",
+      "симметричные",
+      "отражение"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ОСЕВАЯ СИММЕТРИЯ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ПАРАЛЛЕЛОГРАММЫ",
+    "skills": [
+      "параллелограмм",
+      "прямоугольник",
+      "ромб",
+      "квадрат"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "cut_and_drag_parallelogram",
+    "reason": "Перекалибровано по Aymo: свойства и площадь параллелограмма лучше показывать через разрезание и перенос куска."
+  },
+  {
+    "grade": 8,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК",
+    "skills": [
+      "свойства",
+      "признаки",
+      "равносторонний"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "РАВНЫЕ ТРЕУГОЛЬНИКИ",
+    "skills": [
+      "признаки",
+      "доказательство",
+      "свойства"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"РАВНЫЕ ТРЕУГОЛЬНИКИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "РАЗЛОЖЕНИЕ НА МНОЖИТЕЛИ",
+    "skills": [
+      "общий множитель",
+      "формулы",
+      "группировка"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "algebra_tiles",
+    "reason": "Автовыбор по теме \"РАЗЛОЖЕНИЕ НА МНОЖИТЕЛИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ТЕОРЕМА ПИФАГОРА",
+    "skills": [
+      "катеты",
+      "гипотенуза",
+      "обратная"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ТЕОРЕМА ПИФАГОРА\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ТРЕУГОЛЬНИКИ",
+    "skills": [
+      "стороны",
+      "углы",
+      "высота",
+      "медиана",
+      "биссектриса"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ТРЕУГОЛЬНИКИ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "УГЛЫ ТРЕУГОЛЬНИКА",
+    "skills": [
+      "сумма углов",
+      "внешний угол",
+      "неравенство"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"УГЛЫ ТРЕУГОЛЬНИКА\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "УМНОЖЕНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ",
+    "skills": [
+      "одночлен",
+      "многочлен",
+      "степень"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "algebra_tiles",
+    "reason": "Автовыбор по теме \"УМНОЖЕНИЕ ЦЕЛЫХ ВЫРАЖЕНИЙ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 8,
+    "topic": "ФОРМУЛЫ УМНОЖЕНИЯ",
+    "skills": [
+      "квадрат суммы",
+      "квадрат разности",
+      "разность квадратов"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "algebra_tiles",
+    "reason": "Автовыбор по теме \"ФОРМУЛЫ УМНОЖЕНИЯ\" из учебной программы 8 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ВЕРОЯТНОСТЬ",
+    "skills": [
+      "случайное",
+      "вероятность",
+      "частота"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "function_table",
+    "reason": "Автовыбор по теме \"ВЕРОЯТНОСТЬ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ВЫЧИСЛЕНИЕ ВЕРОЯТНОСТИ",
+    "skills": [
+      "перечисление",
+      "дерево",
+      "таблица"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ВЫЧИСЛЕНИЕ ВЕРОЯТНОСТИ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ДЛИНА ДУГИ И ПЛОЩАДЬ СЕКТОРА",
+    "skills": [
+      "дуга",
+      "сектор",
+      "формулы"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ДЛИНА ДУГИ И ПЛОЩАДЬ СЕКТОРА\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ЗАДАЧИ С КВАДРАТИЧНЫМИ ФУНКЦИЯМИ",
+    "skills": [
+      "максимум",
+      "минимум",
+      "применение"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph_slider",
+    "reason": "Перекалибровано по Aymo: задачи с квадратичными функциями лучше объяснять через график со слайдерами."
+  },
+  {
+    "grade": 9,
+    "topic": "ЗАДАЧИ С КВАДРАТНЫМИ УРАВНЕНИЯМИ",
+    "skills": [
+      "применение",
+      "задачи",
+      "проверка"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"ЗАДАЧИ С КВАДРАТНЫМИ УРАВНЕНИЯМИ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "КВАДРАТИЧНАЯ ФУНКЦИЯ И УРАВНЕНИЕ",
+    "skills": [
+      "нули",
+      "пересечение",
+      "дискриминант"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph_slider",
+    "reason": "Перекалибровано по Aymo: связь квадратичной функции и уравнения лучше показывать через график со слайдерами."
+  },
+  {
+    "grade": 9,
+    "topic": "КВАДРАТИЧНЫЕ ФУНКЦИИ",
+    "skills": [
+      "график",
+      "парабола",
+      "вершина",
+      "ветви"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph_slider",
+    "reason": "Перекалибровано по Aymo: квадратичные функции лучше показывать через график со слайдерами параметров."
+  },
+  {
+    "grade": 9,
+    "topic": "КВАДРАТНЫЕ УРАВНЕНИЯ",
+    "skills": [
+      "общий вид",
+      "дискриминант",
+      "формула",
+      "Виета"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"КВАДРАТНЫЕ УРАВНЕНИЯ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ОБРАТНАЯ ПРОПОРЦИОНАЛЬНОСТЬ",
+    "skills": [
+      "y=k/x",
+      "гипербола",
+      "асимптоты"
+    ],
+    "family": "ratios_proportions",
+    "visual_type": "ratio_table",
+    "reason": "Автовыбор по теме \"ОБРАТНАЯ ПРОПОРЦИОНАЛЬНОСТЬ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ОКРУЖНОСТЬ",
+    "skills": [
+      "центр",
+      "радиус",
+      "диаметр",
+      "хорда",
+      "дуга"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ОКРУЖНОСТЬ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ОСТРЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ",
+    "skills": [
+      "sin",
+      "cos",
+      "tg",
+      "таблица"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph",
+    "reason": "Автовыбор по теме \"ОСТРЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПОВОРОТ",
+    "skills": [
+      "угол поворота",
+      "центр",
+      "фигуры"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ПОВОРОТ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПОВТОРЕНИЕ 1 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 1 СЕМЕСТРА\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПОВТОРЕНИЕ 2 СЕМЕСТРА",
+    "skills": [
+      "всё"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОВТОРЕНИЕ 2 СЕМЕСТРА\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПОДОБИЕ",
+    "skills": [
+      "коэффициент",
+      "признаки",
+      "применение"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПОДОБИЕ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПОЛОЖЕНИЕ ПРЯМОЙ И ОКРУЖНОСТИ",
+    "skills": [
+      "касание",
+      "секущая",
+      "расстояние"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ПОЛОЖЕНИЕ ПРЯМОЙ И ОКРУЖНОСТИ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПРАВИЛЬНЫЕ МНОГОУГОЛЬНИКИ И ОКРУЖНОСТЬ",
+    "skills": [
+      "вписанный",
+      "описанный",
+      "формулы"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ПРАВИЛЬНЫЕ МНОГОУГОЛЬНИКИ И ОКРУЖНОСТЬ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ПРОЕКЦИИ И ВИДЫ",
+    "skills": [
+      "проекция",
+      "вид сверху",
+      "вид спереди",
+      "вид сбоку"
+    ],
+    "family": "addition_subtraction",
+    "visual_type": "part_part_whole_bar",
+    "reason": "Автовыбор по теме \"ПРОЕКЦИИ И ВИДЫ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "РЕШЕНИЕ КВАДРАТНЫХ УРАВНЕНИЙ",
+    "skills": [
+      "выделение",
+      "формула",
+      "теорема Виета"
+    ],
+    "family": "expressions_equations_inequalities",
+    "visual_type": "balance_scale_equation",
+    "reason": "Автовыбор по теме \"РЕШЕНИЕ КВАДРАТНЫХ УРАВНЕНИЙ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "СВОЙСТВА ОКРУЖНОСТИ",
+    "skills": [
+      "перпендикуляр",
+      "касательная",
+      "центральный угол"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"СВОЙСТВА ОКРУЖНОСТИ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "СВОЙСТВА ПАРАБОЛЫ",
+    "skills": [
+      "a",
+      "b",
+      "c",
+      "ось симметрии"
+    ],
+    "family": "functions_graphs",
+    "visual_type": "cartesian_graph",
+    "reason": "Автовыбор по теме \"СВОЙСТВА ПАРАБОЛЫ\" из учебной программы 9 класса."
+  },
+  {
+    "grade": 9,
+    "topic": "ЦЕНТРАЛЬНАЯ СИММЕТРИЯ",
+    "skills": [
+      "центр",
+      "точка",
+      "симметрия"
+    ],
+    "family": "geometry_measurement",
+    "visual_type": "geoboard_dynamic",
+    "reason": "Автовыбор по теме \"ЦЕНТРАЛЬНАЯ СИММЕТРИЯ\" из учебной программы 9 класса."
+  }
+]

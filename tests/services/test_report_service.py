@@ -22,6 +22,7 @@ def test_report_practice_result_is_status_string() -> None:
     report = build_report(weak_topic, practice_feedback)
 
     assert report["summary"]
+    assert "по одной задаче" in report["summary"]
     assert report["weak_topic"] == weak_topic
     assert report["practice_result"] == "success"
     assert isinstance(report["recommendations"], list) and report["recommendations"]
@@ -30,3 +31,5 @@ def test_report_practice_result_is_status_string() -> None:
 def test_report_wrong_practice_result_needs_review() -> None:
     report = build_report({"topic": "Сложение"}, {"is_correct": False})
     assert report["practice_result"] == "needs_review"
+    assert "Одна ошибка" in report["summary"]
+    assert "о знании всей темы" in report["recommendations"][1]

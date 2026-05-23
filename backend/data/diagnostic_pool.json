@@ -1,13 +1,15 @@
 {
   "questions": [
     {
-      "id": "g1_t01_q01",
+      "id": "g1_t07_q01",
       "grade": 1,
-      "topic_id": "g1_t01",
-      "topic": "Счёт до 10",
-      "question": "Сколько будет 3 + 2?",
-      "answer": "5",
-      "alternatives": ["пять"],
+      "topic_id": "g1_t07",
+      "topic": "СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10",
+      "question": "Сколько будет 8 + 5?",
+      "answer": "13",
+      "alternatives": [
+        "тринадцать"
+      ],
       "difficulty": 1
     },
     {
@@ -17,7 +19,9 @@
       "topic": "Следующее число",
       "question": "Какое число идёт после 6?",
       "answer": "7",
-      "alternatives": ["семь"],
+      "alternatives": [
+        "семь"
+      ],
       "difficulty": 1
     },
     {
@@ -27,7 +31,9 @@
       "topic": "Сложение с переходом",
       "question": "4 + 3 = ?",
       "answer": "7",
-      "alternatives": ["семь"],
+      "alternatives": [
+        "семь"
+      ],
       "difficulty": 1
     },
     {
@@ -37,7 +43,9 @@
       "topic": "Вычитание",
       "question": "7 - 4 = ?",
       "answer": "3",
-      "alternatives": ["три"],
+      "alternatives": [
+        "три"
+      ],
       "difficulty": 1
     },
     {
@@ -47,8 +55,122 @@
       "topic": "Сложение двузначных чисел",
       "question": "12 + 5 = ?",
       "answer": "17",
-      "alternatives": ["семнадцать"],
+      "alternatives": [
+        "семнадцать"
+      ],
       "difficulty": 2
+    },
+    {
+      "id": "g3_t01_q01",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "question": "Сколько минут в 2 часах?",
+      "answer": "120",
+      "alternatives": [
+        "сто двадцать"
+      ],
+      "difficulty": 3,
+      "CPA": {
+        "visual": "clock",
+        "objects": "часы"
+      }
+    },
+    {
+      "id": "g4_t01_q01",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Большие числа (до 100 млн)",
+      "question": "Какая цифра стоит в разряде сотен в числе 3 420?",
+      "answer": "4",
+      "alternatives": [
+        "четыре"
+      ],
+      "difficulty": 4,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "разряды"
+      }
+    },
+    {
+      "id": "g5_t01_q01",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Простые уравнения",
+      "question": "Реши уравнение: x + 4 = 9",
+      "answer": "5",
+      "alternatives": [
+        "пять"
+      ],
+      "difficulty": 5,
+      "CPA": {
+        "visual": "balance_scale_equation",
+        "objects": "уравнение"
+      }
+    },
+    {
+      "id": "g6_t01_q01",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Проценты",
+      "question": "Сколько будет 25 процентов от 200?",
+      "answer": "50",
+      "alternatives": [
+        "пятьдесят"
+      ],
+      "difficulty": 6,
+      "CPA": {
+        "visual": "percent_grid_10x10",
+        "objects": "проценты"
+      }
+    },
+    {
+      "id": "g7_t01_q01",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Рациональные числа",
+      "question": "Сколько будет -3 + 5?",
+      "answer": "2",
+      "alternatives": [
+        "два"
+      ],
+      "difficulty": 7,
+      "CPA": {
+        "visual": "part_part_whole_bar",
+        "objects": "числовая прямая"
+      }
+    },
+    {
+      "id": "g8_t01_q01",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Линейные уравнения",
+      "question": "Реши уравнение: 2x = 10",
+      "answer": "5",
+      "alternatives": [
+        "пять"
+      ],
+      "difficulty": 8,
+      "CPA": {
+        "visual": "balance_scale_equation",
+        "objects": "уравнение"
+      }
+    },
+    {
+      "id": "g9_t01_q01",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратные функции",
+      "question": "Как называется график квадратичной функции?",
+      "answer": "парабола",
+      "alternatives": [
+        "парабола"
+      ],
+      "difficulty": 9,
+      "CPA": {
+        "visual": "cartesian_graph_slider",
+        "objects": "график"
+      }
     }
   ]
 }

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { VoiceInput } from "./voice-input";
 import { AchievementPopup } from "./achievement-popup";
-import type { ChatMessage, ApiResponse } from "@/lib/types";
+import type { ChatMessage, ApiResponse, QuestionVisualSection } from "@/lib/types";
 import type { PandaChatResponse } from "@/contracts/panda";
 
 export function ChatInterface() {
@@ -18,6 +18,8 @@ export function ChatInterface() {
   const [showAchievement, setShowAchievement] = useState(false);
   const [achievementText, setAchievementText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const initialTurnStartedRef = useRef<"kungfu" | "homework" | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   
   const { 
@@ -40,6 +42,10 @@ export function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, [messages.length, isLoading, mode]);
 
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim() || isLoading) return;
@@ -64,19 +70,27 @@ export function ChatInterface() {
         message: trimmed,
         name: user?.name ?? null,
         grade,
+        mode,
       });
 
-      const visualData = normalizePandaVisual(response.visual);
-      const assistantMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: response.text,
-        audioUrl: undefined,
-        visualData,
-        timestamp: new Date(),
-      };
+      const visualData = normalizePandaVisual(response.visual, response.text);
+      const assistantChunks = response.text
+        .split(/\n\s*\n/)
+        .map((chunk) => chunk.trim())
+        .filter(Boolean);
+      const chunks = assistantChunks.length ? assistantChunks : [response.text.trim()];
 
-      addMessage(assistantMessage);
+      chunks.forEach((chunk, index) => {
+        const assistantMessage: ChatMessage = {
+          id: `${Date.now()}-${index + 1}`,
+          role: "assistant",
+          content: chunk,
+          audioUrl: undefined,
+          visualData: index === chunks.length - 1 ? visualData : undefined,
+          timestamp: new Date(),
+        };
+        addMessage(assistantMessage);
+      });
 
       if (visualData) {
         setCurrentVisualData(visualData);
@@ -110,7 +124,20 @@ export function ChatInterface() {
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, addMessage, setIsLoading, setCurrentVisualData, user, studentProfile, updateStudentProfile, addQiEnergy, addAuthQiEnergy]);
+  }, [isLoading, addMessage, setIsLoading, setCurrentVisualData, user, studentProfile, updateStudentProfile, addQiEnergy, addAuthQiEnergy, mode]);
+
+  useEffect(() => {
+    if (!mode) {
+      initialTurnStartedRef.current = null;
+      return;
+    }
+
+    if (messages.length > 0 || isLoading) return;
+    if (initialTurnStartedRef.current === mode) return;
+
+    initialTurnStartedRef.current = mode;
+    void sendMessage(mode === "kungfu" ? "диагностика" : "начни урок с вопроса");
+  }, [mode, messages.length, isLoading, sendMessage]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,13 +151,46 @@ export function ChatInterface() {
     }
   };
 
-  const normalizePandaVisual = (visual: any): ChatMessage["visualData"] => {
-    if (!visual || typeof visual !== "object") return undefined;
+  const normalizePandaVisual = (visual: any, text: string): ChatMessage["visualData"] => {
+    const extractCountingFromText = (sourceText: string) => {
+      const lower = sourceText.toLowerCase();
+      const numbers = Array.from(sourceText.matchAll(/\d+/g), (match) => Number(match[0]));
+      if (numbers.length < 2) return undefined;
+      if (!/(кружк|круг|шар|яблок|предмет|точк)/i.test(lower)) return undefined;
+
+      const colors: string[] = [];
+      if (/красн/i.test(lower)) colors.push("red");
+      if (/син/i.test(lower)) colors.push("blue");
+      if (/зелён|зелен/i.test(lower)) colors.push("emerald");
+      if (/желт/i.test(lower)) colors.push("gold");
+      if (/фиолет/i.test(lower)) colors.push("purple");
+
+      return {
+        type: "question" as const,
+        title: "Счёт предметов",
+        prompt: sourceText,
+        cpaVisual: "counting" as const,
+        objects: "кружки",
+        parts: numbers.slice(0, 2),
+        colors: colors.length ? colors.slice(0, 2) : undefined,
+      };
+    };
+
+    if (!visual || typeof visual !== "object") {
+      return extractCountingFromText(text);
+    }
+
     if (visual.type === "number_bond" && typeof visual.total === "number" && Array.isArray(visual.parts)) {
+      const promptText = text || (typeof visual.prompt === "string" ? visual.prompt : "");
+      const promptLower = promptText.toLowerCase();
+      const operation = /[-−]|выч|убер|остал|минус|отня/i.test(promptLower) ? "subtract" : "add";
       return {
         type: "number_bond",
         total: visual.total,
         parts: visual.parts,
+        prompt: promptText,
+        title: typeof visual.title === "string" ? visual.title : undefined,
+        operation,
       };
     }
     if (visual.type === "bar_model" && typeof visual.total === "number" && Array.isArray(visual.segments)) {
@@ -147,7 +207,47 @@ export function ChatInterface() {
         total: typeof visual.total === "number" ? visual.total : undefined,
       };
     }
-    return undefined;
+    if (visual.type === "question" && typeof visual.prompt === "string") {
+      return {
+        type: "question",
+        title: typeof visual.title === "string" ? visual.title : "Задание",
+        prompt: visual.prompt,
+        cpaVisual: typeof visual.cpaVisual === "string" ? visual.cpaVisual : "unknown",
+        objects: typeof visual.objects === "string" ? visual.objects : undefined,
+        parts: Array.isArray(visual.parts) ? visual.parts.filter((value: unknown): value is number => typeof value === "number") : undefined,
+        colors: Array.isArray(visual.colors) ? visual.colors.filter((value: unknown): value is string => typeof value === "string") : undefined,
+        answer: typeof visual.answer === "string" ? visual.answer : undefined,
+        topic: typeof visual.topic === "string" ? visual.topic : undefined,
+        templateType: typeof visual.templateType === "string" ? visual.templateType : undefined,
+        templateFamily: typeof visual.templateFamily === "string" ? visual.templateFamily : undefined,
+        templateLabel: typeof visual.templateLabel === "string" ? visual.templateLabel : undefined,
+        templateStage: typeof visual.templateStage === "string" ? visual.templateStage : undefined,
+        templateGlyph: typeof visual.templateGlyph === "string" ? visual.templateGlyph : undefined,
+        templateSections: Array.isArray(visual.templateSections)
+          ? visual.templateSections
+              .map((section: QuestionVisualSection) => ({
+                label: typeof section?.label === "string" ? section.label : "",
+                kind: section?.kind === "concrete" || section?.kind === "pictorial" || section?.kind === "abstract"
+                  ? section.kind
+                  : "pictorial",
+                bullets: Array.isArray(section?.bullets)
+                  ? section.bullets.filter((value: unknown): value is string => typeof value === "string")
+                  : [],
+              }))
+              .filter((section: QuestionVisualSection) => section.label && section.bullets.length > 0)
+          : undefined,
+        templateHide: typeof visual.templateHide === "string" ? visual.templateHide : undefined,
+        templateWhy: typeof visual.templateWhy === "string" ? visual.templateWhy : undefined,
+        templateNotes: typeof visual.templateNotes === "string" ? visual.templateNotes : undefined,
+        templatePreview: visual.templatePreview && typeof visual.templatePreview === "object" ? visual.templatePreview : undefined,
+        templateReason: typeof visual.templateReason === "string" ? visual.templateReason : undefined,
+        templateSkills: Array.isArray(visual.templateSkills)
+          ? visual.templateSkills.filter((value: unknown): value is string => typeof value === "string")
+          : undefined,
+      };
+    }
+
+    return extractCountingFromText(text);
   };
 
   return (
@@ -257,12 +357,13 @@ export function ChatInterface() {
         <form onSubmit={handleSubmit} className="flex items-end gap-2">
           <VoiceInput onTranscript={(text) => sendMessage(text)} />
           <Textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Напиши свой вопрос..."
             className="min-h-[48px] max-h-[120px] resize-none rounded-xl"
-            disabled={isLoading}
+            autoFocus
           />
           <Button
             type="submit"

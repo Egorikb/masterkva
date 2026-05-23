@@ -37,6 +37,7 @@ const beltNames = {
 function SessionContent() {
   const searchParams = useSearchParams();
   const grade = searchParams.get("grade");
+  const parsedGrade = grade ? Number.parseInt(grade, 10) : null;
   const modeParam = searchParams.get("mode");
   
   const { studentProfile, updateStudentProfile } = useAuthStore();
@@ -51,12 +52,12 @@ function SessionContent() {
     }
   }, [modeParam, setMode]);
 
-  // Update last session grade
+  // Update last session grade only when it actually changes
   useEffect(() => {
-    if (grade && studentProfile) {
-      updateStudentProfile({ lastSessionGrade: parseInt(grade) });
+    if (parsedGrade && studentProfile?.lastSessionGrade !== parsedGrade) {
+      updateStudentProfile({ lastSessionGrade: parsedGrade });
     }
-  }, [grade, studentProfile, updateStudentProfile]);
+  }, [parsedGrade, studentProfile?.lastSessionGrade, updateStudentProfile]);
 
   const handleModeSelect = (newMode: "kungfu" | "homework") => {
     setMode(newMode);
