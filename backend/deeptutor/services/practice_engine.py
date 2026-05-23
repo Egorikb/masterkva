@@ -33,8 +33,8 @@ PRACTICE_BY_TOPIC: dict[str, list[dict[str, str]]] = {
         {"question": "9 + 3 = ?", "answer": "12", "item_family": "addition_within_10_part_whole"},
     ],
     "g2_t01": [
-        {"question": "12 + 5 = ?", "answer": "17"},
-        {"question": "14 + 3 = ?", "answer": "17"},
+        {"question": "12 + 5 = ?", "answer": "17", "item_family": "addition_carry"},
+        {"question": "14 + 3 = ?", "answer": "17", "item_family": "addition_carry"},
     ],
 }
 
