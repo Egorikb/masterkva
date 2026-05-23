@@ -90,6 +90,25 @@ def test_build_template_blueprint_uses_topic_override_for_clock() -> None:
 
 
 
+def test_build_template_blueprint_uses_number_bond_for_early_arithmetic_topics() -> None:
+    topics = [
+        "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+        "ЧИСЛА 6-7",
+        "ЧИСЛА 8-9",
+    ]
+
+    for topic in topics:
+        blueprint = build_template_blueprint({
+            "topic": topic,
+            "question": "1 + 1 = ?",
+            "grade": 1,
+        })
+
+        assert blueprint is not None
+        assert blueprint["templateType"] == "number_bond"
+        assert blueprint["templateFamily"] == "addition_subtraction"
+
+
 def test_build_template_blueprint_uses_percent_grid_for_percent_topics() -> None:
     blueprint = build_template_blueprint({
         "topic": "ПРОЦЕНТЫ",

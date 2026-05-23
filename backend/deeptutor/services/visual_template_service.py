@@ -198,6 +198,41 @@ def _template_blueprint_from_visual(
 
 
 _TEMPLATE_LIBRARY: dict[str, dict[str, Any]] = {
+    "number_bond": {
+        "label": "Числовая связка",
+        "family": "addition_subtraction",
+        "stage": "concrete_pictorial_abstract",
+        "glyph": "🧩",
+        "sections": [
+            {
+                "label": "Concrete",
+                "kind": "concrete",
+                "bullets": [
+                    "Покажи целое и части как отдельные предметы или фишки.",
+                    "Сначала собери части в целое, потом назови число.",
+                ],
+            },
+            {
+                "label": "Pictorial",
+                "kind": "pictorial",
+                "bullets": [
+                    "Отобрази две части и одно целое в компактной схеме.",
+                    "Подпиши части так, чтобы ученик видел, как они складываются.",
+                ],
+            },
+            {
+                "label": "Abstract",
+                "kind": "abstract",
+                "bullets": [
+                    "Только после модели покажи запись примера.",
+                    "Спрячь ответ до того, как ученик увидит связь между частями и целым.",
+                ],
+            },
+        ],
+        "hide": "Не показывать результат раньше, чем ученик увидит части и целое.",
+        "why": "Для ранней арифметики важно увидеть структуру числа как связку частей и целого.",
+        "notes": "Базовый шаблон для grade 1 и ранней арифметики.",
+    },
     "ten_frame": {
         "label": "Десятичная рамка",
         "family": "addition_subtraction",
@@ -1211,7 +1246,12 @@ def decorate_question_visual(question: dict[str, Any]) -> dict[str, Any]:
 
     if template_blueprint and template_blueprint.get("templateSections"):
         template_family = str(template_blueprint.get("templateFamily") or "")
-        if not (template_family in {"addition_subtraction", "place_value"} and _looks_like_simple_arithmetic()):
+        template_type = str(template_blueprint.get("templateType") or "")
+        if not (
+            template_family in {"addition_subtraction", "place_value"}
+            and _looks_like_simple_arithmetic()
+            and template_type != "number_bond"
+        ):
             return {
                 "type": "question",
                 "title": title,
