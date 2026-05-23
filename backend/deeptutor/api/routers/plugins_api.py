@@ -8,6 +8,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_engine
+from deeptutor.services.error_taxonomy import error_taxonomy
 from deeptutor.services.learning_rag import learning_rag
 from deeptutor.services.mastery_evaluator import mastery_evaluator
 from deeptutor.services.practice_engine import PracticeEngine
@@ -582,11 +583,13 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             state = update_user_state(user_id, {"current_practice": practice})
 
         feedback = practice_engine.check_practice_answer(practice, message)
-        report = report_service.build_report(state.get("weak_topic") or practice, feedback)
         skill_resolution = skill_resolver.resolve(
             topic_id=str(practice.get("topic_id") or ""),
             topic_name=str((state.get("weak_topic") or {}).get("topic") or ""),
         )
+        error_details = error_taxonomy.classify_practice_error(practice, feedback, skill_resolution.contract)
+        feedback = {**feedback, **error_details}
+        report = report_service.build_report(state.get("weak_topic") or practice, feedback)
         state = update_user_state(
             user_id,
             {
@@ -612,6 +615,9 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
                 "confidence": feedback.get("confidence"),
                 "user_answer": feedback.get("user_answer"),
                 "correct_answer": feedback.get("correct_answer"),
+                "error_code": feedback.get("error_code"),
+                "error_family": feedback.get("error_family"),
+                "remediation_path": feedback.get("remediation_path"),
             },
         )
         mastery_state = (state.get("mastery_status_by_skill") or {}).get(skill_resolution.skill_id or state.get("current_skill_id") or "", {})

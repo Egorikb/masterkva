@@ -31,5 +31,6 @@ def test_report_practice_result_is_status_string() -> None:
 def test_report_wrong_practice_result_needs_review() -> None:
     report = build_report({"topic": "Сложение"}, {"is_correct": False})
     assert report["practice_result"] == "needs_review"
-    assert "Одна ошибка" in report["summary"]
-    assert "о знании всей темы" in report["recommendations"][1]
+    assert "ошибка типа" in report["summary"]
+    assert report["remediation_path"] == "slow_step_by_step"
+    assert "аналогичный пример" in report["recommendations"][1]
