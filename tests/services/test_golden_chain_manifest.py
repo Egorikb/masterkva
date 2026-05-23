@@ -60,6 +60,9 @@ def test_golden_chain_manifest_matches_registry_and_contracts() -> None:
     ]
     assert contract_by_skill["g1_early_arithmetic_core"]["mode"] == "shadow"
     assert contract_by_skill["g2_addition_core"]["mode"] == "active"
+    assert contract_by_skill["g1_early_arithmetic_core"]["diagnostic"]["item_families"][0] == "counting_with_objects"
+    assert contract_by_skill["g1_early_arithmetic_core"]["remediation"]["targets"]["number_bond_missing_part"] == "number_bond"
+    assert contract_by_skill["g2_addition_core"]["remediation"]["blocked_by"] == ["g1_early_arithmetic_core"]
     assert manifest["promotion_rule"]["owner"] == "backend_state_machine"
     assert manifest["promotion_rule"]["mastery_gate_owner"] == "backend_mastery_evaluator"
     assert manifest["promotion_rule"]["requires_mastery_gate"] is True

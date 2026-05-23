@@ -19,6 +19,24 @@ ERROR_CODE_BY_TOPIC: dict[str, str] = {
     "g9_t01": "graph_shape_error",
 }
 
+ERROR_CODE_BY_ITEM_FAMILY: dict[str, str] = {
+    "counting_with_objects": "counting_with_objects_error",
+    "number_successor": "number_successor_error",
+    "addition_within_10_part_whole": "addition_within_10_part_whole_error",
+    "subtraction_within_10_part_whole": "subtraction_within_10_part_whole_error",
+    "number_bond_missing_part": "number_bond_missing_part_error",
+    "compose_decompose_10": "compose_decompose_10_error",
+}
+
+REMEDIATION_BY_ITEM_FAMILY: dict[str, str] = {
+    "counting_with_objects": "ten_frame",
+    "number_successor": "number_line",
+    "addition_within_10_part_whole": "number_bond",
+    "subtraction_within_10_part_whole": "number_bond",
+    "number_bond_missing_part": "number_bond",
+    "compose_decompose_10": "number_bond",
+}
+
 
 def _family_from_error_code(error_code: str | None) -> str | None:
     if not error_code:
@@ -39,24 +57,32 @@ class ErrorTaxonomy:
             }
 
         topic_id = str(practice_feedback.get("topic_id") or question.get("topic_id") or "").strip()
-        error_code = ERROR_CODE_BY_TOPIC.get(topic_id)
-        taxonomy_source = "topic_map" if error_code else "contract"
+        item_family = str(practice_feedback.get("item_family") or question.get("item_family") or "").strip()
+        error_code = ERROR_CODE_BY_ITEM_FAMILY.get(item_family) if item_family else None
+        remediation_path = REMEDIATION_BY_ITEM_FAMILY.get(item_family) if item_family else None
+        taxonomy_source = "item_family" if error_code else "topic_map"
 
         contract = contract or {}
         diagnostic = contract.get("diagnostic") or {}
         error_model = contract.get("error_model") or {}
         remediation_by_error = dict(error_model.get("remediation_by_error") or {})
+        remediation_targets = dict((contract.get("remediation") or {}).get("targets") or {})
         default_remediation = str(error_model.get("default_remediation") or (contract.get("remediation") or {}).get("default_path") or "slow_step_by_step")
+
+        if not error_code:
+            error_code = ERROR_CODE_BY_TOPIC.get(topic_id)
+            taxonomy_source = "topic_map" if error_code else "contract"
 
         if not error_code:
             detectable = list(diagnostic.get("detectable_errors") or [])
             error_code = detectable[0] if detectable else "procedural_slip"
             taxonomy_source = "contract"
 
-        remediation_path = remediation_by_error.get(error_code) or default_remediation
+        remediation_path = remediation_path or remediation_by_error.get(error_code) or remediation_targets.get(item_family) or default_remediation
         return {
             "error_code": error_code,
             "error_family": _family_from_error_code(error_code),
+            "item_family": item_family or None,
             "remediation_path": remediation_path,
             "taxonomy_source": taxonomy_source,
         }

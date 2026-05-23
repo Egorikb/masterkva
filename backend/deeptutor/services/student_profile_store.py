@@ -41,6 +41,8 @@ def _fresh_profile(user_id: str | None = None) -> dict[str, Any]:
             "current_skill_id": None,
             "current_topic_id": None,
             "current_grade": None,
+            "blocked_skill_ids": [],
+            "remediation_targets": {},
             "updated_at": None,
         },
         "skill_mastery": {},
@@ -127,6 +129,8 @@ def record_diagnostic_result(
     diagnosis_confidence: float | None,
     weak_topic: dict[str, Any] | None,
     detected_gaps: list[str] | None,
+    blocked_skill_ids: list[str] | None = None,
+    remediation_targets: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     profile = ensure_student_profile(user_id)
     profile["activity_counters"]["diagnostic_sessions"] = int(profile["activity_counters"].get("diagnostic_sessions") or 0) + 1
@@ -137,6 +141,8 @@ def record_diagnostic_result(
         "current_skill_id": current_skill_id,
         "current_topic_id": current_topic_id,
         "current_grade": current_grade,
+        "blocked_skill_ids": list(blocked_skill_ids or []),
+        "remediation_targets": dict(remediation_targets or {}),
         "updated_at": _utc_now(),
     }
     profile.setdefault("diagnostic_history", []).append(
@@ -150,8 +156,24 @@ def record_diagnostic_result(
             "weak_topic_id": (weak_topic or {}).get("topic_id"),
             "weak_topic": (weak_topic or {}).get("topic"),
             "detected_gaps": list(detected_gaps or []),
+            "blocked_skill_ids": list(blocked_skill_ids or []),
+            "remediation_targets": dict(remediation_targets or {}),
         }
     )
+    if blocked_skill_ids:
+        for blocked_skill_id in blocked_skill_ids:
+            profile = _upsert_skill_entry(
+                profile,
+                blocked_skill_id,
+                {
+                    "skill_id": blocked_skill_id,
+                    "blocked_by": [current_skill_id] if current_skill_id else [],
+                    "blocked_reason": "prerequisite_gap",
+                    "blocked_at": _utc_now(),
+                    "blocked_until": None,
+                    "blocked_by_error_families": list(remediation_targets or {}),
+                },
+            )
     profile["last_updated_at"] = _utc_now()
     return update_student_profile(user_id, profile)
 
@@ -221,6 +243,7 @@ def record_mastery_evaluation(
     remediation_path: str | None,
     error_code: str | None = None,
     error_family: str | None = None,
+    unblocked_skill_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     profile = ensure_student_profile(user_id)
     profile["activity_counters"]["mastery_checks"] = int(profile["activity_counters"].get("mastery_checks") or 0) + 1
@@ -261,6 +284,18 @@ def record_mastery_evaluation(
         )
         if decision == "mastered":
             profile["skill_mastery"][skill_id]["last_mastered_at"] = _utc_now()
+    if unblocked_skill_ids:
+        active_scope = dict(profile.get("active_scope") or {})
+        blocked_ids = [blocked_id for blocked_id in list(active_scope.get("blocked_skill_ids") or []) if blocked_id not in set(unblocked_skill_ids)]
+        active_scope["blocked_skill_ids"] = blocked_ids
+        profile["active_scope"] = active_scope
+        for unblocked_skill_id in unblocked_skill_ids:
+            if unblocked_skill_id in profile.get("skill_mastery", {}):
+                profile["skill_mastery"][unblocked_skill_id].pop("blocked_by", None)
+                profile["skill_mastery"][unblocked_skill_id].pop("blocked_reason", None)
+                profile["skill_mastery"][unblocked_skill_id].pop("blocked_at", None)
+                profile["skill_mastery"][unblocked_skill_id].pop("blocked_until", None)
+                profile["skill_mastery"][unblocked_skill_id].pop("blocked_by_error_families", None)
     profile["last_updated_at"] = _utc_now()
     return update_student_profile(user_id, profile)
 

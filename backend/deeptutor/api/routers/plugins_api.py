@@ -373,6 +373,9 @@ def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         "diagnosis_result_id": None,
         "diagnosis_confidence": None,
         "detected_gaps": [],
+        "blocked_skill_ids": [],
+        "remediation_targets": {},
+        "diagnostic_gap_status": None,
         "explanation_ack_pending": False,
         "explanation_shown_for_skill_id": None,
         "runtime_audit_log": list(state.get("runtime_audit_log") or []),
@@ -406,6 +409,9 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     )
     contract_summary = skill_resolver.skill_summary(resolution)["contract_summary"]
     learning_context = _learning_context_for_topic(result.actual_grade, start_topic)
+    remediation_targets = dict(contract_summary.get("remediation_targets") or {})
+    blocked_skill_ids = list(resolution.next_skills or [])
+    diagnostic_gap_status = "diagnosed_gap" if result.weak_topics else "clear"
 
     summary_line = result.get_learning_path()["message"].splitlines()[0]
     topic_name = str(start_topic.get("topic") or "тема")
@@ -444,6 +450,9 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         "diagnosis_result_id": f"diag_{result.actual_grade}_{len(answers)}_{len(result.weak_topics)}",
         "diagnosis_confidence": result.success_rate,
         "detected_gaps": [topic.get("skill_id") or topic.get("topic_id") for topic in result.weak_topics],
+        "blocked_skill_ids": blocked_skill_ids,
+        "remediation_targets": remediation_targets,
+        "diagnostic_gap_status": diagnostic_gap_status,
         "explanation_ack_pending": True,
         "explanation_shown_for_skill_id": resolution.skill_id,
         "registry_resolution": {
@@ -464,6 +473,8 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
         diagnosis_confidence=result.success_rate,
         weak_topic=start_topic,
         detected_gaps=list(next_state["detected_gaps"]),
+        blocked_skill_ids=blocked_skill_ids,
+        remediation_targets=remediation_targets,
     )
     _append_runtime_audit_log(
         user_id,
@@ -743,12 +754,13 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
                 "mastery_check_result": state.get("mastery_check_result"),
                 "promotion_eligible": bool(state.get("promotion_eligible")),
                 "mastery_check_pending": bool(state.get("mastery_check_pending")),
+                "blocked_skill_ids": [] if mastery_decision.decision == "mastered" else list(state.get("blocked_skill_ids") or []),
                 "phase": state.get("phase") or "report",
             },
         )
         record_mastery_evaluation(
             user_id,
-            skill_id=mastery_decision.skill_id or skill_resolution.skill_id or state.get("current_skill_id"),
+            skill_id=mastery_decision.skill_id or state.get("current_skill_id"),
             skill_version=skill_resolution.skill_version,
             decision=mastery_decision.decision,
             confidence=mastery_decision.confidence,
@@ -758,6 +770,7 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             remediation_path=feedback.get("remediation_path"),
             error_code=feedback.get("error_code"),
             error_family=feedback.get("error_family"),
+            unblocked_skill_ids=list(skill_resolution.next_skills or []) if mastery_decision.decision == "mastered" else None,
         )
         _append_runtime_audit_log(
             user_id,

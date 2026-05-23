@@ -16,6 +16,14 @@
         "item_types": [
           "numeric"
         ],
+        "item_families": [
+          "counting_with_objects",
+          "number_successor",
+          "addition_within_10_part_whole",
+          "subtraction_within_10_part_whole",
+          "number_bond_missing_part",
+          "compose_decompose_10"
+        ],
         "detectable_errors": [
           "carry_error",
           "procedural_slip",
@@ -37,7 +45,15 @@
       },
       "remediation": {
         "required": true,
-        "default_path": "number_bond"
+        "default_path": "number_bond",
+        "targets": {
+          "counting_with_objects": "ten_frame",
+          "number_successor": "number_line",
+          "addition_within_10_part_whole": "number_bond",
+          "subtraction_within_10_part_whole": "number_bond",
+          "number_bond_missing_part": "number_bond",
+          "compose_decompose_10": "number_bond"
+        }
       },
       "visual_policy": {
         "template": "number_bond",
@@ -105,7 +121,8 @@
       },
       "remediation": {
         "required": true,
-        "default_path": "base_ten_blocks"
+        "default_path": "base_ten_blocks",
+        "blocked_by": ["g1_early_arithmetic_core"]
       },
       "visual_policy": {
         "template": "base_ten_blocks",

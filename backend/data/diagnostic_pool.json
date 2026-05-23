@@ -5,6 +5,7 @@
       "grade": 1,
       "topic_id": "g1_t07",
       "topic": "СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10",
+      "item_family": "addition_within_10_part_whole",
       "question": "Сколько будет 8 + 5?",
       "answer": "13",
       "alternatives": [
@@ -17,6 +18,7 @@
       "grade": 1,
       "topic_id": "g1_t02",
       "topic": "Следующее число",
+      "item_family": "number_successor",
       "question": "Какое число идёт после 6?",
       "answer": "7",
       "alternatives": [
@@ -29,6 +31,7 @@
       "grade": 1,
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
       "question": "4 + 3 = ?",
       "answer": "7",
       "alternatives": [
@@ -41,6 +44,7 @@
       "grade": 1,
       "topic_id": "g1_t04",
       "topic": "Вычитание",
+      "item_family": "subtraction_within_10_part_whole",
       "question": "7 - 4 = ?",
       "answer": "3",
       "alternatives": [
@@ -53,6 +57,7 @@
       "grade": 1,
       "topic_id": "g1_t01",
       "topic": "ПОДГОТОВКА",
+      "item_family": "counting_with_objects",
       "question": "Сколько всего предметов: 2 и 1?",
       "answer": "3",
       "alternatives": [
@@ -69,6 +74,7 @@
       "grade": 1,
       "topic_id": "g1_t05",
       "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+      "item_family": "number_bond_missing_part",
       "question": "2 + 1 = ?",
       "answer": "3",
       "alternatives": [
@@ -85,6 +91,7 @@
       "grade": 1,
       "topic_id": "g1_t06",
       "topic": "СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)",
+      "item_family": "compose_decompose_10",
       "question": "20 + 30 = ?",
       "answer": "50",
       "alternatives": [

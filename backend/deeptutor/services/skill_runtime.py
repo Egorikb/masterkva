@@ -16,6 +16,7 @@ class SkillResolution:
     skill_version: str | None
     topic_id: str | None
     lesson_id: str | None
+    next_skills: list[str]
     contract: dict[str, Any]
     source: str
     mode: str
@@ -116,6 +117,7 @@ class SkillResolver:
                 skill_version=self.registry.get("version", "v1"),
                 topic_id=topic_id,
                 lesson_id=lesson_id,
+                next_skills=[],
                 contract={},
                 source="fallback",
                 mode="shadow",
@@ -132,6 +134,7 @@ class SkillResolver:
             skill_version=str(contract.get("version") or skill.get("version") or self.registry.get("version", "v1")),
             topic_id=topic_id or (skill.get("topic_ids") or [None])[0],
             lesson_id=lesson_id,
+            next_skills=list(skill.get("next_skills") or []),
             contract=contract,
             source="registry",
             mode=mode,
@@ -173,6 +176,9 @@ class SkillResolver:
                 "board_policy": resolution.contract.get("board_policy") or "off",
                 "mastery_gate": dict(resolution.contract.get("mastery_gate") or {}),
                 "visual_template": (resolution.contract.get("visual_policy") or {}).get("template"),
+                "remediation_default_path": (resolution.contract.get("remediation") or {}).get("default_path"),
+                "remediation_targets": dict((resolution.contract.get("remediation") or {}).get("targets") or {}),
+                "diagnostic_item_families": list((resolution.contract.get("diagnostic") or {}).get("item_families") or []),
                 "mode": resolution.mode,
                 "validation": validation_summary,
             },
