@@ -4,11 +4,31 @@ import json
 from pathlib import Path
 from typing import Any
 
+from deeptutor.services.visual_template_service import CANONICAL_VISUAL_TYPES
+
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 SKILL_REGISTRY_FILE = DATA_DIR / "skill_registry.json"
 SKILL_CONTRACTS_FILE = DATA_DIR / "skill_contracts.json"
 DIAGNOSTIC_POOL_FILE = DATA_DIR / "diagnostic_pool.json"
-PRACTICE_ENGINE_FILE = Path(__file__).resolve().parent / "practice_engine.py"
+
+_CANONICAL_VISUAL_TYPES_BY_NAME = {v["visual_type"]: v for v in CANONICAL_VISUAL_TYPES}
+
+# Grade bands for visual types (approximate)
+_JUNIOR_GRADES = {1, 2, 3}
+_MIDDLE_GRADES = {4, 5, 6}
+_SENIOR_GRADES = {7, 8, 9}
+
+# Visual types recommended for each grade band
+_JUNIOR_VISUALS = {"ten_frame", "number_line", "base_ten_blocks", "place_value_chart",
+                   "part_part_whole_bar", "number_bond", "clock_face", "spatial_relations",
+                   "shape_recognition"}
+_MIDDLE_VISUALS = {"place_value_chart", "base_ten_blocks", "part_part_whole_bar",
+                   "area_model_grid", "array_matrix", "bar_model_strip_diagram",
+                   "ratio_table", "fraction_circle_region", "percent_grid_10x10",
+                   "balance_scale_equation"}
+_SENIOR_VISUALS = {"coordinate_plane_plot", "algebra_tiles", "balance_scale_equation",
+                   "function_table", "cartesian_graph", "double_number_line",
+                   "double_number_line_dynamic", "net_of_solid", "geoboard_dynamic"}
 
 
 class CoverageReport:
@@ -119,10 +139,31 @@ class CoverageReport:
             checks["blocking_gaps"].append("missing_remediation")
 
         # Check visual policy
-        has_visual = bool(contract.get("visual_policy", {}))
+        visual_policy = contract.get("visual_policy", {})
+        has_visual = bool(visual_policy)
         checks["coverage"]["visual_policy"] = "present" if has_visual else "missing"
         if not has_visual:
             checks["warnings"].append("missing_visual_policy")
+        else:
+            visual_type = str(visual_policy.get("template") or "").strip()
+            if visual_type:
+                # Validate visual type is canonical
+                if visual_type not in _CANONICAL_VISUAL_TYPES_BY_NAME:
+                    checks["warnings"].append(f"unknown_visual_type:{visual_type}")
+                else:
+                    # Validate visual type matches grade band
+                    grade = skill.get("grade", 0)
+                    if grade in _JUNIOR_GRADES and visual_type not in _JUNIOR_VISUALS | _MIDDLE_VISUALS:
+                        checks["warnings"].append(
+                            f"visual_type_grade_mismatch: {visual_type} for grade {grade}"
+                        )
+                    elif grade in _SENIOR_GRADES and visual_type not in _MIDDLE_VISUALS | _SENIOR_VISUALS:
+                        checks["warnings"].append(
+                            f"visual_type_grade_mismatch: {visual_type} for grade {grade}"
+                        )
+                checks["coverage"]["visual_type"] = visual_type
+            else:
+                checks["warnings"].append("missing_visual_type_in_policy")
 
         # Check board policy
         board_policy = str(contract.get("board_policy") or "").strip()

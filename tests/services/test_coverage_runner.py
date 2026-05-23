@@ -113,3 +113,146 @@ def test_coverage_runner_active_with_gaps_warns() -> None:
         assert "test_active_gap" in skills
         # Active skill with blocking gaps should be in active_with_gaps
         assert "test_active_gap" in report["active_with_gaps"]
+
+
+def test_coverage_runner_validates_visual_type() -> None:
+    """Unknown visual type should produce warning."""
+    registry = {
+        "version": "v1",
+        "mode": "shadow",
+        "skills": [
+            {
+                "skill_id": "test_bad_visual",
+                "grade": 1,
+                "domain": "test",
+                "topic_ids": ["test_t01"],
+                "topic_names": ["Test"],
+                "prerequisites": [],
+                "next_skills": [],
+                "contract_id": "test_bad_visual.v1",
+            }
+        ],
+    }
+    contracts = {
+        "version": "v1",
+        "contracts": [
+            {
+                "id": "test_bad_visual.v1",
+                "skill_id": "test_bad_visual",
+                "coverage": {"status": "partial"},
+                "diagnostic": {"required": True, "item_types": ["numeric"]},
+                "visual_policy": {"template": "nonexistent_visual_type"},
+                "mode": "shadow",
+                "validation": {"required": True, "required_sections": []},
+            }
+        ],
+    }
+    diag_pool = {"items": []}
+
+    with patch.object(CoverageReport, "_load_json") as mock_load:
+        mock_load.side_effect = lambda path: {
+            "skill_registry.json": registry,
+            "skill_contracts.json": contracts,
+            "diagnostic_pool.json": diag_pool,
+        }.get(path.name, {})
+
+        report = run_coverage()
+        skills = {s["skill_id"]: s for s in report["skills"]}
+        assert "test_bad_visual" in skills
+        assert any("unknown_visual_type" in w for w in skills["test_bad_visual"]["warnings"])
+
+
+def test_coverage_runner_visual_grade_mismatch() -> None:
+    """Senior-only visual type for junior grade should warn."""
+    registry = {
+        "version": "v1",
+        "mode": "shadow",
+        "skills": [
+            {
+                "skill_id": "test_grade_mismatch",
+                "grade": 1,
+                "domain": "test",
+                "topic_ids": ["test_t01"],
+                "topic_names": ["Test"],
+                "prerequisites": [],
+                "next_skills": [],
+                "contract_id": "test_grade_mismatch.v1",
+            }
+        ],
+    }
+    contracts = {
+        "version": "v1",
+        "contracts": [
+            {
+                "id": "test_grade_mismatch.v1",
+                "skill_id": "test_grade_mismatch",
+                "coverage": {"status": "partial"},
+                "diagnostic": {"required": True, "item_types": ["numeric"]},
+                "visual_policy": {"template": "cartesian_graph"},
+                "mode": "shadow",
+                "validation": {"required": True, "required_sections": []},
+            }
+        ],
+    }
+    diag_pool = {"items": []}
+
+    with patch.object(CoverageReport, "_load_json") as mock_load:
+        mock_load.side_effect = lambda path: {
+            "skill_registry.json": registry,
+            "skill_contracts.json": contracts,
+            "diagnostic_pool.json": diag_pool,
+        }.get(path.name, {})
+
+        report = run_coverage()
+        skills = {s["skill_id"]: s for s in report["skills"]}
+        assert "test_grade_mismatch" in skills
+        assert any("visual_type_grade_mismatch" in w for w in skills["test_grade_mismatch"]["warnings"])
+
+
+def test_coverage_runner_canonical_visual_passes() -> None:
+    """Canonical visual type for correct grade should pass."""
+    registry = {
+        "version": "v1",
+        "mode": "shadow",
+        "skills": [
+            {
+                "skill_id": "test_good_visual",
+                "grade": 1,
+                "domain": "test",
+                "topic_ids": ["test_t01"],
+                "topic_names": ["Test"],
+                "prerequisites": [],
+                "next_skills": [],
+                "contract_id": "test_good_visual.v1",
+            }
+        ],
+    }
+    contracts = {
+        "version": "v1",
+        "contracts": [
+            {
+                "id": "test_good_visual.v1",
+                "skill_id": "test_good_visual",
+                "coverage": {"status": "partial"},
+                "diagnostic": {"required": True, "item_types": ["numeric"]},
+                "visual_policy": {"template": "number_bond"},
+                "mode": "shadow",
+                "validation": {"required": True, "required_sections": []},
+            }
+        ],
+    }
+    diag_pool = {"items": [{"topic_id": "test_t01", "skill_id": "test_good_visual"}]}
+
+    with patch.object(CoverageReport, "_load_json") as mock_load:
+        mock_load.side_effect = lambda path: {
+            "skill_registry.json": registry,
+            "skill_contracts.json": contracts,
+            "diagnostic_pool.json": diag_pool,
+        }.get(path.name, {})
+
+        report = run_coverage()
+        skills = {s["skill_id"]: s for s in report["skills"]}
+        assert "test_good_visual" in skills
+        warnings = skills["test_good_visual"]["warnings"]
+        assert not any("unknown_visual_type" in w for w in warnings)
+        assert not any("visual_type_grade_mismatch" in w for w in warnings)

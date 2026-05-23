@@ -121,6 +121,36 @@ CANONICAL_VISUAL_TYPES: list[dict[str, Any]] = [
         "purpose": "Показывать время на циферблате, час и полчаса",
         "best_for": ["geometry_measurement", "measurement"],
     },
+    {
+        "visual_type": "number_bond",
+        "purpose": "Показывать целое и части, связку числа",
+        "best_for": ["addition_subtraction", "early_number_sense"],
+    },
+    {
+        "visual_type": "cartesian_graph_slider",
+        "purpose": "Показывать графики функций со слайдерами параметров",
+        "best_for": ["functions_graphs"],
+    },
+    {
+        "visual_type": "balance_scale_linear",
+        "purpose": "Показывать линейные уравнения как баланс",
+        "best_for": ["expressions_equations_inequalities"],
+    },
+    {
+        "visual_type": "fraction_bars",
+        "purpose": "Показывать дроби как части полосы",
+        "best_for": ["fractions_decimals_percents"],
+    },
+    {
+        "visual_type": "cut_and_drag_parallelogram",
+        "purpose": "Показывать преобразование фигур и площади",
+        "best_for": ["geometry_measurement"],
+    },
+    {
+        "visual_type": "division_groups",
+        "purpose": "Показывать деление на группы и  sharing",
+        "best_for": ["multiplication_division"],
+    },
 ]
 
 _BASE_DIR = Path(__file__).resolve().parents[2]
