@@ -16,6 +16,8 @@ def test_grade_one_sequence_uses_all_grade_one_questions() -> None:
     assert sequence[0]["skill_mode"] == "shadow"
     assert sequence[0]["coverage_status"] == "partial"
     assert sequence[0]["board_policy"] == "off"
+    assert sequence[0]["contract_validation"]["required"] is True
+    assert sequence[0]["contract_validation"]["board_policy_locked"] is True
 
 
 def test_grade_two_pilot_skill_is_marked_active() -> None:

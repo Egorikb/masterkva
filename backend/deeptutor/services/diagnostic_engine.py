@@ -159,6 +159,7 @@ class DiagnosticEngine:
             "visual_template": (contract.get("visual_policy") or {}).get("template"),
             "error_model": dict(contract.get("error_model") or {}),
             "mastery_gate": dict(contract.get("mastery_gate") or {}),
+            "validation": dict(contract.get("validation") or {}),
         }
 
     def _enrich_question(self, question: dict[str, Any]) -> dict[str, Any]:
@@ -173,6 +174,7 @@ class DiagnosticEngine:
             enriched["error_model"] = skill["error_model"]
             enriched["mastery_gate"] = skill["mastery_gate"]
             enriched["skill_contract_id"] = skill["contract_id"]
+            enriched["contract_validation"] = skill["validation"]
         return enriched
 
     def get_questions_for_grade(self, grade: int) -> list[dict[str, Any]]:

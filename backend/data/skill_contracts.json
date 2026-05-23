@@ -13,11 +13,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["numeric"],
-        "detectable_errors": ["carry_error", "procedural_slip", "visual_misread"]
+        "item_types": [
+          "numeric"
+        ],
+        "detectable_errors": [
+          "carry_error",
+          "procedural_slip",
+          "visual_misread"
+        ]
       },
       "error_model": {
-        "types": ["carry_error", "procedural_slip", "visual_misread"],
+        "types": [
+          "carry_error",
+          "procedural_slip",
+          "visual_misread"
+        ],
         "remediation_by_error": {
           "carry_error": "number_bond",
           "procedural_slip": "slow_step_by_step",
@@ -40,7 +50,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g2_addition_core.v1",
@@ -54,11 +81,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["numeric"],
-        "detectable_errors": ["place_value_error", "carry_error", "procedural_slip"]
+        "item_types": [
+          "numeric"
+        ],
+        "detectable_errors": [
+          "place_value_error",
+          "carry_error",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["place_value_error", "carry_error", "procedural_slip"],
+        "types": [
+          "place_value_error",
+          "carry_error",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "place_value_error": "base_ten_blocks",
           "carry_error": "number_bond",
@@ -81,7 +118,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "active"
+      "mode": "active",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g3_time_measurement_core.v1",
@@ -95,11 +149,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["time"],
-        "detectable_errors": ["clock_reading_error", "unit_conversion_error", "procedural_slip"]
+        "item_types": [
+          "time"
+        ],
+        "detectable_errors": [
+          "clock_reading_error",
+          "unit_conversion_error",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["clock_reading_error", "unit_conversion_error", "procedural_slip"],
+        "types": [
+          "clock_reading_error",
+          "unit_conversion_error",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "clock_reading_error": "clock_face",
           "unit_conversion_error": "time_unit_table",
@@ -122,7 +186,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g4_place_value_core.v1",
@@ -136,11 +217,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["place_value"],
-        "detectable_errors": ["place_value_error", "digit_order_error", "procedural_slip"]
+        "item_types": [
+          "place_value"
+        ],
+        "detectable_errors": [
+          "place_value_error",
+          "digit_order_error",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["place_value_error", "digit_order_error", "procedural_slip"],
+        "types": [
+          "place_value_error",
+          "digit_order_error",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "place_value_error": "place_value_chart",
           "digit_order_error": "base_ten_blocks",
@@ -163,7 +254,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 4,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g5_simple_equations_core.v1",
@@ -177,11 +285,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["equation"],
-        "detectable_errors": ["balance_misread", "inverse_operation_error", "procedural_slip"]
+        "item_types": [
+          "equation"
+        ],
+        "detectable_errors": [
+          "balance_misread",
+          "inverse_operation_error",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["balance_misread", "inverse_operation_error", "procedural_slip"],
+        "types": [
+          "balance_misread",
+          "inverse_operation_error",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "balance_misread": "balance_scale_equation",
           "inverse_operation_error": "step_by_step_inverse_operation",
@@ -204,7 +322,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 5,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g6_percent_core.v1",
@@ -218,11 +353,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["percent"],
-        "detectable_errors": ["percent_calculation_error", "ratio_misread", "procedural_slip"]
+        "item_types": [
+          "percent"
+        ],
+        "detectable_errors": [
+          "percent_calculation_error",
+          "ratio_misread",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["percent_calculation_error", "ratio_misread", "procedural_slip"],
+        "types": [
+          "percent_calculation_error",
+          "ratio_misread",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "percent_calculation_error": "percent_grid_10x10",
           "ratio_misread": "part_part_whole_bar",
@@ -245,7 +390,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 6,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g7_rational_numbers_core.v1",
@@ -259,11 +421,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["number_line"],
-        "detectable_errors": ["sign_error", "number_line_misread", "procedural_slip"]
+        "item_types": [
+          "number_line"
+        ],
+        "detectable_errors": [
+          "sign_error",
+          "number_line_misread",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["sign_error", "number_line_misread", "procedural_slip"],
+        "types": [
+          "sign_error",
+          "number_line_misread",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "sign_error": "number_line",
           "number_line_misread": "number_bond",
@@ -286,7 +458,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 7,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g8_linear_equations_core.v1",
@@ -300,11 +489,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["equation"],
-        "detectable_errors": ["balance_misread", "inverse_operation_error", "procedural_slip"]
+        "item_types": [
+          "equation"
+        ],
+        "detectable_errors": [
+          "balance_misread",
+          "inverse_operation_error",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["balance_misread", "inverse_operation_error", "procedural_slip"],
+        "types": [
+          "balance_misread",
+          "inverse_operation_error",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "balance_misread": "balance_scale_linear",
           "inverse_operation_error": "step_by_step_inverse_operation",
@@ -327,7 +526,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 8,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     },
     {
       "id": "g9_quadratic_functions_core.v1",
@@ -341,11 +557,21 @@
       },
       "diagnostic": {
         "required": true,
-        "item_types": ["graph"],
-        "detectable_errors": ["graph_shape_error", "coefficient_misread", "procedural_slip"]
+        "item_types": [
+          "graph"
+        ],
+        "detectable_errors": [
+          "graph_shape_error",
+          "coefficient_misread",
+          "procedural_slip"
+        ]
       },
       "error_model": {
-        "types": ["graph_shape_error", "coefficient_misread", "procedural_slip"],
+        "types": [
+          "graph_shape_error",
+          "coefficient_misread",
+          "procedural_slip"
+        ],
         "remediation_by_error": {
           "graph_shape_error": "cartesian_graph_slider",
           "coefficient_misread": "graph_parameter_table",
@@ -368,7 +594,24 @@
         "correct": 4,
         "window": 5
       },
-      "mode": "shadow"
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 9,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "error_model",
+          "remediation",
+          "visual_policy",
+          "board_policy",
+          "mastery_gate",
+          "mode"
+        ]
+      }
     }
   ]
 }

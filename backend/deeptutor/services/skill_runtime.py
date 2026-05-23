@@ -71,6 +71,35 @@ class SkillResolver:
                 index.setdefault(self._norm(str(topic_name)), entry)
         return index
 
+    def _validate_contract(self, contract: dict[str, Any], skill_id: str | None = None) -> list[str]:
+        warnings: list[str] = []
+        if not contract:
+            warnings.append("missing_contract")
+            return warnings
+
+        validation = contract.get("validation") or {}
+        if not isinstance(validation, dict) or not validation:
+            warnings.append("validation_missing")
+            return warnings
+
+        required_sections = list(validation.get("required_sections") or [])
+        for section in required_sections:
+            if section not in contract:
+                warnings.append(f"missing_section:{section}")
+
+        if validation.get("board_policy_locked") and str(contract.get("board_policy") or "").strip().lower() not in {"off", "limited", "on"}:
+            warnings.append("invalid_board_policy")
+
+        if validation.get("mastery_owned_by_backend") and not contract.get("mastery_gate"):
+            warnings.append("missing_mastery_gate")
+
+        if validation.get("diagnosis_hint_policy") == "none":
+            diagnostic = contract.get("diagnostic") or {}
+            if isinstance(diagnostic, dict) and diagnostic.get("required") and diagnostic.get("item_types") is None:
+                warnings.append("diagnostic_shape_incomplete")
+
+        return warnings
+
     def resolve(self, *, topic_id: str | None = None, topic_name: str | None = None, lesson_id: str | None = None) -> SkillResolution:
         warnings: list[str] = []
         lookup_keys = [self._norm(topic_id), self._norm(topic_name), self._norm(lesson_id)]
@@ -97,6 +126,7 @@ class SkillResolver:
         mode = str(contract.get("mode") or skill.get("mode") or self.registry.get("mode", "shadow")).strip().lower()
         if mode not in {"shadow", "active"}:
             mode = "shadow"
+        warnings.extend(self._validate_contract(contract, str(skill.get("skill_id") or None)))
         return SkillResolution(
             skill_id=str(skill.get("skill_id") or "") or None,
             skill_version=str(contract.get("version") or skill.get("version") or self.registry.get("version", "v1")),
@@ -121,6 +151,15 @@ class SkillResolver:
         return default
 
     def skill_summary(self, resolution: SkillResolution) -> dict[str, Any]:
+        validation = resolution.contract.get("validation") or {}
+        validation_summary = {
+            "required": bool(validation.get("required", False)),
+            "grade_band": validation.get("grade_band"),
+            "diagnosis_hint_policy": validation.get("diagnosis_hint_policy"),
+            "board_policy_locked": bool(validation.get("board_policy_locked", False)),
+            "mastery_owned_by_backend": bool(validation.get("mastery_owned_by_backend", False)),
+            "required_sections": list(validation.get("required_sections") or []),
+        }
         return {
             "skill_id": resolution.skill_id,
             "skill_version": resolution.skill_version,
@@ -135,6 +174,7 @@ class SkillResolver:
                 "mastery_gate": dict(resolution.contract.get("mastery_gate") or {}),
                 "visual_template": (resolution.contract.get("visual_policy") or {}).get("template"),
                 "mode": resolution.mode,
+                "validation": validation_summary,
             },
         }
 

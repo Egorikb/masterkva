@@ -32,6 +32,11 @@ def test_golden_chain_manifest_matches_registry_and_contracts() -> None:
         assert contract_by_skill[skill_id]["remediation"]["required"] is True
         assert contract_by_skill[skill_id]["board_policy"] in {"off", "limited", "on"}
         assert contract_by_skill[skill_id]["visual_policy"]["diagnosis"] == "off"
+        assert contract_by_skill[skill_id]["validation"]["required"] is True
+        assert contract_by_skill[skill_id]["validation"]["board_policy_locked"] is True
+        assert contract_by_skill[skill_id]["validation"]["mastery_owned_by_backend"] is True
+        assert "coverage" in contract_by_skill[skill_id]["validation"]["required_sections"]
+        assert "mastery_gate" in contract_by_skill[skill_id]["validation"]["required_sections"]
 
     assert registry_by_id["g1_early_arithmetic_core"]["next_skills"] == ["g2_addition_core"]
     assert registry_by_id["g2_addition_core"]["prerequisites"] == ["g1_early_arithmetic_core"]
