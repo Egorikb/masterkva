@@ -321,6 +321,105 @@ def test_mastery_gate_stays_closed_on_insufficient_evidence(tmp_path, monkeypatc
     assert "TEACHER_OK" in payload["text"]
 
 
+
+def test_golden_chain_hardening_run_promotes_from_g1_to_g2(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
+    user_id = f"mvp-golden-chain-promotion-{uuid.uuid4()}"
+    seed_history_g1 = [
+        {"question_id": f"g1-seed-{idx}", "is_correct": True, "confidence": 1.0}
+        for idx in range(1, 5)
+    ]
+    seed_history_g2 = [
+        {"question_id": f"g2-seed-{idx}", "is_correct": True, "confidence": 1.0}
+        for idx in range(1, 5)
+    ]
+    save_user_states(
+        {
+            user_id: {
+                "name": "Алиса",
+                "grade": 1,
+                "phase": "practice",
+                "weak_topic": {
+                    "grade": 1,
+                    "topic_id": "g1_t05",
+                    "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+                    "source_question_id": "g1_t05_q01",
+                },
+                "current_practice": {
+                    "id": "g1_t05_p01",
+                    "topic_id": "g1_t05",
+                    "title": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+                    "question": "2 + 1 = ?",
+                    "answer": "3",
+                    "item_family": "number_bond_missing_part",
+                    "attempts": 0,
+                },
+                "practice_feedback": None,
+                "report": None,
+                "blocked_skill_ids": ["g2_addition_core"],
+                "remediation_targets": {"number_bond_missing_part": "number_bond"},
+                "mastery_status_by_skill": {
+                    "g1_early_arithmetic_core": {
+                        "status": "learning",
+                        "attempt_history": seed_history_g1,
+                    },
+                    "g2_addition_core": {
+                        "status": "learning",
+                        "attempt_history": seed_history_g2,
+                    },
+                },
+                "current_skill_id": "g1_early_arithmetic_core",
+                "current_skill_version": "v1",
+                "current_skill_mode": "shadow",
+                "current_topic_id": "g1_t05",
+                "learning_mode_active": True,
+                "mastery_check_pending": False,
+                "promotion_eligible": False,
+            }
+        }
+    )
+
+    with TestClient(_build_app()) as client:
+        g1_mastery = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "3"},
+        )
+        assert g1_mastery.status_code == 200
+        g1_payload = g1_mastery.json()
+        assert g1_payload["state"]["phase"] == "mastery_check"
+        assert g1_payload["state"]["mastery_gate_status"] == "mastered"
+        assert g1_payload["state"]["promotion_eligible"] is True
+        assert g1_payload["state"]["blocked_skill_ids"] == []
+
+        promote = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "давай"},
+        )
+        assert promote.status_code == 200
+        promote_payload = promote.json()
+        assert promote_payload["state"]["phase"] == "practice"
+        assert promote_payload["state"]["current_skill_id"] == "g2_addition_core"
+        assert promote_payload["state"]["current_practice"]["topic_id"] == "g2_t01"
+        assert promote_payload["state"]["current_practice"]["question"] == "12 + 5 = ?"
+        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g1_early_arithmetic_core"
+        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g2_addition_core"
+        assert promote_payload["state"]["blocked_skill_ids"] == []
+
+        g2_mastery = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "17"},
+        )
+        assert g2_mastery.status_code == 200
+        g2_payload = g2_mastery.json()
+        assert g2_payload["state"]["phase"] == "mastery_check"
+        assert g2_payload["state"]["current_skill_id"] == "g2_addition_core"
+        assert g2_payload["state"]["mastery_gate_status"] == "mastered"
+        assert g2_payload["state"]["promotion_eligible"] is True
+        assert g2_payload["state"]["blocked_skill_ids"] == []
+        assert g2_payload["state"]["mastery_check_result"]["decision"] == "mastered"
+
+
 def test_report_followup_continues_to_next_practice(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")

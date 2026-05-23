@@ -19,6 +19,7 @@ from deeptutor.services.student_profile_store import (
     record_diagnostic_result,
     record_mastery_evaluation,
     record_practice_attempt,
+    record_promotion,
 )
 from deeptutor.services.teacher_llm import generate_teacher_reply
 from deeptutor.services.visual_template_service import decorate_question_visual
@@ -190,6 +191,16 @@ def _ensure_state_defaults(state: dict[str, Any]) -> dict[str, Any]:
     merged = _fresh_state()
     merged.update(state or {})
     return merged
+
+
+def _skill_entry_by_id(skill_id: str | None) -> dict[str, Any] | None:
+    normalized_skill_id = str(skill_id or "").strip()
+    if not normalized_skill_id:
+        return None
+    for skill in skill_resolver.registry.get("skills", []):
+        if str(skill.get("skill_id") or "").strip() == normalized_skill_id:
+            return dict(skill)
+    return None
 
 
 def _append_runtime_audit_log(user_id: str, event_type: str, payload: dict[str, Any]) -> None:
@@ -803,6 +814,67 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         mastery_result = state.get("mastery_check_result") or {}
         skill_id = mastery_result.get("skill_id") or state.get("current_skill_id")
         decision = mastery_result.get("decision") or state.get("mastery_gate_status") or "unknown"
+        normalized_message = str(message).strip().lower()
+        if decision == "mastered" and normalized_message in {"давай", "продолжай", "поехали", "ок"}:
+            current_resolution = skill_resolver.resolve(topic_id=skill_id)
+            next_skill_id = (current_resolution.next_skills or [None])[0]
+            next_skill_entry = _skill_entry_by_id(next_skill_id)
+            next_resolution = skill_resolver.resolve(topic_id=next_skill_id)
+            if next_skill_id and next_skill_entry:
+                next_topic_id = str((next_skill_entry.get("topic_ids") or [next_resolution.topic_id or None])[0] or "")
+                next_topic_name = str((next_skill_entry.get("topic_names") or [None])[0] or next_skill_id)
+                next_weak_topic = {
+                    "grade": int(next_skill_entry.get("grade") or state.get("grade") or 1),
+                    "topic_id": next_topic_id or next_resolution.topic_id,
+                    "topic": next_topic_name,
+                    "skill_id": next_skill_id,
+                }
+                next_practice = practice_engine.create_practice(next_weak_topic)
+                state = update_user_state(
+                    user_id,
+                    {
+                        "phase": "practice",
+                        "weak_topic": next_weak_topic,
+                        "current_practice": next_practice,
+                        "practice_feedback": None,
+                        "report": None,
+                        "current_skill_id": next_resolution.skill_id,
+                        "current_skill_version": next_resolution.skill_version,
+                        "current_skill_mode": next_resolution.mode,
+                        "current_topic_id": next_weak_topic.get("topic_id"),
+                        "learning_mode_active": True,
+                        "mastery_check_pending": False,
+                        "promotion_eligible": False,
+                    },
+                )
+                student_profile = record_promotion(
+                    user_id,
+                    from_skill_id=skill_id,
+                    to_skill_id=next_skill_id,
+                    from_skill_version=current_resolution.skill_version,
+                    to_skill_version=next_resolution.skill_version,
+                    reason="mastery_check_acknowledged",
+                )
+                state = update_user_state(user_id, {"student_profile": student_profile})
+                _append_runtime_audit_log(
+                    user_id,
+                    "promotion_started",
+                    {
+                        "from_skill_id": skill_id,
+                        "to_skill_id": next_skill_id,
+                        "reason": "mastery_check_acknowledged",
+                        "source": "backend_state_machine",
+                    },
+                )
+                text = generate_teacher_reply(
+                    stage="practice_intro",
+                    grade=int(state.get("grade") or 1),
+                    weak_topic=next_weak_topic,
+                    learning_context=list(state.get("learning_context") or []),
+                    user_message=message,
+                    practice_question=next_practice.get("question", ""),
+                )
+                return _panda_response(text, state, visual=_question_visual(next_practice))
         if decision == "mastered":
             text = (
                 "🎯 Навык подтверждён backend-оценкой.\n\n"
