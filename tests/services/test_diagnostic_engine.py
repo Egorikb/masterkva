@@ -9,7 +9,7 @@ def test_grade_one_sequence_uses_all_grade_one_questions() -> None:
 
     sequence = engine.build_diagnostic_sequence(1)
 
-    assert len(sequence) == 4
+    assert len(sequence) == 7
     assert {item["grade"] for item in sequence} == {1}
     assert sequence[0]["topic_id"] == "g1_t07"
     assert sequence[0]["skill_id"] == "g1_early_arithmetic_core"
@@ -38,8 +38,8 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     sequence = engine.build_diagnostic_sequence(9)
     visuals = [decorate_question_visual(question) for question in sequence]
 
-    assert len(sequence) == 12
-    assert [item["grade"] for item in sequence] == [1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert len(sequence) == 15
+    assert [item["grade"] for item in sequence] == [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     assert {item["grade"] for item in sequence} == set(range(1, 10))
     assert all(item.get("skill_id") for item in sequence)
     assert all(item.get("coverage_status") == "partial" for item in sequence)
@@ -48,6 +48,13 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
 
     visuals_by_topic = {item["topic"]: visual for item, visual in zip(sequence, visuals)}
 
+    assert visuals_by_topic["ПОДГОТОВКА"]["type"] == "number_bond"
+    assert visuals_by_topic["ПОДГОТОВКА"]["parts"] == [2, 1]
+    assert visuals_by_topic["ПОДГОТОВКА"]["operation"] == "add"
+    assert visuals_by_topic["СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5"]["type"] == "question"
+    assert visuals_by_topic["СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5"]["templateType"] == "number_bond"
+    assert visuals_by_topic["СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5"]["templateFamily"] == "addition_subtraction"
+    assert visuals_by_topic["СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)"]["type"] == "number_bond"
     assert visuals_by_topic["Следующее число"]["templateType"] == "number_line"
     assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["type"] == "number_bond"
     assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["parts"] == [8, 5]
@@ -61,9 +68,9 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     assert visuals_by_topic["Время (часы, минуты, секунды)"]["templateType"] == "clock_face"
     assert visuals_by_topic["Большие числа (до 100 млн)"]["templateType"] == "place_value_chart"
     assert visuals_by_topic["Простые уравнения"]["templateType"] == "balance_scale_equation"
-    assert sequence[7]["skill_id"] == "g5_simple_equations_core"
-    assert sequence[7]["coverage_status"] == "partial"
-    assert sequence[7]["board_policy"] == "limited"
+    assert sequence[10]["skill_id"] == "g5_simple_equations_core"
+    assert sequence[10]["coverage_status"] == "partial"
+    assert sequence[10]["board_policy"] == "limited"
     assert visuals_by_topic["Проценты"]["templateType"] == "percent_grid_10x10"
     assert visuals_by_topic["Рациональные числа"]["type"] == "number_bond"
     assert visuals_by_topic["Рациональные числа"]["parts"] == [3, 5]

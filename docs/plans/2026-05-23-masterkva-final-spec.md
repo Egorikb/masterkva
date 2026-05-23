@@ -103,7 +103,7 @@ Split remediation by error type, not by generic similarity.
 ## 7. Gaps that are still open
 
 - coverage is still partial for both chain skills;
-- `g1_early_arithmetic_core` needs more diagnostic breadth;
+- `g1_early_arithmetic_core` now has broader diagnostic breadth, but still needs explicit remediation branching;
 - `g2_addition_core` needs a stronger mastery gate path;
 - remediation still needs more explicit branching;
 - the chain still needs a strict release gate before any broader curriculum expansion.

@@ -40,6 +40,24 @@ def test_golden_chain_manifest_matches_registry_and_contracts() -> None:
 
     assert registry_by_id["g1_early_arithmetic_core"]["next_skills"] == ["g2_addition_core"]
     assert registry_by_id["g2_addition_core"]["prerequisites"] == ["g1_early_arithmetic_core"]
+    assert registry_by_id["g1_early_arithmetic_core"]["topic_ids"] == [
+        "g1_t01",
+        "g1_t02",
+        "g1_t03",
+        "g1_t04",
+        "g1_t05",
+        "g1_t06",
+        "g1_t07",
+    ]
+    assert registry_by_id["g1_early_arithmetic_core"]["topic_names"] == [
+        "ПОДГОТОВКА",
+        "Следующее число",
+        "Сложение с переходом",
+        "Вычитание",
+        "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+        "СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)",
+        "СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10",
+    ]
     assert contract_by_skill["g1_early_arithmetic_core"]["mode"] == "shadow"
     assert contract_by_skill["g2_addition_core"]["mode"] == "active"
     assert manifest["promotion_rule"]["owner"] == "backend_state_machine"

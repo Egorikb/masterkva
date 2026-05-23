@@ -49,6 +49,54 @@
       "difficulty": 1
     },
     {
+      "id": "g1_t01_q01",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "ПОДГОТОВКА",
+      "question": "Сколько всего предметов: 2 и 1?",
+      "answer": "3",
+      "alternatives": [
+        "три"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t05_q01",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
+      "question": "2 + 1 = ?",
+      "answer": "3",
+      "alternatives": [
+        "три"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t06_q01",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)",
+      "question": "20 + 30 = ?",
+      "answer": "50",
+      "alternatives": [
+        "пятьдесят"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
       "id": "g2_t01_q01",
       "grade": 2,
       "topic_id": "g2_t01",

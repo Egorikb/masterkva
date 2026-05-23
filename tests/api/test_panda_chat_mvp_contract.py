@@ -51,7 +51,7 @@ def test_diagnostic_completion_waits_for_manual_continue(tmp_path, monkeypatch) 
         assert start.json()["state"]["phase"] == "diagnostic"
 
         response = start
-        for _ in range(4):
+        for _ in range(7):
             response = client.post(
                 "/api/v1/plugins/panda/chat",
                 json={"user_id": user_id, "message": "999"},

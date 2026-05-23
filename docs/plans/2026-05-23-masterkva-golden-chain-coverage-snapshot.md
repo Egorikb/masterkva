@@ -8,7 +8,7 @@
 - registry mode: shadow
 - contract mode: shadow
 - coverage status: partial
-- diagnostics mapped: 4
+- diagnostics mapped: 7
 - visual template: number_bond
 - board policy: off
 - detectable errors: carry_error, procedural_slip, visual_misread
@@ -30,7 +30,8 @@
 - The chain is operational and already supported by live QA at the `g2_addition_core` end.
 - Coverage is still partial, so the chain is not yet a fully hardened v2 segment.
 - The backend-owned mastery gate for `g2_addition_core` is now explicitly tracked in state and covered by tests.
-- The strongest next improvement is diagnostic breadth and remediation branching for the prerequisite skill.
+- `g1_early_arithmetic_core` now has broader diagnostic breadth, but remediation branching still needs explicit branching.
+- The strongest next improvement is diagnostic breadth completion and remediation branching for the prerequisite skill.
 
 ## Recommended gate
 - Keep the chain in controlled hardening until coverage and mastery validation are explicitly expanded.
