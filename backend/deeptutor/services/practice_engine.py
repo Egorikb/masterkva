@@ -36,6 +36,10 @@ PRACTICE_BY_TOPIC: dict[str, list[dict[str, str]]] = {
         {"question": "12 + 5 = ?", "answer": "17", "item_family": "addition_carry"},
         {"question": "14 + 3 = ?", "answer": "17", "item_family": "addition_carry"},
     ],
+    "g2_t02": [
+        {"question": "15 - 7 = ?", "answer": "8", "item_family": "subtraction_within_10_part_whole"},
+        {"question": "13 - 6 = ?", "answer": "7", "item_family": "subtraction_within_10_part_whole"},
+    ],
 }
 
 ITEM_FAMILY_BY_TOPIC = {
@@ -46,6 +50,7 @@ ITEM_FAMILY_BY_TOPIC = {
     "g1_t05": "number_bond_missing_part",
     "g1_t06": "compose_decompose_10",
     "g1_t07": "addition_within_10_part_whole",
+    "g2_t02": "subtraction_within_10_part_whole",
 }
 
 

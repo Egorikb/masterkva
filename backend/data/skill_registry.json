@@ -26,7 +26,8 @@
       ],
       "prerequisites": [],
       "next_skills": [
-        "g2_addition_core"
+        "g2_addition_core",
+        "g2_subtraction_core"
       ],
       "contract_id": "g1_early_arithmetic_core.v1"
     },

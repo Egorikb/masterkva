@@ -38,7 +38,7 @@ def test_golden_chain_manifest_matches_registry_and_contracts() -> None:
         assert "coverage" in contract_by_skill[skill_id]["validation"]["required_sections"]
         assert "mastery_gate" in contract_by_skill[skill_id]["validation"]["required_sections"]
 
-    assert registry_by_id["g1_early_arithmetic_core"]["next_skills"] == ["g2_addition_core"]
+    assert registry_by_id["g1_early_arithmetic_core"]["next_skills"] == ["g2_addition_core", "g2_subtraction_core"]
     assert registry_by_id["g2_addition_core"]["prerequisites"] == ["g1_early_arithmetic_core"]
     assert registry_by_id["g1_early_arithmetic_core"]["topic_ids"] == [
         "g1_t01",

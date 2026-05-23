@@ -44,6 +44,10 @@ def test_golden_chain_release_gate_acceptance_suite(tmp_path, monkeypatch) -> No
                         "status": "learning",
                         "attempt_history": seed_history_g2,
                     },
+                    "g2_subtraction_core": {
+                        "status": "learning",
+                        "attempt_history": seed_history_g2,
+                    },
                 },
             }
         }
@@ -69,7 +73,7 @@ def test_golden_chain_release_gate_acceptance_suite(tmp_path, monkeypatch) -> No
         diag_state = diag_payload["state"]
         assert diag_state["phase"] == "explanation"
         assert diag_state["diagnostic_gap_status"] == "diagnosed_gap"
-        assert diag_state["blocked_skill_ids"] == ["g2_addition_core"]
+        assert diag_state["blocked_skill_ids"] == ["g2_addition_core", "g2_subtraction_core"]
         assert diag_state["remediation_targets"]["number_bond_missing_part"] == "number_bond"
 
         continue_response = client.post(
@@ -81,7 +85,7 @@ def test_golden_chain_release_gate_acceptance_suite(tmp_path, monkeypatch) -> No
         continue_state = continue_payload["state"]
         assert continue_state["phase"] == "practice"
         assert continue_state["current_skill_id"] == "g1_early_arithmetic_core"
-        assert continue_state["blocked_skill_ids"] == ["g2_addition_core"]
+        assert continue_state["blocked_skill_ids"] == ["g2_addition_core", "g2_subtraction_core"]
         assert continue_state["current_practice"] is not None
         assert continue_state["student_profile"]["active_scope"]["chain_id"] == "g1_to_g2_addition"
 

@@ -65,7 +65,7 @@ def test_diagnostic_completion_waits_for_manual_continue(tmp_path, monkeypatch) 
     assert state["current_practice"] is None
     assert state["report"] is None
     assert state["diagnostic_gap_status"] == "diagnosed_gap"
-    assert state["blocked_skill_ids"] == ["g2_addition_core"]
+    assert state["blocked_skill_ids"] == ["g2_addition_core", "g2_subtraction_core"]
     assert state["remediation_targets"]["number_bond_missing_part"] == "number_bond"
     assert "Скажи «давай»" in payload["text"]
     assert "Начнём с темы" not in payload["text"]

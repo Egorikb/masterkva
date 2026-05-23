@@ -116,6 +116,19 @@
       "difficulty": 2
     },
     {
+      "id": "g2_t02_q01",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "15 - 7 = ?",
+      "answer": "8",
+      "alternatives": [
+        "восемь"
+      ],
+      "difficulty": 2
+    },
+    {
       "id": "g3_t01_q01",
       "grade": 3,
       "topic_id": "g3_t01",

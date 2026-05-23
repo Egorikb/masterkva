@@ -43,7 +43,7 @@ class CoverageReport:
             for c in self.contracts.get("contracts", [])
         }
         self._diagnostic_skill_ids: set[str] = set()
-        for item in self.diagnostic_pool.get("items", []):
+        for item in self.diagnostic_pool.get("items", []) + self.diagnostic_pool.get("questions", []):
             skill_id = str(item.get("skill_id") or "").strip()
             if skill_id:
                 self._diagnostic_skill_ids.add(skill_id)
@@ -57,11 +57,10 @@ class CoverageReport:
 
         # Also index diagnostic pool items by topic_id
         self._diagnostic_topic_ids: set[str] = set()
-        for item in self.diagnostic_pool.get("items", []):
+        for item in self.diagnostic_pool.get("items", []) + self.diagnostic_pool.get("questions", []):
             tid = str(item.get("topic_id") or "").strip()
             if tid:
                 self._diagnostic_topic_ids.add(tid)
-                # Map topic_id -> skill_id
                 skill_id = self._topic_to_skill.get(tid, "")
                 if skill_id:
                     self._diagnostic_skill_ids.add(skill_id)

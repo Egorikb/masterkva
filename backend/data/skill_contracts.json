@@ -170,6 +170,10 @@
           "subtraction",
           "missing_part"
         ],
+        "item_families": [
+          "subtraction_within_10_part_whole",
+          "number_bond_missing_part"
+        ],
         "detectable_errors": [
           "missing_part_error",
           "place_value_error",
@@ -191,7 +195,12 @@
       },
       "remediation": {
         "required": true,
-        "default_path": "number_bond"
+        "default_path": "number_bond",
+        "blocked_by": ["g1_early_arithmetic_core"],
+        "targets": {
+          "subtraction_within_10_part_whole": "number_bond",
+          "number_bond_missing_part": "number_bond"
+        }
       },
       "visual_policy": {
         "template": "number_bond",
