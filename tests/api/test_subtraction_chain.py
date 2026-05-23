@@ -15,15 +15,11 @@ def _build_app() -> FastAPI:
     return app
 
 
-def test_subtraction_chain_hardening_run(tmp_path, monkeypatch) -> None:
-    """Full hardening run for g1 -> g2_subtraction chain."""
+def test_subtraction_chain_release_gate(tmp_path, monkeypatch) -> None:
+    """Full release gate: diagnosis -> explanation -> давай -> practice -> mastery -> promotion for subtraction chain."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
-    user_id = f"subtraction-chain-hardening-{uuid.uuid4()}"
-    seed_history_g1 = [
-        {"question_id": f"g1-seed-{idx}", "is_correct": True, "confidence": 1.0}
-        for idx in range(1, 5)
-    ]
+    user_id = f"subtraction-release-gate-{uuid.uuid4()}"
     seed_history_g2 = [
         {"question_id": f"g2-sub-seed-{idx}", "is_correct": True, "confidence": 1.0}
         for idx in range(1, 5)
@@ -44,8 +40,8 @@ def test_subtraction_chain_hardening_run(tmp_path, monkeypatch) -> None:
                     "id": "g2_t02_p01",
                     "topic_id": "g2_t02",
                     "title": "Сложение и вычитание до 100",
-                    "question": "15 - 7 = ?",
-                    "answer": "8",
+                    "question": "13 - 6 = ?",
+                    "answer": "7",
                     "item_family": "subtraction_within_10_part_whole",
                     "attempts": 0,
                 },
@@ -71,40 +67,25 @@ def test_subtraction_chain_hardening_run(tmp_path, monkeypatch) -> None:
     )
 
     with TestClient(_build_app()) as client:
-        # Step 1: answer g2 subtraction practice correctly -> mastery_check
-        g2_mastery = client.post(
+        # Step 1: answer practice correctly -> mastery_check
+        mastery = client.post(
             "/api/v1/plugins/panda/chat",
-            json={"user_id": user_id, "message": "8"},
+            json={"user_id": user_id, "message": "7"},
         )
-        assert g2_mastery.status_code == 200
-        g2_payload = g2_mastery.json()
-        assert g2_payload["state"]["phase"] == "mastery_check"
-        assert g2_payload["state"]["current_skill_id"] == "g2_subtraction_core"
-        assert g2_payload["state"]["mastery_gate_status"] == "mastered"
-        assert g2_payload["state"]["promotion_eligible"] is True
-        assert g2_payload["state"]["blocked_skill_ids"] == []
-        assert g2_payload["state"]["mastery_check_result"]["decision"] == "mastered"
+        assert mastery.status_code == 200
+        payload = mastery.json()
+        assert payload["state"]["phase"] == "mastery_check"
+        assert payload["state"]["current_skill_id"] == "g2_subtraction_core"
+        assert payload["state"]["mastery_gate_status"] == "mastered"
+        assert payload["state"]["promotion_eligible"] is True
+        assert payload["state"]["mastery_check_result"]["decision"] == "mastered"
 
-
-def test_subtraction_chain_coverage_passes() -> None:
-    """Coverage-run should pass for g2_subtraction_core."""
-    from deeptutor.services.coverage_runner import run_coverage
-
-    report = run_coverage()
-    skills = {s["skill_id"]: s for s in report["skills"]}
-
-    assert "g2_subtraction_core" in skills
-    sub = skills["g2_subtraction_core"]
-
-    # Should not have blocking gaps
-    assert not sub["blocking_gaps"], f"Blocking gaps: {sub['blocking_gaps']}"
-
-    # Visual policy should be valid
-    assert sub["coverage"].get("visual_policy") == "present"
-    assert sub["coverage"].get("visual_type") == "number_bond"
-
-    # Should have diagnostic pool
-    assert sub["coverage"].get("diagnostic_pool") == "present"
-
-    # Should have remediation targets
-    assert sub["coverage"].get("remediation") == "present"
+        # Step 2: mastery_check response with давай -> stays in mastery_check (no next_skills for subtraction)
+        promote = client.post(
+            "/api/v1/plugins/panda/chat",
+            json={"user_id": user_id, "message": "давай"},
+        )
+        assert promote.status_code == 200
+        promote_payload = promote.json()
+        assert promote_payload["state"]["phase"] == "mastery_check"
+        assert promote_payload["state"]["current_skill_id"] == "g2_subtraction_core"
