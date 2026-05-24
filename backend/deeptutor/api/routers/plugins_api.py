@@ -325,12 +325,10 @@ def _is_answer_correct(answer: str, question: dict[str, Any]) -> bool:
 
 
 def _strip_followup_question(text: str) -> str:
-    """Remove trailing 'want more?' type questions from LLM output.
-    Teacher drives the flow, so we don't ask 'Хочешь ещё?' — we just give the next question."""
+    """Remove trailing 'want more?' type questions from LLM output."""
     import re
-    # Remove common follow-up questions at the end
+    # Only remove specific follow-up patterns, don't cut mid-sentence
     patterns = [
-        r"\n\n[А-Яа-яЁёA-Za-z]*\?*$",  # trailing question on last line
         r"\n\nХочешь[^\n]*\??$",
         r"\n\nПродолж[^\n]*\??$",
         r"\n\nЕщё[^\n]*\??$",
