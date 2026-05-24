@@ -1207,12 +1207,76 @@ def _select_visual_type(question: dict[str, Any]) -> tuple[str | None, str | Non
     return None, None
 
 
-def build_template_blueprint(question: dict[str, Any]) -> dict[str, Any] | None:
+def _select_age_based_visual(grade: int, skill_contract: dict[str, Any] | None) -> str | None:
+    """D1: Select visual type based on student age/grade and skill_contract.
+
+    Grade bands (CPA model):
+      1-4 (младшая школа):   concrete-pictorial visuals
+      5-6 (средняя школа):   pictorial-abstract visuals
+      7-9 (старшая школа):   abstract-representational visuals
+    """
+    visual_policy = (skill_contract or {}).get("visual_policy") or {}
+    age_band = visual_policy.get("age_band")
+
+    if age_band == "junior":
+        grade = min(grade, 4)
+    elif age_band == "middle":
+        grade = max(min(grade, 6), 5)
+    elif age_band == "senior":
+        grade = max(grade, 7)
+
+    if grade <= 4:
+        return "number_bond"
+    elif grade <= 6:
+        return "place_value_chart"
+    else:
+        return "coordinate_plane_plot"
+
+
+def build_template_blueprint(
+    question: dict[str, Any],
+    skill_contract: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
     grade = _extract_grade(question)
     title = str(question.get("topic") or question.get("title") or "Задание")
     prompt = str(question.get("question") or "")
     topic_key = _normalize_topic_key(title)
 
+    # D1: Check skill_contract visual_policy first (highest priority)
+    if skill_contract:
+        visual_policy = skill_contract.get("visual_policy") or {}
+        contract_visual = str(visual_policy.get("template") or "").strip()
+        if contract_visual and contract_visual in _TEMPLATE_LIBRARY:
+            family = str(visual_policy.get("family") or _TEMPLATE_LIBRARY[contract_visual].get("family") or "")
+            blueprint = _template_blueprint_from_visual(
+                visual_type=contract_visual,
+                title=title,
+                prompt=prompt,
+                family=family,
+                grade=grade,
+            )
+            if blueprint:
+                blueprint["templateReason"] = f"Визуал из skill_contract: {contract_visual}"
+                blueprint["templateSource"] = "skill_contract"
+                return blueprint
+
+        # D1: Age-based visual selection from contract
+        age_visual = _select_age_based_visual(grade, skill_contract)
+        if age_visual and age_visual in _TEMPLATE_LIBRARY:
+            family = _TEMPLATE_LIBRARY[age_visual].get("family") or ""
+            blueprint = _template_blueprint_from_visual(
+                visual_type=age_visual,
+                title=title,
+                prompt=prompt,
+                family=family,
+                grade=grade,
+            )
+            if blueprint:
+                blueprint["templateReason"] = f"Возрастной визуал для grade {grade}: {age_visual}"
+                blueprint["templateSource"] = "age_based"
+                return blueprint
+
+    # Fallback: topic blueprint overrides
     override = TOPIC_BLUEPRINT_OVERRIDES.get((grade, topic_key))
     if override:
         visual_type = str(override.get("visual_type") or "")
@@ -1245,13 +1309,16 @@ def build_template_blueprint(question: dict[str, Any]) -> dict[str, Any] | None:
     return blueprint
 
 
-def decorate_question_visual(question: dict[str, Any]) -> dict[str, Any]:
+def decorate_question_visual(
+    question: dict[str, Any],
+    skill_contract: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     prompt = str(question.get("question") or "")
     prompt_lower = prompt.lower()
     numbers = [int(value) for value in re.findall(r"\d+", prompt)]
     title = str(question.get("topic") or "Задание")
     cpa = dict(question.get("CPA") or {})
-    template_blueprint = build_template_blueprint(question)
+    template_blueprint = build_template_blueprint(question, skill_contract=skill_contract)
 
     def _looks_like_simple_arithmetic() -> bool:
         if len(numbers) < 2:

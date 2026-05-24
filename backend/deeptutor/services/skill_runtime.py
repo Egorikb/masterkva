@@ -88,8 +88,17 @@ class SkillResolver:
             if section not in contract:
                 warnings.append(f"missing_section:{section}")
 
-        if validation.get("board_policy_locked") and str(contract.get("board_policy") or "").strip().lower() not in {"off", "limited", "on"}:
-            warnings.append("invalid_board_policy")
+        if validation.get("board_policy_locked"):
+            bp = contract.get("board_policy")
+            if isinstance(bp, dict):
+                # Object-based: check that all phase values are valid
+                valid = {"off", "limited", "on"}
+                for phase, val in bp.items():
+                    if str(val).strip().lower() not in valid:
+                        warnings.append("invalid_board_policy")
+                        break
+            elif str(bp or "").strip().lower() not in {"off", "limited", "on"}:
+                warnings.append("invalid_board_policy")
 
         if validation.get("mastery_owned_by_backend") and not contract.get("mastery_gate"):
             warnings.append("missing_mastery_gate")
@@ -142,15 +151,40 @@ class SkillResolver:
         )
 
     def apply_board_policy(self, resolution: SkillResolution, default: str = "off") -> str:
-        board_policy = str(resolution.contract.get("board_policy") or default).strip().lower()
-        if board_policy in {"off", "limited", "on"}:
-            return board_policy
+        board_policy = resolution.contract.get("board_policy")
+        # D3: Handle object-based board_policy with phase-specific values
+        if isinstance(board_policy, dict):
+            return str(board_policy.get("default") or default).strip().lower()
+        # Legacy: string-based board_policy
+        if isinstance(board_policy, str):
+            bp = board_policy.strip().lower()
+            if bp in {"off", "limited", "on"}:
+                return bp
         visual_policy = resolution.contract.get("visual_policy") or {}
         visual_mode = str(visual_policy.get("learning") or "").strip().lower()
         if visual_mode == "on":
             return "on"
         if visual_mode == "limited":
             return "limited"
+        return default
+
+    def apply_board_policy_for_phase(
+        self,
+        resolution: SkillResolution,
+        phase: str,
+        default: str = "off",
+    ) -> str:
+        """D3: Get board_policy for specific phase (diagnostic/learning/remediation)."""
+        board_policy = resolution.contract.get("board_policy")
+        if isinstance(board_policy, dict):
+            phase_policy = board_policy.get(phase)
+            if phase_policy:
+                return str(phase_policy).strip().lower()
+            return str(board_policy.get("default") or default).strip().lower()
+        if isinstance(board_policy, str):
+            bp = board_policy.strip().lower()
+            if bp in {"off", "limited", "on"}:
+                return bp
         return default
 
     def skill_summary(self, resolution: SkillResolution) -> dict[str, Any]:

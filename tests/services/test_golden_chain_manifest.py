@@ -30,7 +30,11 @@ def test_golden_chain_manifest_matches_registry_and_contracts() -> None:
         assert contract_by_skill[skill_id]["coverage"]["status"] == "partial"
         assert contract_by_skill[skill_id]["diagnostic"]["required"] is True
         assert contract_by_skill[skill_id]["remediation"]["required"] is True
-        assert contract_by_skill[skill_id]["board_policy"] in {"off", "limited", "on"}
+        bp = contract_by_skill[skill_id]["board_policy"]
+        if isinstance(bp, dict):
+            assert bp.get("default") in {"off", "limited", "on"}
+        else:
+            assert bp in {"off", "limited", "on"}
         assert contract_by_skill[skill_id]["visual_policy"]["diagnosis"] == "off"
         assert contract_by_skill[skill_id]["validation"]["required"] is True
         assert contract_by_skill[skill_id]["validation"]["board_policy_locked"] is True

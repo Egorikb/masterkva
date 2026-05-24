@@ -16,7 +16,8 @@ def test_grade_one_sequence_uses_all_grade_one_questions() -> None:
     assert sequence[0]["skill_id"] == "g1_early_arithmetic_core"
     assert sequence[0]["skill_mode"] == "shadow"
     assert sequence[0]["coverage_status"] == "partial"
-    assert sequence[0]["board_policy"] == "off"
+    bp0 = sequence[0]["board_policy"]
+    assert (bp0 == "off") or (isinstance(bp0, dict) and bp0.get("default") == "off")
     assert sequence[0]["contract_validation"]["required"] is True
     assert sequence[0]["contract_validation"]["board_policy_locked"] is True
 
@@ -30,7 +31,7 @@ def test_grade_two_pilot_skill_is_marked_active() -> None:
     assert pilot["skill_id"] == "g2_addition_core"
     assert pilot["skill_mode"] == "active"
     assert pilot["coverage_status"] == "partial"
-    assert pilot["board_policy"] == "off"
+    assert pilot["board_policy"] == "off" or (isinstance(pilot["board_policy"], dict) and pilot["board_policy"].get("default") == "off")
 
 
 def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
@@ -70,7 +71,8 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     # g5_simple_equations_core is at index 39
     assert sequence[39]["skill_id"] == "g5_simple_equations_core"
     assert sequence[39]["coverage_status"] == "partial"
-    assert sequence[39]["board_policy"] == "limited"
+    bp39 = sequence[39]["board_policy"]
+    assert (bp39 == "limited") or (isinstance(bp39, dict) and bp39.get("default") == "limited")
     assert visuals_by_topic["Проценты"]["templateType"] == "percent_grid_10x10"
     assert visuals_by_topic["Рациональные числа"]["type"] == "number_bond"
     assert len(visuals_by_topic["Рациональные числа"]["parts"]) == 2

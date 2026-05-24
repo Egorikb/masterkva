@@ -58,9 +58,18 @@
       "visual_policy": {
         "template": "number_bond",
         "diagnosis": "off",
-        "learning": "on"
+        "learning": "on",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "off",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
       "mastery_gate": {
         "type": "streak",
         "correct": 4,
@@ -122,14 +131,25 @@
       "remediation": {
         "required": true,
         "default_path": "base_ten_blocks",
-        "blocked_by": ["g1_early_arithmetic_core"]
+        "blocked_by": [
+          "g1_early_arithmetic_core"
+        ]
       },
       "visual_policy": {
         "template": "base_ten_blocks",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "off",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -196,7 +216,9 @@
       "remediation": {
         "required": true,
         "default_path": "number_bond",
-        "blocked_by": ["g1_early_arithmetic_core"],
+        "blocked_by": [
+          "g1_early_arithmetic_core"
+        ],
         "targets": {
           "subtraction_within_10_part_whole": "number_bond",
           "number_bond_missing_part": "number_bond"
@@ -205,9 +227,18 @@
       "visual_policy": {
         "template": "number_bond",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "off",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -273,7 +304,9 @@
       "remediation": {
         "required": true,
         "default_path": "clock_face",
-        "blocked_by": ["g2_addition_core"],
+        "blocked_by": [
+          "g2_addition_core"
+        ],
         "targets": {
           "time_unit_conversion": "time_unit_table",
           "clock_reading": "clock_face"
@@ -282,9 +315,18 @@
       "visual_policy": {
         "template": "clock_face",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "streak",
         "correct": 4,
@@ -350,9 +392,18 @@
       "visual_policy": {
         "template": "place_value_chart",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -418,9 +469,18 @@
       "visual_policy": {
         "template": "balance_scale_equation",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -486,9 +546,18 @@
       "visual_policy": {
         "template": "percent_grid_10x10",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "streak",
         "correct": 4,
@@ -554,9 +623,18 @@
       "visual_policy": {
         "template": "number_bond",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -622,9 +700,18 @@
       "visual_policy": {
         "template": "balance_scale_linear",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "limited",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "limited"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
@@ -690,9 +777,18 @@
       "visual_policy": {
         "template": "cartesian_graph_slider",
         "diagnosis": "off",
-        "learning": "limited"
+        "learning": "limited",
+        "age_band": "junior",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
       },
-      "board_policy": "on",
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "on"
+      },
       "mastery_gate": {
         "type": "accuracy_over_n",
         "correct": 4,
