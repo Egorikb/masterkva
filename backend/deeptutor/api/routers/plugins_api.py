@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -1132,3 +1133,57 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
 def get_progress(user_id: str) -> dict[str, Any]:
     """Read-only progress summary for parents/teachers."""
     return get_progress_summary(user_id)
+
+
+# === PHASE G: Analytics & Reports API ===
+
+@router.get("/panda/dashboard/{user_id}")
+def get_dashboard(user_id: str) -> dict[str, Any]:
+    """Full dashboard data for parents/teachers."""
+    summary = get_progress_summary(user_id)
+    full_report = report_service.build_full_report(user_id)
+    return {
+        "user_id": user_id,
+        "summary": summary,
+        "report": full_report,
+    }
+
+
+@router.get("/panda/reports/{user_id}/csv")
+def get_report_csv(user_id: str) -> dict[str, Any]:
+    """Export student progress as CSV."""
+    csv_content = report_service.export_csv(user_id)
+    return {
+        "user_id": user_id,
+        "format": "csv",
+        "content": csv_content,
+    }
+
+
+@router.post("/panda/notifications/subscribe")
+def subscribe_notifications(
+    user_id: str,
+    webhook_url: str | None = None,
+) -> dict[str, Any]:
+    """Subscribe to progress notifications for a user.
+
+    In production, webhook_url would be stored and called on events.
+    For now, returns the subscription config.
+    """
+    # Store subscription in user state
+    state = get_user_state(user_id)
+    state = update_user_state(
+        user_id,
+        {
+            "notification_subscription": {
+                "webhook_url": webhook_url,
+                "subscribed_at": datetime.now(timezone.utc).isoformat(),
+                "events": ["mastery_achieved", "daily_summary", "streak_milestone"],
+            }
+        },
+    )
+    return {
+        "user_id": user_id,
+        "subscribed": True,
+        "events": ["mastery_achieved", "daily_summary", "streak_milestone"],
+    }
