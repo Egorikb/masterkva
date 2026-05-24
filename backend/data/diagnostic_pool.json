@@ -187,10 +187,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "2 + 3 = ?",
-      "answer": "5",
+      "question": "8 + 5 = ?",
+      "answer": "13",
       "alternatives": [
-        "5"
+        "13"
       ],
       "difficulty": 1
     },
@@ -200,10 +200,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "3 + 4 = ?",
-      "answer": "7",
+      "question": "9 + 3 = ?",
+      "answer": "12",
       "alternatives": [
-        "7"
+        "12"
       ],
       "difficulty": 1
     },
@@ -213,10 +213,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "1 + 5 = ?",
-      "answer": "6",
+      "question": "7 + 6 = ?",
+      "answer": "13",
       "alternatives": [
-        "6"
+        "13"
       ],
       "difficulty": 1
     },
@@ -226,10 +226,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "2 + 6 = ?",
-      "answer": "8",
+      "question": "6 + 7 = ?",
+      "answer": "13",
       "alternatives": [
-        "8"
+        "13"
       ],
       "difficulty": 1
     },
@@ -239,10 +239,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "3 + 3 = ?",
-      "answer": "6",
+      "question": "9 + 5 = ?",
+      "answer": "14",
       "alternatives": [
-        "6"
+        "14"
       ],
       "difficulty": 1
     },
@@ -252,10 +252,10 @@
       "topic_id": "g1_t03",
       "topic": "Сложение с переходом",
       "item_family": "addition_within_10_part_whole",
-      "question": "4 + 4 = ?",
-      "answer": "8",
+      "question": "8 + 7 = ?",
+      "answer": "15",
       "alternatives": [
-        "8"
+        "15"
       ],
       "difficulty": 1
     },
@@ -1236,10 +1236,10 @@
       "topic_id": "g3_t01",
       "topic": "Время (часы, минуты, секунды)",
       "item_family": "time_unit_conversion",
-      "question": "Сколько минут в 1 часе?",
-      "answer": "30",
+      "question": "Сколько минут в 1.5 часах?",
+      "answer": "90",
       "alternatives": [
-        "30"
+        "90"
       ],
       "difficulty": 3
     },
@@ -1262,10 +1262,10 @@
       "topic_id": "g3_t02",
       "topic": "Большие единицы длины",
       "item_family": "measurement_large_units",
-      "question": "2 км = ? м",
-      "answer": "2000",
+      "question": "3 км = ? м",
+      "answer": "3000",
       "alternatives": [
-        "2000"
+        "3000"
       ],
       "difficulty": 3
     },
@@ -1314,10 +1314,10 @@
       "topic_id": "g3_t02",
       "topic": "Большие единицы длины",
       "item_family": "measurement_large_units",
-      "question": "1 км = ? м",
-      "answer": "500",
+      "question": "2.5 км = ? м",
+      "answer": "2500",
       "alternatives": [
-        "500"
+        "2500"
       ],
       "difficulty": 3
     },
@@ -1512,7 +1512,9 @@
       "question": "17 ÷ 5 = ? (с остатком)",
       "answer": "3 (ост. 2)",
       "alternatives": [
-        "3"
+        "3",
+        "3 (ост. 2)",
+        "3(ост.2)"
       ],
       "difficulty": 3
     },
@@ -1525,7 +1527,9 @@
       "question": "23 ÷ 4 = ? (с остатком)",
       "answer": "5 (ост. 3)",
       "alternatives": [
-        "5"
+        "5",
+        "5 (ост. 3)",
+        "5(ост.3)"
       ],
       "difficulty": 3
     },
@@ -1538,7 +1542,9 @@
       "question": "31 ÷ 7 = ? (с остатком)",
       "answer": "4 (ост. 3)",
       "alternatives": [
-        "4"
+        "4",
+        "4 (ост. 3)",
+        "4(ост.3)"
       ],
       "difficulty": 3
     },
@@ -1551,7 +1557,9 @@
       "question": "29 ÷ 6 = ? (с остатком)",
       "answer": "4 (ост. 5)",
       "alternatives": [
-        "4"
+        "4",
+        "4 (ост. 5)",
+        "4(ост.5)"
       ],
       "difficulty": 3
     },
@@ -1564,7 +1572,9 @@
       "question": "38 ÷ 9 = ? (с остатком)",
       "answer": "4 (ост. 2)",
       "alternatives": [
-        "4"
+        "4",
+        "4 (ост. 2)",
+        "4(ост.2)"
       ],
       "difficulty": 3
     },
@@ -1577,7 +1587,9 @@
       "question": "43 ÷ 8 = ? (с остатком)",
       "answer": "5 (ост. 3)",
       "alternatives": [
-        "5"
+        "5",
+        "5 (ост. 3)",
+        "5(ост.3)"
       ],
       "difficulty": 3
     },
@@ -1590,7 +1602,9 @@
       "question": "50 ÷ 6 = ? (с остатком)",
       "answer": "8 (ост. 2)",
       "alternatives": [
-        "8"
+        "8",
+        "8 (ост. 2)",
+        "8(ост.2)"
       ],
       "difficulty": 3
     },
@@ -2406,7 +2420,7 @@
       "topic_id": "g5_t04",
       "topic": "Простые уравнения",
       "item_family": "simple_equations",
-      "question": "3x + 4 = 20. Найдите x.",
+      "question": "3x + 4 = 19. Найдите x.",
       "answer": "5",
       "alternatives": [
         "5"
@@ -2419,10 +2433,10 @@
       "topic_id": "g5_t04",
       "topic": "Простые уравнения",
       "item_family": "simple_equations",
-      "question": "5x + 2 = 24. Найдите x.",
-      "answer": "4",
+      "question": "5x + 2 = 27. Найдите x.",
+      "answer": "5",
       "alternatives": [
-        "4"
+        "5"
       ],
       "difficulty": 5
     },
@@ -2432,7 +2446,7 @@
       "topic_id": "g5_t04",
       "topic": "Простые уравнения",
       "item_family": "simple_equations",
-      "question": "4x + 3 = 22. Найдите x.",
+      "question": "4x + 3 = 19. Найдите x.",
       "answer": "4",
       "alternatives": [
         "4"
@@ -2445,7 +2459,7 @@
       "topic_id": "g5_t04",
       "topic": "Простые уравнения",
       "item_family": "simple_equations",
-      "question": "6x + 5 = 40. Найдите x.",
+      "question": "6x + 5 = 35. Найдите x.",
       "answer": "5",
       "alternatives": [
         "5"
@@ -2458,7 +2472,7 @@
       "topic_id": "g5_t04",
       "topic": "Простые уравнения",
       "item_family": "simple_equations",
-      "question": "7x + 3 = 32. Найдите x.",
+      "question": "7x + 3 = 31. Найдите x.",
       "answer": "4",
       "alternatives": [
         "4"
@@ -2893,8 +2907,8 @@
       "topic_id": "g6_t05",
       "topic": "Координатная плоскость",
       "item_family": "coordinate_plane",
-      "question": "Точка A(0, 6). В какой четверти она находится?",
-      "answer": "IV",
+      "question": "Точка A(3, 6). В какой четверти она находится?",
+      "answer": "I",
       "alternatives": [
         "I",
         "II",
@@ -2941,8 +2955,8 @@
       "topic_id": "g6_t05",
       "topic": "Координатная плоскость",
       "item_family": "coordinate_plane",
-      "question": "Точка A(-5, 0). В какой четверти она находится?",
-      "answer": "IV",
+      "question": "Точка A(-5, -2). В какой четверти она находится?",
+      "answer": "III",
       "alternatives": [
         "I",
         "II",
@@ -3789,10 +3803,10 @@
       "topic_id": "g9_t01",
       "topic": "Квадратичные функции и графики",
       "item_family": "quadratic_functions",
-      "question": "x² + -7x + 3 = 0. Найдите больший корень.",
-      "answer": "3",
+      "question": "x² - 7x + 10 = 0. Найдите больший корень.",
+      "answer": "5",
       "alternatives": [
-        "3"
+        "5"
       ],
       "difficulty": 9
     },
