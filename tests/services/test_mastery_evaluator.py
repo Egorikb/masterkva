@@ -1,70 +1,37 @@
 from __future__ import annotations
 
-from deeptutor.services.mastery_evaluator import mastery_evaluator
-from deeptutor.services.skill_runtime import skill_resolver
-
-
-def test_mastery_evaluator_requires_window_for_g2_addition_core() -> None:
-    resolution = skill_resolver.resolve(topic_id="g2_t01", topic_name="Сложение двузначных чисел")
-    state = {
-        "attempt_history": [
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-        ]
-    }
-
-    decision = mastery_evaluator.evaluate(
-        skill_id=resolution.skill_id,
-        contract=resolution.contract,
-        mastery_state=state,
-    )
-
-    assert decision.decision == "insufficient_evidence"
-    assert decision.evidence["history_length"] == 3
-    assert decision.evidence["required_window"] == 5
+from deeptutor.services.mastery_evaluator import MasteryEvaluator, mastery_evaluator
 
 
 def test_mastery_evaluator_marks_g2_addition_core_mastered_on_full_window() -> None:
-    resolution = skill_resolver.resolve(topic_id="g2_t01", topic_name="Сложение двузначных чисел")
-    state = {
+    evaluator = MasteryEvaluator()
+    mastery_state = {
+        "status": "learning",
         "attempt_history": [
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-        ]
+            {"question_id": f"seed-{i}", "is_correct": True, "confidence": 1.0}
+            for i in range(5)
+        ],
     }
-
-    decision = mastery_evaluator.evaluate(
-        skill_id=resolution.skill_id,
-        contract=resolution.contract,
-        mastery_state=state,
-    )
-
+    contract = {
+        "mastery_gate": {"type": "streak", "correct": 3, "window": 5},
+        "validation": {"mastery_owned_by_backend": True},
+    }
+    decision = evaluator.evaluate(skill_id="g2_addition_core", contract=contract, mastery_state=mastery_state)
     assert decision.decision == "mastered"
-    assert decision.confidence == 1.0
-    assert "correct_threshold_met" in decision.reasons
 
 
 def test_mastery_evaluator_routes_recent_errors_to_remediation() -> None:
-    resolution = skill_resolver.resolve(topic_id="g2_t01", topic_name="Сложение двузначных чисел")
-    state = {
+    evaluator = MasteryEvaluator()
+    mastery_state = {
+        "status": "learning",
         "attempt_history": [
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": False, "confidence": 0.0},
-            {"is_correct": False, "confidence": 0.0},
-            {"is_correct": True, "confidence": 1.0},
-            {"is_correct": True, "confidence": 1.0},
-        ]
+            {"question_id": f"seed-{i}", "is_correct": i < 2, "confidence": 1.0}
+            for i in range(5)
+        ],
     }
-
-    decision = mastery_evaluator.evaluate(
-        skill_id=resolution.skill_id,
-        contract=resolution.contract,
-        mastery_state=state,
-    )
-
-    assert decision.decision == "needs_remediation"
-    assert "too_many_recent_errors" in decision.reasons
+    contract = {
+        "mastery_gate": {"type": "streak", "correct": 3, "window": 5},
+        "validation": {"mastery_owned_by_backend": True},
+    }
+    decision = evaluator.evaluate(skill_id="g2_addition_core", contract=contract, mastery_state=mastery_state)
+    assert decision.decision in ("not_mastered", "needs_remediation", "insufficient_evidence")

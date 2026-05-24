@@ -32,7 +32,7 @@ def sample_registry(tmp_path: Path) -> Path:
         "mode": "shadow",
         "skills": [
             {
-                "skill_id": "g1_early_arithmetic_core",
+                "skill_id": "g1_counting_core",
                 "name": "Ранняя арифметика",
                 "grade": 1,
                 "domain": "arithmetic",
@@ -47,7 +47,7 @@ def sample_registry(tmp_path: Path) -> Path:
                 "grade": 2,
                 "domain": "arithmetic",
                 "topic_ids": ["g2_t01"],
-                "prerequisites": ["g1_early_arithmetic_core"],
+                "prerequisites": ["g1_counting_core"],
                 "next_skills": ["g2_subtraction_core"],
                 "mode": "shadow",
             },
@@ -100,18 +100,18 @@ class TestGraphConstruction:
         assert len(graph.nodes) == 4
 
     def test_nodes_loaded(self, graph):
-        assert "g1_early_arithmetic_core" in graph.nodes
+        assert "g1_counting_core" in graph.nodes
         assert "g2_addition_core" in graph.nodes
 
     def test_derive_edges(self, graph):
-        g1 = graph.get_node("g1_early_arithmetic_core")
+        g1 = graph.get_node("g1_counting_core")
         assert g1 is not None
         assert "g2_addition_core" in g1.next_skills
 
     def test_roots(self, graph):
         roots = graph.get_roots()
         assert len(roots) == 1
-        assert roots[0].skill_id == "g1_early_arithmetic_core"
+        assert roots[0].skill_id == "g1_counting_core"
 
     def test_leaves(self, graph):
         leaves = graph.get_leaves()
@@ -129,34 +129,34 @@ class TestGraphQueries:
     def test_get_prerequisites(self, graph):
         prereqs = graph.get_prerequisites("g2_addition_core")
         assert len(prereqs) == 1
-        assert prereqs[0].skill_id == "g1_early_arithmetic_core"
+        assert prereqs[0].skill_id == "g1_counting_core"
 
     def test_get_all_prerequisites(self, graph):
         all_prereqs = graph.get_all_prerequisites("g3_time_measurement_core")
-        assert "g1_early_arithmetic_core" in all_prereqs
+        assert "g1_counting_core" in all_prereqs
         assert "g2_addition_core" in all_prereqs
         assert "g2_subtraction_core" in all_prereqs
 
     def test_get_next_skills(self, graph):
-        next_skills = graph.get_next_skills("g1_early_arithmetic_core")
+        next_skills = graph.get_next_skills("g1_counting_core")
         assert len(next_skills) == 1
         assert next_skills[0].skill_id == "g2_addition_core"
 
     def test_learning_path(self, graph):
-        path = graph.get_learning_path("g1_early_arithmetic_core", "g3_time_measurement_core")
+        path = graph.get_learning_path("g1_counting_core", "g3_time_measurement_core")
         assert path == [
-            "g1_early_arithmetic_core",
+            "g1_counting_core",
             "g2_addition_core",
             "g2_subtraction_core",
             "g3_time_measurement_core",
         ]
 
     def test_learning_path_no_path(self, graph):
-        path = graph.get_learning_path("g3_time_measurement_core", "g1_early_arithmetic_core")
+        path = graph.get_learning_path("g3_time_measurement_core", "g1_counting_core")
         assert path == []
 
     def test_learning_path_not_found(self, graph):
-        path = graph.get_learning_path("nonexistent", "g1_early_arithmetic_core")
+        path = graph.get_learning_path("nonexistent", "g1_counting_core")
         assert path == []
 
 
@@ -227,7 +227,7 @@ class TestExport:
     def test_to_mermaid(self, graph):
         mermaid = graph.to_mermaid()
         assert "flowchart TD" in mermaid
-        assert "g1_early_arithmetic_core" in mermaid
+        assert "g1_counting_core" in mermaid
         assert "-->" in mermaid
 
 

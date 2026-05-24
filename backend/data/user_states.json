@@ -1,31 +1,31 @@
 {
-  "progress-practice-3d08ae4e-0095-4bb2-bb14-4b5b0bc09c93": {
+  "progress-practice-4ac8dc28-6fe1-4030-a1b2-460a8ebddb36": {
     "name": "Алиса",
     "grade": 1,
     "phase": "chat",
     "mastery_status_by_skill": {
-      "g1_early_arithmetic_core": {
+      "g1_counting_core": {
         "status": "learning"
       }
     },
     "student_profile": {
       "active_scope": {
-        "current_skill_id": "g1_early_arithmetic_core",
+        "current_skill_id": "g1_counting_core",
         "chain_id": "g1_to_g2_addition",
         "blocked_skill_ids": []
       },
       "skill_mastery": {
-        "g1_early_arithmetic_core": {
+        "g1_counting_core": {
           "status": "learning"
         }
       },
       "promotion_history": []
     }
   },
-  "progress-api-886258e3-ebac-45e8-b4e3-83319bbb24f6": {
+  "progress-api-68665d36-254b-4bb8-b416-bed0d9267ead": {
     "student_profile": {
       "profile_schema_version": "v1",
-      "user_id": "progress-api-886258e3-ebac-45e8-b4e3-83319bbb24f6",
+      "user_id": "progress-api-68665d36-254b-4bb8-b416-bed0d9267ead",
       "active_scope": {
         "chain_id": "g1_to_g2_addition",
         "allowed_skill_ids": [
@@ -50,219 +50,6 @@
         "promotions": 0
       },
       "last_updated_at": null
-    }
-  },
-  "subtraction-release-gate-95b29470-1da8-4a68-899e-dfdc6ef8a644": {
-    "student_profile": {
-      "profile_schema_version": "v1",
-      "user_id": "subtraction-release-gate-95b29470-1da8-4a68-899e-dfdc6ef8a644",
-      "active_scope": {
-        "chain_id": "g1_to_g2_addition",
-        "allowed_skill_ids": [
-          "g1_early_arithmetic_core",
-          "g2_addition_core"
-        ],
-        "current_skill_id": null,
-        "current_topic_id": null,
-        "current_grade": null,
-        "blocked_skill_ids": [],
-        "remediation_targets": {},
-        "updated_at": null
-      },
-      "skill_mastery": {
-        "g2_subtraction_core": {
-          "skill_id": "g2_subtraction_core",
-          "skill_version": "v1",
-          "last_practiced_at": "2026-05-24T18:01:20.668187+00:00",
-          "last_attempt_at": "2026-05-24T18:01:20.668196+00:00",
-          "last_attempt_correct": true,
-          "last_attempt_confidence": 1.0,
-          "last_practice_question_id": "g2_t02_p01",
-          "last_practice_topic_id": "g2_t02",
-          "error_code": null,
-          "error_family": null,
-          "remediation_path": null,
-          "status": "mastered",
-          "mastery_level": "mastered",
-          "last_evaluated_at": "2026-05-24T18:01:20.670810+00:00",
-          "mastery_confidence": 1.0,
-          "decision": "mastered",
-          "evidence": {
-            "history_length": 5,
-            "window": 5,
-            "required_correct": 4,
-            "correct_count": 5,
-            "wrong_count": 0,
-            "consecutive_correct": 5,
-            "gate_type": "accuracy_over_n"
-          },
-          "reasons": [
-            "correct_threshold_met",
-            "required_window_met"
-          ],
-          "failed_criteria": [],
-          "last_mastered_at": "2026-05-24T18:01:20.670818+00:00"
-        }
-      },
-      "diagnostic_history": [],
-      "mastery_history": [
-        {
-          "at": "2026-05-24T18:01:20.668202+00:00",
-          "event": "practice_attempt",
-          "skill_id": "g2_subtraction_core",
-          "skill_version": "v1",
-          "question_id": "g2_t02_p01",
-          "topic_id": "g2_t02",
-          "is_correct": true,
-          "confidence": 1.0,
-          "error_code": null,
-          "error_family": null,
-          "remediation_path": null
-        },
-        {
-          "at": "2026-05-24T18:01:20.670795+00:00",
-          "skill_id": "g2_subtraction_core",
-          "skill_version": "v1",
-          "decision": "mastered",
-          "confidence": 1.0,
-          "evidence": {
-            "history_length": 5,
-            "window": 5,
-            "required_correct": 4,
-            "correct_count": 5,
-            "wrong_count": 0,
-            "consecutive_correct": 5,
-            "gate_type": "accuracy_over_n"
-          },
-          "reasons": [
-            "correct_threshold_met",
-            "required_window_met"
-          ],
-          "failed_criteria": [],
-          "remediation_path": null,
-          "error_code": null,
-          "error_family": null
-        }
-      ],
-      "promotion_history": [],
-      "activity_counters": {
-        "diagnostic_sessions": 0,
-        "practice_sessions": 1,
-        "mastery_checks": 1,
-        "promotions": 0
-      },
-      "last_updated_at": "2026-05-24T18:01:20.670978+00:00"
-    }
-  },
-  "time-chain-hardening-a19b9b79-132c-4842-bd42-220031765e0b": {
-    "student_profile": {
-      "profile_schema_version": "v1",
-      "user_id": "time-chain-hardening-a19b9b79-132c-4842-bd42-220031765e0b",
-      "active_scope": {
-        "chain_id": "g1_to_g2_addition",
-        "allowed_skill_ids": [
-          "g1_early_arithmetic_core",
-          "g2_addition_core"
-        ],
-        "current_skill_id": "g4_place_value_core",
-        "current_topic_id": null,
-        "current_grade": null,
-        "blocked_skill_ids": [],
-        "remediation_targets": {},
-        "updated_at": "2026-05-24T18:01:20.684847+00:00"
-      },
-      "skill_mastery": {
-        "g3_time_measurement_core": {
-          "skill_id": "g3_time_measurement_core",
-          "skill_version": "v1",
-          "last_practiced_at": "2026-05-24T18:01:20.679123+00:00",
-          "last_attempt_at": "2026-05-24T18:01:20.679133+00:00",
-          "last_attempt_correct": true,
-          "last_attempt_confidence": 1.0,
-          "last_practice_question_id": "g3_t01_p01",
-          "last_practice_topic_id": "g3_t01",
-          "error_code": null,
-          "error_family": null,
-          "remediation_path": null,
-          "status": "mastered",
-          "mastery_level": "mastered",
-          "last_evaluated_at": "2026-05-24T18:01:20.682206+00:00",
-          "mastery_confidence": 1.0,
-          "decision": "mastered",
-          "evidence": {
-            "history_length": 5,
-            "window": 5,
-            "required_correct": 4,
-            "correct_count": 5,
-            "wrong_count": 0,
-            "consecutive_correct": 5,
-            "gate_type": "streak"
-          },
-          "reasons": [
-            "correct_streak_met",
-            "required_window_met"
-          ],
-          "failed_criteria": [],
-          "last_mastered_at": "2026-05-24T18:01:20.682212+00:00"
-        }
-      },
-      "diagnostic_history": [],
-      "mastery_history": [
-        {
-          "at": "2026-05-24T18:01:20.679138+00:00",
-          "event": "practice_attempt",
-          "skill_id": "g3_time_measurement_core",
-          "skill_version": "v1",
-          "question_id": "g3_t01_p01",
-          "topic_id": "g3_t01",
-          "is_correct": true,
-          "confidence": 1.0,
-          "error_code": null,
-          "error_family": null,
-          "remediation_path": null
-        },
-        {
-          "at": "2026-05-24T18:01:20.682192+00:00",
-          "skill_id": "g3_time_measurement_core",
-          "skill_version": "v1",
-          "decision": "mastered",
-          "confidence": 1.0,
-          "evidence": {
-            "history_length": 5,
-            "window": 5,
-            "required_correct": 4,
-            "correct_count": 5,
-            "wrong_count": 0,
-            "consecutive_correct": 5,
-            "gate_type": "streak"
-          },
-          "reasons": [
-            "correct_streak_met",
-            "required_window_met"
-          ],
-          "failed_criteria": [],
-          "remediation_path": null,
-          "error_code": null,
-          "error_family": null
-        }
-      ],
-      "promotion_history": [
-        {
-          "at": "2026-05-24T18:01:20.684835+00:00",
-          "from_skill_id": "g3_time_measurement_core",
-          "to_skill_id": "g4_place_value_core",
-          "from_skill_version": "v1",
-          "to_skill_version": "v1",
-          "reason": "mastery_auto_promotion"
-        }
-      ],
-      "activity_counters": {
-        "diagnostic_sessions": 0,
-        "practice_sessions": 1,
-        "mastery_checks": 1,
-        "promotions": 1
-      },
-      "last_updated_at": "2026-05-24T18:01:20.684998+00:00"
     }
   }
 }

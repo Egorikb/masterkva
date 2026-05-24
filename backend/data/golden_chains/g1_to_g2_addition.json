@@ -1,12 +1,12 @@
 {
   "chain_id": "g1_to_g2_addition",
-  "version": "v1",
-  "description": "First v2 golden chain for hardening the early arithmetic foundation before expanding beyond grade 2.",
+  "version": "v2",
+  "description": "Golden chain: g1_counting_core → g2_addition_core. Early arithmetic foundation.",
   "baseline_anchor_skill_id": "g2_addition_core",
-  "prerequisite_skill_id": "g1_early_arithmetic_core",
+  "prerequisite_skill_id": "g1_counting_core",
   "skills": [
     {
-      "skill_id": "g1_early_arithmetic_core",
+      "skill_id": "g1_counting_core",
       "role": "prerequisite",
       "required_mode": "shadow",
       "expected_contract_mode": "shadow"
@@ -20,10 +20,10 @@
   ],
   "promotion_rule": {
     "owner": "backend_state_machine",
-    "continuation_trigger": "давай",
+    "continuation_trigger": "auto",
     "requires_mastery_gate": true,
     "mastery_gate_owner": "backend_mastery_evaluator",
-    "from_skill_id": "g1_early_arithmetic_core",
+    "from_skill_id": "g1_counting_core",
     "to_skill_id": "g2_addition_core"
   },
   "qa_rules": [

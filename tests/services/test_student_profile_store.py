@@ -31,7 +31,7 @@ def test_record_diagnostic_result_updates_profile_history(state_file: Path) -> N
     profile = store.record_diagnostic_result(
         "user-2",
         chain_id="g1_to_g2_addition",
-        current_skill_id="g1_early_arithmetic_core",
+        current_skill_id="g1_counting_core",
         current_topic_id="g1_t05",
         current_grade=1,
         diagnosis_result_id="diag_1_4_1",
@@ -43,12 +43,12 @@ def test_record_diagnostic_result_updates_profile_history(state_file: Path) -> N
     )
 
     assert profile["activity_counters"]["diagnostic_sessions"] == 1
-    assert profile["active_scope"]["current_skill_id"] == "g1_early_arithmetic_core"
+    assert profile["active_scope"]["current_skill_id"] == "g1_counting_core"
     assert profile["active_scope"]["blocked_skill_ids"] == ["g2_addition_core"]
     assert profile["active_scope"]["remediation_targets"]["number_bond_missing_part"] == "number_bond"
     assert profile["diagnostic_history"]
     assert profile["diagnostic_history"][0]["diagnosis_result_id"] == "diag_1_4_1"
-    assert profile["skill_mastery"]["g2_addition_core"]["blocked_by"] == ["g1_early_arithmetic_core"]
+    assert profile["skill_mastery"]["g2_addition_core"]["blocked_by"] == ["g1_counting_core"]
     assert profile["skill_mastery"]["g2_addition_core"]["blocked_by_error_families"] == ["number_bond_missing_part"]
 
 
@@ -93,7 +93,7 @@ def test_record_mastery_evaluation_clears_blocked_gates(state_file: Path) -> Non
     store.record_diagnostic_result(
         "user-4",
         chain_id="g1_to_g2_addition",
-        current_skill_id="g1_early_arithmetic_core",
+        current_skill_id="g1_counting_core",
         current_topic_id="g1_t05",
         current_grade=1,
         diagnosis_result_id="diag_1_4_1",
@@ -106,7 +106,7 @@ def test_record_mastery_evaluation_clears_blocked_gates(state_file: Path) -> Non
 
     profile = store.record_mastery_evaluation(
         "user-4",
-        skill_id="g1_early_arithmetic_core",
+        skill_id="g1_counting_core",
         skill_version="v1",
         decision="mastered",
         confidence=0.95,

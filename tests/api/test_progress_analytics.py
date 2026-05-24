@@ -40,18 +40,18 @@ def test_progress_summary_after_practice(tmp_path, monkeypatch) -> None:
                 "grade": 1,
                 "phase": "chat",
                 "mastery_status_by_skill": {
-                    "g1_early_arithmetic_core": {
+                    "g1_counting_core": {
                         "status": "learning",
                     },
                 },
                 "student_profile": {
                     "active_scope": {
-                        "current_skill_id": "g1_early_arithmetic_core",
+                        "current_skill_id": "g1_counting_core",
                         "chain_id": "g1_to_g2_addition",
                         "blocked_skill_ids": [],
                     },
                     "skill_mastery": {
-                        "g1_early_arithmetic_core": {
+                        "g1_counting_core": {
                             "status": "learning",
                         },
                     },
@@ -65,7 +65,7 @@ def test_progress_summary_after_practice(tmp_path, monkeypatch) -> None:
     assert summary["user_id"] == user_id
     assert len(summary["skills"]) > 0
 
-    g1_skill = next((s for s in summary["skills"] if s["skill_id"] == "g1_early_arithmetic_core"), None)
+    g1_skill = next((s for s in summary["skills"] if s["skill_id"] == "g1_counting_core"), None)
     assert g1_skill is not None
     assert g1_skill["status"] == "learning"
 

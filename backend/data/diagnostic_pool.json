@@ -1,63 +1,4125 @@
 {
+  "version": "v2",
   "questions": [
-    {"id": "g1_t01_q01", "grade": 1, "topic_id": "g1_t01", "topic": "Подготовка к счёту", "item_family": "counting_with_objects", "question": "Сколько всего: 2 и 1?", "answer": "3", "alternatives": ["три"], "difficulty": 1, "CPA": {"visual": "ten_frame", "objects": "счёт"}},
-    {"id": "g1_t01_q02", "grade": 1, "topic_id": "g1_t01", "topic": "Подготовка к счёту", "item_family": "counting_with_objects", "question": "Сколько всего: 3 и 2?", "answer": "5", "alternatives": ["пять"], "difficulty": 1, "CPA": {"visual": "ten_frame", "objects": "счёт"}},
-    {"id": "g1_t01_q03", "grade": 1, "topic_id": "g1_t01", "topic": "Подготовка к счёту", "item_family": "counting_with_objects", "question": "У Маши было 4 яблока, а у Пети — 1. Сколько яблок у них вместе?", "answer": "5", "alternatives": ["пять"], "difficulty": 1, "CPA": {"visual": "ten_frame", "objects": "счёт"}},
-    {"id": "g1_t02_q01", "grade": 1, "topic_id": "g1_t02", "topic": "Следующее число", "item_family": "number_successor", "question": "Какое число идёт после 6?", "answer": "7", "alternatives": ["семь"], "difficulty": 1},
-    {"id": "g1_t02_q02", "grade": 1, "topic_id": "g1_t02", "topic": "Следующее число", "item_family": "number_successor", "question": "Какое число идёт после 8?", "answer": "9", "alternatives": ["девять"], "difficulty": 1},
-    {"id": "g1_t02_q03", "grade": 1, "topic_id": "g1_t02", "topic": "Следующее число", "item_family": "number_successor", "question": "Какое число на 1 больше, чем 5?", "answer": "6", "alternatives": ["шесть"], "difficulty": 1},
-    {"id": "g1_t03_q01", "grade": 1, "topic_id": "g1_t03", "topic": "Сложение с переходом", "item_family": "addition_within_10_part_whole", "question": "4 + 3 = ?", "answer": "7", "alternatives": ["семь"], "difficulty": 1},
-    {"id": "g1_t03_q02", "grade": 1, "topic_id": "g1_t03", "topic": "Сложение с переходом", "item_family": "addition_within_10_part_whole", "question": "2 + 5 = ?", "answer": "7", "alternatives": ["семь"], "difficulty": 1},
-    {"id": "g1_t03_q03", "grade": 1, "topic_id": "g1_t03", "topic": "Сложение с переходом", "item_family": "addition_within_10_part_whole", "question": "3 + 6 = ?", "answer": "9", "alternatives": ["девять"], "difficulty": 1},
-    {"id": "g1_t04_q01", "grade": 1, "topic_id": "g1_t04", "topic": "Вычитание в пределах 10", "item_family": "subtraction_within_10_part_whole", "question": "7 - 4 = ?", "answer": "3", "alternatives": ["три"], "difficulty": 1},
-    {"id": "g1_t04_q02", "grade": 1, "topic_id": "g1_t04", "topic": "Вычитание в пределах 10", "item_family": "subtraction_within_10_part_whole", "question": "8 - 5 = ?", "answer": "3", "alternatives": ["три"], "difficulty": 1},
-    {"id": "g1_t04_q03", "grade": 1, "topic_id": "g1_t04", "topic": "Вычитание в пределах 10", "item_family": "subtraction_within_10_part_whole", "question": "9 - 6 = ?", "answer": "3", "alternatives": ["три"], "difficulty": 1},
-    {"id": "g1_t05_q01", "grade": 1, "topic_id": "g1_t05", "topic": "Сложение и вычитание до 5", "item_family": "number_bond_missing_part", "question": "2 + 1 = ?", "answer": "3", "alternatives": ["три"], "difficulty": 1, "CPA": {"visual": "number_bond", "objects": "целое и части"}},
-    {"id": "g1_t05_q02", "grade": 1, "topic_id": "g1_t05", "topic": "Сложение и вычитание до 5", "item_family": "number_bond_missing_part", "question": "? + 2 = 5", "answer": "3", "alternatives": ["три"], "difficulty": 1, "CPA": {"visual": "number_bond", "objects": "целое и части"}},
-    {"id": "g1_t05_q03", "grade": 1, "topic_id": "g1_t05", "topic": "Сложение и вычитание до 5", "item_family": "number_bond_missing_part", "question": "1 + ? = 4", "answer": "3", "alternatives": ["три"], "difficulty": 1, "CPA": {"visual": "number_bond", "objects": "целое и части"}},
-    {"id": "g1_t06_q01", "grade": 1, "topic_id": "g1_t06", "topic": "Сложение до 100 без перехода", "item_family": "compose_decompose_10", "question": "20 + 30 = ?", "answer": "50", "alternatives": ["пятьдесят"], "difficulty": 1, "CPA": {"visual": "place_value_chart", "objects": "десятки"}},
-    {"id": "g1_t06_q02", "grade": 1, "topic_id": "g1_t06", "topic": "Сложение до 100 без перехода", "item_family": "compose_decompose_10", "question": "40 + 10 = ?", "answer": "50", "alternatives": ["пятьдесят"], "difficulty": 1, "CPA": {"visual": "place_value_chart", "objects": "десятки"}},
-    {"id": "g1_t06_q03", "grade": 1, "topic_id": "g1_t06", "topic": "Сложение до 100 без перехода", "item_family": "compose_decompose_10", "question": "30 + 40 = ?", "answer": "70", "alternatives": ["семьдесят"], "difficulty": 1, "CPA": {"visual": "place_value_chart", "objects": "десятки"}},
-    {"id": "g1_t07_q01", "grade": 1, "topic_id": "g1_t07", "topic": "Сложение с переходом через 10", "item_family": "addition_within_10_part_whole", "question": "Сколько будет 8 + 5?", "answer": "13", "alternatives": ["тринадцать"], "difficulty": 1},
-    {"id": "g1_t07_q02", "grade": 1, "topic_id": "g1_t07", "topic": "Сложение с переходом через 10", "item_family": "addition_within_10_part_whole", "question": "Сколько будет 9 + 3?", "answer": "12", "alternatives": ["двенадцать"], "difficulty": 1},
-    {"id": "g1_t07_q03", "grade": 1, "topic_id": "g1_t07", "topic": "Сложение с переходом через 10", "item_family": "addition_within_10_part_whole", "question": "Сколько будет 7 + 6?", "answer": "13", "alternatives": ["тринадцать"], "difficulty": 1},
-    {"id": "g1_t07_q04", "grade": 1, "topic_id": "g1_t07", "topic": "Сложение с переходом через 10", "item_family": "addition_within_10_part_whole", "question": "Сколько будет 6 + 7?", "answer": "13", "alternatives": ["тринадцать"], "difficulty": 1},
-    {"id": "g1_t07_q05", "grade": 1, "topic_id": "g1_t07", "topic": "Сложение с переходом через 10", "item_family": "addition_within_10_part_whole", "question": "Сколько будет 9 + 5?", "answer": "14", "alternatives": ["четырнадцать"], "difficulty": 1},
-    {"id": "g2_t01_q01", "grade": 2, "topic_id": "g2_t01", "topic": "Сложение двузначных чисел", "item_family": "addition_carry", "question": "12 + 5 = ?", "answer": "17", "alternatives": ["семнадцать"], "difficulty": 2},
-    {"id": "g2_t01_q02", "grade": 2, "topic_id": "g2_t01", "topic": "Сложение двузначных чисел", "item_family": "addition_carry", "question": "14 + 3 = ?", "answer": "17", "alternatives": ["семнадцать"], "difficulty": 2},
-    {"id": "g2_t01_q03", "grade": 2, "topic_id": "g2_t01", "topic": "Сложение двузначных чисел", "item_family": "addition_carry", "question": "23 + 8 = ?", "answer": "31", "alternatives": ["тридцать один"], "difficulty": 2},
-    {"id": "g2_t01_q04", "grade": 2, "topic_id": "g2_t01", "topic": "Сложение двузначных чисел", "item_family": "addition_carry", "question": "15 + 9 = ?", "answer": "24", "alternatives": ["двадцать четыре"], "difficulty": 2},
-    {"id": "g2_t02_q01", "grade": 2, "topic_id": "g2_t02", "topic": "Сложение и вычитание до 100", "item_family": "subtraction_within_10_part_whole", "question": "15 - 7 = ?", "answer": "8", "alternatives": ["восемь"], "difficulty": 2},
-    {"id": "g2_t02_q02", "grade": 2, "topic_id": "g2_t02", "topic": "Сложение и вычитание до 100", "item_family": "subtraction_within_10_part_whole", "question": "13 - 6 = ?", "answer": "7", "alternatives": ["семь"], "difficulty": 2},
-    {"id": "g2_t02_q03", "grade": 2, "topic_id": "g2_t02", "topic": "Сложение и вычитание до 100", "item_family": "subtraction_within_10_part_whole", "question": "18 - 9 = ?", "answer": "9", "alternatives": ["девять"], "difficulty": 2},
-    {"id": "g2_t02_q04", "grade": 2, "topic_id": "g2_t02", "topic": "Сложение и вычитание до 100", "item_family": "subtraction_within_10_part_whole", "question": "11 - 4 = ?", "answer": "7", "alternatives": ["семь"], "difficulty": 2},
-    {"id": "g3_t01_q01", "grade": 3, "topic_id": "g3_t01", "topic": "Время (часы, минуты, секунды)", "item_family": "time_unit_conversion", "question": "Сколько минут в 2 часах?", "answer": "120", "alternatives": ["сто двадцать"], "difficulty": 3, "CPA": {"visual": "clock", "objects": "часы"}},
-    {"id": "g3_t01_q02", "grade": 3, "topic_id": "g3_t01", "topic": "Время (часы, минуты, секунды)", "item_family": "time_unit_conversion", "question": "Сколько минут в 3 часах?", "answer": "180", "alternatives": ["сто восемьдесят"], "difficulty": 3, "CPA": {"visual": "clock", "objects": "часы"}},
-    {"id": "g3_t01_q03", "grade": 3, "topic_id": "g3_t01", "topic": "Время (часы, минуты, секунды)", "item_family": "time_unit_conversion", "question": "Сколько часов в 120 минутах?", "answer": "2", "alternatives": ["два"], "difficulty": 3, "CPA": {"visual": "clock", "objects": "часы"}},
-    {"id": "g3_t01_q04", "grade": 3, "topic_id": "g3_t01", "topic": "Время (часы, минуты, секунды)", "item_family": "time_unit_conversion", "question": "Сколько минут в 1 часе?", "answer": "60", "alternatives": ["шестьдесят"], "difficulty": 3, "CPA": {"visual": "clock", "objects": "часы"}},
-    {"id": "g4_t01_q01", "grade": 4, "topic_id": "g4_t01", "topic": "Большие числа (до 100 млн)", "item_family": "place_value_error", "question": "Какая цифра стоит в разряде сотен в числе 3 420?", "answer": "4", "alternatives": ["четыре"], "difficulty": 4, "CPA": {"visual": "place_value_chart", "objects": "разряды"}},
-    {"id": "g4_t01_q02", "grade": 4, "topic_id": "g4_t01", "topic": "Большие числа (до 100 млн)", "item_family": "place_value_error", "question": "Какая цифра стоит в разряде тысяч в числе 5 678?", "answer": "5", "alternatives": ["пять"], "difficulty": 4, "CPA": {"visual": "place_value_chart", "objects": "разряды"}},
-    {"id": "g4_t01_q03", "grade": 4, "topic_id": "g4_t01", "topic": "Большие числа (до 100 млн)", "item_family": "place_value_error", "question": "Запиши число: 7 тысяч, 3 сотни, 2 десятка и 5 единиц.", "answer": "7325", "alternatives": ["семь тысяч триста двадцать пять"], "difficulty": 4, "CPA": {"visual": "place_value_chart", "objects": "разряды"}},
-    {"id": "g4_t01_q04", "grade": 4, "topic_id": "g4_t01", "topic": "Большие числа (до 100 млн)", "item_family": "place_value_error", "question": "Сколько сотен в числе 3 000?", "answer": "30", "alternatives": ["тридцать"], "difficulty": 4, "CPA": {"visual": "place_value_chart", "objects": "разряды"}},
-    {"id": "g5_t01_q01", "grade": 5, "topic_id": "g5_t01", "topic": "Простые уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: x + 4 = 9", "answer": "5", "alternatives": ["пять"], "difficulty": 5, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g5_t01_q02", "grade": 5, "topic_id": "g5_t01", "topic": "Простые уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: x - 3 = 7", "answer": "10", "alternatives": ["десять"], "difficulty": 5, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g5_t01_q03", "grade": 5, "topic_id": "g5_t01", "topic": "Простые уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: 2x = 10", "answer": "5", "alternatives": ["пять"], "difficulty": 5, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g5_t01_q04", "grade": 5, "topic_id": "g5_t01", "topic": "Простые уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: x + 7 = 15", "answer": "8", "alternatives": ["восемь"], "difficulty": 5, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g6_t01_q01", "grade": 6, "topic_id": "g6_t01", "topic": "Проценты", "item_family": "percent_calculation_error", "question": "Сколько будет 25 процентов от 200?", "answer": "50", "alternatives": ["пятьдесят"], "difficulty": 6, "CPA": {"visual": "percent_grid_10x10", "objects": "проценты"}},
-    {"id": "g6_t01_q02", "grade": 6, "topic_id": "g6_t01", "topic": "Проценты", "item_family": "percent_calculation_error", "question": "Сколько будет 10% от 300?", "answer": "30", "alternatives": ["тридцать"], "difficulty": 6, "CPA": {"visual": "percent_grid_10x10", "objects": "проценты"}},
-    {"id": "g6_t01_q03", "grade": 6, "topic_id": "g6_t01", "topic": "Проценты", "item_family": "percent_calculation_error", "question": "Сколько будет 50% от 80?", "answer": "40", "alternatives": ["сорок"], "difficulty": 6, "CPA": {"visual": "percent_grid_10x10", "objects": "проценты"}},
-    {"id": "g6_t01_q04", "grade": 6, "topic_id": "g6_t01", "topic": "Проценты", "item_family": "percent_calculation_error", "question": "Какой процент составляет 20 от 100?", "answer": "20", "alternatives": ["двадцать"], "difficulty": 6, "CPA": {"visual": "percent_grid_10x10", "objects": "проценты"}},
-    {"id": "g7_t01_q01", "grade": 7, "topic_id": "g7_t01", "topic": "Рациональные числа", "item_family": "sign_error", "question": "Сколько будет -3 + 5?", "answer": "2", "alternatives": ["два"], "difficulty": 7, "CPA": {"visual": "part_part_whole_bar", "objects": "числовая прямая"}},
-    {"id": "g7_t01_q02", "grade": 7, "topic_id": "g7_t01", "topic": "Рациональные числа", "item_family": "sign_error", "question": "Сколько будет -7 + 4?", "answer": "-3", "alternatives": ["минус три"], "difficulty": 7, "CPA": {"visual": "part_part_whole_bar", "objects": "числовая прямая"}},
-    {"id": "g7_t01_q03", "grade": 7, "topic_id": "g7_t01", "topic": "Рациональные числа", "item_family": "sign_error", "question": "Сколько будет -5 + (-3)?", "answer": "-8", "alternatives": ["минус восемь"], "difficulty": 7, "CPA": {"visual": "part_part_whole_bar", "objects": "числовая прямая"}},
-    {"id": "g7_t01_q04", "grade": 7, "topic_id": "g7_t01", "topic": "Рациональные числа", "item_family": "sign_error", "question": "Сколько будет 6 + (-9)?", "answer": "-3", "alternatives": ["минус три"], "difficulty": 7, "CPA": {"visual": "part_part_whole_bar", "objects": "числовая прямая"}},
-    {"id": "g8_t01_q01", "grade": 8, "topic_id": "g8_t01", "topic": "Линейные уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: 2x = 10", "answer": "5", "alternatives": ["пять"], "difficulty": 8, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g8_t01_q02", "grade": 8, "topic_id": "g8_t01", "topic": "Линейные уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: 3x = 21", "answer": "7", "alternatives": ["семь"], "difficulty": 8, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g8_t01_q03", "grade": 8, "topic_id": "g8_t01", "topic": "Линейные уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: x + 5 = 12", "answer": "7", "alternatives": ["семь"], "difficulty": 8, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g8_t01_q04", "grade": 8, "topic_id": "g8_t01", "topic": "Линейные уравнения", "item_family": "inverse_operation_error", "question": "Реши уравнение: x - 8 = 3", "answer": "11", "alternatives": ["одиннадцать"], "difficulty": 8, "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"}},
-    {"id": "g9_t01_q01", "grade": 9, "topic_id": "g9_t01", "topic": "Квадратные функции", "item_family": "graph_shape_error", "question": "Как называется график квадратичной функции?", "answer": "парабола", "alternatives": ["парабола"], "difficulty": 9, "CPA": {"visual": "cartesian_graph_slider", "objects": "график"}},
-    {"id": "g9_t01_q02", "grade": 9, "topic_id": "g9_t01", "topic": "Квадратные функции", "item_family": "graph_shape_error", "question": "Какой знак имеет коэффициент a, если ветви параболы направлены вверх?", "answer": "положительный", "alternatives": ["положительный"], "difficulty": 9, "CPA": {"visual": "cartesian_graph_slider", "objects": "график"}},
-    {"id": "g9_t01_q03", "grade": 9, "topic_id": "g9_t01", "topic": "Квадратные функции", "item_family": "graph_shape_error", "question": "Сколько корней имеет уравнение x² = 0?", "answer": "один", "alternatives": ["один"], "difficulty": 9, "CPA": {"visual": "cartesian_graph_slider", "objects": "график"}},
-    {"id": "g9_t01_q04", "grade": 9, "topic_id": "g9_t01", "topic": "Квадратные функции", "item_family": "graph_shape_error", "question": "Как называется точка пересечения параболы с осью y?", "answer": "начало координат", "alternatives": ["начало координат"], "difficulty": 9, "CPA": {"visual": "cartesian_graph_slider", "objects": "график"}}
+    {
+      "id": "g1_t01_q01",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 2 и 1?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t01_q02",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 3 и 2?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t01_q03",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 4 и 1?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t01_q04",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 1 и 3?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t01_q05",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 2 и 2?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t01_q06",
+      "grade": 1,
+      "topic_id": "g1_t01",
+      "topic": "Подготовка к счёту",
+      "item_family": "counting_with_objects",
+      "question": "Сколько всего: 3 и 1?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "ten_frame",
+        "objects": "счёт"
+      }
+    },
+    {
+      "id": "g1_t02_q01",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 3?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q02",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 5?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q03",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 7?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q04",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 9?",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q05",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 12?",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t02_q06",
+      "grade": 1,
+      "topic_id": "g1_t02",
+      "topic": "Следующее число",
+      "item_family": "number_successor",
+      "question": "Какое число идёт после 15?",
+      "answer": "16",
+      "alternatives": [
+        "16"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q01",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "2 + 3 = ?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q02",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "3 + 4 = ?",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q03",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "1 + 5 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q04",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "2 + 6 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q05",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "3 + 3 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t03_q06",
+      "grade": 1,
+      "topic_id": "g1_t03",
+      "topic": "Сложение с переходом",
+      "item_family": "addition_within_10_part_whole",
+      "question": "4 + 4 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q01",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "7 - 3 = ?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q02",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "8 - 4 = ?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q03",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "9 - 5 = ?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q04",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "6 - 2 = ?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q05",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "10 - 3 = ?",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t04_q06",
+      "grade": 1,
+      "topic_id": "g1_t04",
+      "topic": "Вычитание в пределах 10",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "7 - 5 = ?",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t05_q01",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "2 + ? = 5",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t05_q02",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "1 + ? = 4",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t05_q03",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "3 + ? = 5",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t05_q04",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "2 + ? = 6",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t05_q05",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "1 + ? = 3",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t05_q06",
+      "grade": 1,
+      "topic_id": "g1_t05",
+      "topic": "Сложение и вычитание до 5",
+      "item_family": "number_bond_missing_part",
+      "question": "4 + ? = 5",
+      "answer": "1",
+      "alternatives": [
+        "1"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "number_bond",
+        "objects": "целое и части"
+      }
+    },
+    {
+      "id": "g1_t06_q01",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "20 + 30 = ?",
+      "answer": "50",
+      "alternatives": [
+        "50"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t06_q02",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "40 + 10 = ?",
+      "answer": "50",
+      "alternatives": [
+        "50"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t06_q03",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "30 + 40 = ?",
+      "answer": "70",
+      "alternatives": [
+        "70"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t06_q04",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "50 + 20 = ?",
+      "answer": "70",
+      "alternatives": [
+        "70"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t06_q05",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "10 + 60 = ?",
+      "answer": "70",
+      "alternatives": [
+        "70"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t06_q06",
+      "grade": 1,
+      "topic_id": "g1_t06",
+      "topic": "Сложение до 100 без перехода",
+      "item_family": "compose_decompose_10",
+      "question": "30 + 30 = ?",
+      "answer": "60",
+      "alternatives": [
+        "60"
+      ],
+      "difficulty": 1,
+      "CPA": {
+        "visual": "place_value_chart",
+        "objects": "десятки"
+      }
+    },
+    {
+      "id": "g1_t07_q01",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 8 + 5?",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t07_q02",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 9 + 3?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t07_q03",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 7 + 6?",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t07_q04",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 6 + 7?",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t07_q05",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 9 + 5?",
+      "answer": "14",
+      "alternatives": [
+        "14"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g1_t07_q06",
+      "grade": 1,
+      "topic_id": "g1_t07",
+      "topic": "Сложение с переходом через 10",
+      "item_family": "addition_within_10_part_whole",
+      "question": "Сколько будет 8 + 7?",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "g2_t01_q01",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "12 + 5 = ?",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q02",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "14 + 3 = ?",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q03",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "23 + 8 = ?",
+      "answer": "31",
+      "alternatives": [
+        "31"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q04",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "15 + 9 = ?",
+      "answer": "24",
+      "alternatives": [
+        "24"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q05",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "27 + 6 = ?",
+      "answer": "33",
+      "alternatives": [
+        "33"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q06",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "18 + 7 = ?",
+      "answer": "25",
+      "alternatives": [
+        "25"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t01_q07",
+      "grade": 2,
+      "topic_id": "g2_t01",
+      "topic": "Сложение двузначных чисел",
+      "item_family": "addition_carry",
+      "question": "35 + 8 = ?",
+      "answer": "43",
+      "alternatives": [
+        "43"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q01",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "15 - 7 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q02",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "13 - 6 = ?",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q03",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "20 - 8 = ?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q04",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "17 - 9 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q05",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "25 - 13 = ?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q06",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "30 - 14 = ?",
+      "answer": "16",
+      "alternatives": [
+        "16"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t02_q07",
+      "grade": 2,
+      "topic_id": "g2_t02",
+      "topic": "Сложение и вычитание до 100",
+      "item_family": "subtraction_within_10_part_whole",
+      "question": "18 - 11 = ?",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q01",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "32 - 7 = ?",
+      "answer": "25",
+      "alternatives": [
+        "25"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q02",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "41 - 5 = ?",
+      "answer": "36",
+      "alternatives": [
+        "36"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q03",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "53 - 8 = ?",
+      "answer": "45",
+      "alternatives": [
+        "45"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q04",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "27 - 9 = ?",
+      "answer": "18",
+      "alternatives": [
+        "18"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q05",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "45 - 18 = ?",
+      "answer": "27",
+      "alternatives": [
+        "27"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q06",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "36 - 19 = ?",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t03_q07",
+      "grade": 2,
+      "topic_id": "g2_t03",
+      "topic": "Вычитание с переходом",
+      "item_family": "subtraction_carry",
+      "question": "50 - 25 = ?",
+      "answer": "25",
+      "alternatives": [
+        "25"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q01",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "3 группы по 2. Сколько всего?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q02",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "4 группы по 2. Сколько всего?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q03",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "5 группы по 2. Сколько всего?",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q04",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "3 группы по 3. Сколько всего?",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q05",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "4 группы по 3. Сколько всего?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q06",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "2 группы по 5. Сколько всего?",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t04_q07",
+      "grade": 2,
+      "topic_id": "g2_t04",
+      "topic": "Умножение — повторяющееся сложение",
+      "item_family": "multiplication_intro",
+      "question": "3 группы по 4. Сколько всего?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q01",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "6 предметов разложили на 2 равные группы. Сколько в каждой?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q02",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "8 предметов разложили на 2 равные группы. Сколько в каждой?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q03",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "9 предметов разложили на 3 равные группы. Сколько в каждой?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q04",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "10 предметов разложили на 2 равные группы. Сколько в каждой?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q05",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "12 предметов разложили на 3 равные группы. Сколько в каждой?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q06",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "15 предметов разложили на 3 равные группы. Сколько в каждой?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t05_q07",
+      "grade": 2,
+      "topic_id": "g2_t05",
+      "topic": "Деление — равные группы",
+      "item_family": "division_intro",
+      "question": "18 предметов разложили на 2 равные группы. Сколько в каждой?",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q01",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 5 см увеличили на 3 см. Какова длина?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q02",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 8 см увеличили на 4 см. Какова длина?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q03",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 12 см увеличили на 5 см. Какова длина?",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q04",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 7 см увеличили на 9 см. Какова длина?",
+      "answer": "16",
+      "alternatives": [
+        "16"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q05",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 15 см увеличили на 8 см. Какова длина?",
+      "answer": "23",
+      "alternatives": [
+        "23"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q06",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 20 см увеличили на 13 см. Какова длина?",
+      "answer": "33",
+      "alternatives": [
+        "33"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g2_t06_q07",
+      "grade": 2,
+      "topic_id": "g2_t06",
+      "topic": "Сантиметры и дециметры",
+      "item_family": "measurement_length",
+      "question": "Отрезок длиной 6 см увеличили на 11 см. Какова длина?",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "g3_t01_q01",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 1 часе?",
+      "answer": "60",
+      "alternatives": [
+        "60"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t01_q02",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 2 часах?",
+      "answer": "120",
+      "alternatives": [
+        "120"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t01_q03",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 3 часах?",
+      "answer": "180",
+      "alternatives": [
+        "180"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t01_q04",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 4 часах?",
+      "answer": "240",
+      "alternatives": [
+        "240"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t01_q05",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 5 часах?",
+      "answer": "300",
+      "alternatives": [
+        "300"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t01_q06",
+      "grade": 3,
+      "topic_id": "g3_t01",
+      "topic": "Время (часы, минуты, секунды)",
+      "item_family": "time_unit_conversion",
+      "question": "Сколько минут в 1 часе?",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q01",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "1 км = ? м",
+      "answer": "1000",
+      "alternatives": [
+        "1000"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q02",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "2 км = ? м",
+      "answer": "2000",
+      "alternatives": [
+        "2000"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q03",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "3 км = ? м",
+      "answer": "3000",
+      "alternatives": [
+        "3000"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q04",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "5 км = ? м",
+      "answer": "5000",
+      "alternatives": [
+        "5000"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q05",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "10 км = ? м",
+      "answer": "10000",
+      "alternatives": [
+        "10000"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t02_q06",
+      "grade": 3,
+      "topic_id": "g3_t02",
+      "topic": "Большие единицы длины",
+      "item_family": "measurement_large_units",
+      "question": "1 км = ? м",
+      "answer": "500",
+      "alternatives": [
+        "500"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q01",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "3 × 4 = ?",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q02",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "5 × 6 = ?",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q03",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "7 × 8 = ?",
+      "answer": "56",
+      "alternatives": [
+        "56"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q04",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "6 × 9 = ?",
+      "answer": "54",
+      "alternatives": [
+        "54"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q05",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "4 × 7 = ?",
+      "answer": "28",
+      "alternatives": [
+        "28"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q06",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "8 × 3 = ?",
+      "answer": "24",
+      "alternatives": [
+        "24"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t03_q07",
+      "grade": 3,
+      "topic_id": "g3_t03",
+      "topic": "Таблица умножения",
+      "item_family": "multiplication_tables",
+      "question": "9 × 5 = ?",
+      "answer": "45",
+      "alternatives": [
+        "45"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q01",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "24 ÷ 4 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q02",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "36 ÷ 6 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q03",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "42 ÷ 7 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q04",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "54 ÷ 6 = ?",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q05",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "48 ÷ 8 = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q06",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "63 ÷ 7 = ?",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t04_q07",
+      "grade": 3,
+      "topic_id": "g3_t04",
+      "topic": "Деление через умножение",
+      "item_family": "division_via_multiplication",
+      "question": "56 ÷ 8 = ?",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q01",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "17 ÷ 5 = ? (с остатком)",
+      "answer": "3 (ост. 2)",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q02",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "23 ÷ 4 = ? (с остатком)",
+      "answer": "5 (ост. 3)",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q03",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "31 ÷ 7 = ? (с остатком)",
+      "answer": "4 (ост. 3)",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q04",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "29 ÷ 6 = ? (с остатком)",
+      "answer": "4 (ост. 5)",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q05",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "38 ÷ 9 = ? (с остатком)",
+      "answer": "4 (ост. 2)",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q06",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "43 ÷ 8 = ? (с остатком)",
+      "answer": "5 (ост. 3)",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t05_q07",
+      "grade": 3,
+      "topic_id": "g3_t05",
+      "topic": "Деление с остатком",
+      "item_family": "division_with_remainder",
+      "question": "50 ÷ 6 = ? (с остатком)",
+      "answer": "8 (ост. 2)",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q01",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 1/2 от целого?",
+      "answer": "1/2",
+      "alternatives": [
+        "1/2"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q02",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 1/3 от целого?",
+      "answer": "1/3",
+      "alternatives": [
+        "1/3"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q03",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 1/4 от целого?",
+      "answer": "1/4",
+      "alternatives": [
+        "1/4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q04",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 2/3 от целого?",
+      "answer": "2/3",
+      "alternatives": [
+        "2/3"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q05",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 3/4 от целого?",
+      "answer": "3/4",
+      "alternatives": [
+        "3/4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q06",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 2/5 от целого?",
+      "answer": "2/5",
+      "alternatives": [
+        "2/5"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t06_q07",
+      "grade": 3,
+      "topic_id": "g3_t06",
+      "topic": "Дроби — части целого",
+      "item_family": "fractions_intro",
+      "question": "Какую часть составляет 3/5 от целого?",
+      "answer": "3/5",
+      "alternatives": [
+        "3/5"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q01",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у квадрата?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q02",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у треугольника?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q03",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у прямоугольника?",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q04",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у круга?",
+      "answer": "0",
+      "alternatives": [
+        "0"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q05",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у пятиугольника?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g3_t07_q06",
+      "grade": 3,
+      "topic_id": "g3_t07",
+      "topic": "Плоские фигуры и их свойства",
+      "item_family": "geometry_2d",
+      "question": "Сколько сторон у шестиугольника?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "g4_t01_q01",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "1/2 + 4/2 = ?",
+      "answer": "5/2",
+      "alternatives": [
+        "5/2"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t01_q02",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "1/1 + 3/1 = ?",
+      "answer": "4/1",
+      "alternatives": [
+        "4/1"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t01_q03",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "2/1 + 5/1 = ?",
+      "answer": "7/1",
+      "alternatives": [
+        "7/1"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t01_q04",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "3/2 + 8/2 = ?",
+      "answer": "11/2",
+      "alternatives": [
+        "11/2"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t01_q05",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "1/2 + 6/2 = ?",
+      "answer": "7/2",
+      "alternatives": [
+        "7/2"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t01_q06",
+      "grade": 4,
+      "topic_id": "g4_t01",
+      "topic": "Сложение и вычитание дробей",
+      "item_family": "fractions_addition",
+      "question": "3/2 + 7/2 = ?",
+      "answer": "10/2",
+      "alternatives": [
+        "10/2"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q01",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 1/2 или 1/3?",
+      "answer": "1/2",
+      "alternatives": [
+        "1/2"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q02",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 2/3 или 3/4?",
+      "answer": "3/4",
+      "alternatives": [
+        "3/4"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q03",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 1/4 или 1/5?",
+      "answer": "1/4",
+      "alternatives": [
+        "1/4"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q04",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 3/5 или 2/5?",
+      "answer": "3/5",
+      "alternatives": [
+        "3/5"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q05",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 4/7 или 3/7?",
+      "answer": "4/7",
+      "alternatives": [
+        "4/7"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t02_q06",
+      "grade": 4,
+      "topic_id": "g4_t02",
+      "topic": "Сравнение дробей",
+      "item_family": "fractions_comparison",
+      "question": "Какая дробь больше: 5/8 или 3/8?",
+      "answer": "5/8",
+      "alternatives": [
+        "5/8"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q01",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 0.5",
+      "answer": "0.5",
+      "alternatives": [
+        "0.5"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q02",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 1.3",
+      "answer": "1.3",
+      "alternatives": [
+        "1.3"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q03",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 2.7",
+      "answer": "2.7",
+      "alternatives": [
+        "2.7"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q04",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 0.1",
+      "answer": "0.1",
+      "alternatives": [
+        "0.1"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q05",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 3.14",
+      "answer": "3.14",
+      "alternatives": [
+        "3.14"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t03_q06",
+      "grade": 4,
+      "topic_id": "g4_t03",
+      "topic": "Десятичные дроби — введение",
+      "item_family": "decimals_intro",
+      "question": "Запишите число: 1.01",
+      "answer": "1.01",
+      "alternatives": [
+        "1.01"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q01",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 5 × 3. Найдите площадь.",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q02",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 7 × 4. Найдите площадь.",
+      "answer": "28",
+      "alternatives": [
+        "28"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q03",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 6 × 6. Найдите площадь.",
+      "answer": "36",
+      "alternatives": [
+        "36"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q04",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 8 × 3. Найдите площадь.",
+      "answer": "24",
+      "alternatives": [
+        "24"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q05",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 9 × 2. Найдите площадь.",
+      "answer": "18",
+      "alternatives": [
+        "18"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t04_q06",
+      "grade": 4,
+      "topic_id": "g4_t04",
+      "topic": "Площадь прямоугольника",
+      "item_family": "area_perimeter",
+      "question": "Прямоугольник 4 × 7. Найдите площадь.",
+      "answer": "28",
+      "alternatives": [
+        "28"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q01",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: тысяча",
+      "answer": "1000",
+      "alternatives": [
+        "1000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q02",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: десять тысяч",
+      "answer": "10000",
+      "alternatives": [
+        "10000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q03",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: сто тысяч",
+      "answer": "100000",
+      "alternatives": [
+        "100000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q04",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: миллион",
+      "answer": "1000000",
+      "alternatives": [
+        "1000000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q05",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: десять миллионов",
+      "answer": "10000000",
+      "alternatives": [
+        "10000000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g4_t05_q06",
+      "grade": 4,
+      "topic_id": "g4_t05",
+      "topic": "Большие числа (до 100 млн)",
+      "item_family": "large_numbers",
+      "question": "Запишите число: сто миллионов",
+      "answer": "100000000",
+      "alternatives": [
+        "100000000"
+      ],
+      "difficulty": 4
+    },
+    {
+      "id": "g5_t01_q01",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "1.5 + 2.3 = ?",
+      "answer": "3.8",
+      "alternatives": [
+        "3.8"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t01_q02",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "3.7 + 1.2 = ?",
+      "answer": "4.9",
+      "alternatives": [
+        "4.9"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t01_q03",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "5.1 + 0.9 = ?",
+      "answer": "6.0",
+      "alternatives": [
+        "6.0"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t01_q04",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "2.4 + 3.6 = ?",
+      "answer": "6.0",
+      "alternatives": [
+        "6.0"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t01_q05",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "4.8 + 1.7 = ?",
+      "answer": "6.5",
+      "alternatives": [
+        "6.5"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t01_q06",
+      "grade": 5,
+      "topic_id": "g5_t01",
+      "topic": "Сложение и вычитание десятичных",
+      "item_family": "decimals_operations",
+      "question": "6.3 + 2.5 = ?",
+      "answer": "8.8",
+      "alternatives": [
+        "8.8"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q01",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "1/2 × 1/3 = ?",
+      "answer": "1/6",
+      "alternatives": [
+        "1/6"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q02",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "2/3 × 3/4 = ?",
+      "answer": "6/12",
+      "alternatives": [
+        "6/12"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q03",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "1/4 × 2/5 = ?",
+      "answer": "2/20",
+      "alternatives": [
+        "2/20"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q04",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "3/5 × 1/2 = ?",
+      "answer": "3/10",
+      "alternatives": [
+        "3/10"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q05",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "2/7 × 1/3 = ?",
+      "answer": "2/21",
+      "alternatives": [
+        "2/21"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t02_q06",
+      "grade": 5,
+      "topic_id": "g5_t02",
+      "topic": "Умножение и деление дробей",
+      "item_family": "fractions_multiplication",
+      "question": "3/8 × 2/5 = ?",
+      "answer": "6/40",
+      "alternatives": [
+        "6/40"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q01",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 1 1/2 в виде неправильной дроби.",
+      "answer": "3/2",
+      "alternatives": [
+        "3/2"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q02",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 2 1/3 в виде неправильной дроби.",
+      "answer": "7/3",
+      "alternatives": [
+        "7/3"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q03",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 3 2/5 в виде неправильной дроби.",
+      "answer": "17/5",
+      "alternatives": [
+        "17/5"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q04",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 1 3/4 в виде неправильной дроби.",
+      "answer": "7/4",
+      "alternatives": [
+        "7/4"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q05",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 2 3/7 в виде неправильной дроби.",
+      "answer": "17/7",
+      "alternatives": [
+        "17/7"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t03_q06",
+      "grade": 5,
+      "topic_id": "g5_t03",
+      "topic": "Смешанные числа",
+      "item_family": "mixed_numbers",
+      "question": "Запишите 4 1/5 в виде неправильной дроби.",
+      "answer": "21/5",
+      "alternatives": [
+        "21/5"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q01",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "2x + 3 = 11. Найдите x.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q02",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "3x + 4 = 20. Найдите x.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q03",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "5x + 2 = 24. Найдите x.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q04",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "4x + 3 = 22. Найдите x.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q05",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "6x + 5 = 40. Найдите x.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t04_q06",
+      "grade": 5,
+      "topic_id": "g5_t04",
+      "topic": "Простые уравнения",
+      "item_family": "simple_equations",
+      "question": "7x + 3 = 32. Найдите x.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q01",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 6, высота 4. Найдите площадь.",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q02",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 8, высота 3. Найдите площадь.",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q03",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 10, высота 5. Найдите площадь.",
+      "answer": "25",
+      "alternatives": [
+        "25"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q04",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 12, высота 7. Найдите площадь.",
+      "answer": "42",
+      "alternatives": [
+        "42"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q05",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 9, высота 8. Найдите площадь.",
+      "answer": "36",
+      "alternatives": [
+        "36"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g5_t05_q06",
+      "grade": 5,
+      "topic_id": "g5_t05",
+      "topic": "Площадь треугольника и параллелограмма",
+      "item_family": "area_triangle",
+      "question": "Треугольник: основание 15, высота 6. Найдите площадь.",
+      "answer": "45",
+      "alternatives": [
+        "45"
+      ],
+      "difficulty": 5
+    },
+    {
+      "id": "g6_t01_q01",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "3x + 5 = 20. Найдите x.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t01_q02",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "2x + 7 = 25. Найдите x.",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t01_q03",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "4x + 3 = 35. Найдите x.",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t01_q04",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "5x + 8 = 48. Найдите x.",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t01_q05",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "6x + 4 = 52. Найдите x.",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t01_q06",
+      "grade": 6,
+      "topic_id": "g6_t01",
+      "topic": "Линейные уравнения",
+      "item_family": "linear_equations",
+      "question": "7x + 3 = 59. Найдите x.",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q01",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "2/3 = 8/x. Найдите x.",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q02",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "3/4 = 9/x. Найдите x.",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q03",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "5/6 = 20/x. Найдите x.",
+      "answer": "24",
+      "alternatives": [
+        "24"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q04",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "2/5 = 6/x. Найдите x.",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q05",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "3/7 = 12/x. Найдите x.",
+      "answer": "28",
+      "alternatives": [
+        "28"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t02_q06",
+      "grade": 6,
+      "topic_id": "g6_t02",
+      "topic": "Пропорции и масштаб",
+      "item_family": "proportions",
+      "question": "4/9 = 16/x. Найдите x.",
+      "answer": "36",
+      "alternatives": [
+        "36"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q01",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 3 × 4 × 5. Найдите объём.",
+      "answer": "60",
+      "alternatives": [
+        "60"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q02",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 6 × 2 × 7. Найдите объём.",
+      "answer": "84",
+      "alternatives": [
+        "84"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q03",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 5 × 5 × 5. Найдите объём.",
+      "answer": "125",
+      "alternatives": [
+        "125"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q04",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 8 × 3 × 4. Найдите объём.",
+      "answer": "96",
+      "alternatives": [
+        "96"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q05",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 10 × 2 × 6. Найдите объём.",
+      "answer": "120",
+      "alternatives": [
+        "120"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t03_q06",
+      "grade": 6,
+      "topic_id": "g6_t03",
+      "topic": "Объём прямоугольного параллелепипеда",
+      "item_family": "volume",
+      "question": "Параллелепипед 7 × 4 × 3. Найдите объём.",
+      "answer": "84",
+      "alternatives": [
+        "84"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q01",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "3 + (-7) = ?",
+      "answer": "-4",
+      "alternatives": [
+        "-4"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q02",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "-5 + (2) = ?",
+      "answer": "-3",
+      "alternatives": [
+        "-3"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q03",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "8 + (-3) = ?",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q04",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "-4 + (-9) = ?",
+      "answer": "-13",
+      "alternatives": [
+        "-13"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q05",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "6 + (-11) = ?",
+      "answer": "-5",
+      "alternatives": [
+        "-5"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t04_q06",
+      "grade": 6,
+      "topic_id": "g6_t04",
+      "topic": "Положительные и отрицательные числа",
+      "item_family": "rational_numbers",
+      "question": "-7 + (13) = ?",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q01",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(3, 4). В какой четверти она находится?",
+      "answer": "I",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q02",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(-2, 5). В какой четверти она находится?",
+      "answer": "II",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q03",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(0, 6). В какой четверти она находится?",
+      "answer": "IV",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q04",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(-4, -3). В какой четверти она находится?",
+      "answer": "III",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q05",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(7, -1). В какой четверти она находится?",
+      "answer": "IV",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g6_t05_q06",
+      "grade": 6,
+      "topic_id": "g6_t05",
+      "topic": "Координатная плоскость",
+      "item_family": "coordinate_plane",
+      "question": "Точка A(-5, 0). В какой четверти она находится?",
+      "answer": "IV",
+      "alternatives": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "difficulty": 6
+    },
+    {
+      "id": "g7_t01_q01",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(1) + (2) = ?",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t01_q02",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(3) - (4) = ?",
+      "answer": "-1",
+      "alternatives": [
+        "-1"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t01_q03",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(2) × (5) = ?",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t01_q04",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(3) + (8) = ?",
+      "answer": "11",
+      "alternatives": [
+        "11"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t01_q05",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(5) - (6) = ?",
+      "answer": "-1",
+      "alternatives": [
+        "-1"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t01_q06",
+      "grade": 7,
+      "topic_id": "g7_t01",
+      "topic": "Все операции с рациональными числами",
+      "item_family": "rational_operations",
+      "question": "(7) × (9) = ?",
+      "answer": "63",
+      "alternatives": [
+        "63"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q01",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 8, x - y = -2. Найдите x.",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q02",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 9, x - y = 5. Найдите x.",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q03",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 12, x - y = -4. Найдите x.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q04",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 7, x - y = 5. Найдите x.",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q05",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 12, x - y = 6. Найдите x.",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t02_q06",
+      "grade": 7,
+      "topic_id": "g7_t02",
+      "topic": "Системы уравнений",
+      "item_family": "systems_of_equations",
+      "question": "Решите систему: x + y = 9, x - y = -5. Найдите x.",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q01",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 20% от 150.",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q02",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 15% от 200.",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q03",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 30% от 120.",
+      "answer": "36",
+      "alternatives": [
+        "36"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q04",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 25% от 80.",
+      "answer": "20",
+      "alternatives": [
+        "20"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q05",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 10% от 500.",
+      "answer": "50",
+      "alternatives": [
+        "50"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t03_q06",
+      "grade": 7,
+      "topic_id": "g7_t03",
+      "topic": "Проценты и вычисления",
+      "item_family": "percent",
+      "question": "Найдите 45% от 240.",
+      "answer": "108",
+      "alternatives": [
+        "108"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q01",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 60° и 70°. Найдите третий угол.",
+      "answer": "50",
+      "alternatives": [
+        "50"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q02",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 45° и 45°. Найдите третий угол.",
+      "answer": "90",
+      "alternatives": [
+        "90"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q03",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 30° и 60°. Найдите третий угол.",
+      "answer": "90",
+      "alternatives": [
+        "90"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q04",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 90° и 45°. Найдите третий угол.",
+      "answer": "45",
+      "alternatives": [
+        "45"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q05",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 120° и 30°. Найдите третий угол.",
+      "answer": "30",
+      "alternatives": [
+        "30"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t04_q06",
+      "grade": 7,
+      "topic_id": "g7_t04",
+      "topic": "Углы и треугольники",
+      "item_family": "angles_triangles",
+      "question": "Два угла треугольника: 50° и 80°. Найдите третий угол.",
+      "answer": "50",
+      "alternatives": [
+        "50"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q01",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "2^3 = ?",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q02",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "3^2 = ?",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q03",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "5^3 = ?",
+      "answer": "125",
+      "alternatives": [
+        "125"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q04",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "2^5 = ?",
+      "answer": "32",
+      "alternatives": [
+        "32"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q05",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "4^3 = ?",
+      "answer": "64",
+      "alternatives": [
+        "64"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g7_t05_q06",
+      "grade": 7,
+      "topic_id": "g7_t05",
+      "topic": "Степени и корни",
+      "item_family": "exponents",
+      "question": "10^4 = ?",
+      "answer": "10000",
+      "alternatives": [
+        "10000"
+      ],
+      "difficulty": 7
+    },
+    {
+      "id": "g8_t01_q01",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -6x + 9 = 0. Найдите корень.",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t01_q02",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -10x + 25 = 0. Найдите корень.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t01_q03",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -14x + 49 = 0. Найдите корень.",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t01_q04",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -4x + 4 = 0. Найдите корень.",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t01_q05",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -8x + 16 = 0. Найдите корень.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t01_q06",
+      "grade": 8,
+      "topic_id": "g8_t01",
+      "topic": "Квадратные уравнения",
+      "item_family": "quadratic",
+      "question": "x² + -12x + 36 = 0. Найдите корень.",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q01",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 2x + 3. Найдите f(5).",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q02",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 3x + -1. Найдите f(4).",
+      "answer": "11",
+      "alternatives": [
+        "11"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q03",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 5x + 2. Найдите f(3).",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q04",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 4x + -3. Найдите f(2).",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q05",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 7x + 1. Найдите f(6).",
+      "answer": "43",
+      "alternatives": [
+        "43"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t02_q06",
+      "grade": 8,
+      "topic_id": "g8_t02",
+      "topic": "Линейные функции",
+      "item_family": "linear_functions",
+      "question": "f(x) = 2x + -5. Найдите f(7).",
+      "answer": "9",
+      "alternatives": [
+        "9"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q01",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(30°) = ?",
+      "answer": "0.5",
+      "alternatives": [
+        "0.5"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q02",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(45°) = ?",
+      "answer": "0.707",
+      "alternatives": [
+        "0.707"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q03",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(60°) = ?",
+      "answer": "0.866",
+      "alternatives": [
+        "0.866"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q04",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(90°) = ?",
+      "answer": "1",
+      "alternatives": [
+        "1"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q05",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(0°) = ?",
+      "answer": "0",
+      "alternatives": [
+        "0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t03_q06",
+      "grade": 8,
+      "topic_id": "g8_t03",
+      "topic": "Синус, косинус, тангенс",
+      "item_family": "trigonometry",
+      "question": "sin(180°) = ?",
+      "answer": "0",
+      "alternatives": [
+        "0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q01",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 3, 5, 7, 9, 1",
+      "answer": "5.0",
+      "alternatives": [
+        "5.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q02",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 2, 4, 6, 8, 10",
+      "answer": "6.0",
+      "alternatives": [
+        "6.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q03",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 1, 3, 5, 7, 9",
+      "answer": "5.0",
+      "alternatives": [
+        "5.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q04",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 10, 20, 30, 40, 50",
+      "answer": "30.0",
+      "alternatives": [
+        "30.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q05",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 5, 10, 15, 20, 25",
+      "answer": "15.0",
+      "alternatives": [
+        "15.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t04_q06",
+      "grade": 8,
+      "topic_id": "g8_t04",
+      "topic": "Среднее, медиана, мода",
+      "item_family": "statistics",
+      "question": "Найдите среднее арифметическое: 2, 2, 3, 5, 8",
+      "answer": "4.0",
+      "alternatives": [
+        "4.0"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q01",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 3 и 4. Найдите гипотенузу.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q02",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 5 и 12. Найдите гипотенузу.",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q03",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 6 и 8. Найдите гипотенузу.",
+      "answer": "10",
+      "alternatives": [
+        "10"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q04",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 8 и 15. Найдите гипотенузу.",
+      "answer": "17",
+      "alternatives": [
+        "17"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q05",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 7 и 24. Найдите гипотенузу.",
+      "answer": "25",
+      "alternatives": [
+        "25"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g8_t05_q06",
+      "grade": 8,
+      "topic_id": "g8_t05",
+      "topic": "Теорема Пифагора",
+      "item_family": "pythagorean",
+      "question": "Катеты 9 и 12. Найдите гипотенузу.",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 8
+    },
+    {
+      "id": "g9_t01_q01",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + -5x + 6 = 0. Найдите больший корень.",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t01_q02",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + -6x + 8 = 0. Найдите больший корень.",
+      "answer": "4",
+      "alternatives": [
+        "4"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t01_q03",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + 2x + -8 = 0. Найдите больший корень.",
+      "answer": "2",
+      "alternatives": [
+        "2"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t01_q04",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + -3x + -10 = 0. Найдите больший корень.",
+      "answer": "5",
+      "alternatives": [
+        "5"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t01_q05",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + -7x + 3 = 0. Найдите больший корень.",
+      "answer": "3",
+      "alternatives": [
+        "3"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t01_q06",
+      "grade": 9,
+      "topic_id": "g9_t01",
+      "topic": "Квадратичные функции и графики",
+      "item_family": "quadratic_functions",
+      "question": "x² + 4x + 4 = 0. Найдите больший корень.",
+      "answer": "-2",
+      "alternatives": [
+        "-2"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q01",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: sin²30° + cos²30°",
+      "answer": "1",
+      "alternatives": [
+        "1"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q02",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: sin²45° + cos²45°",
+      "answer": "1",
+      "alternatives": [
+        "1"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q03",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: sin²60° + cos²60°",
+      "answer": "1",
+      "alternatives": [
+        "1"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q04",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: 2sin30°cos30°",
+      "answer": "0.866",
+      "alternatives": [
+        "0.866"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q05",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: sin(90°-30°)",
+      "answer": "0.866",
+      "alternatives": [
+        "0.866"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t02_q06",
+      "grade": 9,
+      "topic_id": "g9_t02",
+      "topic": "Тригонометрические тождества",
+      "item_family": "trig_identities",
+      "question": "Вычислите: cos(90°-45°)",
+      "answer": "0.707",
+      "alternatives": [
+        "0.707"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q01",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 1, а всего 6?",
+      "answer": "1/6",
+      "alternatives": [
+        "1/6"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q02",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 2, а всего 6?",
+      "answer": "1/3",
+      "alternatives": [
+        "1/3"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q03",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 3, а всего 6?",
+      "answer": "1/2",
+      "alternatives": [
+        "1/2"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q04",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 1, а всего 2?",
+      "answer": "1/2",
+      "alternatives": [
+        "1/2"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q05",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 1, а всего 3?",
+      "answer": "1/3",
+      "alternatives": [
+        "1/3"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t03_q06",
+      "grade": 9,
+      "topic_id": "g9_t03",
+      "topic": "Вероятность и комбинаторика",
+      "item_family": "probability",
+      "question": "Какова вероятность вытащить нужный элемент, если благоприятных 2, а всего 5?",
+      "answer": "2/5",
+      "alternatives": [
+        "2/5"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q01",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=2, d=3. Найдите a5.",
+      "answer": "14",
+      "alternatives": [
+        "14"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q02",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=1, d=2. Найдите a10.",
+      "answer": "19",
+      "alternatives": [
+        "19"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q03",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=3, d=2. Найдите a6.",
+      "answer": "13",
+      "alternatives": [
+        "13"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q04",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=5, d=3. Найдите a4.",
+      "answer": "14",
+      "alternatives": [
+        "14"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q05",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=1, d=10. Найдите a3.",
+      "answer": "21",
+      "alternatives": [
+        "21"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t04_q06",
+      "grade": 9,
+      "topic_id": "g9_t04",
+      "topic": "Арифметическая и геометрическая прогрессии",
+      "item_family": "sequences",
+      "question": "Прогрессия: a₁=7, d=2. Найдите a8.",
+      "answer": "21",
+      "alternatives": [
+        "21"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q01",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 3x^2 при x=1.",
+      "answer": "6",
+      "alternatives": [
+        "6"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q02",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 5x^3 при x=1.",
+      "answer": "15",
+      "alternatives": [
+        "15"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q03",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 2x^4 при x=1.",
+      "answer": "8",
+      "alternatives": [
+        "8"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q04",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 7x^1 при x=1.",
+      "answer": "7",
+      "alternatives": [
+        "7"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q05",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 4x^5 при x=1.",
+      "answer": "20",
+      "alternatives": [
+        "20"
+      ],
+      "difficulty": 9
+    },
+    {
+      "id": "g9_t05_q06",
+      "grade": 9,
+      "topic_id": "g9_t05",
+      "topic": "Производные — введение",
+      "item_family": "derivatives_intro",
+      "question": "Найдите производную 6x^2 при x=1.",
+      "answer": "12",
+      "alternatives": [
+        "12"
+      ],
+      "difficulty": 9
+    }
   ]
 }

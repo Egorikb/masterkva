@@ -17,7 +17,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-DATA_DIR = Path(__file__).parents[1] / "data"
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 SKILL_REGISTRY_FILE = DATA_DIR / "skill_registry.json"
 
 
