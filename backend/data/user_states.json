@@ -1,20 +1,40 @@
 {
-  "csv-api-8ee7c5ae-fff4-41bd-8c02-3df84368ce97": {
-    "name": "Тест",
+  "gamif-api-7d3e0dd4-60fa-4a43-bf5f-fde9776c4d56": {
+    "name": "Test",
     "grade": 1,
     "phase": "chat",
     "student_profile": {
+      "profile_schema_version": "v1",
+      "user_id": "gamif-api-7d3e0dd4-60fa-4a43-bf5f-fde9776c4d56",
       "active_scope": {
+        "chain_id": "g1_to_g2_addition",
+        "allowed_skill_ids": [
+          "g1_early_arithmetic_core",
+          "g2_addition_core"
+        ],
         "current_skill_id": null,
-        "blocked_skill_ids": []
+        "current_topic_id": null,
+        "current_grade": null,
+        "blocked_skill_ids": [],
+        "remediation_targets": {},
+        "updated_at": null
       },
       "skill_mastery": {},
-      "promotion_history": []
+      "diagnostic_history": [],
+      "mastery_history": [],
+      "promotion_history": [],
+      "activity_counters": {
+        "diagnostic_sessions": 0,
+        "practice_sessions": 0,
+        "mastery_checks": 0,
+        "promotions": 0
+      },
+      "last_updated_at": null
     }
   },
-  "notif-api-23be0ff0-3377-47ec-acfb-c1228564db19": {
-    "name": null,
-    "grade": 0,
+  "embed-init-0ad5aee7-595b-4cbf-a32e-3bec240a0870": {
+    "name": "Вася",
+    "grade": 1,
     "last_topic": null,
     "onboarding_complete": false,
     "phase": "chat",
@@ -77,15 +97,6 @@
         "promotions": 0
       },
       "last_updated_at": null
-    },
-    "notification_subscription": {
-      "webhook_url": "https://example.com/webhook",
-      "subscribed_at": "2026-05-24T19:58:02.317756+00:00",
-      "events": [
-        "mastery_achieved",
-        "daily_summary",
-        "streak_milestone"
-      ]
     }
   },
   "u1": {

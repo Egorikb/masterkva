@@ -1187,3 +1187,75 @@ def subscribe_notifications(
         "subscribed": True,
         "events": ["mastery_achieved", "daily_summary", "streak_milestone"],
     }
+
+
+# === PHASE H: Integrations ===
+
+from deeptutor.services.gamification import (
+    get_gamification_state,
+    record_answer,
+    record_mastery,
+    get_level_progress,
+    BADGES,
+)
+
+
+@router.get("/panda/gamification/{user_id}")
+def get_gamification(user_id: str) -> dict[str, Any]:
+    """Get gamification state for a user (XP, level, badges)."""
+    state = get_gamification_state(user_id)
+    return {
+        "user_id": user_id,
+        **state.to_dict(),
+        "level_progress": get_level_progress(state.xp),
+        "available_badges": {k: {"name": v["name"], "description": v["description"], "icon": v["icon"]} for k, v in BADGES.items()},
+    }
+
+
+@router.post("/panda/embed/init")
+def init_embed(
+    user_id: str,
+    pupil_name: str | None = None,
+    grade: int | None = None,
+) -> dict[str, Any]:
+    """Initialize embedded session (for iframe/widget integration).
+
+    Returns session config that the embed frontend can use.
+    """
+    state = get_user_state(user_id)
+    if pupil_name:
+        state = update_user_state(user_id, {"name": pupil_name})
+    if grade:
+        state = update_user_state(user_id, {"grade": grade})
+
+    return {
+        "user_id": user_id,
+        "name": state.get("name"),
+        "grade": state.get("grade"),
+        "ready": bool(state.get("name") and state.get("grade")),
+        "base_url": "/api/v1/plugins/panda",
+    }
+
+
+@router.get("/panda/embed/code")
+def get_embed_code(
+    user_id: str,
+    height: str = "600",
+    width: str = "100%",
+) -> dict[str, Any]:
+    """Get embeddable iframe HTML code."""
+    iframe_html = (
+        f'<iframe '
+        f'src="/embed?user_id={user_id}" '
+        f'width="{width}" '
+        f'height="{height}" '
+        f'frameborder="0" '
+        f'allow="clipboard-write" '
+        f'style="border: 1px solid #e5e7eb; border-radius: 12px;" '
+        f'title="MasterKva Tutor">'
+        f'</iframe>'
+    )
+    return {
+        "user_id": user_id,
+        "iframe_html": iframe_html,
+    }
