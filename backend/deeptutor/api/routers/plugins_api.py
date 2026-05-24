@@ -16,11 +16,13 @@ from deeptutor.services.report_service import ReportService
 from deeptutor.services.skill_runtime import skill_resolver
 from deeptutor.services.student_profile_store import (
     ensure_student_profile,
+    get_student_profile,
     record_diagnostic_result,
     record_mastery_evaluation,
     record_practice_attempt,
     record_promotion,
 )
+from deeptutor.services.progress_analytics import get_progress_summary
 from deeptutor.services.teacher_llm import generate_teacher_reply
 from deeptutor.services.visual_template_service import decorate_question_visual
 
@@ -920,3 +922,9 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         f"Привет, {state['name']}! Напиши 'диагностика', чтобы начать учёбу.",
         state,
     )
+
+
+@router.get("/panda/progress/{user_id}")
+def get_progress(user_id: str) -> dict[str, Any]:
+    """Read-only progress summary for parents/teachers."""
+    return get_progress_summary(user_id)
