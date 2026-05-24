@@ -1,5 +1,5 @@
 {
-  "progress-practice-e9dd4c99-9ecc-400a-b31c-006470d5d162": {
+  "progress-practice-3d08ae4e-0095-4bb2-bb14-4b5b0bc09c93": {
     "name": "Алиса",
     "grade": 1,
     "phase": "chat",
@@ -22,10 +22,10 @@
       "promotion_history": []
     }
   },
-  "progress-api-955b51b1-ede1-49f7-a8a7-c0fa8e5779dd": {
+  "progress-api-886258e3-ebac-45e8-b4e3-83319bbb24f6": {
     "student_profile": {
       "profile_schema_version": "v1",
-      "user_id": "progress-api-955b51b1-ede1-49f7-a8a7-c0fa8e5779dd",
+      "user_id": "progress-api-886258e3-ebac-45e8-b4e3-83319bbb24f6",
       "active_scope": {
         "chain_id": "g1_to_g2_addition",
         "allowed_skill_ids": [
@@ -52,10 +52,10 @@
       "last_updated_at": null
     }
   },
-  "subtraction-release-gate-742fe100-fa62-4d58-8f5c-c6d83b0c77ae": {
+  "subtraction-release-gate-95b29470-1da8-4a68-899e-dfdc6ef8a644": {
     "student_profile": {
       "profile_schema_version": "v1",
-      "user_id": "subtraction-release-gate-742fe100-fa62-4d58-8f5c-c6d83b0c77ae",
+      "user_id": "subtraction-release-gate-95b29470-1da8-4a68-899e-dfdc6ef8a644",
       "active_scope": {
         "chain_id": "g1_to_g2_addition",
         "allowed_skill_ids": [
@@ -73,8 +73,8 @@
         "g2_subtraction_core": {
           "skill_id": "g2_subtraction_core",
           "skill_version": "v1",
-          "last_practiced_at": "2026-05-24T16:58:11.642291+00:00",
-          "last_attempt_at": "2026-05-24T16:58:11.642303+00:00",
+          "last_practiced_at": "2026-05-24T18:01:20.668187+00:00",
+          "last_attempt_at": "2026-05-24T18:01:20.668196+00:00",
           "last_attempt_correct": true,
           "last_attempt_confidence": 1.0,
           "last_practice_question_id": "g2_t02_p01",
@@ -84,7 +84,7 @@
           "remediation_path": null,
           "status": "mastered",
           "mastery_level": "mastered",
-          "last_evaluated_at": "2026-05-24T16:58:11.644499+00:00",
+          "last_evaluated_at": "2026-05-24T18:01:20.670810+00:00",
           "mastery_confidence": 1.0,
           "decision": "mastered",
           "evidence": {
@@ -101,13 +101,13 @@
             "required_window_met"
           ],
           "failed_criteria": [],
-          "last_mastered_at": "2026-05-24T16:58:11.644505+00:00"
+          "last_mastered_at": "2026-05-24T18:01:20.670818+00:00"
         }
       },
       "diagnostic_history": [],
       "mastery_history": [
         {
-          "at": "2026-05-24T16:58:11.642328+00:00",
+          "at": "2026-05-24T18:01:20.668202+00:00",
           "event": "practice_attempt",
           "skill_id": "g2_subtraction_core",
           "skill_version": "v1",
@@ -120,7 +120,7 @@
           "remediation_path": null
         },
         {
-          "at": "2026-05-24T16:58:11.644488+00:00",
+          "at": "2026-05-24T18:01:20.670795+00:00",
           "skill_id": "g2_subtraction_core",
           "skill_version": "v1",
           "decision": "mastered",
@@ -151,13 +151,13 @@
         "mastery_checks": 1,
         "promotions": 0
       },
-      "last_updated_at": "2026-05-24T16:58:11.644628+00:00"
+      "last_updated_at": "2026-05-24T18:01:20.670978+00:00"
     }
   },
-  "time-chain-hardening-0d7f2b08-0071-4570-a6d8-dbe7cac5c921": {
+  "time-chain-hardening-a19b9b79-132c-4842-bd42-220031765e0b": {
     "student_profile": {
       "profile_schema_version": "v1",
-      "user_id": "time-chain-hardening-0d7f2b08-0071-4570-a6d8-dbe7cac5c921",
+      "user_id": "time-chain-hardening-a19b9b79-132c-4842-bd42-220031765e0b",
       "active_scope": {
         "chain_id": "g1_to_g2_addition",
         "allowed_skill_ids": [
@@ -169,14 +169,14 @@
         "current_grade": null,
         "blocked_skill_ids": [],
         "remediation_targets": {},
-        "updated_at": "2026-05-24T16:58:11.658964+00:00"
+        "updated_at": "2026-05-24T18:01:20.684847+00:00"
       },
       "skill_mastery": {
         "g3_time_measurement_core": {
           "skill_id": "g3_time_measurement_core",
           "skill_version": "v1",
-          "last_practiced_at": "2026-05-24T16:58:11.653877+00:00",
-          "last_attempt_at": "2026-05-24T16:58:11.653891+00:00",
+          "last_practiced_at": "2026-05-24T18:01:20.679123+00:00",
+          "last_attempt_at": "2026-05-24T18:01:20.679133+00:00",
           "last_attempt_correct": true,
           "last_attempt_confidence": 1.0,
           "last_practice_question_id": "g3_t01_p01",
@@ -186,7 +186,7 @@
           "remediation_path": null,
           "status": "mastered",
           "mastery_level": "mastered",
-          "last_evaluated_at": "2026-05-24T16:58:11.656462+00:00",
+          "last_evaluated_at": "2026-05-24T18:01:20.682206+00:00",
           "mastery_confidence": 1.0,
           "decision": "mastered",
           "evidence": {
@@ -203,13 +203,13 @@
             "required_window_met"
           ],
           "failed_criteria": [],
-          "last_mastered_at": "2026-05-24T16:58:11.656467+00:00"
+          "last_mastered_at": "2026-05-24T18:01:20.682212+00:00"
         }
       },
       "diagnostic_history": [],
       "mastery_history": [
         {
-          "at": "2026-05-24T16:58:11.653898+00:00",
+          "at": "2026-05-24T18:01:20.679138+00:00",
           "event": "practice_attempt",
           "skill_id": "g3_time_measurement_core",
           "skill_version": "v1",
@@ -222,7 +222,7 @@
           "remediation_path": null
         },
         {
-          "at": "2026-05-24T16:58:11.656452+00:00",
+          "at": "2026-05-24T18:01:20.682192+00:00",
           "skill_id": "g3_time_measurement_core",
           "skill_version": "v1",
           "decision": "mastered",
@@ -248,7 +248,7 @@
       ],
       "promotion_history": [
         {
-          "at": "2026-05-24T16:58:11.658952+00:00",
+          "at": "2026-05-24T18:01:20.684835+00:00",
           "from_skill_id": "g3_time_measurement_core",
           "to_skill_id": "g4_place_value_core",
           "from_skill_version": "v1",
@@ -262,7 +262,7 @@
         "mastery_checks": 1,
         "promotions": 1
       },
-      "last_updated_at": "2026-05-24T16:58:11.659130+00:00"
+      "last_updated_at": "2026-05-24T18:01:20.684998+00:00"
     }
   }
 }

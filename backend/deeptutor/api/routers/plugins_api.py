@@ -23,6 +23,7 @@ from deeptutor.services.student_profile_store import (
     record_promotion,
 )
 from deeptutor.services.progress_analytics import get_progress_summary
+from deeptutor.services.remediation_engine import remediation_engine
 from deeptutor.services.teacher_llm import generate_teacher_reply
 from deeptutor.services.visual_template_service import decorate_question_visual
 
@@ -338,6 +339,34 @@ def _strip_followup_question(text: str) -> str:
     for pattern in patterns:
         result = re.sub(pattern, "", result, flags=re.IGNORECASE | re.MULTILINE)
     return result.strip()
+
+
+def _get_scaffolding_visual(remediation) -> str:
+    """Get visual hint for scaffolding level 1."""
+    visual_hint = remediation.remediation_path
+    if not visual_hint:
+        return ""
+    visual_names = {
+        "number_bond": "Посмотри на числовой домик:",
+        "ten_frame": "Посчитай на десятирамке:",
+        "number_line": "Посмотри на числовую прямую:",
+        "base_ten_blocks": "Представь блоки десятков:",
+        "clock_face": "Посмотри на часы:",
+        "time_unit_table": "Вспомни: 1 час = 60 минут.",
+    }
+    return visual_names.get(visual_hint, f"Подсказка: {visual_hint}")
+
+
+def _get_scaffolding_step_by_step(remediation) -> str:
+    """Get step-by-step hint for scaffolding level 2."""
+    item_family = remediation.item_family
+    if "addition" in item_family or "compose" in item_family:
+        return "Давай по шагам: 1) Найди первое число. 2) Прибавь второе. 3) Если сумма больше 10 — запиши единицу и переноси десяток."
+    if "subtraction" in item_family:
+        return "Давай по шагам: 1) Найди первое число. 2) Вычти второе. 3) Если не хватает — займи десяток."
+    if "time" in item_family:
+        return "Вспомни: 1 час = 60 минут. Умножь часы на 60."
+    return "Давай разберём по шагам. Сначала подумай, что нужно сделать."
 
 
 
@@ -736,6 +765,21 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             teacher_text = _strip_followup_question(teacher_text)
             text = f"{teacher_text}\n\n{next_practice['question']}"
         else:
+            # Practice wrong → start remediation flow
+            remediation = remediation_engine.start_remediation(
+                user_id,
+                original_question=practice,
+                error_details=feedback,
+            )
+            first_step = remediation.current_step
+
+            scaffolding_level = remediation.scaffolding_level
+            scaffolding_hint = ""
+            if scaffolding_level == 1:
+                scaffolding_hint = _get_scaffolding_visual(remediation)
+            elif scaffolding_level == 2:
+                scaffolding_hint = _get_scaffolding_step_by_step(remediation)
+
             teacher_text = generate_teacher_reply(
                 stage="practice_result",
                 grade=int(state.get("grade") or 1),
@@ -746,16 +790,25 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
                 practice_feedback=feedback,
                 report=report,
             )
-            text = f"{teacher_text}\n\nСмотри: {practice['answer']}.\n\n{next_practice['question']}"
+            teacher_text = _strip_followup_question(teacher_text)
+
+            # Build remediation response
+            correct_answer_text = f"Правильный ответ: {practice['answer']}."
+            parts = [teacher_text, correct_answer_text]
+            if scaffolding_hint:
+                parts.append(scaffolding_hint)
+            parts.append(first_step.question)
+            text = "\n\n".join(parts)
 
         state = update_user_state(
             user_id,
             {
-                "phase": "practice",
+                "phase": "remediation" if not feedback["is_correct"] else "practice",
                 "practice_round": practice_round,
                 "practice_feedback": feedback,
                 "report": report,
-                "current_practice": next_practice,
+                "current_practice": next_practice if feedback["is_correct"] else practice,
+                "remediation_step_type": first_step.step_type if not feedback["is_correct"] else None,
                 "mastery_check_pending": False,
                 "promotion_eligible": False,
             },
@@ -903,6 +956,87 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
 
         visual = {"type": "report", "practice_result": report["practice_result"]} if feedback["is_correct"] else _question_visual(next_practice)
         return _panda_response(text, state, visual=visual)
+
+    # === REMEDIATION PHASE ===
+    if state.get("phase") == "remediation":
+        remediation = remediation_engine.get_state(user_id)
+        if not remediation:
+            # Lost state — restart practice
+            weak_topic = state.get("weak_topic") or diagnostic_engine.get_starting_topic(int(state.get("grade") or 1))
+            next_practice = practice_engine.create_practice(weak_topic)
+            state = update_user_state(user_id, {"phase": "practice", "current_practice": next_practice})
+            return _panda_response(next_practice["question"], state, visual=_question_visual(next_practice))
+
+        is_correct, next_step, is_complete, should_escalate = remediation_engine.check_answer(
+            user_id, message
+        )
+
+        if should_escalate:
+            # 3 errors in remediation → escalate to full explanation
+            remediation_engine.remove_state(user_id)
+            weak_topic = state.get("weak_topic") or {}
+            explanation_text = generate_teacher_explanation(
+                stage="explanation",
+                grade=int(state.get("grade") or 1),
+                weak_topic=weak_topic,
+                learning_context=list(state.get("learning_context") or []),
+                user_message=message,
+            )
+            explanation_text = _strip_followup_question(explanation_text)
+            new_practice = practice_engine.create_practice(weak_topic)
+            state = update_user_state(
+                user_id,
+                {
+                    "phase": "explanation",
+                    "teacher_explanation": explanation_text,
+                    "explanation_ack_pending": True,
+                    "explanation_shown_for_skill_id": state.get("current_skill_id"),
+                    "board_mode": "on",
+                },
+            )
+            text = f"{explanation_text}\n\nПопробуем ещё раз.\n\n{new_practice['question']}"
+            return _panda_response(text, state, visual=_question_visual(new_practice))
+
+        if is_complete:
+            # Remediation done — return to practice
+            remediation_engine.remove_state(user_id)
+            weak_topic = state.get("weak_topic") or {}
+            next_practice = practice_engine.create_practice(weak_topic)
+            state = update_user_state(
+                user_id,
+                {
+                    "phase": "practice",
+                    "current_practice": next_practice,
+                    "remediation_step_type": None,
+                },
+            )
+            if is_correct:
+                text = f"Верно! Отлично, продолжаем.\n\n{next_practice['question']}"
+            else:
+                text = f"Верно! Возвращаемся к практике.\n\n{next_practice['question']}"
+            return _panda_response(text, state, visual=_question_visual(next_practice))
+
+        # More steps in remediation
+        scaffolding_hint = ""
+        scaffolding_level = remediation.scaffolding_level
+        if scaffolding_level == 1:
+            scaffolding_hint = _get_scaffolding_visual(remediation)
+        elif scaffolding_level == 2:
+            scaffolding_hint = _get_scaffolding_step_by_step(remediation)
+
+        if is_correct:
+            text = f"Верно!\n\n{next_step.question}"
+        else:
+            text = f"Не совсем. Правильный ответ: {remediation.current_step.answer if remediation.current_step else ''}.\n\n{next_step.question}"
+
+        if scaffolding_hint:
+            text = f"{text}\n\n{scaffolding_hint}"
+
+        state = update_user_state(
+            user_id,
+            {"remediation_step_type": next_step.step_type},
+        )
+        return _panda_response(text, state, visual=_question_visual({"question": next_step.question}))
 
     # Report phase is no longer a separate step — practice auto-advances.
     # If state somehow lands in "report" (e.g. old saved state), push forward to practice.

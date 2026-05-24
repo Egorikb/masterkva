@@ -21,6 +21,7 @@ class Phase(str, Enum):
     DIAGNOSTIC = "diagnostic"
     EXPLANATION = "explanation"
     PRACTICE = "practice"
+    REMEDIATION = "remediation"
     MASTERY_CHECK = "mastery_check"
     REPORT = "report"
 
@@ -32,10 +33,15 @@ class Transition(str, Enum):
     DIAGNOSTIC_COMPLETE = "diagnostic_complete"
     EXPLANATION_DONE = "explanation_done"
     PRACTICE_CORRECT = "practice_correct"
-    PRACTICE_WRONG = "practice_wractice"
+    PRACTICE_WRONG = "practice_wrong"
     MASTERY_ACHIEVED = "mastery_achieved"
     MASTERY_FAILED = "mastery_failed"
     PROMOTE = "promote"
+    REMEDIATION_START = "remediation_start"
+    REMEDIATION_CORRECT = "remediation_correct"
+    REMEDIATION_WRONG = "remediation_wrong"
+    REMEDIATION_COMPLETE = "remediation_complete"
+    REMEDIATION_ESCALATE = "remediation_escalate"
 
 
 # === State transition table ===
@@ -47,9 +53,13 @@ TRANSITIONS: dict[tuple[Phase, Transition], Phase] = {
     (Phase.DIAGNOSTIC, Transition.DIAGNOSTIC_COMPLETE): Phase.PRACTICE,
     (Phase.EXPLANATION, Transition.EXPLANATION_DONE): Phase.PRACTICE,
     (Phase.PRACTICE, Transition.PRACTICE_CORRECT): Phase.PRACTICE,
-    (Phase.PRACTICE, Transition.PRACTICE_WRONG): Phase.PRACTICE,
+    (Phase.PRACTICE, Transition.PRACTICE_WRONG): Phase.REMEDIATION,
     (Phase.PRACTICE, Transition.MASTERY_ACHIEVED): Phase.MASTERY_CHECK,
     (Phase.PRACTICE, Transition.MASTERY_FAILED): Phase.PRACTICE,
+    (Phase.REMEDIATION, Transition.REMEDIATION_CORRECT): Phase.REMEDIATION,
+    (Phase.REMEDIATION, Transition.REMEDIATION_WRONG): Phase.REMEDIATION,
+    (Phase.REMEDIATION, Transition.REMEDIATION_COMPLETE): Phase.PRACTICE,
+    (Phase.REMEDIATION, Transition.REMEDIATION_ESCALATE): Phase.EXPLANATION,
     (Phase.MASTERY_CHECK, Transition.PROMOTE): Phase.PRACTICE,
 }
 

@@ -48,19 +48,20 @@ def test_diagnostic_auto_transitions_to_practice_no_davay(tmp_path, monkeypatch)
         assert start.status_code == 200
         assert start.json()["state"]["phase"] == "diagnostic"
 
-        # Answer questions (wrong answers to trigger early termination)
-        response = start
-        for _ in range(7):
+        # Answer questions (wrong answers trigger early termination at 3)
+        # Diagnostic auto-transitions to practice after 3 wrong answers
+        for _ in range(3):
             response = client.post(
                 "/api/v1/plugins/panda/chat",
                 json={"user_id": user_id, "message": "999"},
             )
             assert response.status_code == 200
 
-    payload = response.json()
-    state = payload["state"]
-    # Auto-transitioned to practice (not explanation, not waiting for "давай")
-    assert state["phase"] == "practice"
+        # After diagnostic completes, phase should be practice (not waiting for "давай")
+        payload = response.json()
+        state = payload["state"]
+        # Auto-transitioned to practice (not explanation, not waiting for "давай")
+        assert state["phase"] == "practice"
     assert isinstance(state["weak_topic"], dict)
     assert state["current_practice"] is not None
     assert state["diagnostic_gap_status"] == "diagnosed_gap"
@@ -155,8 +156,8 @@ def test_practice_answer_auto_advances_to_next_question(tmp_path, monkeypatch) -
     assert "ещё" not in text.lower() or "Смотри" in text
 
 
-def test_wrong_practice_answer_stays_in_practice_with_next_question(tmp_path, monkeypatch) -> None:
-    """After wrong answer, teacher shows correct answer and gives next question."""
+def test_wrong_practice_answer_enters_remediation_flow(tmp_path, monkeypatch) -> None:
+    """After wrong answer, system enters remediation flow (not raw practice)."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "Почти.")
     user_id = f"mvp-practice-retry-{uuid.uuid4()}"
@@ -172,6 +173,7 @@ def test_wrong_practice_answer_stays_in_practice_with_next_question(tmp_path, mo
         "title": "Счёт до 10",
         "question": "Сколько всего: 3 и 2?",
         "answer": "5",
+        "item_family": "counting_with_objects",
         "attempts": 0,
     }
     save_user_states(
@@ -194,12 +196,14 @@ def test_wrong_practice_answer_stays_in_practice_with_next_question(tmp_path, mo
         )
 
     payload = response.json()
-    assert payload["state"]["phase"] == "practice"
-    assert payload["state"]["current_practice"]["attempts"] == 0  # new practice
+    # Wrong answer → remediation phase
+    assert payload["state"]["phase"] == "remediation"
     assert payload["state"]["practice_feedback"]["is_correct"] is False
-    # Text should contain the correct answer and next question
+    # Text should contain the correct answer
     text = payload["text"]
     assert "5" in text  # correct answer shown
+    # And a clarifying question (remediation step)
+    assert "?" in text
 
 
 def test_mastery_gate_marks_g2_mastered_after_full_window(tmp_path, monkeypatch) -> None:
