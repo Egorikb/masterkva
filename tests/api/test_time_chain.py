@@ -16,7 +16,7 @@ def _build_app() -> FastAPI:
 
 
 def test_time_chain_hardening_run(tmp_path, monkeypatch) -> None:
-    """Full hardening run for g2 -> g3_time chain: practice -> mastery -> promotion."""
+    """Full hardening run for g2 -> g3_time chain: practice -> mastery -> auto-promotion."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"time-chain-hardening-{uuid.uuid4()}"
@@ -67,31 +67,23 @@ def test_time_chain_hardening_run(tmp_path, monkeypatch) -> None:
     )
 
     with TestClient(_build_app()) as client:
-        # Step 1: answer practice correctly -> mastery_check
+        # Step 1: answer practice correctly → mastery + auto-promotion to g4
         mastery = client.post(
             "/api/v1/plugins/panda/chat",
             json={"user_id": user_id, "message": "120"},
         )
         assert mastery.status_code == 200
         payload = mastery.json()
-        assert payload["state"]["phase"] == "mastery_check"
-        assert payload["state"]["current_skill_id"] == "g3_time_measurement_core"
-        assert payload["state"]["mastery_gate_status"] == "mastered"
-        assert payload["state"]["promotion_eligible"] is True
-        assert payload["state"]["mastery_check_result"]["decision"] == "mastered"
-
-        # Step 2: promotion to g4_place_value_core (next_skill of g3)
-        promote = client.post(
-            "/api/v1/plugins/panda/chat",
-            json={"user_id": user_id, "message": "давай"},
-        )
-        assert promote.status_code == 200
-        promote_payload = promote.json()
-        assert promote_payload["state"]["phase"] == "practice"
-        assert promote_payload["state"]["current_skill_id"] == "g4_place_value_core"
-        assert promote_payload["state"]["current_practice"]["topic_id"] == "g4_t01"
-        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g3_time_measurement_core"
-        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g4_place_value_core"
+        state = payload["state"]
+        assert state["mastery_gate_status"] == "mastered"
+        assert state["promotion_eligible"] is True
+        assert state["mastery_check_result"]["decision"] == "mastered"
+        # Auto-promoted to g4_place_value_core (next_skill of g3)
+        assert state["phase"] == "practice"
+        assert state["current_skill_id"] == "g4_place_value_core"
+        assert state["current_practice"]["topic_id"] == "g4_t01"
+        assert state["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g3_time_measurement_core"
+        assert state["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g4_place_value_core"
 
 
 def test_time_chain_coverage_passes() -> None:

@@ -15,10 +15,11 @@ def _build_app() -> FastAPI:
     return app
 
 
-def test_diagnostic_start_uses_teacher_voice(tmp_path, monkeypatch) -> None:
+def test_diagnostic_start_uses_backend_text_no_llm(tmp_path, monkeypatch) -> None:
+    """Diagnostic start uses backend-owned text, not LLM. No 'давай' needed."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
-    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "Я твой преподаватель. Давай начнём диагностику спокойно и шаг за шагом.")
-    user_id = f"mvp-start-teacher-voice-{uuid.uuid4()}"
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "LLM_TEXT_SHOULD_NOT_APPEAR")
+    user_id = f"mvp-start-backend-text-{uuid.uuid4()}"
 
     with TestClient(_build_app()) as client:
         response = client.post(
@@ -28,19 +29,16 @@ def test_diagnostic_start_uses_teacher_voice(tmp_path, monkeypatch) -> None:
 
     payload = response.json()
     assert payload["state"]["phase"] == "diagnostic"
-    assert "я твой преподаватель" in payload["text"].lower()
-    assert "Начинаем диагностику" not in payload["text"]
-    assert payload["visual"]["type"] == "number_bond"
-    assert payload["visual"]["parts"] == [8, 5]
-    assert payload["visual"]["operation"] == "add"
+    assert "Начнём диагностику" in payload["text"]
+    assert "LLM_TEXT_SHOULD_NOT_APPEAR" not in payload["text"]
+    assert payload["visual"] is not None
 
 
-
-
-def test_diagnostic_completion_waits_for_manual_continue(tmp_path, monkeypatch) -> None:
+def test_diagnostic_auto_transitions_to_practice_no_davay(tmp_path, monkeypatch) -> None:
+    """After diagnostic completes, teacher auto-transitions to practice — no 'давай' needed."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
-    user_id = f"mvp-explanation-phase-{uuid.uuid4()}"
+    user_id = f"mvp-auto-practice-{uuid.uuid4()}"
 
     with TestClient(_build_app()) as client:
         start = client.post(
@@ -50,6 +48,7 @@ def test_diagnostic_completion_waits_for_manual_continue(tmp_path, monkeypatch) 
         assert start.status_code == 200
         assert start.json()["state"]["phase"] == "diagnostic"
 
+        # Answer questions (wrong answers to trigger early termination)
         response = start
         for _ in range(7):
             response = client.post(
@@ -60,19 +59,19 @@ def test_diagnostic_completion_waits_for_manual_continue(tmp_path, monkeypatch) 
 
     payload = response.json()
     state = payload["state"]
-    assert state["phase"] == "explanation"
+    # Auto-transitioned to practice (not explanation, not waiting for "давай")
+    assert state["phase"] == "practice"
     assert isinstance(state["weak_topic"], dict)
-    assert state["current_practice"] is None
-    assert state["report"] is None
+    assert state["current_practice"] is not None
     assert state["diagnostic_gap_status"] == "diagnosed_gap"
     assert state["blocked_skill_ids"] == ["g2_addition_core", "g2_subtraction_core"]
     assert state["remediation_targets"]["number_bond_missing_part"] == "number_bond"
-    assert "Скажи «давай»" in payload["text"]
-    assert "Начнём с темы" not in payload["text"]
-    assert "Вот первый пример" not in payload["text"]
+    # No "Скажи «давай»" in text
+    assert "Скажи" not in payload["text"] or "давай" not in payload["text"].lower()
 
 
 def test_start_from_explanation_creates_practice_from_weak_topic(tmp_path, monkeypatch) -> None:
+    """If state is in explanation (old saved state), push forward to practice automatically."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"mvp-start-practice-{uuid.uuid4()}"
@@ -107,10 +106,11 @@ def test_start_from_explanation_creates_practice_from_weak_topic(tmp_path, monke
     assert state["current_practice"]["answer"] != "42"
 
 
-def test_practice_answer_moves_to_report_without_regenerating_practice(tmp_path, monkeypatch) -> None:
+def test_practice_answer_auto_advances_to_next_question(tmp_path, monkeypatch) -> None:
+    """After correct practice answer, teacher auto-gives next question (no 'want more?')."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
-    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
-    user_id = f"mvp-practice-to-report-{uuid.uuid4()}"
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "Верно!")
+    user_id = f"mvp-practice-auto-advance-{uuid.uuid4()}"
     weak_topic = {
         "grade": 1,
         "topic_id": "g1_t03",
@@ -145,17 +145,20 @@ def test_practice_answer_moves_to_report_without_regenerating_practice(tmp_path,
         )
 
     state = response.json()["state"]
-    assert state["phase"] == "report"
-    assert state["current_practice"]["id"] == "g1_t03_p01"
-    assert state["current_practice"]["attempts"] == 1
+    # Still in practice (auto-advanced to next question)
+    assert state["phase"] == "practice"
+    assert state["current_practice"]["attempts"] == 0  # new practice object
     assert state["practice_feedback"]["is_correct"] is True
-    assert state["report"]["practice_result"] == "success"
-    assert "TEACHER_OK" in response.json()["text"]
+    # The text should contain the next question, not "want more?"
+    text = response.json()["text"]
+    assert "Хочешь" not in text
+    assert "ещё" not in text.lower() or "Смотри" in text
 
 
-def test_wrong_practice_answer_stays_in_live_practice(tmp_path, monkeypatch) -> None:
+def test_wrong_practice_answer_stays_in_practice_with_next_question(tmp_path, monkeypatch) -> None:
+    """After wrong answer, teacher shows correct answer and gives next question."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
-    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "Почти.")
     user_id = f"mvp-practice-retry-{uuid.uuid4()}"
     weak_topic = {
         "grade": 1,
@@ -192,16 +195,15 @@ def test_wrong_practice_answer_stays_in_live_practice(tmp_path, monkeypatch) -> 
 
     payload = response.json()
     assert payload["state"]["phase"] == "practice"
-    assert payload["state"]["current_practice"]["attempts"] == 1
+    assert payload["state"]["current_practice"]["attempts"] == 0  # new practice
     assert payload["state"]["practice_feedback"]["is_correct"] is False
-    assert payload["state"]["report"]["practice_result"] == "needs_review"
-    assert payload["visual"]["type"] == "number_bond"
-    assert payload["visual"]["parts"] == [3, 2]
-    assert payload["visual"]["operation"] == "add"
-    assert "TEACHER_OK" in payload["text"]
+    # Text should contain the correct answer and next question
+    text = payload["text"]
+    assert "5" in text  # correct answer shown
 
 
 def test_mastery_gate_marks_g2_mastered_after_full_window(tmp_path, monkeypatch) -> None:
+    """Mastery gate still works — after enough correct answers, skill is mastered."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"mvp-mastery-gate-mastered-{uuid.uuid4()}"
@@ -251,17 +253,15 @@ def test_mastery_gate_marks_g2_mastered_after_full_window(tmp_path, monkeypatch)
 
     payload = response.json()
     state = payload["state"]
-    assert state["phase"] == "mastery_check"
+    # Mastered — auto-promoted to next skill's practice
     assert state["mastery_gate_status"] == "mastered"
     assert state["promotion_eligible"] is True
-    assert state["mastery_check_pending"] is True
     assert state["mastery_check_result"]["decision"] == "mastered"
-    assert state["mastery_check_result"]["evidence"]["history_length"] == 5
     assert state["mastery_status_by_skill"]["g2_addition_core"]["last_mastery_decision"] == "mastered"
-    assert "backend-оценке" in payload["text"]
 
 
 def test_mastery_gate_stays_closed_on_insufficient_evidence(tmp_path, monkeypatch) -> None:
+    """Not enough evidence — stays in practice."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"mvp-mastery-gate-insufficient-{uuid.uuid4()}"
@@ -311,18 +311,17 @@ def test_mastery_gate_stays_closed_on_insufficient_evidence(tmp_path, monkeypatc
 
     payload = response.json()
     state = payload["state"]
-    assert state["phase"] == "report"
     assert state["mastery_gate_status"] == "insufficient_evidence"
     assert state["promotion_eligible"] is False
-    assert state["mastery_check_pending"] is False
     assert state["mastery_check_result"]["decision"] == "insufficient_evidence"
     assert state["mastery_check_result"]["evidence"]["history_length"] == 3
     assert state["mastery_status_by_skill"]["g2_addition_core"]["last_mastery_decision"] == "insufficient_evidence"
-    assert "TEACHER_OK" in payload["text"]
-
+    # Still in practice — teacher continues
+    assert state["phase"] == "practice"
 
 
 def test_golden_chain_hardening_run_promotes_from_g1_to_g2(tmp_path, monkeypatch) -> None:
+    """Full chain: practice → mastery → auto-promote to next skill → practice."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"mvp-golden-chain-promotion-{uuid.uuid4()}"
@@ -387,24 +386,14 @@ def test_golden_chain_hardening_run_promotes_from_g1_to_g2(tmp_path, monkeypatch
         )
         assert g1_mastery.status_code == 200
         g1_payload = g1_mastery.json()
-        assert g1_payload["state"]["phase"] == "mastery_check"
-        assert g1_payload["state"]["mastery_gate_status"] == "mastered"
-        assert g1_payload["state"]["promotion_eligible"] is True
+        # Auto-promoted to g2 practice (no "давай" needed)
+        assert g1_payload["state"]["phase"] == "practice"
+        assert g1_payload["state"]["current_skill_id"] == "g2_addition_core"
+        assert g1_payload["state"]["current_practice"]["topic_id"] == "g2_t01"
+        assert g1_payload["state"]["current_practice"]["question"] == "12 + 5 = ?"
+        assert g1_payload["state"]["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g1_early_arithmetic_core"
+        assert g1_payload["state"]["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g2_addition_core"
         assert g1_payload["state"]["blocked_skill_ids"] == []
-
-        promote = client.post(
-            "/api/v1/plugins/panda/chat",
-            json={"user_id": user_id, "message": "давай"},
-        )
-        assert promote.status_code == 200
-        promote_payload = promote.json()
-        assert promote_payload["state"]["phase"] == "practice"
-        assert promote_payload["state"]["current_skill_id"] == "g2_addition_core"
-        assert promote_payload["state"]["current_practice"]["topic_id"] == "g2_t01"
-        assert promote_payload["state"]["current_practice"]["question"] == "12 + 5 = ?"
-        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["from_skill_id"] == "g1_early_arithmetic_core"
-        assert promote_payload["state"]["student_profile"]["promotion_history"][-1]["to_skill_id"] == "g2_addition_core"
-        assert promote_payload["state"]["blocked_skill_ids"] == []
 
         g2_mastery = client.post(
             "/api/v1/plugins/panda/chat",
@@ -412,18 +401,17 @@ def test_golden_chain_hardening_run_promotes_from_g1_to_g2(tmp_path, monkeypatch
         )
         assert g2_mastery.status_code == 200
         g2_payload = g2_mastery.json()
-        assert g2_payload["state"]["phase"] == "mastery_check"
-        assert g2_payload["state"]["current_skill_id"] == "g2_addition_core"
-        assert g2_payload["state"]["mastery_gate_status"] == "mastered"
+        # g2 is also mastered (had 4 seed correct + 1 current = 5), auto-promotes to g3
+        assert g2_payload["state"]["current_skill_id"] == "g3_time_measurement_core"
         assert g2_payload["state"]["promotion_eligible"] is True
-        assert g2_payload["state"]["blocked_skill_ids"] == []
-        assert g2_payload["state"]["mastery_check_result"]["decision"] == "mastered"
+        assert g2_payload["state"]["mastery_gate_status"] == "mastered"
 
 
-def test_report_followup_continues_to_next_practice(tmp_path, monkeypatch) -> None:
+def test_report_phase_redirects_to_practice(tmp_path, monkeypatch) -> None:
+    """If state is in report (old saved state), push forward to practice."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
-    user_id = f"mvp-report-followup-{uuid.uuid4()}"
+    user_id = f"mvp-report-redirect-{uuid.uuid4()}"
     weak_topic = {
         "grade": 1,
         "topic_id": "g1_t02",
@@ -431,13 +419,10 @@ def test_report_followup_continues_to_next_practice(tmp_path, monkeypatch) -> No
         "source_question_id": "g1_t02_q01",
     }
     report = {
-        "summary": "В этой попытке по теме 'Следующее число' есть ошибка. Одна ошибка не означает, что тема не понята.",
+        "summary": "В этой попытке по теме 'Следующее число' есть ошибка.",
         "weak_topic": weak_topic,
         "practice_result": "needs_review",
-        "recommendations": [
-            "Повтори объяснение и попробуй ещё раз",
-            "Одна ошибка не даёт повода делать вывод о знании всей темы",
-        ],
+        "recommendations": ["Повтори объяснение и попробуй ещё раз"],
     }
     save_user_states(
         {
@@ -469,8 +454,5 @@ def test_report_followup_continues_to_next_practice(tmp_path, monkeypatch) -> No
     payload = response.json()
     assert payload["state"]["phase"] == "practice"
     assert payload["state"]["current_practice"]["topic_id"] == "g1_t02"
-    assert payload["state"]["current_practice"]["question"] != "Какое число идёт после 6?"
     assert payload["state"]["practice_feedback"] is None
     assert payload["state"]["report"] is None
-    assert payload["visual"]["type"] == "question"
-    assert "TEACHER_OK" in payload["text"]

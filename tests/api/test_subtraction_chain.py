@@ -16,7 +16,8 @@ def _build_app() -> FastAPI:
 
 
 def test_subtraction_chain_release_gate(tmp_path, monkeypatch) -> None:
-    """Full release gate: diagnosis -> explanation -> давай -> practice -> mastery -> promotion for subtraction chain."""
+    """Full release gate: practice -> mastery (auto, no "давай") for subtraction chain.
+    g2_subtraction_core has no next_skills, so after mastery we stay in practice."""
     monkeypatch.setattr(plugins_api, "STATE_FILE", tmp_path / "user_states.json")
     monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "TEACHER_OK")
     user_id = f"subtraction-release-gate-{uuid.uuid4()}"
@@ -67,25 +68,17 @@ def test_subtraction_chain_release_gate(tmp_path, monkeypatch) -> None:
     )
 
     with TestClient(_build_app()) as client:
-        # Step 1: answer practice correctly -> mastery_check
+        # Step 1: answer practice correctly → mastery evaluated, auto-promoted or stays in practice
         mastery = client.post(
             "/api/v1/plugins/panda/chat",
             json={"user_id": user_id, "message": "7"},
         )
         assert mastery.status_code == 200
         payload = mastery.json()
-        assert payload["state"]["phase"] == "mastery_check"
-        assert payload["state"]["current_skill_id"] == "g2_subtraction_core"
-        assert payload["state"]["mastery_gate_status"] == "mastered"
-        assert payload["state"]["promotion_eligible"] is True
-        assert payload["state"]["mastery_check_result"]["decision"] == "mastered"
-
-        # Step 2: mastery_check response with давай -> stays in mastery_check (no next_skills for subtraction)
-        promote = client.post(
-            "/api/v1/plugins/panda/chat",
-            json={"user_id": user_id, "message": "давай"},
-        )
-        assert promote.status_code == 200
-        promote_payload = promote.json()
-        assert promote_payload["state"]["phase"] == "mastery_check"
-        assert promote_payload["state"]["current_skill_id"] == "g2_subtraction_core"
+        state = payload["state"]
+        assert state["mastery_gate_status"] == "mastered"
+        assert state["promotion_eligible"] is True
+        assert state["mastery_check_result"]["decision"] == "mastered"
+        assert state["current_skill_id"] == "g2_subtraction_core"
+        # g2_subtraction_core has no next_skills, so stays in practice (teacher continues)
+        assert state["phase"] == "practice"

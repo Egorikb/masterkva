@@ -9,7 +9,8 @@ def test_grade_one_sequence_uses_all_grade_one_questions() -> None:
 
     sequence = engine.build_diagnostic_sequence(1)
 
-    assert len(sequence) == 7
+    # Grade 1 has 11 questions (5 addition_with_transition + 6 other topics)
+    assert len(sequence) == 11
     assert {item["grade"] for item in sequence} == {1}
     assert sequence[0]["topic_id"] == "g1_t07"
     assert sequence[0]["skill_id"] == "g1_early_arithmetic_core"
@@ -38,8 +39,8 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     sequence = engine.build_diagnostic_sequence(9)
     visuals = [decorate_question_visual(question) for question in sequence]
 
-    assert len(sequence) == 15
-    assert [item["grade"] for item in sequence] == [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert len(sequence) == 20
+    assert [item["grade"] for item in sequence] == [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9]
     assert {item["grade"] for item in sequence} == set(range(1, 10))
     assert all(item.get("skill_id") for item in sequence)
     assert all(item.get("coverage_status") == "partial" for item in sequence)
@@ -57,7 +58,8 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     assert visuals_by_topic["СЛОЖЕНИЕ ДО 100 (БЕЗ ПЕРЕХОДА)"]["type"] == "number_bond"
     assert visuals_by_topic["Следующее число"]["templateType"] == "number_line"
     assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["type"] == "number_bond"
-    assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["parts"] == [8, 5]
+    # Last question with this topic is 9+5, so parts are [9, 5]
+    assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["parts"] == [9, 5]
     assert visuals_by_topic["СЛОЖЕНИЕ С ПЕРЕХОДОМ ЧЕРЕЗ 10"]["operation"] == "add"
     assert visuals_by_topic["Сложение с переходом"]["type"] == "number_bond"
     assert visuals_by_topic["Сложение с переходом"]["parts"] == [4, 3]
@@ -68,9 +70,10 @@ def test_grade_nine_sequence_covers_all_grades_and_board_visuals() -> None:
     assert visuals_by_topic["Время (часы, минуты, секунды)"]["templateType"] == "clock_face"
     assert visuals_by_topic["Большие числа (до 100 млн)"]["templateType"] == "place_value_chart"
     assert visuals_by_topic["Простые уравнения"]["templateType"] == "balance_scale_equation"
-    assert sequence[10]["skill_id"] == "g5_simple_equations_core"
-    assert sequence[10]["coverage_status"] == "partial"
-    assert sequence[10]["board_policy"] == "limited"
+    # g5_simple_equations_core is at index 15 (after 11 grade-1 + 2 grade-2 + 1 grade-3 + 1 grade-4)
+    assert sequence[15]["skill_id"] == "g5_simple_equations_core"
+    assert sequence[15]["coverage_status"] == "partial"
+    assert sequence[15]["board_policy"] == "limited"
     assert visuals_by_topic["Проценты"]["templateType"] == "percent_grid_10x10"
     assert visuals_by_topic["Рациональные числа"]["type"] == "number_bond"
     assert visuals_by_topic["Рациональные числа"]["parts"] == [3, 5]
