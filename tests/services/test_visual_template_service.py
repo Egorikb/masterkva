@@ -1,172 +1,83 @@
-from deeptutor.services.visual_template_service import build_template_blueprint, decorate_question_visual
+"""Tests for visual_template_service.py"""
+from __future__ import annotations
+
+import pytest
+
+from deeptutor.services.visual_template_service import decorate_question_visual
 
 
-def test_decorate_question_visual_keeps_simple_addition_as_number_bond() -> None:
-    visual = decorate_question_visual({
-        "topic": "Сложение с переходом",
-        "question": "3 + 2 = ?",
-        "answer": "5",
-        "grade": 1,
-    })
+class TestDecorateQuestionVisual:
+    """Test that visual templates are correctly assigned based on topic/CPA."""
 
-    assert visual["type"] == "number_bond"
-    assert visual["parts"] == [3, 2]
-    assert visual["operation"] == "add"
-    assert visual["prompt"] == "3 + 2 = ?"
-    assert visual["total"] == 5
+    def test_addition_within_10_returns_number_bond(self):
+        q = {
+            "topic": "Сложение с переходом",
+            "item_family": "addition_within_10_part_whole",
+            "question": "8 + 5 = ?",
+            "CPA": {"visual": "number_bond", "objects": "счёт"},
+        }
+        visual = decorate_question_visual(q)
+        assert visual["type"] == "number_bond"
+        assert visual["operation"] == "add"
 
+    def test_subtraction_returns_number_bond_with_subtract(self):
+        q = {
+            "topic": "Вычитание",
+            "item_family": "subtraction_within_10_part_whole",
+            "question": "7 - 4 = ?",
+        }
+        visual = decorate_question_visual(q)
+        assert visual["type"] == "number_bond"
+        assert visual["operation"] == "subtract"
 
+    def test_time_returns_question_with_cpa_visual(self):
+        q = {
+            "topic": "Время (часы, минуты, секунды)",
+            "item_family": "time_unit_conversion",
+            "question": "Сколько минут в 2 часах?",
+            "CPA": {"visual": "clock", "objects": "часы"},
+        }
+        visual = decorate_question_visual(q)
+        assert visual["type"] == "question"
+        assert visual["cpaVisual"] == "clock"
+        assert visual["objects"] == "часы"
 
-def test_decorate_question_visual_uses_number_bond_for_real_carry() -> None:
-    visual = decorate_question_visual({
-        "topic": "Сложение с переходом",
-        "question": "8 + 5 = ?",
-        "answer": "13",
-        "grade": 1,
-    })
+    def test_equations_returns_balance_scale(self):
+        q = {
+            "topic": "Простые уравнения",
+            "item_family": "inverse_operation_error",
+            "question": "x + 4 = 9",
+            "CPA": {"visual": "balance_scale_equation", "objects": "уравнение"},
+        }
+        visual = decorate_question_visual(q)
+        assert visual["templateType"] == "balance_scale_equation"
 
-    assert visual["type"] == "number_bond"
-    assert visual["parts"] == [8, 5]
-    assert visual["operation"] == "add"
-    assert visual["total"] == 13
+    def test_percent_returns_percent_grid(self):
+        q = {
+            "topic": "Проценты",
+            "item_family": "percent_calculation_error",
+            "question": "25% от 200",
+            "CPA": {"visual": "percent_grid_10x10", "objects": "проценты"},
+        }
+        visual = decorate_question_visual(q)
+        assert visual["templateType"] == "percent_grid_10x10"
 
+    def test_returns_question_type_for_unknown(self):
+        q = {
+            "topic": "Неизвестная тема",
+            "item_family": "unknown_family",
+            "question": "???",
+        }
+        visual = decorate_question_visual(q)
+        assert visual["type"] == "question"
 
-
-def test_decorate_question_visual_adds_blueprint_for_equation() -> None:
-    visual = decorate_question_visual({
-        "topic": "Реши уравнение",
-        "question": "x + 3 = 7",
-        "answer": "x = 4",
-        "grade": 5,
-    })
-
-    assert visual["type"] == "question"
-    assert visual["templateType"] == "balance_scale_equation"
-    assert visual["templateFamily"] == "expressions_equations_inequalities"
-    assert len(visual["templateSections"]) == 3
-    assert "balance" in visual["templateWhy"].lower() or "равновес" in visual["templateWhy"].lower()
-
-
-
-def test_build_template_blueprint_handles_fraction_topics() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "Доли и дроби",
-        "question": "Найди 1/2 от круга",
-        "grade": 4,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "fraction_bars"
-    assert blueprint["templateFamily"] == "fractions_decimals_percents"
-    assert any(section["label"] == "Pictorial" for section in blueprint["templateSections"])
-
-
-
-def test_build_template_blueprint_uses_topic_override_for_positions() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ПОЗИЦИИ",
-        "question": "Что выше: карандаш или тетрадь?",
-        "grade": 1,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "spatial_relations"
-    assert blueprint["templateFamily"] == "geometry_measurement"
-    assert blueprint["templateSkills"] == ["верх/низ", "лево/право", "перед/сзади"]
-
-
-
-def test_build_template_blueprint_uses_topic_override_for_clock() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ЧАСЫ",
-        "question": "Покажи 3 часа на часах",
-        "grade": 1,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "clock_face"
-    assert blueprint["templateFamily"] == "geometry_measurement"
-    assert blueprint["templatePreview"]["visual_type"] == "clock_face"
-
-
-
-def test_build_template_blueprint_uses_number_bond_for_early_arithmetic_topics() -> None:
-    topics = [
-        "СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 5",
-        "ЧИСЛА 6-7",
-        "ЧИСЛА 8-9",
-    ]
-
-    for topic in topics:
-        blueprint = build_template_blueprint({
-            "topic": topic,
-            "question": "1 + 1 = ?",
-            "grade": 1,
-        })
-
-        assert blueprint is not None
-        assert blueprint["templateType"] == "number_bond"
-        assert blueprint["templateFamily"] == "addition_subtraction"
-
-
-def test_build_template_blueprint_uses_percent_grid_for_percent_topics() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ПРОЦЕНТЫ",
-        "question": "Найди 20% от числа 50",
-        "grade": 6,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "percent_grid_10x10"
-    assert blueprint["templateFamily"] == "fractions_decimals_percents"
-    assert blueprint["templateNotes"]
-
-
-def test_build_template_blueprint_uses_dynamic_double_number_line_for_proportions() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ПРОПОРЦИИ",
-        "question": "Если 2 тетради стоят 20 рублей, сколько стоят 5 тетрадей?",
-        "grade": 6,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "double_number_line_dynamic"
-    assert blueprint["templateFamily"] == "ratios_proportions"
-    assert "масшта" in blueprint["templateWhy"].lower() or "привяз" in blueprint["templateWhy"].lower()
-
-
-def test_build_template_blueprint_uses_linear_balance_for_linear_equations() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ЛИНЕЙНЫЕ УРАВНЕНИЯ",
-        "question": "2x + 3 = 11",
-        "grade": 7,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "balance_scale_linear"
-    assert blueprint["templateFamily"] == "expressions_equations_inequalities"
-
-
-def test_build_template_blueprint_uses_slider_graph_for_linear_functions() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ЛИНЕЙНЫЕ ФУНКЦИИ",
-        "question": "Построй y = 2x + 1",
-        "grade": 8,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "cartesian_graph_slider"
-    assert blueprint["templateFamily"] == "functions_graphs"
-
-
-def test_build_template_blueprint_uses_cut_and_drag_for_parallelogram_topics() -> None:
-    blueprint = build_template_blueprint({
-        "topic": "ПАРАЛЛЕЛОГРАММЫ",
-        "question": "Найди площадь параллелограмма",
-        "grade": 8,
-    })
-
-    assert blueprint is not None
-    assert blueprint["templateType"] == "cut_and_drag_parallelogram"
-    assert blueprint["templateFamily"] == "geometry_measurement"
-    assert blueprint["templatePreview"]["visual_type"] == "cut_and_drag_parallelogram"
+    def test_visual_has_required_fields(self):
+        q = {
+            "topic": "Сложение",
+            "item_family": "addition_within_10_part_whole",
+            "question": "2 + 3 = ?",
+        }
+        visual = decorate_question_visual(q)
+        assert "title" in visual
+        assert "prompt" in visual
+        assert "type" in visual

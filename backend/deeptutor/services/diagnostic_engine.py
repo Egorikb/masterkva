@@ -65,7 +65,7 @@ class DiagnosticResult:
 
 
 class DiagnosticEngine:
-    FAIL_THRESHOLD = 2
+    FAIL_THRESHOLD = 3
     MAX_GRADE = 9
 
     def __init__(self, pool: dict[str, Any] | None = None):
