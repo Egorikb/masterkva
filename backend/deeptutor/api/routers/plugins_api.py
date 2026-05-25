@@ -456,14 +456,32 @@ def _current_question(state: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def _should_end_diagnostic(state: dict[str, Any]) -> bool:
-    """Check if diagnostic should end early based on wrong answers threshold."""
+    """Check if diagnostic should end early based on wrong answers threshold.
+
+    Ends early if:
+    - 3 or more wrong answers in a row (consecutive failures)
+    - All questions in the sequence have been answered
+    """
     progress = dict(state.get("diagnostic_progress", {}))
     answers = list(state.get("diag_answers", []))
-    if len(answers) >= 6:
+    sequence = list(state.get("diag_sequence", []))
+
+    # End if all questions answered
+    questions_answered = int(progress.get("questions_answered", 0))
+    if questions_answered >= len(sequence):
         return True
+
+    # End if 3 consecutive wrong answers
+    if len(answers) >= 3:
+        last_3 = answers[-3:]
+        if all(not a.get("is_correct", False) for a in last_3):
+            return True
+
+    # End if 5 total wrong answers (across all answered questions)
     wrong_count = sum(1 for a in answers if not a.get("is_correct", False))
-    if wrong_count >= 3:
+    if wrong_count >= 5:
         return True
+
     return False
 
 
