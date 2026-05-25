@@ -1,11 +1,11 @@
 {
-  "gamif-api-27becead-3574-4fcf-8a8f-4206b561eeb8": {
+  "gamif-api-cdd63332-6872-42b4-909a-a466675f2ab4": {
     "name": "Test",
     "grade": 1,
     "phase": "chat",
     "student_profile": {
       "profile_schema_version": "v1",
-      "user_id": "gamif-api-27becead-3574-4fcf-8a8f-4206b561eeb8",
+      "user_id": "gamif-api-cdd63332-6872-42b4-909a-a466675f2ab4",
       "active_scope": {
         "chain_id": "g1_to_g2_addition",
         "allowed_skill_ids": [
@@ -32,7 +32,7 @@
       "last_updated_at": null
     }
   },
-  "embed-init-f6b977b7-11a0-4937-8dfe-8afbab72e8b8": {
+  "embed-init-413f2eba-02a7-4ff7-a914-22c65fa5cdfa": {
     "name": "Вася",
     "grade": 1,
     "last_topic": null,
