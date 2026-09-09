@@ -11,6 +11,14 @@ import deeptutor.api.routers.plugins_api as plugins_api
 import deeptutor.services.student_profile_store as student_profile_store
 
 
+def test_diagnostic_answer_comparison_preserves_decimal_and_units() -> None:
+    question = {"answer": "1.5", "alternatives": []}
+    assert plugins_api._is_answer_correct("1,5", question) is True
+    assert plugins_api._is_answer_correct("15", question) is False
+    assert plugins_api._is_answer_correct("3 м", {"answer": "3 см"}) is False
+    assert plugins_api._is_answer_correct("3 см", {"answer": "3 см"}) is True
+
+
 def _build_app() -> FastAPI:
     app = FastAPI()
     app.include_router(router, prefix="/api/v1/plugins")

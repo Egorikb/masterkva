@@ -79,6 +79,16 @@ def _single_number(value: str) -> str | None:
     return nums[0] if len(nums) == 1 else None
 
 
+def _number_and_unit(value: str) -> tuple[str, str | None] | None:
+    """Parse one numeric answer while keeping a supplied measurement unit."""
+    match = re.fullmatch(r"\s*([+-]?\d+(?:[.,]\d+)?)\s*([^\W\d_]+)?\s*", str(value).strip(), re.IGNORECASE)
+    if not match:
+        return None
+    number = match.group(1).replace(",", ".")
+    unit = match.group(2).lower() if match.group(2) else None
+    return number, unit
+
+
 def _check_answer(user_answer: str, correct_answer: str, alternatives: list[str] | None = None) -> tuple[bool, float]:
     user = str(user_answer).strip().lower()
     correct = str(correct_answer).strip().lower()
@@ -88,9 +98,14 @@ def _check_answer(user_answer: str, correct_answer: str, alternatives: list[str]
     if user in normalized_alternatives:
         return True, 0.98
 
-    user_num = _single_number(user)
-    correct_num = _single_number(correct)
-    if user_num is not None and correct_num is not None:
+    user_measurement = _number_and_unit(user)
+    correct_measurement = _number_and_unit(correct)
+    if user_measurement is not None and correct_measurement is not None:
+        user_num, user_unit = user_measurement
+        correct_num, correct_unit = correct_measurement
+        # A measurement answer must preserve its unit: 3 cm is not 3 m.
+        if correct_unit is not None and user_unit != correct_unit:
+            return False, 0.0
         is_correct = user_num == correct_num
         return is_correct, 0.95 if is_correct else 0.0
 

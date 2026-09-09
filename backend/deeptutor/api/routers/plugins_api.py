@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -346,14 +347,17 @@ def _is_answer_correct(answer: str, question: dict[str, Any]) -> bool:
     if user in alternatives:
         return True
 
-    def _digits(value: str) -> str | None:
-        digits = "".join(ch for ch in value if ch.isdigit() or ch == "-")
-        return digits if digits and digits not in {"-", "--"} else None
-
-    user_digits = _digits(user)
-    correct_digits = _digits(correct)
-    if user_digits is not None and correct_digits is not None:
-        return user_digits == correct_digits
+    number_pattern = r"[+-]?\d+(?:[.,]\d+)?"
+    measurement_pattern = rf"^\s*({number_pattern})\s*([^\W\d_]+)?\s*$"
+    user_match = re.fullmatch(measurement_pattern, user, re.IGNORECASE)
+    correct_match = re.fullmatch(measurement_pattern, correct, re.IGNORECASE)
+    if user_match and correct_match:
+        user_number, user_unit = user_match.groups()
+        correct_number, correct_unit = correct_match.groups()
+        # Do not accept a different unit merely because its digits match.
+        if correct_unit is not None and user_unit != correct_unit:
+            return False
+        return user_number.replace(",", ".") == correct_number.replace(",", ".")
     return False
 
 

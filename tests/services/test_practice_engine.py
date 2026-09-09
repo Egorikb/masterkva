@@ -106,3 +106,17 @@ def test_check_practice_answer_accepts_pool_alternatives() -> None:
 
     assert feedback["is_correct"] is True
     assert feedback["confidence"] == 0.98
+
+
+def test_check_practice_answer_does_not_ignore_measurement_units() -> None:
+    engine = PracticeEngine()
+    practice = {
+        "id": "measurement",
+        "topic_id": "g3_t01",
+        "question": "Назови длину отрезка.",
+        "answer": "3 см",
+        "attempts": 0,
+    }
+
+    assert engine.check_practice_answer(practice, "3 м")["is_correct"] is False
+    assert engine.check_practice_answer(practice, "3 см")["is_correct"] is True
