@@ -119,3 +119,19 @@
 - Live QA после каждого milestone
 - Coverage snapshot обновлён при изменении chains
 - Не расширять scope без подтверждения
+
+## video_site — Контент-воронка
+
+- **Сайт:** https://idealive-app.vercel.app/blog
+- **Директория:** `/home/egor/workspace_hermes/video_site/`
+- **Статей:** 21 (JSON-формат), деплой на Vercel
+- **Telegram:** @aaaanewsFromIT, chat_id `-1003916066966`, 21 пост (msg_id 130-148)
+- **Бот:** News_to_day_bot, публикация через curl sendPhoto, caption ≤1000 зн
+- **Vercel deploy:** `vercel --prod --yes --token $VERCEL_TOKEN` (токен из `/home/egor/backups/openclaw/2026-05-06/.env.bak`)
+- **YouTube API key:** `~/workspace_hermes/youtube-ai-pipeline/.env` (YOUTUBE_API_KEY)
+- **Транскрибация:** `yt-dlp --write-auto-sub --sub-lang en --sub-format srt` (работает ~95% видео)
+- **Фактчекинг:** обязателен — сравнивать статью с транскриптом, убирать галлюцинации
+- **Стиль:** журналистский, от третьего лица, без выдуманных цифр
+- **YouTube mapping:** `/tmp/youtube_mapping.json` — slug → video_id
+- **Транскрипты:** `/tmp/transcripts/{slug}.txt`
+- **Процедура:** references/article-cleanup-procedure.md

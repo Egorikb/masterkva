@@ -21,14 +21,15 @@ _SENIOR_GRADES = {7, 8, 9}
 # Visual types recommended for each grade band
 _JUNIOR_VISUALS = {"ten_frame", "number_line", "base_ten_blocks", "place_value_chart",
                    "part_part_whole_bar", "number_bond", "clock_face", "spatial_relations",
-                   "shape_recognition"}
+                   "shape_recognition", "division_groups", "fraction_bars", "geoboard_dynamic"}
 _MIDDLE_VISUALS = {"place_value_chart", "base_ten_blocks", "part_part_whole_bar",
                    "area_model_grid", "array_matrix", "bar_model_strip_diagram",
                    "ratio_table", "fraction_circle_region", "percent_grid_10x10",
                    "balance_scale_equation"}
 _SENIOR_VISUALS = {"coordinate_plane_plot", "algebra_tiles", "balance_scale_equation",
                    "function_table", "cartesian_graph", "double_number_line",
-                   "double_number_line_dynamic", "net_of_solid", "geoboard_dynamic"}
+                   "double_number_line_dynamic", "net_of_solid", "geoboard_dynamic",
+                   "cartesian_graph_slider"}
 
 
 class CoverageReport:

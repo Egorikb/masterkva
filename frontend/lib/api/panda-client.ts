@@ -1,6 +1,7 @@
 import type { PandaChatRequest, PandaChatResponse } from "@/contracts/panda";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8001";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8001";
 const PANDA_CHAT_PATH = "/api/v1/plugins/panda/chat";
 
 export async function postPandaChat(payload: PandaChatRequest): Promise<PandaChatResponse> {

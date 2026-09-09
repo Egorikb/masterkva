@@ -1,4 +1,13 @@
-export type PandaPhase = "chat" | "diagnostic" | "explanation" | "practice" | "check" | "report";
+export type PandaPhase =
+  | "chat"
+  | "diagnostic"
+  | "explanation"
+  | "practice"
+  | "remediation"
+  | "mastery_check"
+  | "paused"
+  | "check"
+  | "report";
 
 export interface PandaWeakTopic {
   grade: number;

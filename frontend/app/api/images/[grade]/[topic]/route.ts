@@ -37,12 +37,11 @@ const topicToPage: Record<string, string> = {
   '120': '120',
 };
 
-// Fallback простой серый квадрат
-const fallbackPng = Buffer.from([
-  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
-  0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-  0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53, 0xDE,
-]);
+// Valid transparent 1x1 PNG fallback.
+const fallbackPng = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=',
+  'base64'
+);
 
 export async function GET(
   request: NextRequest,
@@ -56,6 +55,10 @@ export async function GET(
     path.join(imagesDir, grade, `page${page}.png`),
     path.join(imagesDir, grade, `grade${grade}_page${page}.png`),
     path.join(imagesDir, grade, `grade${grade}_page94.png`),
+    path.join(imagesDir, 'textbook', `${page}.png`),
+    path.join(imagesDir, 'textbook', `page${page}.png`),
+    path.join(imagesDir, 'textbook', `grade${grade}_page${page}.png`),
+    path.join(imagesDir, 'textbook', `grade${grade}_page94.png`),
   ];
 
   for (const filepath of candidates) {

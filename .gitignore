@@ -6,3 +6,9 @@ node_modules
 __pycache__
 .pytest_cache
 .DS_Store
+
+# Local textbook sources and generated vector indexes. Keep locally; publish
+# manifests/curated JSON instead of large binary or machine-generated files.
+backend/data/knowledge_bases/**/raw/
+backend/data/knowledge_bases/**/llamaindex_storage/
+backend/data/china_textbooks_junior/*.pdf

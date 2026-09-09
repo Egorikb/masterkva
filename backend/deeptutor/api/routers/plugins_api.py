@@ -19,16 +19,16 @@ from deeptutor.services.student_profile_store import (
     ensure_student_profile,
     get_student_profile,
     record_diagnostic_result,
+    record_learning_pause,
     record_mastery_evaluation,
     record_practice_attempt,
     record_promotion,
 )
+from deeptutor.services.state_storage import read_states, write_states
 from deeptutor.services.progress_analytics import get_progress_summary
 from deeptutor.services.remediation_engine import remediation_engine
-from deeptutor.services.teacher_llm import generate_teacher_reply
+from deeptutor.services.teacher_llm import generate_teacher_explanation, generate_teacher_reply
 from deeptutor.services.visual_template_service import decorate_question_visual
-
-generate_teacher_explanation = generate_teacher_reply
 
 router = APIRouter()
 STATE_FILE = Path(__file__).resolve().parents[3] / "data" / "user_states.json"
@@ -81,12 +81,14 @@ DEFAULT_STATE: dict[str, Any] = {
     "promotion_eligible": False,
     "registry_resolution": {"source": "fallback", "resolved_at": None, "warnings": []},
     "runtime_audit_log": [],
+    "phase_before_pause": None,
+    "paused_context": None,
     "student_profile": {
         "profile_schema_version": "v1",
         "user_id": None,
         "active_scope": {
             "chain_id": "g1_to_g2_addition",
-            "allowed_skill_ids": ["g1_early_arithmetic_core", "g2_addition_core"],
+            "allowed_skill_ids": ["g1_counting_core", "g2_addition_core"],
             "current_skill_id": None,
             "current_topic_id": None,
             "current_grade": None,
@@ -96,6 +98,23 @@ DEFAULT_STATE: dict[str, Any] = {
         "diagnostic_history": [],
         "mastery_history": [],
         "promotion_history": [],
+        "learning_memory": {
+            "last_topics": [],
+            "weak_topic_queue": [],
+            "mastered_weak_topics": [],
+            "misconceptions": {},
+            "teaching_actions": [],
+        },
+        "session_status": {
+            "status": "active",
+            "reason": None,
+            "paused_at": None,
+            "resumed_at": None,
+            "resume_phase": None,
+            "resume_topic_id": None,
+            "resume_topic": None,
+            "resume_skill_id": None,
+        },
         "activity_counters": {
             "diagnostic_sessions": 0,
             "practice_sessions": 0,
@@ -112,17 +131,11 @@ def _fresh_state() -> dict[str, Any]:
 
 
 def _read_states() -> dict[str, dict[str, Any]]:
-    if not STATE_FILE.exists():
-        return {}
-    try:
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
-    except Exception:
-        return {}
+    return read_states(STATE_FILE)
 
 
 def save_user_states(states: dict[str, dict[str, Any]]) -> None:
-    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps(states, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_states(STATE_FILE, states)
 
 
 def _refresh_stale_diagnostic_state(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
@@ -306,6 +319,24 @@ def _is_followup_request(message: str) -> bool:
     return any(token in text for token in ("что дальше", "дальше", "продолж", "ещё", "еще", "следующ", "потом"))
 
 
+def _is_stop_intent(message: str) -> bool:
+    text = f" {message.lower().strip()} "
+    stop_tokens = (
+        " хватит ",
+        " стоп ",
+        " остановись ",
+        " пауза ",
+        " устал ",
+        " устала ",
+        " не хочу ",
+        " закончили ",
+        " на сегодня всё ",
+        " на сегодня все ",
+        " достаточно ",
+    )
+    return any(token in text for token in stop_tokens)
+
+
 def _is_answer_correct(answer: str, question: dict[str, Any]) -> bool:
     user = str(answer).strip().lower()
     correct = str(question.get("answer", "")).strip().lower()
@@ -331,15 +362,109 @@ def _strip_followup_question(text: str) -> str:
     import re
     # Only remove specific follow-up patterns, don't cut mid-sentence
     patterns = [
-        r"\n\nХочешь[^\n]*\??$",
-        r"\n\nПродолж[^\n]*\??$",
-        r"\n\nЕщё[^\n]*\??$",
-        r"\n\nДавай[^\n]*\??$",
+        r"(?:\n\n|\s)Хочешь[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Готов[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Продолж[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Ещё[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Еще[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Давай[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Скажи[^\n.!?]*(?:давай|продолж)[^\n.!?]*\??$",
+        r"(?:\n\n|\s)Если хочешь[^\n.!?]*$",
     ]
     result = text
     for pattern in patterns:
         result = re.sub(pattern, "", result, flags=re.IGNORECASE | re.MULTILINE)
     return result.strip()
+
+
+def _pause_learning(user_id: str, state: dict[str, Any], message: str) -> dict[str, Any]:
+    weak_topic = state.get("weak_topic") or {}
+    practice = state.get("current_practice") or {}
+    topic_id = str(weak_topic.get("topic_id") or practice.get("topic_id") or state.get("current_topic_id") or "")
+    topic_name = str(weak_topic.get("topic") or practice.get("title") or "текущая тема")
+    resume_phase = str(state.get("phase") or "chat")
+    if resume_phase == "paused":
+        paused_context = dict(state.get("paused_context") or {})
+        resume_phase = str(paused_context.get("phase") or state.get("phase_before_pause") or "chat")
+
+    paused_context = {
+        "phase": resume_phase,
+        "topic_id": topic_id or None,
+        "topic": topic_name,
+        "skill_id": state.get("current_skill_id"),
+        "practice_id": practice.get("id"),
+        "paused_at": datetime.now(timezone.utc).isoformat(),
+    }
+    profile = record_learning_pause(
+        user_id,
+        status="paused",
+        reason=message,
+        resume_phase=resume_phase,
+        resume_topic_id=topic_id or None,
+        resume_topic=topic_name,
+        resume_skill_id=state.get("current_skill_id"),
+    )
+    updated = update_user_state(
+        user_id,
+        {
+            "phase": "paused",
+            "phase_before_pause": resume_phase,
+            "paused_context": paused_context,
+            "learning_mode_active": False,
+            "in_learning": False,
+            "student_profile": profile,
+        },
+    )
+    text = f"Хорошо, остановимся здесь. Я сохраню место: продолжим с темы «{topic_name}»."
+    return _panda_response(text, updated)
+
+
+def _resume_paused_learning(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
+    paused_context = dict(state.get("paused_context") or {})
+    resume_phase = str(paused_context.get("phase") or state.get("phase_before_pause") or "chat")
+    topic_name = str(paused_context.get("topic") or (state.get("weak_topic") or {}).get("topic") or "текущая тема")
+    profile = record_learning_pause(
+        user_id,
+        status="active",
+        reason="resume",
+        resume_phase=resume_phase,
+        resume_topic_id=paused_context.get("topic_id"),
+        resume_topic=topic_name,
+        resume_skill_id=paused_context.get("skill_id") or state.get("current_skill_id"),
+    )
+    state = update_user_state(
+        user_id,
+        {
+            "phase": resume_phase,
+            "learning_mode_active": resume_phase in {"diagnostic", "practice", "remediation", "explanation", "mastery_check"},
+            "in_learning": resume_phase in {"practice", "remediation", "explanation", "mastery_check"},
+            "student_profile": profile,
+        },
+    )
+
+    if resume_phase == "diagnostic":
+        question = _current_question(state)
+        if question:
+            return _panda_response(f"Продолжим диагностику.\n\n{question['question']}", state, visual=_question_visual(question))
+
+    if resume_phase == "remediation":
+        remediation = remediation_engine.get_state(user_id)
+        if remediation and remediation.current_step:
+            return _panda_response(
+                f"Продолжим с маленького шага по теме «{topic_name}».\n\n{remediation.current_step.question}",
+                state,
+                visual=_question_visual({"question": remediation.current_step.question}),
+            )
+
+    practice = state.get("current_practice")
+    if practice:
+        return _panda_response(
+            f"Продолжим с темы «{topic_name}».\n\n{practice['question']}",
+            state,
+            visual=_question_visual(practice),
+        )
+
+    return _panda_response(f"Продолжим с темы «{topic_name}».", state)
 
 
 def _get_scaffolding_visual(remediation) -> str:
@@ -615,6 +740,12 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         state = update_user_state(user_id, {"name": request.name})
     if request.grade and request.grade > 0 and not state.get("grade"):
         state = update_user_state(user_id, {"grade": request.grade})
+
+    if _is_stop_intent(message):
+        return _pause_learning(user_id, state, message)
+
+    if state.get("phase") == "paused":
+        return _resume_paused_learning(user_id, state)
 
     if not state.get("name"):
         return _panda_response(
@@ -986,6 +1117,7 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             state = update_user_state(user_id, {"phase": "practice", "current_practice": next_practice})
             return _panda_response(next_practice["question"], state, visual=_question_visual(next_practice))
 
+        answered_step = remediation.current_step
         is_correct, next_step, is_complete, should_escalate = remediation_engine.check_answer(
             user_id, message
         )
@@ -995,7 +1127,6 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
             remediation_engine.remove_state(user_id)
             weak_topic = state.get("weak_topic") or {}
             explanation_text = generate_teacher_explanation(
-                stage="explanation",
                 grade=int(state.get("grade") or 1),
                 weak_topic=weak_topic,
                 learning_context=list(state.get("learning_context") or []),
@@ -1046,7 +1177,8 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         if is_correct:
             text = f"Верно!\n\n{next_step.question}"
         else:
-            text = f"Не совсем. Правильный ответ: {remediation.current_step.answer if remediation.current_step else ''}.\n\n{next_step.question}"
+            answered_value = answered_step.answer if answered_step else ""
+            text = f"Не совсем. Правильный ответ: {answered_value}.\n\n{next_step.question}"
 
         if scaffolding_hint:
             text = f"{text}\n\n{scaffolding_hint}"

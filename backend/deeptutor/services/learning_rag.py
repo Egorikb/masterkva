@@ -80,7 +80,21 @@ class LearningRAG:
             return
         if isinstance(value, dict):
             nested: list[str] = []
-            for key in ("title", "task", "question", "answer", "solution", "description", "pages", "skills", "examples", "visual", "cpa_objects"):
+            for key in (
+                "title",
+                "student_prompt",
+                "task",
+                "question",
+                "expected_answers",
+                "answer",
+                "solution",
+                "description",
+                "pages",
+                "skills",
+                "examples",
+                "visual",
+                "cpa_objects",
+            ):
                 if key in value:
                     LearningRAG._append_text(nested, value.get(key), prefix=key)
             if nested:
@@ -89,7 +103,21 @@ class LearningRAG:
 
     def _build_chunk_text(self, payload: dict[str, Any], *, fallback_title: str, source_type: str) -> str:
         parts: list[str] = [f"Источник: {source_type}"]
-        for key in ("title", "name", "description", "pages", "skills", "review_topic", "topic", "task", "question", "solution", "answer"):
+        for key in (
+            "title",
+            "name",
+            "description",
+            "pages",
+            "skills",
+            "review_topic",
+            "topic",
+            "student_prompt",
+            "task",
+            "question",
+            "expected_answers",
+            "solution",
+            "answer",
+        ):
             if key in payload:
                 self._append_text(parts, payload.get(key), prefix=key)
         for key in ("lessons", "topics", "semester_1", "semester_2", "skill_index"):
@@ -190,13 +218,32 @@ class LearningRAG:
         for source_dir in self.source_dirs:
             if not source_dir.exists():
                 continue
+            canonical_curriculum_names = self._canonical_curriculum_names(source_dir)
             for path in sorted(source_dir.glob("*.json")):
+                if canonical_curriculum_names and path.name not in canonical_curriculum_names:
+                    continue
                 try:
                     payload = self._load_json(path)
                 except Exception:
                     continue
                 chunks.extend(self._extract_chunks_from_payload(path, payload))
         return chunks
+
+    @staticmethod
+    def _canonical_curriculum_names(source_dir: Path) -> set[str]:
+        if source_dir.name != "curriculum":
+            return set()
+        manifest_path = source_dir / "canonical_curriculum.json"
+        if not manifest_path.exists():
+            return set()
+        try:
+            payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except Exception:
+            return set()
+        grades = payload.get("grades") if isinstance(payload, dict) else None
+        if not isinstance(grades, dict):
+            return set()
+        return {str(file_name) for file_name in grades.values() if str(file_name).strip()}
 
     @property
     def chunks(self) -> list[LearningChunk]:

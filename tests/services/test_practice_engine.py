@@ -71,3 +71,38 @@ def test_check_practice_answer_rejects_wrong_numeric_answer() -> None:
 
     assert feedback["is_correct"] is False
     assert feedback["attempts"] == 1
+
+
+def test_create_practice_for_unmapped_senior_topic_uses_diagnostic_pool() -> None:
+    engine = PracticeEngine()
+    weak_topic = {
+        "grade": 8,
+        "topic_id": "g8_t01",
+        "topic": "Квадратные уравнения",
+        "source_question_id": "g8_t01_q01",
+    }
+
+    practice = engine.create_practice(weak_topic)
+
+    assert practice["topic_id"] == "g8_t01"
+    assert practice["source"] == "diagnostic_pool"
+    assert practice["item_family"] == "quadratic"
+    assert "x" in practice["question"] or "корень" in practice["question"].lower()
+    assert practice.get("fallback_warning") is None
+
+
+def test_check_practice_answer_accepts_pool_alternatives() -> None:
+    engine = PracticeEngine()
+    practice = {
+        "id": "pool-q",
+        "topic_id": "g8_t01",
+        "question": "x² - 6x + 9 = 0. Найдите корень.",
+        "answer": "3",
+        "alternatives": ["x=3"],
+        "attempts": 0,
+    }
+
+    feedback = engine.check_practice_answer(practice, "x=3")
+
+    assert feedback["is_correct"] is True
+    assert feedback["confidence"] == 0.98

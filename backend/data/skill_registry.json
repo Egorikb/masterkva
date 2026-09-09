@@ -140,7 +140,7 @@
       "next_skills": [
         "g2_subtraction_core"
       ],
-      "mode": "shadow",
+      "mode": "active",
       "contract_id": "g2_addition_core.v1"
     },
     {
@@ -410,7 +410,7 @@
         "g4_decimals_intro"
       ],
       "next_skills": [
-        "g5_rational_numbers"
+        "g5_decimals_operations"
       ],
       "mode": "shadow",
       "contract_id": "g4_large_numbers.v1"

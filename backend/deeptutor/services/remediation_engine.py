@@ -251,12 +251,10 @@ class RemediationEngine:
                 "answer": str(hours * 60),
             }
         else:
-            # Generic: use original but with smaller numbers
-            if len(parts) >= 2:
-                a = max(1, int(parts[0]) // 2) if str(parts[0]).isdigit() else 3
-                b = max(1, int(parts[1]) // 2) if str(parts[1]).isdigit() else 2
-                return {"question": f"Сколько будет {a} + {b}?", "answer": str(a + b)}
-            return {"question": "Сколько будет 2 + 3?", "answer": "5"}
+            return {
+                "question": str(original.get("question") or "Повтори условие исходной задачи."),
+                "answer": str(original.get("answer") or ""),
+            }
 
     def _make_analog(
         self,
@@ -312,9 +310,10 @@ class RemediationEngine:
             }
 
         else:
-            a = rng.randint(2, 8)
-            b = rng.randint(1, 9 - a)
-            return {"question": f"Сколько будет {a} + {b}?", "answer": str(a + b)}
+            return {
+                "question": str(original.get("question") or "Повтори условие исходной задачи."),
+                "answer": str(original.get("answer") or ""),
+            }
 
     def _get_visual_hint(self, item_family: str) -> str | None:
         """Get the visual hint type for this item family."""

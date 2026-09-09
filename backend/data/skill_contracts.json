@@ -17,46 +17,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "counting_with_objects"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "counting_with_objects_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "counting_with_objects_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "counting_with_objects_error": "ten_frame"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "ten_frame"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "ten_frame",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "counting_with_objects": "ten_frame"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "ten_frame",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -108,46 +95,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "number_successor"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "number_successor_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "number_successor_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "number_successor_error": "number_line"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "number_line"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "number_line",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "number_successor": "number_line"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "number_line",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -199,42 +173,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "addition_within_10_part_whole"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_within_10_part_whole_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_within_10_part_whole_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "addition_within_10_part_whole_error": "number_bond"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "number_bond"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "number_bond",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "addition_within_10_part_whole": "number_bond"
         }
       },
       "visual_policy": {
@@ -290,42 +251,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "subtraction_within_10_part_whole"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "subtraction_within_10_part_whole_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "subtraction_within_10_part_whole_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "subtraction_within_10_part_whole_error": "number_bond"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "number_bond"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "number_bond",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "subtraction_within_10_part_whole": "number_bond"
         }
       },
       "visual_policy": {
@@ -381,42 +329,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "number_bond_missing_part"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "number_bond_missing_part_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "number_bond_missing_part_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "number_bond_missing_part_error": "number_bond"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "number_bond"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "number_bond",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "number_bond_missing_part": "number_bond"
         }
       },
       "visual_policy": {
@@ -472,42 +407,34 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
           "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "compose_decompose_10"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_within_10_part_whole_error",
+          "compose_decompose_10_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_within_10_part_whole_error",
+          "compose_decompose_10_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "addition_within_10_part_whole_error": "number_bond",
+          "compose_decompose_10_error": "number_bond"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "number_bond"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "number_bond",
         "targets": {
           "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "compose_decompose_10": "number_bond"
         }
       },
       "visual_policy": {
@@ -563,46 +490,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "addition_carry"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_carry_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "addition_carry_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "addition_carry_error": "base_ten_blocks"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "base_ten_blocks"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "base_ten_blocks",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "addition_carry": "base_ten_blocks"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "base_ten_blocks",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -622,7 +536,7 @@
         "correct": 3,
         "window": 5
       },
-      "mode": "shadow",
+      "mode": "active",
       "validation": {
         "required": true,
         "grade_band": 2,
@@ -654,46 +568,38 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "subtraction_carry",
+          "subtraction_within_10_part_whole"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "subtraction_carry_error",
+          "subtraction_within_10_part_whole_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "subtraction_carry_error",
+          "subtraction_within_10_part_whole_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "subtraction_carry_error": "base_ten_blocks",
+          "subtraction_within_10_part_whole_error": "number_bond"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "base_ten_blocks"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "base_ten_blocks",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "subtraction_carry": "base_ten_blocks",
+          "subtraction_within_10_part_whole": "number_bond"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "base_ten_blocks",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -745,46 +651,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "multiplication_intro"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "multiplication_intro_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "multiplication_intro_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "multiplication_intro_error": "array_matrix"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "array_matrix"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "array_matrix",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "multiplication_intro": "array_matrix"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "array_matrix",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -836,46 +729,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "division_intro"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_intro_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_intro_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "division_intro_error": "division_groups"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "division_groups"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "division_groups",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "division_intro": "division_groups"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "division_groups",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -927,44 +807,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "time_unit_conversion",
-          "measurement_length",
-          "measurement_large_units"
+          "measurement_length"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "measurement_length_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "measurement_length_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "measurement_length_error": "place_value_chart"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "place_value_chart"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "place_value_chart",
         "targets": {
-          "time_unit_conversion": "clock_face",
-          "measurement_length": "clock_face",
-          "measurement_large_units": "clock_face"
+          "measurement_length": "place_value_chart"
         }
       },
       "visual_policy": {
-        "template": "clock_face",
+        "template": "place_value_chart",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1016,44 +885,38 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "time_unit_conversion",
-          "measurement_length",
-          "measurement_large_units"
+          "measurement_large_units",
+          "time_unit_conversion"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "measurement_large_units_error",
+          "time_unit_conversion_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "measurement_large_units_error",
+          "time_unit_conversion_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "measurement_large_units_error": "place_value_chart",
+          "time_unit_conversion_error": "clock_face"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "place_value_chart"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "place_value_chart",
         "targets": {
-          "time_unit_conversion": "clock_face",
-          "measurement_length": "clock_face",
-          "measurement_large_units": "clock_face"
+          "measurement_large_units": "place_value_chart",
+          "time_unit_conversion": "clock_face"
         }
       },
       "visual_policy": {
-        "template": "clock_face",
+        "template": "place_value_chart",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1105,46 +968,38 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "division_via_multiplication",
+          "multiplication_tables"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_via_multiplication_error",
+          "multiplication_tables_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_via_multiplication_error",
+          "multiplication_tables_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "division_via_multiplication_error": "division_groups",
+          "multiplication_tables_error": "array_matrix"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "division_groups"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "division_groups",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "division_via_multiplication": "division_groups",
+          "multiplication_tables": "array_matrix"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "division_groups",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1196,46 +1051,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "division_with_remainder"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_with_remainder_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "division_with_remainder_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "division_with_remainder_error": "division_groups"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "division_groups"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "division_groups",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "division_with_remainder": "division_groups"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "division_groups",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1287,46 +1129,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "fractions_intro"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_intro_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_intro_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "fractions_intro_error": "fraction_bars"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "fraction_bars"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "fraction_bars",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "fractions_intro": "fraction_bars"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "fraction_bars",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1378,46 +1207,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "conceptual"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "geometry_2d"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "geometry_2d_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "geometry_2d_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "geometry_2d_error": "geoboard_dynamic"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "geoboard_dynamic"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "geoboard_dynamic",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "geometry_2d": "geoboard_dynamic"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "geoboard_dynamic",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1469,46 +1285,38 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "fractions_addition",
+          "fractions_comparison"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_addition_error",
+          "fractions_comparison_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_addition_error",
+          "fractions_comparison_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "fractions_addition_error": "fraction_bars",
+          "fractions_comparison_error": "fraction_bars"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "fraction_bars"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "fraction_bars",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "fractions_addition": "fraction_bars",
+          "fractions_comparison": "fraction_bars"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "fraction_bars",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1560,46 +1368,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "decimals_intro"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "decimals_intro_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "decimals_intro_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "decimals_intro_error": "place_value_chart"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "place_value_chart"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "place_value_chart",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "decimals_intro": "place_value_chart"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "place_value_chart",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1651,46 +1446,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "area_perimeter"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "area_perimeter_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "area_perimeter_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "area_perimeter_error": "area_model_grid"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "area_model_grid"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "area_model_grid",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "area_perimeter": "area_model_grid"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "area_model_grid",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1742,46 +1524,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "large_numbers"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "large_numbers_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "large_numbers_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "large_numbers_error": "place_value_chart"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "place_value_chart"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "place_value_chart",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "large_numbers": "place_value_chart"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "place_value_chart",
         "age_band": "junior",
         "diagnosis": "off",
         "learning": "on",
@@ -1833,46 +1602,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "decimals_operations"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "decimals_operations_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "decimals_operations_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "decimals_operations_error": "place_value_chart"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "place_value_chart"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "place_value_chart",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "decimals_operations": "place_value_chart"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "place_value_chart",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -1924,46 +1680,38 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "fractions_multiplication",
+          "mixed_numbers"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_multiplication_error",
+          "mixed_numbers_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "fractions_multiplication_error",
+          "mixed_numbers_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "fractions_multiplication_error": "fraction_bars",
+          "mixed_numbers_error": "fraction_bars"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "fraction_bars"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "fraction_bars",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "fractions_multiplication": "fraction_bars",
+          "mixed_numbers": "fraction_bars"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "fraction_bars",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -2015,42 +1763,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "simple_equations"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "simple_equations_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "simple_equations_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "simple_equations_error": "balance_scale_equation"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "balance_scale_equation"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "balance_scale_equation",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "simple_equations": "balance_scale_equation"
         }
       },
       "visual_policy": {
@@ -2106,46 +1841,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "area_triangle"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "area_triangle_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "area_triangle_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "area_triangle_error": "cut_and_drag_parallelogram"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "cut_and_drag_parallelogram"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "cut_and_drag_parallelogram",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "area_triangle": "cut_and_drag_parallelogram"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "cut_and_drag_parallelogram",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -2197,42 +1919,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "linear_equations"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "linear_equations_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "linear_equations_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "linear_equations_error": "balance_scale_equation"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "balance_scale_equation"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "balance_scale_equation",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "linear_equations": "balance_scale_equation"
         }
       },
       "visual_policy": {
@@ -2288,46 +1997,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "proportions"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "proportions_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "proportions_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "proportions_error": "ratio_table"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "ratio_table"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "ratio_table",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "proportions": "ratio_table"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "ratio_table",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -2379,46 +2075,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
           "volume"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "volume_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "volume_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "volume_error": "net_of_solid"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "net_of_solid"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "net_of_solid",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "volume": "net_of_solid"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "net_of_solid",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -2470,46 +2153,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "rational_numbers"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "rational_numbers_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "rational_numbers_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "rational_numbers_error": "double_number_line"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "double_number_line"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "double_number_line",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "rational_numbers": "double_number_line"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "double_number_line",
         "age_band": "middle",
         "diagnosis": "off",
         "learning": "on",
@@ -2561,46 +2231,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "rational_operations"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "rational_operations_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "rational_operations_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "rational_operations_error": "double_number_line"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "double_number_line"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "double_number_line",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "rational_operations": "double_number_line"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "double_number_line",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -2652,42 +2309,29 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "systems_of_equations"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "systems_of_equations_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "systems_of_equations_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "systems_of_equations_error": "balance_scale_equation"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "balance_scale_equation"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "balance_scale_equation",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "systems_of_equations": "balance_scale_equation"
         }
       },
       "visual_policy": {
@@ -2743,46 +2387,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "addition_within_10_part_whole",
-          "subtraction_within_10_part_whole",
-          "multiplication_tables",
-          "division_basics"
+          "percent"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "percent_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "percent_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "percent_error": "percent_grid_10x10"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "percent_grid_10x10"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "percent_grid_10x10",
         "targets": {
-          "addition_within_10_part_whole": "number_bond",
-          "subtraction_within_10_part_whole": "number_bond",
-          "multiplication_tables": "number_bond",
-          "division_basics": "number_bond"
+          "percent": "percent_grid_10x10"
         }
       },
       "visual_policy": {
-        "template": "number_bond",
+        "template": "percent_grid_10x10",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -2834,46 +2465,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "conceptual"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "angles_triangles"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "angles_triangles_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "angles_triangles_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "angles_triangles_error": "geoboard_dynamic"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "geoboard_dynamic"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "geoboard_dynamic",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "angles_triangles": "geoboard_dynamic"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "geoboard_dynamic",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -2925,46 +2543,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
           "quadratic"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "quadratic_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "quadratic_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "quadratic_error": "algebra_tiles"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "algebra_tiles"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "algebra_tiles",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "quadratic": "algebra_tiles"
         }
       },
       "visual_policy": {
-        "template": "balance_scale_equation",
+        "template": "algebra_tiles",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3016,46 +2621,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "linear_functions"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "linear_functions_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "linear_functions_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "linear_functions_error": "cartesian_graph_slider"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "cartesian_graph_slider"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "cartesian_graph_slider",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "linear_functions": "cartesian_graph_slider"
         }
       },
       "visual_policy": {
-        "template": "balance_scale_equation",
+        "template": "cartesian_graph_slider",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3107,46 +2699,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "trigonometry"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "trigonometry_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "trigonometry_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "trigonometry_error": "geoboard_dynamic"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "geoboard_dynamic"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "geoboard_dynamic",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "trigonometry": "geoboard_dynamic"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "geoboard_dynamic",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3198,42 +2777,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "data"
         ],
         "item_families": [
-          "statistics",
-          "probability"
+          "statistics"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "statistics_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "statistics_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "statistics_error": "part_part_whole_bar"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "part_part_whole_bar"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "part_part_whole_bar",
         "targets": {
-          "statistics": "place_value_chart",
-          "probability": "place_value_chart"
+          "statistics": "part_part_whole_bar"
         }
       },
       "visual_policy": {
-        "template": "place_value_chart",
+        "template": "part_part_whole_bar",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3285,46 +2855,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "quadratic_functions"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "quadratic_functions_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "quadratic_functions_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "quadratic_functions_error": "cartesian_graph_slider"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "cartesian_graph_slider"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "cartesian_graph_slider",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "quadratic_functions": "cartesian_graph_slider"
         }
       },
       "visual_policy": {
-        "template": "balance_scale_equation",
+        "template": "cartesian_graph_slider",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3376,46 +2933,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "geometry_2d",
-          "area_perimeter",
-          "area_triangle",
-          "volume"
+          "trig_identities"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "trig_identities_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "trig_identities_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "trig_identities_error": "geoboard_dynamic"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "geoboard_dynamic"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "geoboard_dynamic",
         "targets": {
-          "geometry_2d": "geobond_dynamic",
-          "area_perimeter": "geobond_dynamic",
-          "area_triangle": "geobond_dynamic",
-          "volume": "geobond_dynamic"
+          "trig_identities": "geoboard_dynamic"
         }
       },
       "visual_policy": {
-        "template": "geobond_dynamic",
+        "template": "geoboard_dynamic",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3467,42 +3011,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "data"
         ],
         "item_families": [
-          "statistics",
           "probability"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "probability_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "probability_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "probability_error": "percent_grid_10x10"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "percent_grid_10x10"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "percent_grid_10x10",
         "targets": {
-          "statistics": "place_value_chart",
-          "probability": "place_value_chart"
+          "probability": "percent_grid_10x10"
         }
       },
       "visual_policy": {
-        "template": "place_value_chart",
+        "template": "percent_grid_10x10",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",
@@ -3554,46 +3089,33 @@
       "diagnostic": {
         "required": true,
         "item_types": [
-          "numeric",
-          "word_problem"
+          "numeric"
         ],
         "item_families": [
-          "simple_equations",
-          "linear_equations",
-          "systems_of_equations",
-          "quadratic"
+          "sequences"
         ],
         "detectable_errors": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "sequences_error"
         ]
       },
       "error_model": {
         "types": [
-          "procedural_slip",
-          "conceptual_error",
-          "careless_mistake"
+          "sequences_error"
         ],
         "remediation_by_error": {
-          "procedural_slip": "slow_step_by_step",
-          "conceptual_error": "use_concrete_objects",
-          "careless_mistake": "self_check_prompt"
+          "sequences_error": "function_table"
         },
-        "default_remediation": "slow_step_by_step"
+        "default_remediation": "function_table"
       },
       "remediation": {
         "required": true,
-        "default_path": "slow_step_by_step",
+        "default_path": "function_table",
         "targets": {
-          "simple_equations": "balance_scale_equation",
-          "linear_equations": "balance_scale_equation",
-          "systems_of_equations": "balance_scale_equation",
-          "quadratic": "balance_scale_equation"
+          "sequences": "function_table"
         }
       },
       "visual_policy": {
-        "template": "balance_scale_equation",
+        "template": "function_table",
         "age_band": "senior",
         "diagnosis": "off",
         "learning": "on",

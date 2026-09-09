@@ -50,6 +50,7 @@ def test_record_diagnostic_result_updates_profile_history(state_file: Path) -> N
     assert profile["diagnostic_history"][0]["diagnosis_result_id"] == "diag_1_4_1"
     assert profile["skill_mastery"]["g2_addition_core"]["blocked_by"] == ["g1_counting_core"]
     assert profile["skill_mastery"]["g2_addition_core"]["blocked_by_error_families"] == ["number_bond_missing_part"]
+    assert profile["learning_memory"]["weak_topic_queue"][0]["topic_id"] == "g1_t05"
 
 
 def test_record_practice_attempt_and_mastery_evaluation_update_skill_mastery(state_file: Path) -> None:
@@ -122,5 +123,24 @@ def test_record_mastery_evaluation_clears_blocked_gates(state_file: Path) -> Non
     assert profile["active_scope"]["blocked_skill_ids"] == []
     assert "blocked_by" not in profile["skill_mastery"]["g2_addition_core"]
     assert "blocked_reason" not in profile["skill_mastery"]["g2_addition_core"]
+    assert profile["learning_memory"]["weak_topic_queue"] == []
+    assert profile["learning_memory"]["mastered_weak_topics"][0]["topic_id"] == "g1_t05"
 
 
+def test_record_learning_pause_updates_session_status(state_file: Path) -> None:
+    store.ensure_student_profile("user-5")
+
+    profile = store.record_learning_pause(
+        "user-5",
+        status="paused",
+        reason="хватит",
+        resume_phase="practice",
+        resume_topic_id="g1_t03",
+        resume_topic="Сложение до 10",
+        resume_skill_id="g1_addition_core",
+    )
+
+    assert profile["session_status"]["status"] == "paused"
+    assert profile["session_status"]["resume_phase"] == "practice"
+    assert profile["session_status"]["resume_topic_id"] == "g1_t03"
+    assert profile["learning_memory"]["teaching_actions"][-1]["event"] == "learning_paused"

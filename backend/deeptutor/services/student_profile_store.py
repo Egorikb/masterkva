@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-import json
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from deeptutor.services.state_storage import read_states, write_states
+
 STATE_FILE = Path(__file__).resolve().parents[2] / "data" / "user_states.json"
 DEFAULT_CHAIN_ID = "g1_to_g2_addition"
-DEFAULT_ALLOWED_SKILLS = ["g1_early_arithmetic_core", "g2_addition_core"]
+DEFAULT_ALLOWED_SKILLS = ["g1_counting_core", "g2_addition_core"]
 PROFILE_SCHEMA_VERSION = "v1"
 
 
@@ -17,18 +18,11 @@ def _utc_now() -> str:
 
 
 def _read_states() -> dict[str, dict[str, Any]]:
-    if not STATE_FILE.exists():
-        return {}
-    try:
-        data = json.loads(STATE_FILE.read_text(encoding="utf-8"))
-        return data if isinstance(data, dict) else {}
-    except Exception:
-        return {}
+    return read_states(STATE_FILE)
 
 
 def _write_states(states: dict[str, dict[str, Any]]) -> None:
-    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps(states, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_states(STATE_FILE, states)
 
 
 def _fresh_profile(user_id: str | None = None) -> dict[str, Any]:
@@ -49,6 +43,23 @@ def _fresh_profile(user_id: str | None = None) -> dict[str, Any]:
         "diagnostic_history": [],
         "mastery_history": [],
         "promotion_history": [],
+        "learning_memory": {
+            "last_topics": [],
+            "weak_topic_queue": [],
+            "mastered_weak_topics": [],
+            "misconceptions": {},
+            "teaching_actions": [],
+        },
+        "session_status": {
+            "status": "active",
+            "reason": None,
+            "paused_at": None,
+            "resumed_at": None,
+            "resume_phase": None,
+            "resume_topic_id": None,
+            "resume_topic": None,
+            "resume_skill_id": None,
+        },
         "activity_counters": {
             "diagnostic_sessions": 0,
             "practice_sessions": 0,
@@ -69,6 +80,8 @@ def _merge_profile(base: dict[str, Any], profile: dict[str, Any] | None, user_id
         merged["diagnostic_history"] = list(profile.get("diagnostic_history") or [])
         merged["mastery_history"] = list(profile.get("mastery_history") or [])
         merged["promotion_history"] = list(profile.get("promotion_history") or [])
+        merged["learning_memory"].update(profile.get("learning_memory") or {})
+        merged["session_status"].update(profile.get("session_status") or {})
     if user_id is not None:
         merged["user_id"] = user_id
     return merged
@@ -160,6 +173,19 @@ def record_diagnostic_result(
             "remediation_targets": dict(remediation_targets or {}),
         }
     )
+    if weak_topic:
+        memory = profile.setdefault("learning_memory", {})
+        queue = list(memory.get("weak_topic_queue") or [])
+        weak_topic_id = weak_topic.get("topic_id") or current_topic_id
+        queue = [item for item in queue if item.get("topic_id") != weak_topic_id]
+        queue.append({
+            "topic_id": weak_topic_id,
+            "topic": weak_topic.get("topic") or weak_topic.get("title"),
+            "skill_id": current_skill_id,
+            "grade": current_grade,
+            "added_at": _utc_now(),
+        })
+        memory["weak_topic_queue"] = queue
     if blocked_skill_ids:
         for blocked_skill_id in blocked_skill_ids:
             profile = _upsert_skill_entry(
@@ -284,6 +310,13 @@ def record_mastery_evaluation(
         )
         if decision == "mastered":
             profile["skill_mastery"][skill_id]["last_mastered_at"] = _utc_now()
+            memory = profile.setdefault("learning_memory", {})
+            queue = list(memory.get("weak_topic_queue") or [])
+            mastered = [item for item in queue if item.get("skill_id") == skill_id]
+            memory["weak_topic_queue"] = [item for item in queue if item.get("skill_id") != skill_id]
+            memory.setdefault("mastered_weak_topics", []).extend(
+                {**item, "mastered_at": _utc_now()} for item in mastered
+            )
     if unblocked_skill_ids:
         active_scope = dict(profile.get("active_scope") or {})
         blocked_ids = [blocked_id for blocked_id in list(active_scope.get("blocked_skill_ids") or []) if blocked_id not in set(unblocked_skill_ids)]
@@ -327,4 +360,41 @@ def record_promotion(
         "updated_at": _utc_now(),
     }
     profile["last_updated_at"] = _utc_now()
+    return update_student_profile(user_id, profile)
+
+
+def record_learning_pause(
+    user_id: str,
+    *,
+    status: str,
+    reason: str | None,
+    resume_phase: str | None,
+    resume_topic_id: str | None,
+    resume_topic: str | None,
+    resume_skill_id: str | None,
+) -> dict[str, Any]:
+    profile = ensure_student_profile(user_id)
+    now = _utc_now()
+    profile["session_status"] = {
+        **dict(profile.get("session_status") or {}),
+        "status": status,
+        "reason": reason,
+        "paused_at": now if status == "paused" else profile.get("session_status", {}).get("paused_at"),
+        "resumed_at": now if status == "active" else profile.get("session_status", {}).get("resumed_at"),
+        "resume_phase": resume_phase,
+        "resume_topic_id": resume_topic_id,
+        "resume_topic": resume_topic,
+        "resume_skill_id": resume_skill_id,
+    }
+    profile.setdefault("learning_memory", {}).setdefault("teaching_actions", []).append(
+        {
+            "at": now,
+            "event": "learning_paused" if status == "paused" else "learning_resumed",
+            "reason": reason,
+            "resume_phase": resume_phase,
+            "resume_topic_id": resume_topic_id,
+            "resume_skill_id": resume_skill_id,
+        }
+    )
+    profile["last_updated_at"] = now
     return update_student_profile(user_id, profile)

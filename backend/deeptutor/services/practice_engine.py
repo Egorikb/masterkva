@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import json
 import random
 import re
 from dataclasses import dataclass
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+DIAGNOSTIC_POOL_FILE = DATA_DIR / "diagnostic_pool.json"
 
 # Static practice templates for topics that need specific wording
 PRACTICE_BY_TOPIC: dict[str, list[dict[str, str]]] = {
@@ -57,16 +62,31 @@ ITEM_FAMILY_BY_TOPIC = {
 }
 
 
+def _load_diagnostic_questions() -> list[dict]:
+    try:
+        data = json.loads(DIAGNOSTIC_POOL_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    questions = data.get("questions", []) if isinstance(data, dict) else data
+    return [dict(item) for item in questions if isinstance(item, dict)]
+
+
+DIAGNOSTIC_QUESTIONS = _load_diagnostic_questions()
+
+
 def _single_number(value: str) -> str | None:
     nums = re.findall(r"-?\d+", str(value).strip())
     return nums[0] if len(nums) == 1 else None
 
 
-def _check_answer(user_answer: str, correct_answer: str) -> tuple[bool, float]:
+def _check_answer(user_answer: str, correct_answer: str, alternatives: list[str] | None = None) -> tuple[bool, float]:
     user = str(user_answer).strip().lower()
     correct = str(correct_answer).strip().lower()
     if user == correct:
         return True, 1.0
+    normalized_alternatives = {str(item).strip().lower() for item in list(alternatives or [])}
+    if user in normalized_alternatives:
+        return True, 0.98
 
     user_num = _single_number(user)
     correct_num = _single_number(correct)
@@ -75,6 +95,33 @@ def _check_answer(user_answer: str, correct_answer: str) -> tuple[bool, float]:
         return is_correct, 0.95 if is_correct else 0.0
 
     return False, 0.0
+
+
+def _pool_template_for_topic(
+    *,
+    topic_id: str,
+    item_family: str | None,
+    source_question_id: str | None,
+    variant: int,
+) -> dict | None:
+    topic_id = str(topic_id or "").strip()
+    item_family = str(item_family or "").strip()
+    source_question_id = str(source_question_id or "").strip()
+    if not topic_id and not item_family:
+        return None
+
+    candidates = [
+        question
+        for question in DIAGNOSTIC_QUESTIONS
+        if (topic_id and str(question.get("topic_id") or "").strip() == topic_id)
+        or (item_family and str(question.get("item_family") or "").strip() == item_family)
+    ]
+    if not candidates:
+        return None
+
+    non_source = [question for question in candidates if str(question.get("id") or "").strip() != source_question_id]
+    pool = non_source or candidates
+    return dict(pool[variant % len(pool)])
 
 
 def _generate_addition_within_20(variant: int) -> dict[str, str]:
@@ -188,12 +235,14 @@ class PracticeEngine:
     def create_practice(self, weak_topic: dict, variant: int = 0) -> dict:
         topic_id = str(weak_topic.get("topic_id") or "unknown_topic")
         title = weak_topic.get("topic") or "Тема"
+        weak_item_family = str(weak_topic.get("item_family") or ITEM_FAMILY_BY_TOPIC.get(topic_id) or "").strip()
+        source_question_id = str(weak_topic.get("source_question_id") or "").strip()
 
         # Try static templates first
         templates = PRACTICE_BY_TOPIC.get(topic_id)
         if templates:
             template = templates[variant % len(templates)]
-            item_family = str(template.get("item_family") or weak_topic.get("item_family") or ITEM_FAMILY_BY_TOPIC.get(topic_id) or "").strip() or None
+            item_family = str(template.get("item_family") or weak_item_family).strip() or None
             return {
                 "id": f"{topic_id}_p{variant + 1:02d}",
                 "topic_id": topic_id,
@@ -204,17 +253,32 @@ class PracticeEngine:
                 "attempts": 0,
             }
 
+        pool_template = _pool_template_for_topic(
+            topic_id=topic_id,
+            item_family=weak_item_family,
+            source_question_id=source_question_id,
+            variant=variant,
+        )
+        if pool_template:
+            item_family = str(pool_template.get("item_family") or weak_item_family).strip() or None
+            return {
+                "id": f"{topic_id}_pool_{variant + 1:02d}",
+                "topic_id": topic_id,
+                "title": title,
+                "question": str(pool_template.get("question") or ""),
+                "answer": str(pool_template.get("answer") or ""),
+                "alternatives": list(pool_template.get("alternatives") or []),
+                "difficulty": pool_template.get("difficulty"),
+                "item_family": item_family,
+                "attempts": 0,
+                "generated": True,
+                "source": "diagnostic_pool",
+                "source_question_id": pool_template.get("id"),
+            }
+
         # Fall back to algorithmic generation
-        item_family = str(weak_topic.get("item_family") or ITEM_FAMILY_BY_TOPIC.get(topic_id) or "").strip() or "addition_within_10_part_whole"
+        item_family = weak_item_family or "addition_within_10_part_whole"
         generator = GENERATORS.get(item_family, _generate_addition_within_20)
-
-        # Use variant to pick generator for variety
-        family_generators = list(GENERATORS.keys())
-        gen_idx = variant % max(len(family_generators), 1)
-        for _ in range(gen_idx):
-            generator = GENERATORS.get(family_generators[gen_idx % len(family_generators)], generator)
-            break
-
         generated = generator(variant)
 
         return {
@@ -226,6 +290,7 @@ class PracticeEngine:
             "item_family": generated.get("item_family", item_family),
             "attempts": 0,
             "generated": True,
+            "fallback_warning": None if item_family in GENERATORS else "unmapped_practice_family",
         }
 
     def build_practice_item(self, weak_topic: dict) -> dict:
@@ -233,7 +298,7 @@ class PracticeEngine:
 
     def check_practice_answer(self, practice: dict, user_answer: str) -> dict:
         practice["attempts"] = int(practice.get("attempts", 0)) + 1
-        is_correct, confidence = _check_answer(user_answer, practice.get("answer", ""))
+        is_correct, confidence = _check_answer(user_answer, practice.get("answer", ""), list(practice.get("alternatives") or []))
         return {
             "is_correct": is_correct,
             "confidence": confidence,

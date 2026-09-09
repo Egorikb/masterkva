@@ -247,6 +247,6 @@ def _recommend_next_action(
             return f"needs_more_practice:{current_skill_id}"
 
     else:
-        return f"start_g1_early_arithmetic_core"
+        return "start_g1_counting_core"
 
     return "diagnose"

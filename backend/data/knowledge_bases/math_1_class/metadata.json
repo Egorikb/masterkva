@@ -1,0 +1,23 @@
+{
+  "name": "math_1_class",
+  "created_at": "2026-04-14 13:39:28",
+  "description": "Knowledge base: math_1_class",
+  "version": "1.0",
+  "rag_provider": "llamaindex",
+  "needs_reindex": false,
+  "last_updated": "2026-04-14 13:40:01",
+  "update_history": [
+    {
+      "timestamp": "2026-04-14 13:39:47",
+      "action": "incremental_add",
+      "count": 0,
+      "provider": "llamaindex"
+    },
+    {
+      "timestamp": "2026-04-14 13:40:01",
+      "action": "incremental_add",
+      "count": 0,
+      "provider": "llamaindex"
+    }
+  ]
+}

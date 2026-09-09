@@ -3,11 +3,11 @@
   "version": "v1",
   "description": "Second minimal chain for hardening subtraction as a sibling of the frozen addition chain.",
   "baseline_anchor_skill_id": "g2_subtraction_core",
-  "prerequisite_skill_id": "g1_early_arithmetic_core",
+  "prerequisite_skill_id": "g1_counting_core",
   "release_stage": "frozen",
   "skills": [
     {
-      "skill_id": "g1_early_arithmetic_core",
+      "skill_id": "g1_counting_core",
       "role": "prerequisite"
     },
     {

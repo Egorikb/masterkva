@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import uuid
 
 from fastapi import FastAPI
@@ -7,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from deeptutor.api.routers.plugins_api import router, save_user_states
 import deeptutor.api.routers.plugins_api as plugins_api
+import deeptutor.services.student_profile_store as student_profile_store
 
 
 def _build_app() -> FastAPI:
@@ -69,7 +71,7 @@ def test_diagnostic_auto_transitions_to_practice_no_davay(tmp_path, monkeypatch)
     # g1_counting_core has next_skills: ["g1_number_successor"]
     assert "g1_number_successor" in state["blocked_skill_ids"]
     # remediation_targets depend on the skill's item families
-    # g1_counting_core has different item families than the old g1_early_arithmetic_core
+    # g1_counting_core exposes concrete item-family remediation targets.
     assert len(state["remediation_targets"]) > 0
     # No "Скажи «давай»" in text
     assert "Скажи" not in payload["text"] or "давай" not in payload["text"].lower()
@@ -208,6 +210,98 @@ def test_wrong_practice_answer_enters_remediation_flow(tmp_path, monkeypatch) ->
     assert "5" in text  # correct answer shown
     # And a clarifying question (remediation step)
     assert "?" in text
+
+
+def test_stop_intent_pauses_learning_without_checking_answer(tmp_path, monkeypatch) -> None:
+    """Child can stop the lesson; 'хватит' is not treated as a wrong math answer."""
+    state_file = tmp_path / "user_states.json"
+    monkeypatch.setattr(plugins_api, "STATE_FILE", state_file)
+    monkeypatch.setattr(student_profile_store, "STATE_FILE", state_file)
+    user_id = f"mvp-stop-pauses-{uuid.uuid4()}"
+    weak_topic = {
+        "grade": 1,
+        "topic_id": "g1_t03",
+        "topic": "Сложение до 10",
+        "source_question_id": "g1_t03_q01",
+    }
+    current_practice = {
+        "id": "g1_t03_p01",
+        "topic_id": "g1_t03",
+        "title": "Сложение до 10",
+        "question": "4 + 3 = ?",
+        "answer": "7",
+        "attempts": 0,
+    }
+    save_user_states(
+        {
+            user_id: {
+                "name": "Алиса",
+                "grade": 1,
+                "phase": "practice",
+                "weak_topic": weak_topic,
+                "current_practice": current_practice,
+                "practice_feedback": None,
+                "report": None,
+            }
+        }
+    )
+
+    payload = asyncio.run(plugins_api.panda_chat(plugins_api.ChatRequest(user_id=user_id, message="хватит")))
+    assert payload["state"]["phase"] == "paused"
+    assert payload["state"]["phase_before_pause"] == "practice"
+    assert payload["state"]["current_practice"]["attempts"] == 0
+    assert payload["state"]["practice_feedback"] is None
+    assert "сохраню место" in payload["text"].lower()
+
+
+def test_remediation_wrong_answer_shows_answer_for_answered_step(tmp_path, monkeypatch) -> None:
+    """Wrong remediation answer must not display the next step's answer."""
+    state_file = tmp_path / "user_states.json"
+    monkeypatch.setattr(plugins_api, "STATE_FILE", state_file)
+    monkeypatch.setattr(student_profile_store, "STATE_FILE", state_file)
+    monkeypatch.setattr(plugins_api, "generate_teacher_reply", lambda **kwargs: "Почти.")
+    user_id = f"mvp-remediation-answer-step-{uuid.uuid4()}"
+    weak_topic = {
+        "grade": 1,
+        "topic_id": "g1_t01",
+        "topic": "Счёт до 10",
+        "source_question_id": "g1_t01_q01",
+    }
+    current_practice = {
+        "id": "g1_t01_p01",
+        "topic_id": "g1_t01",
+        "title": "Счёт до 10",
+        "question": "Сколько всего: 3 и 2?",
+        "answer": "5",
+        "item_family": "counting_with_objects",
+        "attempts": 0,
+    }
+    save_user_states(
+        {
+            user_id: {
+                "name": "Алиса",
+                "grade": 1,
+                "phase": "practice",
+                "weak_topic": weak_topic,
+                "current_practice": current_practice,
+                "report": None,
+            }
+        }
+    )
+
+    start = asyncio.run(plugins_api.panda_chat(plugins_api.ChatRequest(user_id=user_id, message="9")))
+    assert start["state"]["phase"] == "remediation"
+
+    remediation = plugins_api.remediation_engine.get_state(user_id)
+    assert remediation is not None
+    remediation.steps[0].answer = "111"
+    remediation.steps[1].answer = "222"
+
+    response = asyncio.run(plugins_api.panda_chat(plugins_api.ChatRequest(user_id=user_id, message="999")))
+
+    text = response["text"]
+    assert "Правильный ответ: 111." in text
+    assert "Правильный ответ: 222." not in text
 
 
 def test_mastery_gate_marks_g2_mastered_after_full_window(tmp_path, monkeypatch) -> None:

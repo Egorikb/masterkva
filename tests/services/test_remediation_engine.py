@@ -167,6 +167,26 @@ class TestClarifyingQuestions:
         assert clarify.step_type == "clarify"
         assert "−" in clarify.question or "-" in clarify.question
 
+    def test_unknown_family_keeps_original_topic(self, engine):
+        question = {
+            "question": "Найди корни уравнения x² - 5x + 6 = 0",
+            "answer": "2; 3",
+            "item_family": "quadratic_equation",
+            "parts": [],
+        }
+        details = {
+            "error_code": "quadratic_error",
+            "error_family": "quadratic_equation",
+            "item_family": "quadratic_equation",
+            "remediation_path": "algebra_tiles",
+        }
+
+        engine.start_remediation("user-senior", question, details)
+        state = engine.get_state("user-senior")
+
+        assert all(step.question == question["question"] for step in state.steps)
+        assert all("2 + 3" not in step.question for step in state.steps)
+
 
 class TestAnalogQuestions:
     def test_analog_same_family(self, engine, addition_question, error_details_addition):
