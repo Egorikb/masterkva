@@ -48,6 +48,13 @@ def validate_grade(grade: int) -> list[str]:
                     errors.append(f"{location}: source_topic_id mismatch")
                 if lesson.get("skills") != source_topics.get(topic_id, {}).get("skills", []):
                     errors.append(f"{location}: skills do not match source topic")
+                if grade <= 3:
+                    if "answer" in lesson or "answers" in lesson:
+                        errors.append(f"{location}: non-canonical answer field")
+                    if lesson.get("answer_mode") not in {"exact", "open"}:
+                        errors.append(f"{location}: invalid answer_mode")
+                    if "teacher_note" not in lesson:
+                        errors.append(f"{location}: missing teacher_note")
 
     missing = set(source_topics) - seen
     errors.extend(f"grade {grade}: missing topic {topic_id}" for topic_id in sorted(missing))
