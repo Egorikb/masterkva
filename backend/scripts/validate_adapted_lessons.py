@@ -1,4 +1,4 @@
-"""Small quality gate for grades 1-3 adapted lesson data."""
+"""Small quality gate for grades 1-9 adapted lesson data."""
 
 from __future__ import annotations
 
@@ -55,11 +55,11 @@ def validate_grade(grade: int) -> list[str]:
 
 
 def main() -> int:
-    errors = [error for grade in (1, 2, 3) for error in validate_grade(grade)]
+    errors = [error for grade in range(1, 10) for error in validate_grade(grade)]
     if errors:
         print("\n".join(errors))
         return 1
-    print("grades 1-3 adapted lessons: OK")
+    print("grades 1-9 adapted lessons: OK")
     return 0
 
 

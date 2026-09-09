@@ -1,4 +1,4 @@
-"""Normalize and annotate Russian adapted lessons for grades 1-3.
+"""Normalize and annotate Russian adapted lessons for grades 1-9.
 
 This is intentionally a small, deterministic migration: it removes teacher-only
 boilerplate from child-facing text and carries source-topic metadata into each
@@ -26,7 +26,7 @@ LEAKS = (
 
 
 def main() -> None:
-    for grade in (1, 2, 3):
+    for grade in range(1, 10):
         curriculum = json.loads(
             (DATA / "curriculum" / f"grade_{grade}_full.json").read_text()
         )
