@@ -88,6 +88,22 @@ Astra изучил проект, заметки и три независимых
 
 **Исправление прежних заявлений:** PDF не отсутствуют вообще; отсутствует подходящий нижний том 1 класса. «Высокая трассируемость» по скопированным страницам была завышена. Утечки ответов встречались и после фильтра шаблонов. Прежние exact/open были технической классификацией, а слово «решение» не гарантировало пошаговый разбор. Наличие answer_mode никогда само по себе не подключало урок к runtime.
 
+## Результат 2026-09-10: D1 — карта идентификаторов 1 класса
+
+**Результат:** построена явная content-based карта для 26 canonical topics и 78 уроков версии 2.0. Каждый `lesson_id` учтён ровно один раз. Из 78 строк 9 имеют статус `mapped`, 23 — `review_required`, 46 — `unmapped`.
+
+**Ключевые расхождения:** числовые суффиксы не задают связь. Canonical topic 2 — позиции, runtime `g1_t02` — следующее число; canonical topic 3 — числа до 5, runtime `g1_t03` фактически проверяет сложение через 10. Legacy `curriculum_detailed` содержит только восемь файлов и отдельную таксономию: detailed topic 4 «ФИГУРЫ» соответствует canonical topic 15, detailed topic 5 разделён на canonical 6–9, detailed topic 7 — на canonical 12–13.
+
+**Runtime:** в реестре обнаружены 6 grade-1 skills для 7 diagnostic topic IDs. `g1_compose_decompose_10` владеет одновременно `g1_t06` и `g1_t07`; `g1_t03` и `g1_t07` используют одно семейство и дублируют примеры с переходом через 10. `SkillResolver` не индексирует `lesson_id`, а `DiagnosticEngine.get_questions_for_grade` теряет исходный `item_family` при нормализации.
+
+**Файлы:** `docs/audit/grade1-topic-identity.md`, `backend/data/curriculum/lesson_runtime_map.json`, `backend/scripts/validate_grade1_topic_identity.py`.
+
+**Проверка:** `python3 backend/scripts/validate_grade1_topic_identity.py` — OK: 26 тем, 78 уроков ровно по одному разу, 7 diagnostic topics, 6 grade-1 skills; ссылки на diagnostic/registry/contracts/families существуют; вымышленных skill IDs нет. Дополнительно прошли `py_compile`, JSON parse и проверка окончаний строк.
+
+**Ограничение:** карта является кандидатом. `review_required` нельзя использовать для автоматического выбора задания или mastery. В текущей инструментальной сессии GitHub разрешил чтение, но отклонил fork с `403 Resource not accessible by personal access token`; push не заявляется. `backend/data/user_states.json` не читался и не изменялся.
+
+**Следующий шаг:** Sol подтверждает 9 `mapped` строк и принимает решения по 23 спорным строкам; B1 начинает с одной проверенной цепочки первого полугодия. Для 46 `unmapped` строк нужны новые grade-1 runtime contracts либо явное исключение из маршрута.
+
 ## Учебный корпус
 
 | Класс | Темы | Задания | Статус |
