@@ -1,0 +1,1790 @@
+{
+  "schema_version": 1,
+  "status": "candidate",
+  "generated_on": "2026-09-10",
+  "source_commit": "e53d18c1d10519aae218c044ab6898253b104e0b",
+  "reference_version": "2.0",
+  "scope": {
+    "grade": 1,
+    "canonical_topics": 26,
+    "lessons": 78
+  },
+  "namespace_notes": {
+    "canonical_topic_id": "Numeric id from curriculum/grade_1_full.json and lessons/grade_1_ru_adapted.json.",
+    "lesson_id": "Stable lesson id from grade_1_ru_adapted.json; not a diagnostic id.",
+    "diagnostic_topic_id": "Runtime topic id from diagnostic_pool.json; never inferred from numeric suffix alone.",
+    "status": "mapped = semantic link confirmed by Sol, not automatic assessment or mastery permission; review_required = reviewed but unsafe without part-level mapping or contract changes; unmapped = no coherent grade-1 runtime coverage."
+  },
+  "counts": {
+    "mapped": 9,
+    "review_required": 10,
+    "unmapped": 59
+  },
+  "mappings": [
+    {
+      "canonical_topic_id": 1,
+      "canonical_topic_title": "Подготовка",
+      "lesson_id": "g1-t01-l01",
+      "content_version": "2.0",
+      "lesson_type": "concrete",
+      "lesson_skills": [
+        "счёт предметов"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Урок проверяет физический пересчёт до 5 по одному предмету. g1_t01 фактически спрашивает сумму двух уже заданных чисел, а практика делает то же; название counting_with_objects не компенсирует смену действия."
+    },
+    {
+      "canonical_topic_id": 1,
+      "canonical_topic_title": "Подготовка",
+      "lesson_id": "g1-t01-l02",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение количеств"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сравнение 3 и 5 и разностное сравнение 5−3; g1_t01/g1_counting_core/counting_with_objects не проверяет ни знак сравнения, ни «на сколько»."
+    },
+    {
+      "canonical_topic_id": 1,
+      "canonical_topic_title": "Подготовка",
+      "lesson_id": "g1-t01-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "количество и порядок"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Две цели: количественный и порядковый счёт. В grade-1 runtime нет ordinal family; g1_t01 проверяет сумму, не место в ряду."
+    },
+    {
+      "canonical_topic_id": 2,
+      "canonical_topic_title": "Позиции",
+      "lesson_id": "g1-t02-l01",
+      "content_version": "2.0",
+      "lesson_type": "concrete",
+      "lesson_skills": [
+        "пространственные отношения"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 2,
+      "canonical_topic_title": "Позиции",
+      "lesson_id": "g1-t02-l02",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "выше и ниже"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 2,
+      "canonical_topic_title": "Позиции",
+      "lesson_id": "g1-t02-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "ориентация на листе"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 3,
+      "canonical_topic_title": "Числа до 5",
+      "lesson_id": "g1-t03-l01",
+      "content_version": "2.0",
+      "lesson_type": "number_composition",
+      "lesson_skills": [
+        "ноль и состав пяти"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Две части 5=2+□, 5=0+□ совпадают с g1_t05/g1_number_bond/number_bond_missing_part, но первая часть 3−3=0 проверяет иной результат. Одна тройка не представляет весь ordered assessment."
+    },
+    {
+      "canonical_topic_id": 3,
+      "canonical_topic_title": "Числа до 5",
+      "lesson_id": "g1-t03-l02",
+      "content_version": "2.0",
+      "lesson_type": "addition",
+      "lesson_skills": [
+        "сложение до пяти"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Прямая сумма 2+2 до 5 не является missing part. Альтернатива g1_t03 тоже не годится: его диагностика состоит из сумм с переходом через 10 (g1_t03_q01)."
+    },
+    {
+      "canonical_topic_id": 3,
+      "canonical_topic_title": "Числа до 5",
+      "lesson_id": "g1-t03-l03",
+      "content_version": "2.0",
+      "lesson_type": "subtraction",
+      "lesson_skills": [
+        "вычитание до пяти"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t04",
+      "skill_id": "g1_subtraction_within_10",
+      "item_family": "subtraction_within_10_part_whole",
+      "evidence": "Задача 4−1=3 — однозначное уменьшение в диапазоне до 10; diagnostic и practice g1_t04 проверяют то же действие и диапазон (g1_t04_q01)."
+    },
+    {
+      "canonical_topic_id": 4,
+      "canonical_topic_title": "Сложение и вычитание до 5",
+      "lesson_id": "g1-t04-l01",
+      "content_version": "2.0",
+      "lesson_type": "concrete",
+      "lesson_skills": [
+        "прибавление одного"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "3+1 — прямая сумма без перехода. g1_t05 проверяет missing part, а g1_t03 диагностирует переход через 10, хотя его статическая практика противоречиво выдаёт суммы без перехода. Целостной тройки нет."
+    },
+    {
+      "canonical_topic_id": 4,
+      "canonical_topic_title": "Сложение и вычитание до 5",
+      "lesson_id": "g1-t04-l02",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение выражений"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Ordered assessment объединяет сложение, вычитание и сравнение результатов. Нужны как минимум две arithmetic family и отдельное сравнение; один number_bond_missing_part и один skill искажают урок."
+    },
+    {
+      "canonical_topic_id": 4,
+      "canonical_topic_title": "Сложение и вычитание до 5",
+      "lesson_id": "g1-t04-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "действия до пяти"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Четыре прямых действия чередуют сложение и вычитание. Их можно сопоставлять только по частям после разделения; g1_t05/number_bond_missing_part не соответствует форме заданий."
+    },
+    {
+      "canonical_topic_id": 5,
+      "canonical_topic_title": "Объёмные тела",
+      "lesson_id": "g1-t05-l01",
+      "content_version": "2.0",
+      "lesson_type": "recognition",
+      "lesson_skills": [
+        "объёмные тела"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 5,
+      "canonical_topic_title": "Объёмные тела",
+      "lesson_id": "g1-t05-l02",
+      "content_version": "2.0",
+      "lesson_type": "recognition",
+      "lesson_skills": [
+        "тело и плоская фигура"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 5,
+      "canonical_topic_title": "Объёмные тела",
+      "lesson_id": "g1-t05-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "грань и отпечаток"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "canonical_topic_id": 6,
+      "canonical_topic_title": "Числа 6-7",
+      "lesson_id": "g1-t06-l01",
+      "content_version": "2.0",
+      "lesson_type": "number_composition",
+      "lesson_skills": [
+        "состав шести"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Состав 6 тематически близок number bond и одно диагностическое задание действительно доходит до 6, но урок требует два наблюдаемых разбиения на непустые группы, а family проверяет одну пропущенную часть числового равенства. Нужен отдельный rubric/family либо разбиение."
+    },
+    {
+      "canonical_topic_id": 6,
+      "canonical_topic_title": "Числа 6-7",
+      "lesson_id": "g1-t06-l02",
+      "content_version": "2.0",
+      "lesson_type": "word_problem",
+      "lesson_skills": [
+        "сложение до семи"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "4+3=7 — сложение без перехода; все diagnostic items g1_t03 переходят через 10. Совпадение со статическим practice при противоположной диагностике не образует надёжного контракта."
+    },
+    {
+      "canonical_topic_id": 6,
+      "canonical_topic_title": "Числа 6-7",
+      "lesson_id": "g1-t06-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение соседних чисел"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t02",
+      "skill_id": "g1_number_successor",
+      "item_family": "number_successor",
+      "evidence": "Урок использует соседство 6→7, но оценивает и большее число, и разность 7−6. number_successor покрывает лишь основание рассуждения, не полный ordered assessment."
+    },
+    {
+      "canonical_topic_id": 7,
+      "canonical_topic_title": "Числа 8-9",
+      "lesson_id": "g1-t07-l01",
+      "content_version": "2.0",
+      "lesson_type": "number_composition",
+      "lesson_skills": [
+        "состав восьми"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Состав 8 связан с number bond, но требует двух физических разбиений. Diagnostic g1_t05 проверяет одну пропущенную часть и фактически ограничен целыми 3–6; покрытие диапазона 8 и rubric отсутствует."
+    },
+    {
+      "canonical_topic_id": 7,
+      "canonical_topic_title": "Числа 8-9",
+      "lesson_id": "g1-t07-l02",
+      "content_version": "2.0",
+      "lesson_type": "word_problem",
+      "lesson_skills": [
+        "сложение до восьми"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "6+2=8 не переходит через 10. Diagnostic g1_t03 проверяет только суммы 11–15, поэтому topic и диапазон кандидата не совпадают с уроком."
+    },
+    {
+      "canonical_topic_id": 7,
+      "canonical_topic_title": "Числа 8-9",
+      "lesson_id": "g1-t07-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "порядок чисел"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t02",
+      "skill_id": "g1_number_successor",
+      "item_family": "number_successor",
+      "evidence": "Оба вопроса фиксируют одну и ту же смежную пару 8→9: 8 раньше, 9 позже. Runtime g1_t02 прямо содержит «какое число идёт после 8?» (practice_engine.py)."
+    },
+    {
+      "canonical_topic_id": 8,
+      "canonical_topic_title": "Число 10",
+      "lesson_id": "g1-t08-l01",
+      "content_version": "2.0",
+      "lesson_type": "ten_frame",
+      "lesson_skills": [
+        "дополнение до десяти"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Дополнение 7 до 10 является составом числа 10, но фактический g1_t06 складывает круглые десятки до 100 (g1_t06_q01). compose_decompose_10 здесь имеет иное реальное значение."
+    },
+    {
+      "canonical_topic_id": 8,
+      "canonical_topic_title": "Число 10",
+      "lesson_id": "g1-t08-l02",
+      "content_version": "2.0",
+      "lesson_type": "number_composition",
+      "lesson_skills": [
+        "состав десяти"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Три missing-part равенства с целым 10 не покрываются ни g1_t06 с круглыми десятками, ни g1_t05 с фактическим диапазоном до 6. Название skill «Состав десятка» недостаточно."
+    },
+    {
+      "canonical_topic_id": 8,
+      "canonical_topic_title": "Число 10",
+      "lesson_id": "g1-t08-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "прямой и обратный счёт"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Прямой и обратный счёт до 10 не совпадает с successor и не покрывается другим grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 9,
+      "canonical_topic_title": "Смешанные задачи до 10",
+      "lesson_id": "g1-t09-l01",
+      "content_version": "2.0",
+      "lesson_type": "word_problem",
+      "lesson_skills": [
+        "задача на увеличение"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сюжетная сумма 4+3=7 без перехода. g1_t03 диагностирует переход через 10; отдельного согласованного grade-1 topic для сложения без перехода нет."
+    },
+    {
+      "canonical_topic_id": 9,
+      "canonical_topic_title": "Смешанные задачи до 10",
+      "lesson_id": "g1-t09-l02",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "задача на уменьшение"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t04",
+      "skill_id": "g1_subtraction_within_10",
+      "item_family": "subtraction_within_10_part_whole",
+      "evidence": "Однозначная задача на уменьшение 8−2=6 в диапазоне до 10; topic, skill, family, diagnostic и practice согласованы по действию и диапазону."
+    },
+    {
+      "canonical_topic_id": 9,
+      "canonical_topic_title": "Смешанные задачи до 10",
+      "lesson_id": "g1-t09-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "выбор действия"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Один урок объединяет 5+1 и 9−4. Вычитание имеет рабочую тройку g1_t04, сложение без перехода — нет; одной тройкой урок описать нельзя.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t03",
+          "diagnostic_topic_title": "Сложение с переходом",
+          "skill_id": "g1_addition_within_10",
+          "item_family": "addition_within_10_part_whole",
+          "confidence": "low",
+          "reason": "Первая часть — сложение до 10 без перехода, а g1_t03 проверяет переход."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "Вторая часть — вычитание 9−4 в пределах 10."
+        }
+      ]
+    },
+    {
+      "canonical_topic_id": 10,
+      "canonical_topic_title": "Числа 11-20",
+      "lesson_id": "g1-t10-l01",
+      "content_version": "2.0",
+      "lesson_type": "place_value",
+      "lesson_skills": [
+        "десятки и единицы"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 10,
+      "canonical_topic_title": "Числа 11-20",
+      "lesson_id": "g1-t10-l02",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение до двадцати"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 10,
+      "canonical_topic_title": "Числа 11-20",
+      "lesson_id": "g1-t10-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "запись чисел до двадцати"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 11,
+      "canonical_topic_title": "Часы",
+      "lesson_id": "g1-t11-l01",
+      "content_version": "2.0",
+      "lesson_type": "time",
+      "lesson_skills": [
+        "целый час"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "canonical_topic_id": 11,
+      "canonical_topic_title": "Часы",
+      "lesson_id": "g1-t11-l02",
+      "content_version": "2.0",
+      "lesson_type": "time",
+      "lesson_skills": [
+        "целые часы",
+        "положение стрелок"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "canonical_topic_id": 11,
+      "canonical_topic_title": "Часы",
+      "lesson_id": "g1-t11-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "время в повседневной жизни"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "canonical_topic_id": 12,
+      "canonical_topic_title": "Сложение с переходом через 10",
+      "lesson_id": "g1-t12-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "сложение через десять"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "Урок и решение — 8+5, разложение 5 на 2 и 3, дополнение 8 до 10. g1_t07_q01 задаёт ровно 8+5=13 (диагностика); контракт skill включает это family (контракт)."
+    },
+    {
+      "canonical_topic_id": 12,
+      "canonical_topic_title": "Сложение с переходом через 10",
+      "lesson_id": "g1-t12-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "практика перехода через десять"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "Все три суммы переходят через 10; 7+6 и 9+5 буквально присутствуют в g1_t07, а 5+7 имеет тот же диапазон и стратегию."
+    },
+    {
+      "canonical_topic_id": 12,
+      "canonical_topic_title": "Сложение с переходом через 10",
+      "lesson_id": "g1-t12-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "объяснение перехода через десять"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "Рубрика требует именно разложение 6 на 1+5 и переход 9+1=10, 10+5=15. Это тот же предметный паттерн carry-addition. Статус не делает rubric автоматически оцениваемой и не разрешает mastery."
+    },
+    {
+      "canonical_topic_id": 13,
+      "canonical_topic_title": "Сложение в пределах 20: закрепление",
+      "lesson_id": "g1-t13-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "закрепление сложения до двадцати"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "6+8=14 находится в том же диапазоне 11–17 и требует дополнения до 10; topic и family совпадают по действию и стратегии."
+    },
+    {
+      "canonical_topic_id": 13,
+      "canonical_topic_title": "Сложение в пределах 20: закрепление",
+      "lesson_id": "g1-t13-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "сложение до двадцати"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "Все три суммы — однозначное сложение с переходом в пределах 20; 8+7 буквально есть в diagnostic g1_t07, остальные сохраняют тот же паттерн."
+    },
+    {
+      "canonical_topic_id": 13,
+      "canonical_topic_title": "Сложение в пределах 20: закрепление",
+      "lesson_id": "g1-t13-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение способов сложения"
+      ],
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t07",
+      "skill_id": "g1_compose_decompose_10",
+      "item_family": "addition_within_10_part_whole",
+      "evidence": "Оба требуемых способа для 7+8 — дополнение одного слагаемого до 10; число и стратегия лежат в точном runtime topic. Рубрика остаётся только наблюдаемым lesson assessment."
+    },
+    {
+      "canonical_topic_id": 14,
+      "canonical_topic_title": "Повторение 1 семестра",
+      "lesson_id": "g1-t14-l01",
+      "content_version": "2.0",
+      "lesson_type": "concrete",
+      "lesson_skills": [
+        "соседи числа и ноль"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Ordered assessment объединяет predecessor 10, successor 10 и 5−5=0. number_successor покрывает только одну часть, а single-family mapping исказит повторение.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t02",
+          "diagnostic_topic_title": "Следующее число",
+          "skill_id": "g1_number_successor",
+          "item_family": "number_successor",
+          "confidence": "medium",
+          "reason": "Сосед числа после 10 близок successor."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "5−5 — вычитание в пределах 10."
+        }
+      ]
+    },
+    {
+      "canonical_topic_id": 14,
+      "canonical_topic_title": "Повторение 1 семестра",
+      "lesson_id": "g1-t14-l02",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "проверка обратным действием"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": "g1_t05",
+      "skill_id": "g1_number_bond",
+      "item_family": "number_bond_missing_part",
+      "evidence": "Цель — не только 3+2=5, а обязательная проверка пересчётом или обратным 5−2=3. Ни number_bond_missing_part, ни numeric addition family не оценивают способ проверки; нужен rubric/composite contract."
+    },
+    {
+      "canonical_topic_id": 14,
+      "canonical_topic_title": "Повторение 1 семестра",
+      "lesson_id": "g1-t14-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "повторение первого семестра"
+      ],
+      "status": "review_required",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Три части принадлежат разным семействам: сложение без перехода, вычитание до 10, сложение с переходом. Допустима только part-level карта после разделения.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t03",
+          "diagnostic_topic_title": "Сложение с переходом",
+          "skill_id": "g1_addition_within_10",
+          "item_family": "addition_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "8+4 — переход через 10."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "9−3 — вычитание в пределах 10."
+        },
+        {
+          "diagnostic_topic_id": "g1_t05",
+          "diagnostic_topic_title": "Сложение и вычитание до 5",
+          "skill_id": "g1_number_bond",
+          "item_family": "number_bond_missing_part",
+          "confidence": "low",
+          "reason": "6+2 — сложение в малом диапазоне, но runtime g1_t05 ограничен до 5."
+        }
+      ]
+    },
+    {
+      "canonical_topic_id": 15,
+      "canonical_topic_title": "Фигуры (плоские)",
+      "lesson_id": "g1-t15-l01",
+      "content_version": "2.0",
+      "lesson_type": "recognition",
+      "lesson_skills": [
+        "плоские фигуры"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "canonical_topic_id": 15,
+      "canonical_topic_title": "Фигуры (плоские)",
+      "lesson_id": "g1-t15-l02",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "признаки плоских фигур"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "canonical_topic_id": 15,
+      "canonical_topic_title": "Фигуры (плоские)",
+      "lesson_id": "g1-t15-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "группировка фигур"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "canonical_topic_id": 16,
+      "canonical_topic_title": "Вычитание через 10",
+      "lesson_id": "g1-t16-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "вычитание через десять"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "canonical_topic_id": 16,
+      "canonical_topic_title": "Вычитание через 10",
+      "lesson_id": "g1-t16-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "вычитание до двадцати"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "canonical_topic_id": 16,
+      "canonical_topic_title": "Вычитание через 10",
+      "lesson_id": "g1-t16-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "объяснение вычитания"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "canonical_topic_id": 17,
+      "canonical_topic_title": "Вычитание в пределах 20: закрепление",
+      "lesson_id": "g1-t17-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "вычитание до двадцати"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 17,
+      "canonical_topic_title": "Вычитание в пределах 20: закрепление",
+      "lesson_id": "g1-t17-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "закрепление вычитания"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 17,
+      "canonical_topic_title": "Вычитание в пределах 20: закрепление",
+      "lesson_id": "g1-t17-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "обратная проверка"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 18,
+      "canonical_topic_title": "Классификация",
+      "lesson_id": "g1-t18-l01",
+      "content_version": "2.0",
+      "lesson_type": "sorting",
+      "lesson_skills": [
+        "классификация по одному признаку"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 18,
+      "canonical_topic_title": "Классификация",
+      "lesson_id": "g1-t18-l02",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "объяснение классификации"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 18,
+      "canonical_topic_title": "Классификация",
+      "lesson_id": "g1-t18-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "поиск отличия"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 19,
+      "canonical_topic_title": "Числа до 100",
+      "lesson_id": "g1-t19-l01",
+      "content_version": "2.0",
+      "lesson_type": "place_value",
+      "lesson_skills": [
+        "разряды до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 19,
+      "canonical_topic_title": "Числа до 100",
+      "lesson_id": "g1-t19-l02",
+      "content_version": "2.0",
+      "lesson_type": "counting",
+      "lesson_skills": [
+        "счёт десятками"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 19,
+      "canonical_topic_title": "Числа до 100",
+      "lesson_id": "g1-t19-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "сравнение до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 20,
+      "canonical_topic_title": "Сложение до 100 (без перехода)",
+      "lesson_id": "g1-t20-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "сложение без перехода"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "24+35 требует сложения десятков и единиц. g1_t06/compose_decompose_10 проверяет лишь суммы круглых десятков, поэтому не покрывает единицы и полный алгоритм."
+    },
+    {
+      "canonical_topic_id": 20,
+      "canonical_topic_title": "Сложение до 100 (без перехода)",
+      "lesson_id": "g1-t20-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "практика без перехода"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Все три примера складывают двузначные числа по двум разрядам; диагностические и practice items g1_t06 содержат только круглые десятки. Диапазон ответа до 79 не доказывает совпадение skill."
+    },
+    {
+      "canonical_topic_id": 20,
+      "canonical_topic_title": "Сложение до 100 (без перехода)",
+      "lesson_id": "g1-t20-l03",
+      "content_version": "2.0",
+      "lesson_type": "word_problem",
+      "lesson_skills": [
+        "задача на сумму до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "20+13 включает три единицы и понимание двузначного числа; runtime g1_t06 не проверяет ненулевые единицы. Совпадает лишь общий заголовок «без перехода»."
+    },
+    {
+      "canonical_topic_id": 21,
+      "canonical_topic_title": "Деньги (рубли)",
+      "lesson_id": "g1-t21-l01",
+      "content_version": "2.0",
+      "lesson_type": "recognition",
+      "lesson_skills": [
+        "рубли и копейки"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 21,
+      "canonical_topic_title": "Деньги (рубли)",
+      "lesson_id": "g1-t21-l02",
+      "content_version": "2.0",
+      "lesson_type": "problem",
+      "lesson_skills": [
+        "стоимость покупки"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 21,
+      "canonical_topic_title": "Деньги (рубли)",
+      "lesson_id": "g1-t21-l03",
+      "content_version": "2.0",
+      "lesson_type": "exchange",
+      "lesson_skills": [
+        "сдача"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 22,
+      "canonical_topic_title": "Вычитание до 100 (без перехода)",
+      "lesson_id": "g1-t22-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "вычитание без перехода"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 22,
+      "canonical_topic_title": "Вычитание до 100 (без перехода)",
+      "lesson_id": "g1-t22-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "практика вычитания без перехода"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 22,
+      "canonical_topic_title": "Вычитание до 100 (без перехода)",
+      "lesson_id": "g1-t22-l03",
+      "content_version": "2.0",
+      "lesson_type": "word_problem",
+      "lesson_skills": [
+        "задача без перехода"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 23,
+      "canonical_topic_title": "Сложение до 100 (с переходом)",
+      "lesson_id": "g1-t23-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "переход через десяток до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "canonical_topic_id": 23,
+      "canonical_topic_title": "Сложение до 100 (с переходом)",
+      "lesson_id": "g1-t23-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "практика сложения с переходом"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "canonical_topic_id": 23,
+      "canonical_topic_title": "Сложение до 100 (с переходом)",
+      "lesson_id": "g1-t23-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "объяснение способа до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "canonical_topic_id": 24,
+      "canonical_topic_title": "Вычитание до 100 (с переходом)",
+      "lesson_id": "g1-t24-l01",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "вычитание с переходом до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 24,
+      "canonical_topic_title": "Вычитание до 100 (с переходом)",
+      "lesson_id": "g1-t24-l02",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "практика вычитания с переходом"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 24,
+      "canonical_topic_title": "Вычитание до 100 (с переходом)",
+      "lesson_id": "g1-t24-l03",
+      "content_version": "2.0",
+      "lesson_type": "comparison",
+      "lesson_skills": [
+        "проверка вычитания до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 25,
+      "canonical_topic_title": "Закономерности",
+      "lesson_id": "g1-t25-l01",
+      "content_version": "2.0",
+      "lesson_type": "pattern",
+      "lesson_skills": [
+        "числовой узор"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 25,
+      "canonical_topic_title": "Закономерности",
+      "lesson_id": "g1-t25-l02",
+      "content_version": "2.0",
+      "lesson_type": "pattern",
+      "lesson_skills": [
+        "узор десятками"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 25,
+      "canonical_topic_title": "Закономерности",
+      "lesson_id": "g1-t25-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "создание закономерности"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "canonical_topic_id": 26,
+      "canonical_topic_title": "Повторение 2 семестра",
+      "lesson_id": "g1-t26-l01",
+      "content_version": "2.0",
+      "lesson_type": "concrete",
+      "lesson_skills": [
+        "повторение действий до ста"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 26,
+      "canonical_topic_title": "Повторение 2 семестра",
+      "lesson_id": "g1-t26-l02",
+      "content_version": "2.0",
+      "lesson_type": "strategy",
+      "lesson_skills": [
+        "смысл переноса разряда"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    },
+    {
+      "canonical_topic_id": 26,
+      "canonical_topic_title": "Повторение 2 семестра",
+      "lesson_id": "g1-t26-l03",
+      "content_version": "2.0",
+      "lesson_type": "practice",
+      "lesson_skills": [
+        "итоговое повторение"
+      ],
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    }
+  ],
+  "review_required": [
+    {
+      "lesson_id": "g1-t03-l01",
+      "canonical_topic_id": 3,
+      "evidence": "Две части 5=2+□, 5=0+□ совпадают с g1_t05/g1_number_bond/number_bond_missing_part, но первая часть 3−3=0 проверяет иной результат. Одна тройка не представляет весь ordered assessment.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t04-l02",
+      "canonical_topic_id": 4,
+      "evidence": "Ordered assessment объединяет сложение, вычитание и сравнение результатов. Нужны как минимум две arithmetic family и отдельное сравнение; один number_bond_missing_part и один skill искажают урок.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t04-l03",
+      "canonical_topic_id": 4,
+      "evidence": "Четыре прямых действия чередуют сложение и вычитание. Их можно сопоставлять только по частям после разделения; g1_t05/number_bond_missing_part не соответствует форме заданий.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t06-l01",
+      "canonical_topic_id": 6,
+      "evidence": "Состав 6 тематически близок number bond и одно диагностическое задание действительно доходит до 6, но урок требует два наблюдаемых разбиения на непустые группы, а family проверяет одну пропущенную часть числового равенства. Нужен отдельный rubric/family либо разбиение.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t06-l03",
+      "canonical_topic_id": 6,
+      "evidence": "Урок использует соседство 6→7, но оценивает и большее число, и разность 7−6. number_successor покрывает лишь основание рассуждения, не полный ordered assessment.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t07-l01",
+      "canonical_topic_id": 7,
+      "evidence": "Состав 8 связан с number bond, но требует двух физических разбиений. Diagnostic g1_t05 проверяет одну пропущенную часть и фактически ограничен целыми 3–6; покрытие диапазона 8 и rubric отсутствует.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t09-l03",
+      "canonical_topic_id": 9,
+      "evidence": "Один урок объединяет 5+1 и 9−4. Вычитание имеет рабочую тройку g1_t04, сложение без перехода — нет; одной тройкой урок описать нельзя.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t03",
+          "diagnostic_topic_title": "Сложение с переходом",
+          "skill_id": "g1_addition_within_10",
+          "item_family": "addition_within_10_part_whole",
+          "confidence": "low",
+          "reason": "Первая часть — сложение до 10 без перехода, а g1_t03 проверяет переход."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "Вторая часть — вычитание 9−4 в пределах 10."
+        }
+      ]
+    },
+    {
+      "lesson_id": "g1-t14-l01",
+      "canonical_topic_id": 14,
+      "evidence": "Ordered assessment объединяет predecessor 10, successor 10 и 5−5=0. number_successor покрывает только одну часть, а single-family mapping исказит повторение.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t02",
+          "diagnostic_topic_title": "Следующее число",
+          "skill_id": "g1_number_successor",
+          "item_family": "number_successor",
+          "confidence": "medium",
+          "reason": "Сосед числа после 10 близок successor."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "5−5 — вычитание в пределах 10."
+        }
+      ]
+    },
+    {
+      "lesson_id": "g1-t14-l02",
+      "canonical_topic_id": 14,
+      "evidence": "Цель — не только 3+2=5, а обязательная проверка пересчётом или обратным 5−2=3. Ни number_bond_missing_part, ни numeric addition family не оценивают способ проверки; нужен rubric/composite contract.",
+      "candidates": []
+    },
+    {
+      "lesson_id": "g1-t14-l03",
+      "canonical_topic_id": 14,
+      "evidence": "Три части принадлежат разным семействам: сложение без перехода, вычитание до 10, сложение с переходом. Допустима только part-level карта после разделения.",
+      "candidates": [
+        {
+          "diagnostic_topic_id": "g1_t03",
+          "diagnostic_topic_title": "Сложение с переходом",
+          "skill_id": "g1_addition_within_10",
+          "item_family": "addition_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "8+4 — переход через 10."
+        },
+        {
+          "diagnostic_topic_id": "g1_t04",
+          "diagnostic_topic_title": "Вычитание в пределах 10",
+          "skill_id": "g1_subtraction_within_10",
+          "item_family": "subtraction_within_10_part_whole",
+          "confidence": "medium",
+          "reason": "9−3 — вычитание в пределах 10."
+        },
+        {
+          "diagnostic_topic_id": "g1_t05",
+          "diagnostic_topic_title": "Сложение и вычитание до 5",
+          "skill_id": "g1_number_bond",
+          "item_family": "number_bond_missing_part",
+          "confidence": "low",
+          "reason": "6+2 — сложение в малом диапазоне, но runtime g1_t05 ограничен до 5."
+        }
+      ]
+    }
+  ],
+  "unmapped": [
+    {
+      "lesson_id": "g1-t01-l01",
+      "canonical_topic_id": 1,
+      "evidence": "Урок проверяет физический пересчёт до 5 по одному предмету. g1_t01 фактически спрашивает сумму двух уже заданных чисел, а практика делает то же; название counting_with_objects не компенсирует смену действия."
+    },
+    {
+      "lesson_id": "g1-t01-l02",
+      "canonical_topic_id": 1,
+      "evidence": "Сравнение 3 и 5 и разностное сравнение 5−3; g1_t01/g1_counting_core/counting_with_objects не проверяет ни знак сравнения, ни «на сколько»."
+    },
+    {
+      "lesson_id": "g1-t01-l03",
+      "canonical_topic_id": 1,
+      "evidence": "Две цели: количественный и порядковый счёт. В grade-1 runtime нет ordinal family; g1_t01 проверяет сумму, не место в ряду."
+    },
+    {
+      "lesson_id": "g1-t02-l01",
+      "canonical_topic_id": 2,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t02-l02",
+      "canonical_topic_id": 2,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t02-l03",
+      "canonical_topic_id": 2,
+      "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t03-l02",
+      "canonical_topic_id": 3,
+      "evidence": "Прямая сумма 2+2 до 5 не является missing part. Альтернатива g1_t03 тоже не годится: его диагностика состоит из сумм с переходом через 10 (g1_t03_q01)."
+    },
+    {
+      "lesson_id": "g1-t04-l01",
+      "canonical_topic_id": 4,
+      "evidence": "3+1 — прямая сумма без перехода. g1_t05 проверяет missing part, а g1_t03 диагностирует переход через 10, хотя его статическая практика противоречиво выдаёт суммы без перехода. Целостной тройки нет."
+    },
+    {
+      "lesson_id": "g1-t05-l01",
+      "canonical_topic_id": 5,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t05-l02",
+      "canonical_topic_id": 5,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t05-l03",
+      "canonical_topic_id": 5,
+      "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t06-l02",
+      "canonical_topic_id": 6,
+      "evidence": "4+3=7 — сложение без перехода; все diagnostic items g1_t03 переходят через 10. Совпадение со статическим practice при противоположной диагностике не образует надёжного контракта."
+    },
+    {
+      "lesson_id": "g1-t07-l02",
+      "canonical_topic_id": 7,
+      "evidence": "6+2=8 не переходит через 10. Diagnostic g1_t03 проверяет только суммы 11–15, поэтому topic и диапазон кандидата не совпадают с уроком."
+    },
+    {
+      "lesson_id": "g1-t08-l01",
+      "canonical_topic_id": 8,
+      "evidence": "Дополнение 7 до 10 является составом числа 10, но фактический g1_t06 складывает круглые десятки до 100 (g1_t06_q01). compose_decompose_10 здесь имеет иное реальное значение."
+    },
+    {
+      "lesson_id": "g1-t08-l02",
+      "canonical_topic_id": 8,
+      "evidence": "Три missing-part равенства с целым 10 не покрываются ни g1_t06 с круглыми десятками, ни g1_t05 с фактическим диапазоном до 6. Название skill «Состав десятка» недостаточно."
+    },
+    {
+      "lesson_id": "g1-t08-l03",
+      "canonical_topic_id": 8,
+      "evidence": "Прямой и обратный счёт до 10 не совпадает с successor и не покрывается другим grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t09-l01",
+      "canonical_topic_id": 9,
+      "evidence": "Сюжетная сумма 4+3=7 без перехода. g1_t03 диагностирует переход через 10; отдельного согласованного grade-1 topic для сложения без перехода нет."
+    },
+    {
+      "lesson_id": "g1-t10-l01",
+      "canonical_topic_id": 10,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t10-l02",
+      "canonical_topic_id": 10,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t10-l03",
+      "canonical_topic_id": 10,
+      "evidence": "Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t11-l01",
+      "canonical_topic_id": 11,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "lesson_id": "g1-t11-l02",
+      "canonical_topic_id": 11,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "lesson_id": "g1-t11-l03",
+      "canonical_topic_id": 11,
+      "evidence": "Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы."
+    },
+    {
+      "lesson_id": "g1-t15-l01",
+      "canonical_topic_id": 15,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "lesson_id": "g1-t15-l02",
+      "canonical_topic_id": 15,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "lesson_id": "g1-t15-l03",
+      "canonical_topic_id": 15,
+      "evidence": "Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3."
+    },
+    {
+      "lesson_id": "g1-t16-l01",
+      "canonical_topic_id": 16,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "lesson_id": "g1-t16-l02",
+      "canonical_topic_id": 16,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "lesson_id": "g1-t16-l03",
+      "canonical_topic_id": 16,
+      "evidence": "Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10."
+    },
+    {
+      "lesson_id": "g1-t17-l01",
+      "canonical_topic_id": 17,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t17-l02",
+      "canonical_topic_id": 17,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t17-l03",
+      "canonical_topic_id": 17,
+      "evidence": "Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t18-l01",
+      "canonical_topic_id": 18,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t18-l02",
+      "canonical_topic_id": 18,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t18-l03",
+      "canonical_topic_id": 18,
+      "evidence": "Классификация по признаку отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t19-l01",
+      "canonical_topic_id": 19,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t19-l02",
+      "canonical_topic_id": 19,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t19-l03",
+      "canonical_topic_id": 19,
+      "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t20-l01",
+      "canonical_topic_id": 20,
+      "evidence": "24+35 требует сложения десятков и единиц. g1_t06/compose_decompose_10 проверяет лишь суммы круглых десятков, поэтому не покрывает единицы и полный алгоритм."
+    },
+    {
+      "lesson_id": "g1-t20-l02",
+      "canonical_topic_id": 20,
+      "evidence": "Все три примера складывают двузначные числа по двум разрядам; диагностические и practice items g1_t06 содержат только круглые десятки. Диапазон ответа до 79 не доказывает совпадение skill."
+    },
+    {
+      "lesson_id": "g1-t20-l03",
+      "canonical_topic_id": 20,
+      "evidence": "20+13 включает три единицы и понимание двузначного числа; runtime g1_t06 не проверяет ненулевые единицы. Совпадает лишь общий заголовок «без перехода»."
+    },
+    {
+      "lesson_id": "g1-t21-l01",
+      "canonical_topic_id": 21,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t21-l02",
+      "canonical_topic_id": 21,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t21-l03",
+      "canonical_topic_id": 21,
+      "evidence": "Деньги и стоимость отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t22-l01",
+      "canonical_topic_id": 22,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t22-l02",
+      "canonical_topic_id": 22,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t22-l03",
+      "canonical_topic_id": 22,
+      "evidence": "Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t23-l01",
+      "canonical_topic_id": 23,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "lesson_id": "g1-t23-l02",
+      "canonical_topic_id": 23,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "lesson_id": "g1-t23-l03",
+      "canonical_topic_id": 23,
+      "evidence": "Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует."
+    },
+    {
+      "lesson_id": "g1-t24-l01",
+      "canonical_topic_id": 24,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t24-l02",
+      "canonical_topic_id": 24,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t24-l03",
+      "canonical_topic_id": 24,
+      "evidence": "Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t25-l01",
+      "canonical_topic_id": 25,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t25-l02",
+      "canonical_topic_id": 25,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t25-l03",
+      "canonical_topic_id": 25,
+      "evidence": "Закономерности отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t26-l01",
+      "canonical_topic_id": 26,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t26-l02",
+      "canonical_topic_id": 26,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t26-l03",
+      "canonical_topic_id": 26,
+      "evidence": "Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill."
+    }
+  ],
+  "legacy_detailed_taxonomy": [
+    {
+      "detailed_topic_id": 1,
+      "title": "ПОДГОТОВКА",
+      "canonical_topic_ids": [
+        1
+      ],
+      "status": "partial_match",
+      "note": "Legacy-файл также смешивает сравнение и позиции."
+    },
+    {
+      "detailed_topic_id": 2,
+      "title": "ПОЗИЦИИ",
+      "canonical_topic_ids": [
+        2
+      ],
+      "status": "content_match"
+    },
+    {
+      "detailed_topic_id": 3,
+      "title": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 5",
+      "canonical_topic_ids": [
+        3,
+        4
+      ],
+      "status": "split_in_reference_v2"
+    },
+    {
+      "detailed_topic_id": 4,
+      "title": "ФИГУРЫ",
+      "canonical_topic_ids": [
+        15
+      ],
+      "status": "renumbered_by_content",
+      "note": "Не canonical topic 4; canonical 4 — сложение/вычитание до 5."
+    },
+    {
+      "detailed_topic_id": 5,
+      "title": "СЛОЖЕНИЕ/ВЫЧИТАНИЕ ДО 10",
+      "canonical_topic_ids": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "status": "split_in_reference_v2"
+    },
+    {
+      "detailed_topic_id": 6,
+      "title": "ЧАСЫ",
+      "canonical_topic_ids": [
+        11
+      ],
+      "status": "partial_match",
+      "note": "Legacy ��ключает полчаса; v2 оставляет целые часы."
+    },
+    {
+      "detailed_topic_id": 7,
+      "title": "СЛОЖЕНИЕ С ПЕРЕХОДОМ",
+      "canonical_topic_ids": [
+        12,
+        13
+      ],
+      "status": "split_in_reference_v2"
+    },
+    {
+      "detailed_topic_id": 8,
+      "title": "ПОВТОРЕНИЕ",
+      "canonical_topic_ids": [
+        14
+      ],
+      "status": "content_match"
+    }
+  ],
+  "semantic_review": {
+    "reviewer": "GPT-5.6 Sol",
+    "reviewed_on": "2026-09-10",
+    "source_commit": "23b44e7df7f93f910274beaed3dee5b163816692",
+    "reviewed_lesson_ids": [
+      "g1-t01-l01",
+      "g1-t01-l02",
+      "g1-t01-l03",
+      "g1-t03-l01",
+      "g1-t03-l02",
+      "g1-t03-l03",
+      "g1-t04-l01",
+      "g1-t04-l02",
+      "g1-t04-l03",
+      "g1-t06-l01",
+      "g1-t06-l02",
+      "g1-t06-l03",
+      "g1-t07-l01",
+      "g1-t07-l02",
+      "g1-t07-l03",
+      "g1-t08-l01",
+      "g1-t08-l02",
+      "g1-t09-l01",
+      "g1-t09-l02",
+      "g1-t09-l03",
+      "g1-t12-l01",
+      "g1-t12-l02",
+      "g1-t12-l03",
+      "g1-t13-l01",
+      "g1-t13-l02",
+      "g1-t13-l03",
+      "g1-t14-l01",
+      "g1-t14-l02",
+      "g1-t14-l03",
+      "g1-t20-l01",
+      "g1-t20-l02",
+      "g1-t20-l03"
+    ],
+    "report": "docs/audit/grade1-topic-identity.md"
+  }
+}
