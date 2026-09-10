@@ -31,6 +31,8 @@ def main() -> None:
     for grade in (1, 2, 3):
         path = DATA / "lessons" / f"grade_{grade}_ru_adapted.json"
         data = json.loads(path.read_text())
+        if data.get("reference_version"):
+            continue
         for semester_key in ("semester_1", "semester_2"):
             for topic in data[semester_key]["topics"]:
                 for lesson in topic["lessons"]:

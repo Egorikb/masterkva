@@ -87,6 +87,9 @@ def main() -> None:
         adapted_path = DATA / "lessons" / f"grade_{grade}_ru_adapted.json"
         adapted = json.loads(adapted_path.read_text())
 
+        if adapted.get("reference_version"):
+            continue
+
         for semester_key in ("semester_1", "semester_2"):
             semester = int(semester_key.rsplit("_", 1)[1])
             for topic in adapted[semester_key]["topics"]:

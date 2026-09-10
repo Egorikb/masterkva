@@ -74,7 +74,10 @@ def validate_grade(grade: int) -> list[str]:
 
 
 def main() -> int:
+    from validate_grade1_reference import validate_reference
+
     errors = [error for grade in range(1, 10) for error in validate_grade(grade)]
+    errors.extend(validate_reference(DATA))
     if errors:
         print("\n".join(errors))
         return 1

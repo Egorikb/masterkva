@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-09",
+  "meaning": "Привязка к разделу и математическому приёму. Задания авторские; это не постраничный перевод упражнений.",
+  "books": {
+    "cn_pep_g1_upper_2022": {
+      "title": "义务教育教科书 数学 一年级 上册",
+      "publisher": "人民教育出版社",
+      "edition": "2022年8月第2版",
+      "isbn": "978-7-107-36922-3",
+      "local_path": "knowledge_bases/math_1_class/raw/1klass_matematika.pdf",
+      "sha256": "a8e880217c456db68bb363cadba9e235263197d375243a5d0850d4f9131562d4",
+      "pdf_pages": 118,
+      "printed_to_pdf_1based_offset": 5,
+      "verification": "local_verified",
+      "publisher_reference": "https://bp.pep.com.cn/xsjc2022/index.html",
+      "evidence": "Проверены выходные данные, оглавление и содержание разделов; printed p соответствует PDF p+5."
+    },
+    "cn_pep_g1_lower_2022": {
+      "title": "义务教育教科书 数学 一年级 下册",
+      "publisher": "人民教育出版社",
+      "edition": "2022年12月第2版 — кандидат для сверки",
+      "local_path": null,
+      "sha256": null,
+      "verification": "missing",
+      "evidence": "Подходящий локальный оригинал не найден. Старые номера страниц не считаются доказательством.",
+      "preview_hint": "https://zy.21cnjy.com/15067466",
+      "next_action": "Получить оригинал, сверить издание, оглавление и каждый раздел перед установкой unit_verified."
+    }
+  },
+  "topic_mapping": {
+    "1": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "准备课",
+      "unit_pages": "2-8",
+      "printed_pages": "2-8",
+      "verification": "unit_verified"
+    },
+    "2": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "位置",
+      "unit_pages": "9-13",
+      "printed_pages": "9-13",
+      "verification": "unit_verified"
+    },
+    "3": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "5以内数的认识和加减法",
+      "unit_pages": "14-33",
+      "printed_pages": "14-33",
+      "verification": "unit_verified"
+    },
+    "4": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "5以内数的认识和加减法",
+      "unit_pages": "14-33",
+      "printed_pages": "21-33",
+      "verification": "unit_verified"
+    },
+    "5": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "认识图形（一）",
+      "unit_pages": "34-38",
+      "printed_pages": "34-38",
+      "verification": "unit_verified"
+    },
+    "6": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "6~10的认识和加减法",
+      "unit_pages": "39-72",
+      "printed_pages": "39-48",
+      "verification": "unit_verified"
+    },
+    "7": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "6~10的认识和加减法",
+      "unit_pages": "39-72",
+      "printed_pages": "49-58",
+      "verification": "unit_verified"
+    },
+    "8": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "6~10的认识和加减法",
+      "unit_pages": "39-72",
+      "printed_pages": "59-66",
+      "verification": "unit_verified"
+    },
+    "9": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "6~10的认识和加减法",
+      "unit_pages": "39-72",
+      "printed_pages": "67-72",
+      "verification": "unit_verified"
+    },
+    "10": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "11~20各数的认识",
+      "unit_pages": "73-81",
+      "printed_pages": "73-81",
+      "verification": "unit_verified"
+    },
+    "11": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "认识钟表",
+      "unit_pages": "84-87",
+      "printed_pages": "84-87",
+      "verification": "unit_verified"
+    },
+    "12": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "20以内的进位加法",
+      "unit_pages": "88-103",
+      "printed_pages": "88-96",
+      "verification": "unit_verified"
+    },
+    "13": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "20以内的进位加法",
+      "unit_pages": "88-103",
+      "printed_pages": "97-103",
+      "verification": "unit_verified"
+    },
+    "14": {
+      "book_id": "cn_pep_g1_upper_2022",
+      "unit": "总复习",
+      "unit_pages": "104-111",
+      "printed_pages": "104-111",
+      "verification": "unit_verified"
+    },
+    "15": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "2-7",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "16": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "8-20",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "17": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "21-26",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "18": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "27-32",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "19": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "33-44",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "20": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "45-51",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "21": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "52-60",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "22": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "61-68",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "23": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "69-75",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "24": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "76-80",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "25": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "81-87",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    },
+    "26": {
+      "book_id": "cn_pep_g1_lower_2022",
+      "printed_pages": "",
+      "verification": "unverified",
+      "legacy_page_hint": "88-99",
+      "note": "Авторская адаптация унаследованной темы; оригинал второго полугодия ещё не сверен."
+    }
+  },
+  "rf_alignment": {
+    "status": "partial_scope_comparison",
+    "reference": "https://edsoo.ru/wp-content/uploads/2025/07/2025_noo_frp_matematika_1-4.pdf",
+    "note": "Сохранён китайский порядок. Числа и действия до 100 выделены как расширение; это не полный годовой курс РФ.",
+    "remaining_coverage": [
+      "сантиметр и дециметр",
+      "измерение и построение отрезков",
+      "чтение простых таблиц",
+      "явные задания на истинность утверждений"
+    ]
+  }
+}
