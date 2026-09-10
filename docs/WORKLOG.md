@@ -100,7 +100,7 @@ Astra изучил проект, заметки и три независимых
 
 **Проверка:** `python3 backend/scripts/validate_grade1_topic_identity.py` — OK: 26 тем, 78 уроков ровно по одному разу, 7 diagnostic topics, 6 grade-1 skills; ссылки на diagnostic/registry/contracts/families существуют; вымышленных skill IDs нет. Дополнительно прошли `py_compile`, JSON parse и проверка окончаний строк.
 
-**Ограничение:** карта является кандидатом. `review_required` нельзя использовать для автоматического выбора задания или mastery. В текущей инструментальной сессии GitHub разрешил чтение, но отклонил fork с `403 Resource not accessible by personal access token`; push не заявляется. `backend/data/user_states.json` не читался и не изменялся.
+**Ограничение:** карта является кандидатом. `review_required` нельзя использовать для автоматического выбора задания или mastery. `backend/data/user_states.json` не читался и не изменялся. Пакет применён и отправлен в ветку `codex/d1-grade1-topic-identity-2026-09-10` коммитом `3caea84` (публикация выполнена Hermes классическим PAT; ограничение исполнителя из Notion — 403 на fork/push — к результату не относится).
 
 **Следующий шаг:** Sol подтверждает 9 `mapped` строк и принимает решения по 23 спорным строкам; B1 начинает с одной проверенной цепочки первого полугодия. Для 46 `unmapped` строк нужны новые grade-1 runtime contracts либо явное исключение из маршрута.
 
