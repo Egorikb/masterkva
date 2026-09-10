@@ -125,12 +125,16 @@ def _pool_template_for_topic(
     if not topic_id and not item_family:
         return None
 
-    candidates = [
-        question
-        for question in DIAGNOSTIC_QUESTIONS
-        if (topic_id and str(question.get("topic_id") or "").strip() == topic_id)
-        or (item_family and str(question.get("item_family") or "").strip() == item_family)
-    ]
+    def matches(question: dict) -> bool:
+        question_topic = str(question.get("topic_id") or "").strip()
+        question_family = str(question.get("item_family") or "").strip()
+        if topic_id and item_family:
+            return question_topic == topic_id and question_family == item_family
+        if topic_id:
+            return question_topic == topic_id
+        return question_family == item_family
+
+    candidates = [question for question in DIAGNOSTIC_QUESTIONS if matches(question)]
     if not candidates:
         return None
 
