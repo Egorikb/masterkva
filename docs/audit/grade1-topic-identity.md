@@ -1,115 +1,127 @@
-# D1 — карта идентификаторов 1 класса
+# D1 — техническая и смысловая приёмка карты 1 класса
 
-Дата: 2026-09-10. Исходный commit: `e53d18c1d10519aae218c044ab6898253b104e0b`. Статус: **кандидат для проверки Sol перед B1**.
+Дата: 2026-09-10. Исходный проверенный HEAD: `23b44e7df7f93f910274beaed3dee5b163816692`. Техническую проверку выполнил основной агент в полной копии `ACTIVE`; независимую смысловую проверку всех 32 строк — GPT-5.6 Sol.
+
+**Статус:** приёмка D1 завершена, разработку узкого B1 можно начинать с `g1-t12-l01` версии `2.0`. Реализация B1 и автоматическое повышение mastery ещё не включены. Карта охватывает 26 тем / 78 уроков / 7 diagnostic topics / 6 grade-1 skills; `mapped` подтверждает смысл связи, а не освоение навыка ребёнком.
 
 ## Итог
 
-- Учтены 26 canonical topics и 78 `lesson_id`; каждый урок присутствует ровно один раз.
-- Найдены 7 диагностических `topic_id`, 6 grade-1 `skill_id` и 6 уникальных `item_family`.
-- Контентно подтверждены **9** строк; **23** требуют проверки; **46** не имеют безопасной grade-1 runtime-связи.
-- Карта не меняет уроки, runtime и пользовательское состояние. `backend/data/user_states.json` не читался и не изменялся.
+Среди 32 рассмотренных строк: **9 `mapped`, 10 `review_required`, 13 `unmapped`**. Решения перенесены в JSON; исходные 46 `unmapped` сохранены без изменения. Итог всей карты: **9 / 10 / 59**.
 
-## Главный вывод
+Из исходных девяти `mapped` подтверждены семь: `g1-t09-l02`, все три урока темы 12 и все три урока темы 13. `g1-t01-l01` понижен до `unmapped`, потому что реальная диагностика и практика складывают два заданных числа и не проверяют пересчёт наблюдаемых предметов. `g1-t03-l01` понижен до `review_required`, потому что только две из трёх частей являются `number_bond_missing_part`, а первая отдельно проверяет вычитание до нуля.
 
-Суффиксы чисел не являются связью. Canonical topic 2 — пространственные позиции, а runtime `g1_t02` — следующее число. Canonical topic 3 — числа до 5, а runtime `g1_t03` фактически содержит сложение с переходом через 10. Поэтому автоматическое соединение по номеру небезопасно.
+Из исходных 23 `review_required` подтверждены две новые связи:
 
-## Карта по 26 темам
+- `g1-t03-l03` → `g1_t04` → `g1_subtraction_within_10` → `subtraction_within_10_part_whole`;
+- `g1-t07-l03` → `g1_t02` → `g1_number_successor` → `number_successor`.
 
-| Canonical | Уроки | Подтверждено | Review | Unmapped | Runtime-кандидаты |
-|---:|---|---:|---:|---:|---|
-| 1 — Подготовка | g1-t01-l01, g1-t01-l02, g1-t01-l03 | 1 | 2 | 0 | g1_t01 → g1_counting_core → counting_with_objects |
-| 2 — Позиции | g1-t02-l01, g1-t02-l02, g1-t02-l03 | 0 | 0 | 3 | — |
-| 3 — Числа до 5 | g1-t03-l01, g1-t03-l02, g1-t03-l03 | 1 | 2 | 0 | g1_t05 → g1_number_bond → number_bond_missing_part |
-| 4 — Сложение и вычитание до 5 | g1-t04-l01, g1-t04-l02, g1-t04-l03 | 0 | 3 | 0 | g1_t05 → g1_number_bond → number_bond_missing_part |
-| 5 — Объёмные тела | g1-t05-l01, g1-t05-l02, g1-t05-l03 | 0 | 0 | 3 | — |
-| 6 — Числа 6-7 | g1-t06-l01, g1-t06-l02, g1-t06-l03 | 0 | 3 | 0 | g1_t05 → g1_number_bond → number_bond_missing_part<br>g1_t03 → g1_addition_within_10 → addition_within_10_part_whole<br>g1_t02 → g1_number_successor → number_successor |
-| 7 — Числа 8-9 | g1-t07-l01, g1-t07-l02, g1-t07-l03 | 0 | 3 | 0 | g1_t05 → g1_number_bond → number_bond_missing_part<br>g1_t03 → g1_addition_within_10 → addition_within_10_part_whole<br>g1_t02 → g1_number_successor → number_successor |
-| 8 — Число 10 | g1-t08-l01, g1-t08-l02, g1-t08-l03 | 0 | 2 | 1 | g1_t06 → g1_compose_decompose_10 → compose_decompose_10 |
-| 9 — Смешанные задачи до 10 | g1-t09-l01, g1-t09-l02, g1-t09-l03 | 1 | 2 | 0 | g1_t03 → g1_addition_within_10 → addition_within_10_part_whole<br>g1_t04 → g1_subtraction_within_10 → subtraction_within_10_part_whole |
-| 10 — Числа 11-20 | g1-t10-l01, g1-t10-l02, g1-t10-l03 | 0 | 0 | 3 | — |
-| 11 — Часы | g1-t11-l01, g1-t11-l02, g1-t11-l03 | 0 | 0 | 3 | — |
-| 12 — Сложение с переходом через 10 | g1-t12-l01, g1-t12-l02, g1-t12-l03 | 3 | 0 | 0 | g1_t07 → g1_compose_decompose_10 → addition_within_10_part_whole |
-| 13 — Сложение в пределах 20: закрепление | g1-t13-l01, g1-t13-l02, g1-t13-l03 | 3 | 0 | 0 | g1_t07 → g1_compose_decompose_10 → addition_within_10_part_whole |
-| 14 — Повторение 1 семестра | g1-t14-l01, g1-t14-l02, g1-t14-l03 | 0 | 3 | 0 | g1_t05 → g1_number_bond → number_bond_missing_part<br>g1_t02 → g1_number_successor → number_successor<br>g1_t04 → g1_subtraction_within_10 → subtraction_within_10_part_whole<br>g1_t03 → g1_addition_within_10 → addition_within_10_part_whole |
-| 15 — Фигуры (плоские) | g1-t15-l01, g1-t15-l02, g1-t15-l03 | 0 | 0 | 3 | — |
-| 16 — Вычитание через 10 | g1-t16-l01, g1-t16-l02, g1-t16-l03 | 0 | 0 | 3 | — |
-| 17 — Вычитание в пределах 20: закрепление | g1-t17-l01, g1-t17-l02, g1-t17-l03 | 0 | 0 | 3 | — |
-| 18 — Классификация | g1-t18-l01, g1-t18-l02, g1-t18-l03 | 0 | 0 | 3 | — |
-| 19 — Числа до 100 | g1-t19-l01, g1-t19-l02, g1-t19-l03 | 0 | 0 | 3 | — |
-| 20 — Сложение до 100 (без перехода) | g1-t20-l01, g1-t20-l02, g1-t20-l03 | 0 | 3 | 0 | g1_t06 → g1_compose_decompose_10 → compose_decompose_10 |
-| 21 — Деньги (рубли) | g1-t21-l01, g1-t21-l02, g1-t21-l03 | 0 | 0 | 3 | — |
-| 22 — Вычитание до 100 (без перехода) | g1-t22-l01, g1-t22-l02, g1-t22-l03 | 0 | 0 | 3 | — |
-| 23 — Сложение до 100 (с переходом) | g1-t23-l01, g1-t23-l02, g1-t23-l03 | 0 | 0 | 3 | — |
-| 24 — Вычитание до 100 (с переходом) | g1-t24-l01, g1-t24-l02, g1-t24-l03 | 0 | 0 | 3 | — |
-| 25 — Закономерности | g1-t25-l01, g1-t25-l02, g1-t25-l03 | 0 | 0 | 3 | — |
-| 26 — Повторение 2 семестра | g1-t26-l01, g1-t26-l02, g1-t26-l03 | 0 | 0 | 3 | — |
+В таблице `review_required` означает: содержательно близкая часть существует, но одна тройка не покрывает весь урок либо текущий diagnostic/practice contract внутренне противоречив; строка должна быть закрыта для автоматического выбора и mastery до разделения урока или исправления контракта. `unmapped` означает отсутствие целостной действующей тройки.
 
-## Проверенные расхождения пространств идентификаторов
+## Карта по 26 темам после Sol
 
-1. `curriculum_detailed/` — отдельная legacy-таксономия из восьми файлов. Её номера нельзя приравнивать к canonical v2: detailed topic 4 «ФИГУРЫ» соответствует canonical topic 15, а не 4; detailed topic 5 объединяет canonical 6–9; detailed topic 7 разделён на canonical 12–13.
-2. Файлы `grade_1_topic_9.json`…`grade_1_topic_26.json` отсутствуют в исследованном commit. Это отсутствие legacy-detail, а не отсутствие canonical тем или уроков.
-3. В registry только шесть навыков первого класса. `g1_compose_decompose_10` одновременно владеет runtime topic `g1_t06` («сложение до 100 без перехода») и `g1_t07` («сложение с переходом через 10»).
-4. `g1_t03` и `g1_t07` используют один `item_family` и фактически дублируют набор примеров с переходом через 10, хотя относятся к разным skill.
-5. Название skill `g1_addition_within_10` противоречит его диагностическим примерам `8+5`, `9+3`, `7+6` с ответами больше 10.
-6. `SkillResolver.resolve(..., lesson_id=...)` не умеет разрешать lesson_id: индекс строится только по skill_id, diagnostic topic_id и topic_names. Без этой карты один lesson_id приводит к `fallback_used`.
-7. `DiagnosticEngine.get_questions_for_grade` не переносит исходный `item_family` в нормализованный вопрос. Практика восстанавливает family из отдельного статического словаря или по topic id, что усиливает риск рассинхронизации.
+| Тема | Mapped | Review | Unmapped | Текущие runtime topics / кандидаты |
+|---|---:|---:|---:|---|
+| 1 — Подготовка | 0 | 0 | 3 | — |
+| 2 — Позиции | 0 | 0 | 3 | — |
+| 3 — Числа до 5 | 1 | 1 | 1 | g1_t05, g1_t04 |
+| 4 — Сложение и вычитание до 5 | 0 | 2 | 1 | g1_t05 |
+| 5 — Объёмные тела | 0 | 0 | 3 | — |
+| 6 — Числа 6-7 | 0 | 2 | 1 | g1_t05, g1_t02 |
+| 7 — Числа 8-9 | 1 | 1 | 1 | g1_t05, g1_t02 |
+| 8 — Число 10 | 0 | 0 | 3 | — |
+| 9 — Смешанные задачи до 10 | 1 | 1 | 1 | g1_t04, g1_t03 |
+| 10 — Числа 11-20 | 0 | 0 | 3 | — |
+| 11 — Часы | 0 | 0 | 3 | — |
+| 12 — Сложение с переходом через 10 | 3 | 0 | 0 | g1_t07 |
+| 13 — Сложение в пределах 20: закрепление | 3 | 0 | 0 | g1_t07 |
+| 14 — Повторение 1 семестра | 0 | 3 | 0 | g1_t02, g1_t04, g1_t05, g1_t03 |
+| 15 — Фигуры (плоские) | 0 | 0 | 3 | — |
+| 16 — Вычитание через 10 | 0 | 0 | 3 | — |
+| 17 — Вычитание в пределах 20: закрепление | 0 | 0 | 3 | — |
+| 18 — Классификация | 0 | 0 | 3 | — |
+| 19 — Числа до 100 | 0 | 0 | 3 | — |
+| 20 — Сложение до 100 (без перехода) | 0 | 0 | 3 | — |
+| 21 — Деньги (рубли) | 0 | 0 | 3 | — |
+| 22 — Вычитание до 100 (без перехода) | 0 | 0 | 3 | — |
+| 23 — Сложение до 100 (с переходом) | 0 | 0 | 3 | — |
+| 24 — Вычитание до 100 (с переходом) | 0 | 0 | 3 | — |
+| 25 — Закономерности | 0 | 0 | 3 | — |
+| 26 — Повторение 2 семестра | 0 | 0 | 3 | — |
 
-## Подтверждённые строки (`mapped`)
+## Решения по 32 строкам
 
-- `g1-t01-l01` → `g1_t01` → `g1_counting_core` → `counting_with_objects`: Пересчёт реальных предметов напрямую совпадает со счётом объектов.
-- `g1-t03-l01` → `g1_t05` → `g1_number_bond` → `number_bond_missing_part`: Пропущенные части состава 5 совпадают с number_bond_missing_part; ноль остаётся дополнительным содержанием урока.
-- `g1-t09-l02` → `g1_t04` → `g1_subtraction_within_10` → `subtraction_within_10_part_whole`: Вычитание 8−2 находится в пределах 10 и совпадает с семейством subtraction_within_10_part_whole.
-- `g1-t12-l01` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: 8+5 буквально присутствует в диагностическом g1_t07; стратегия — переход через 10.
-- `g1-t12-l02` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: 7+6 и 9+5 буквально присутствуют в g1_t07; весь урок про переход через 10.
-- `g1-t12-l03` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: Объяснение 9+6 проверяет ту же стратегию дополнения до 10; item_family совпадает по смыслу.
-- `g1-t13-l01` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: 6+8 требует перехода через 10 и соответствует диагностической теме g1_t07.
-- `g1-t13-l02` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: 8+7 буквально присутствует в g1_t07; другие примеры также переходят через 10.
-- `g1-t13-l03` → `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`: Оба способа 7+8 используют дополнение до 10; это содержание g1_t07.
+Общие runtime-доказательства: реальные вопросы grade 1 начинаются в [`diagnostic_pool.json`](../../backend/data/diagnostic_pool.json#L5); шесть навыков — в [`skill_registry.json`](../../backend/data/skill_registry.json#L6); их контракты — в [`skill_contracts.json`](../../backend/data/skill_contracts.json#L5); статические упражнения и таблица family — в [`practice_engine.py`](../../backend/deeptutor/services/practice_engine.py#L13).
 
-## Спорные строки (`review_required`)
+| Урок | Решение | Тройка при `mapped` | Предметная причина и доказательство |
+|---|---|---|---|
+| [`g1-t01-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L53) | `unmapped` | — | Урок проверяет физический пересчёт до 5 по одному предмету. `g1_t01` фактически спрашивает сумму двух уже заданных чисел, а практика делает то же; название `counting_with_objects` не компенсирует смену действия. |
+| [`g1-t01-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L129) | `unmapped` | — | Сравнение 3 и 5 и разностное сравнение `5−3`; `g1_t01/g1_counting_core/counting_with_objects` не проверяет ни знак сравнения, ни «на сколько». |
+| [`g1-t01-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L208) | `unmapped` | — | Две цели: количественный и порядковый счёт. В grade-1 runtime нет ordinal family; `g1_t01` проверяет сумму, не место в ряду. |
+| [`g1-t03-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L572) | `review_required` | — | Две части `5=2+□`, `5=0+□` совпадают с `g1_t05/g1_number_bond/number_bond_missing_part`, но первая часть `3−3=0` проверяет иной результат. Одна тройка не представляет весь ordered assessment. |
+| [`g1-t03-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L647) | `unmapped` | — | Прямая сумма `2+2` до 5 не является missing part. Альтернатива `g1_t03` тоже не годится: его диагностика состоит из сумм с переходом через 10 ([`g1_t03_q01`](../../backend/data/diagnostic_pool.json#L185)). |
+| [`g1-t03-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L717) | `mapped` | `g1_t04` / `g1_subtraction_within_10` / `subtraction_within_10_part_whole` | Задача `4−1=3` — однозначное уменьшение в диапазоне до 10; diagnostic и practice `g1_t04` проверяют то же действие и диапазон ([`g1_t04_q01`](../../backend/data/diagnostic_pool.json#L263)). |
+| [`g1-t04-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L821) | `unmapped` | — | `3+1` — прямая сумма без перехода. `g1_t05` проверяет missing part, а `g1_t03` диагностирует переход через 10, хотя его статическая практика противоречиво выдаёт суммы без перехода. Целостной тройки нет. |
+| [`g1-t04-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L902) | `review_required` | — | Ordered assessment объединяет сложение, вычитание и сравнение результатов. Нужны как минимум две arithmetic family и отдельное сравнение; один `number_bond_missing_part` и один skill искажают урок. |
+| [`g1-t04-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L1004) | `review_required` | — | Четыре прямых действия чередуют сложение и вычитание. Их можно сопоставлять только по частям после разделения; `g1_t05/number_bond_missing_part` не соответствует форме заданий. |
+| [`g1-t06-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L1359) | `review_required` | — | Состав 6 тематически близок number bond и одно диагностическое задание действительно доходит до 6, но урок требует два наблюдаемых разбиения на непустые группы, а family проверяет одну пропущенную часть числового равенства. Нужен отдельный rubric/family либо разбиение. |
+| [`g1-t06-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L1430) | `unmapped` | — | `4+3=7` — сложение без перехода; все diagnostic items `g1_t03` переходят через 10. Совпадение со статическим practice при противоположной диагностике не образует надёжного контракта. |
+| [`g1-t06-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L1503) | `review_required` | — | Урок использует соседство 6→7, но оценивает и большее число, и разность `7−6`. `number_successor` покрывает лишь основание рассуждения, не полный ordered assessment. |
+| [`g1-t07-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L1610) | `review_required` | — | Состав 8 связан с number bond, но требует двух физических разбиений. Diagnostic `g1_t05` проверяет одну пропущенную часть и фактически ограничен целыми 3–6; покрытие диапазона 8 и rubric отсутствует. |
+| [`g1-t07-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L1681) | `unmapped` | — | `6+2=8` не переходит через 10. Diagnostic `g1_t03` проверяет только суммы 11–15, поэтому topic и диапазон кандидата не совпадают с уроком. |
+| [`g1-t07-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L1753) | `mapped` | `g1_t02` / `g1_number_successor` / `number_successor` | Оба вопроса фиксируют одну и ту же смежную пару 8→9: 8 раньше, 9 позже. Runtime `g1_t02` прямо содержит «какое число идёт после 8?» ([`practice_engine.py`](../../backend/deeptutor/services/practice_engine.py#L18)). |
+| [`g1-t08-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L1861) | `unmapped` | — | Дополнение 7 до 10 является составом числа 10, но фактический `g1_t06` складывает круглые десятки до 100 ([`g1_t06_q01`](../../backend/data/diagnostic_pool.json#L443)). `compose_decompose_10` здесь имеет иное реальное значение. |
+| [`g1-t08-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L1944) | `unmapped` | — | Три missing-part равенства с целым 10 не покрываются ни `g1_t06` с круглыми десятками, ни `g1_t05` с фактическим диапазоном до 6. Название skill «Состав десятка» недостаточно. |
+| [`g1-t09-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L2117) | `unmapped` | — | Сюжетная сумма `4+3=7` без перехода. `g1_t03` диагностирует переход через 10; отдельного согласованного grade-1 topic для сложения без перехода нет. |
+| [`g1-t09-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L2185) | `mapped` | `g1_t04` / `g1_subtraction_within_10` / `subtraction_within_10_part_whole` | Однозначная задача на уменьшение `8−2=6` в диапазоне до 10; topic, skill, family, diagnostic и practice согласованы по действию и диапазону. |
+| [`g1-t09-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L2262) | `review_required` | — | Один урок объединяет `5+1` и `9−4`. Вычитание имеет рабочую тройку `g1_t04`, сложение без перехода — нет; одной тройкой урок описать нельзя. |
+| [`g1-t12-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L2884) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | Урок и решение — `8+5`, разложение 5 на 2 и 3, дополнение 8 до 10. `g1_t07_q01` задаёт ровно `8+5=13` ([диагностика](../../backend/data/diagnostic_pool.json#L545)); контракт skill включает это family ([контракт](../../backend/data/skill_contracts.json#L395)). |
+| [`g1-t12-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L2974) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | Все три суммы переходят через 10; `7+6` и `9+5` буквально присутствуют в `g1_t07`, а `5+7` имеет тот же диапазон и стратегию. |
+| [`g1-t12-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L3035) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | Рубрика требует именно разложение 6 на 1+5 и переход `9+1=10`, `10+5=15`. Это тот же предметный паттерн carry-addition. Статус не делает rubric автоматически оцениваемой и не разрешает mastery. |
+| [`g1-t13-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L3139) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | `6+8=14` находится в том же диапазоне 11–17 и требует дополнения до 10; topic и family совпадают по действию и стратегии. |
+| [`g1-t13-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L3230) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | Все три суммы — однозначное сложение с переходом в пределах 20; `8+7` буквально есть в diagnostic `g1_t07`, остальные сохраняют тот же паттерн. |
+| [`g1-t13-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L3293) | `mapped` | `g1_t07` / `g1_compose_decompose_10` / `addition_within_10_part_whole` | Оба требуемых способа для `7+8` — дополнение одного слагаемого до 10; число и стратегия лежат в точном runtime topic. Рубрика остаётся только наблюдаемым lesson assessment. |
+| [`g1-t14-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L3408) | `review_required` | — | Ordered assessment объединяет predecessor 10, successor 10 и `5−5=0`. `number_successor` покрывает только одну часть, а single-family mapping исказит повторение. |
+| [`g1-t14-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L3472) | `review_required` | — | Цель — не только `3+2=5`, а обязательная проверка пересчётом или обратным `5−2=3`. Ни `number_bond_missing_part`, ни numeric addition family не оценивают способ проверки; нужен rubric/composite contract. |
+| [`g1-t14-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L3559) | `review_required` | — | Три части принадлежат разным семействам: сложение без перехода, вычитание до 10, сложение с переходом. Допустима только part-level карта после разделения. |
+| [`g1-t20-l01`](../../backend/data/lessons/grade_1_ru_adapted.json#L4944) | `unmapped` | — | `24+35` требует сложения десятков и единиц. `g1_t06/compose_decompose_10` проверяет лишь суммы круглых десятков, поэтому не покрывает единицы и полный алгоритм. |
+| [`g1-t20-l02`](../../backend/data/lessons/grade_1_ru_adapted.json#L5034) | `unmapped` | — | Все три примера складывают двузначные числа по двум разрядам; диагностические и practice items `g1_t06` содержат только круглые десятки. Диапазон ответа до 79 не доказывает совпадение skill. |
+| [`g1-t20-l03`](../../backend/data/lessons/grade_1_ru_adapted.json#L5102) | `unmapped` | — | `20+13` включает три единицы и понимание двузначного числа; runtime `g1_t06` не проверяет ненулевые единицы. Совпадает лишь общий заголовок «без перехода». |
 
-- `g1-t01-l02`: Сравнение количеств связано со счётом, но диагностическая семья проверяет сумму двух чисел, а не сравнение. Кандидат: `g1_t01`/`g1_counting_core`/`counting_with_objects`.
-- `g1-t01-l03`: Количество связано со счётом, но порядковое место диагностикой g1_t01 не покрывается. Кандидат: `g1_t01`/`g1_counting_core`/`counting_with_objects`.
-- `g1-t03-l02`: Обычное сложение до 5 относится к skill g1_number_bond, но не имеет пропущенной части, которую проверяет item_family. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t03-l03`: Вычитание до 5 относится к теме skill, но диагностическая семья сформулирована только как пропущенная часть суммы. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t04-l01`: Сложение до 5 совпадает с названием runtime-темы, но формат не совпадает с number_bond_missing_part. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t04-l02`: Урок сравнивает результаты сложения и вычитания; runtime-семья проверяет только одну пропущенную часть. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t04-l03`: Диапазон до 5 совпадает, но урок содержит набор прямых действий, а не один number bond. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t06-l01`: Состав 6 близок числовым связкам, но runtime g1_t05 назван «до 5» и один его вопрос уже выходит до 6. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t06-l02`: Сложение 4+3 не переходит через 10, тогда как все диагностические g1_t03 переходят через 10. Кандидат: `g1_t03`/`g1_addition_within_10`/`addition_within_10_part_whole`.
-- `g1-t06-l03`: Соседство 6 и 7 связано со следующим числом, но урок также требует сравнения и разности. Кандидат: `g1_t02`/`g1_number_successor`/`number_successor`.
-- `g1-t07-l01`: Состав 8 близок числовым связкам, но runtime g1_t05 заявлен для действий до 5. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t07-l02`: Сложение 6+2 не переходит через 10, а диагностический g1_t03 проверяет суммы 11–15. Кандидат: `g1_t03`/`g1_addition_within_10`/`addition_within_10_part_whole`.
-- `g1-t07-l03`: Порядок 8 и 9 близок successor, но урок спрашивает раньше/позже, а не только следующее число. Кандидат: `g1_t02`/`g1_number_successor`/`number_successor`.
-- `g1-t08-l01`: Дополнение 7 до 10 совпадает с названием skill «Состав десятка», но диагностика g1_t06 фактически складывает десятки до 100. Кандидат: `g1_t06`/`g1_compose_decompose_10`/`compose_decompose_10`.
-- `g1-t08-l02`: Состав 10 совпадает с названием skill, но не с фактическими вопросами diagnostic g1_t06. Кандидат: `g1_t06`/`g1_compose_decompose_10`/`compose_decompose_10`.
-- `g1-t09-l01`: Задача 4+3 — сложение до 10 без перехода; g1_t03 фактически проверяет переход через 10. Кандидат: `g1_t03`/`g1_addition_within_10`/`addition_within_10_part_whole`.
-- `g1-t09-l03`: Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку. Кандидаты: `g1_t03`/`g1_addition_within_10`, `g1_t04`/`g1_subtraction_within_10`.
-- `g1-t14-l01`: Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку. Кандидаты: `g1_t02`/`g1_number_successor`, `g1_t04`/`g1_subtraction_within_10`.
-- `g1-t14-l02`: Сложение 3+2 относится к действиям до 5, но урок дополнительно требует проверку обратным действием. Кандидат: `g1_t05`/`g1_number_bond`/`number_bond_missing_part`.
-- `g1-t14-l03`: Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку. Кандидаты: `g1_t03`/`g1_addition_within_10`, `g1_t04`/`g1_subtraction_within_10`, `g1_t05`/`g1_number_bond`.
-- `g1-t20-l01`: Сложение без перехода совпадает с названием g1_t06, но диагностика проверяет только круглые десятки, а урок — 24+35. Кандидат: `g1_t06`/`g1_compose_decompose_10`/`compose_decompose_10`.
-- `g1-t20-l02`: Сложение двузначных без перехода шире диагностических примеров с одними десятками. Кандидат: `g1_t06`/`g1_compose_decompose_10`/`compose_decompose_10`.
-- `g1-t20-l03`: 20+13 — сложение без перехода, но диагностическое покрытие g1_t06 ограничено круглыми десятками. Кандидат: `g1_t06`/`g1_compose_decompose_10`/`compose_decompose_10`.
+## Общие дефекты контрактов
 
-## Непокрытые строки (`unmapped`)
+1. `lesson_runtime_map.json` не загружается приложением: поиск его имени в `backend/deeptutor`, `backend/main.py` и тестах не находит потребителя. `SkillResolver` индексирует skill, runtime topic и topic name, но не lesson ID; переданный `lesson_id` ищется в индексе, где таких ключей нет ([`skill_runtime.py`](../../backend/deeptutor/services/skill_runtime.py#L59), [`resolve`](../../backend/deeptutor/services/skill_runtime.py#L113)).
+2. Запрет для `unmapped` не реализован на уровне сервиса. Чистый прямой вызов `PracticeEngine.create_practice({"topic_id":"g1-t02-l01","lesson_id":"g1-t02-l01","status":"unmapped"})` вернул `9+5`, family `addition_within_10_part_whole`, `fallback_warning=null`. Причина: неизвестный topic доходит до общего генератора, а пустой family подменяется сложением ([`practice_engine.py`](../../backend/deeptutor/services/practice_engine.py#L250), [`fallback`](../../backend/deeptutor/services/practice_engine.py#L294)). Это доказывает отсутствие fail-closed контракта в `PracticeEngine`, но само по себе не доказывает доступность такого входа через HTTP или фактическое повышение mastery. Исходные 46 `unmapped` пока не имеют исполняемой гарантии исключения из automatic selection и mastery.
+3. Выбор из diagnostic pool использует условие `topic_id OR item_family` ([`practice_engine.py`](../../backend/deeptutor/services/practice_engine.py#L128)). Для пилотных `g1_t07` + `addition_within_10_part_whole` variant 0 реально выбирается `g1_t03_q01`, потому что эта family общая для двух topics. Даже когда текст совпал (`8+5`), source topic identity уже потерян.
+4. `DiagnosticEngine.get_questions_for_grade` не переносит исходный `item_family` в нормализованный вопрос ([`diagnostic_engine.py`](../../backend/deeptutor/services/diagnostic_engine.py#L180)). Дальше family восстанавливается отдельным словарём, который может расходиться с данными.
+5. `g1_t03` внутренне противоречив: диагностика проверяет только переход через 10, skill называется «Сложение до 10», а статическая практика выдаёт `4+3` и `2+5` без перехода. `g1_t05` также противоречив: family называется `number_bond_missing_part`, но статическая практика даёт прямые `2+1` и `1+2`.
+6. `g1_compose_decompose_10` одновременно владеет несвязанными `g1_t06` (сложение круглых десятков) и `g1_t07` (переход через 10), а его контракт включает две разные family ([реестр](../../backend/data/skill_registry.json#L105), [контракт](../../backend/data/skill_contracts.json#L395)). Mastery history хранится только по `skill_id` ([`plugins_api.py`](../../backend/deeptutor/api/routers/plugins_api.py#L245)), поэтому успешные попытки одного topic/family могут открыть весь объединённый skill.
+7. `mode=shadow` и `coverage.status=partial` являются метаданными, а не запретом: текущий practice/mastery path всё равно разрешает skill и оценивает его. Уроки отдельно заявляют `mastery_policy=do_not_infer_from_one_lesson`; их семантический `mapped` не отменяет этот запрет.
 
-- Topic 2 — Позиции: `g1-t02-l01`, `g1-t02-l02`, `g1-t02-l03`. Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills.
-- Topic 5 — Объёмные тела: `g1-t05-l01`, `g1-t05-l02`, `g1-t05-l03`. Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills.
-- Topic 8 — Число 10: `g1-t08-l03`. Прямой и обратный счёт до 10 не совпадает с successor и не покрывается другим grade-1 runtime skill.
-- Topic 10 — Числа 11-20: `g1-t10-l01`, `g1-t10-l02`, `g1-t10-l03`. Разрядный состав и запись чисел 11–20 отсутствуют среди grade-1 runtime skills.
-- Topic 11 — Часы: `g1-t11-l01`, `g1-t11-l02`, `g1-t11-l03`. Чтение целых часов отсутствует среди grade-1 runtime skills; skill времени существует только для grade 3 и иной темы.
-- Topic 15 — Фигуры (плоские): `g1-t15-l01`, `g1-t15-l02`, `g1-t15-l03`. Плоские фигуры отсутствуют среди grade-1 runtime skills; geometry_2d зарегистрирован для grade 3.
-- Topic 16 — Вычитание через 10: `g1-t16-l01`, `g1-t16-l02`, `g1-t16-l03`. Вычитание через 10 в пределах 20 не покрывается g1_t04, чьи вопросы ограничены 10.
-- Topic 17 — Вычитание в пределах 20: закрепление: `g1-t17-l01`, `g1-t17-l02`, `g1-t17-l03`. Закрепление вычитания в пределах 20 и обратная проверка не имеют grade-1 runtime skill.
-- Topic 18 — Классификация: `g1-t18-l01`, `g1-t18-l02`, `g1-t18-l03`. Классификация по признаку отсутствует среди grade-1 runtime skills.
-- Topic 19 — Числа до 100: `g1-t19-l01`, `g1-t19-l02`, `g1-t19-l03`. Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills.
-- Topic 21 — Деньги (рубли): `g1-t21-l01`, `g1-t21-l02`, `g1-t21-l03`. Деньги и стоимость отсутствуют среди grade-1 runtime skills.
-- Topic 22 — Вычитание до 100 (без перехода): `g1-t22-l01`, `g1-t22-l02`, `g1-t22-l03`. Вычитание двузначных без перехода отсутствует среди grade-1 runtime skills.
-- Topic 23 — Сложение до 100 (с переходом): `g1-t23-l01`, `g1-t23-l02`, `g1-t23-l03`. Сложение двузначных с переходом шире g1_t07 (пределы 20); grade-1 skill разрядного переноса отсутствует.
-- Topic 24 — Вычитание до 100 (с переходом): `g1-t24-l01`, `g1-t24-l02`, `g1-t24-l03`. Вычитание двузначных с переходом отсутствует среди grade-1 runtime skills.
-- Topic 25 — Закономерности: `g1-t25-l01`, `g1-t25-l02`, `g1-t25-l03`. Закономерности отсутствуют среди grade-1 runtime skills.
-- Topic 26 — Повторение 2 семестра: `g1-t26-l01`, `g1-t26-l02`, `g1-t26-l03`. Итоговый смешанный урок нельзя однозначно связать с одним grade-1 runtime skill.
+## Проверенный пилот
+
+`g1-t12-l01`, v2.0, `8+5` **семантически подтверждён** как `g1_t07` → `g1_compose_decompose_10` → `addition_within_10_part_whole`. Совпадают точное выражение, ответ 13, диапазон до 20 и предметная стратегия дополнения до 10. Это наиболее сильная цепочка первого полугодия.
+
+Подтверждение связи не разрешает текущему runtime автоматически выбирать вопросы или повышать mastery. Для B1 пилот допустим только после fail-closed подключения карты, точного выбора `topic_id AND item_family` и изоляции mastery evidence от `g1_t06/compose_decompose_10`. Дополнительная содержательно согласованная цепочка — `g1-t09-l02` → `g1_t04` → `g1_subtraction_within_10` → `subtraction_within_10_part_whole`; у неё согласованы diagnostic, static practice и skill, но её lesson assessment также содержит `do_not_infer_from_one_lesson`.
+
+## Условия включения B1 и дальнейшего runtime-покрытия
+
+Для реализации и включения пилота B1:
+
+- загружать само задание из `grade_1_ru_adapted.json` по точным `lesson_id` и `content_version`; diagnostic topic и family служат связью с runtime, а не источником случайной замены урока;
+- загрузить карту как обязательный allowlist по точным `lesson_id` + `content_version=2.0` + принятому `status=mapped`; `review_required`, `unmapped`, неизвестные ID и несовпавшая версия должны завершаться явным отказом без генератора;
+- в оставшихся путях выбора из diagnostic pool требовать точное совпадение topic и family; не объединять кандидатов через OR и не подменять topic общим family;
+- переносить `item_family` из diagnostic question без отдельного восстановления;
+- запретить default-addition fallback для curricular lesson route;
+- отделить semantic mapping от assessment/mastery: rubric и `do_not_infer_from_one_lesson` не дают автоматического зачёта;
+- для пилота разделить `g1_compose_decompose_10` на разные skills либо ключевать и проверять evidence как минимум по `skill_id + diagnostic_topic_id + item_family`; продвижение по одному family не должно осваивать другой;
+- добавить проверки fail-closed для исходных 46 `unmapped`, новых пониженных строк, неверной версии, неизвестного lesson ID, topic/family collision и отсутствия fallback.
+
+Смысловая приёмка D1 закрыта решениями по всем 32 строкам, включая честно сохранённые `review_required`. При расширении за пределы узкого пилота:
+
+- решения уже перенесены в JSON; производные списки/counts пересчитаны, опровергнутые исходные `mapped` сняты;
+- оставить 10 `review_required` закрытыми для автоматики до part-level mapping/разделения уроков или новых узких contracts/families;
+- оставить 59 итоговых `unmapped` закрытыми для автоматики; новые runtime skills/families можно создавать отдельными задачами покрытия;
+- исправить внутренние противоречия `g1_t01`, `g1_t03`, `g1_t05`, `g1_t06/g1_t07` и расширить валидатор от проверки существования ссылок до проверки разрешающего статуса, версии, точного topic/family selection и отсутствия fallback.
 
 ## Legacy `curriculum_detailed` по содержанию
 
@@ -124,17 +136,19 @@
 | 7 — СЛОЖЕНИЕ С ПЕРЕХОДОМ | 12, 13 | split_in_reference_v2 |
 | 8 — ПОВТОРЕНИЕ | 14 | content_match |
 
-## Проверка
+## Техническая приёмка в полной копии — 2026-09-10
 
-```bash
-python3 backend/scripts/validate_grade1_topic_identity.py
-git diff --check
-```
+Проверен HEAD `23b44e7df7f93f910274beaed3dee5b163816692` после `git fetch origin` и `git switch codex/d1-grade1-topic-identity-2026-09-10`. Рабочая директория на момент проверки была чистой. База сравнения: `origin/codex/active-orchestration-2026-09-09` = `f352af42f248475fbc6ccc8133111ecabd74870d`.
 
-Валидатор проверяет 26 тем, 78 уникальных уроков, ровно одну строку на урок, совпадение `content_version`, существование diagnostic topic/skill/contract/family и запрещает включать `backend/data/user_states.json` в Git diff.
+| Проверка | Результат |
+|---|---|
+| `python3 backend/scripts/validate_grade1_topic_identity.py` | OK: 26 тем, 78 уникальных уроков, 7 diagnostic topics, 6 grade-1 skills; 9 / 23 / 46 |
+| `python3 -m py_compile backend/scripts/validate_grade1_topic_identity.py` | Код возврата 0 |
+| `git diff --check origin/codex/active-orchestration-2026-09-09...HEAD` | Пустой вывод, код возврата 0 |
+| `git diff --name-only origin/codex/active-orchestration-2026-09-09...HEAD` | Ровно четыре ожидаемых файла: карта, валидатор, этот аудит, WORKLOG; `user_states.json` отсутствует |
+| `python3 backend/scripts/validate_adapted_lessons.py` | OK для 1–9 классов |
+| `python3 backend/scripts/validate_grade1_reference.py --verify-sources` | OK; 14 unit_verified / 12 unverified / 1 missing_book |
 
-## Ограничения и решение для B1
+Встроенная Git-проверка D1-валидатора видит только изменения относительно HEAD; отсутствие пользовательского состояния в diff ветки подтверждено отдельной командой выше. Зелёные проверки не подтверждают китайский нижний том и не заменяют смысловую приёмку. Отчёт этой приёмки добавляется следующим коммитом; исходный проверенный HEAD сохраняется как точка воспроизведения.
 
-- B1 можно начинать только с девяти `mapped` строк; 23 строки требуют решения Sol, 46 нуждаются в новых grade-1 runtime contracts либо остаются вне маршрута.
-- `review_required` не должен автоматически выбирать упражнение или повышать mastery.
-- Карта — кандидат, а не миграция состояния и не разрешение перепривязать исторические попытки.
+После переноса решений Sol все три валидатора и `py_compile` повторно прошли; D1 сообщает **9 mapped / 10 review_required / 59 unmapped**. Дополнительно сверены 32 уникальных решения, производные списки, неизменность всех 46 исходных unmapped и 51 локальная ссылка на доказательства. `git diff --check` без ошибок. Для `g1-t12-l01` чистый assessor принял 13 и отверг 12; для `g1-t09-l02` принял 6 и отверг 5. API и реальные профили в этих проверках не использовались.

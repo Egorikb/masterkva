@@ -13,12 +13,12 @@
     "canonical_topic_id": "Numeric id from curriculum/grade_1_full.json and lessons/grade_1_ru_adapted.json.",
     "lesson_id": "Stable lesson id from grade_1_ru_adapted.json; not a diagnostic id.",
     "diagnostic_topic_id": "Runtime topic id from diagnostic_pool.json; never inferred from numeric suffix alone.",
-    "status": "mapped = content-supported candidate; review_required = plausible but unsafe without owner review; unmapped = no grade-1 runtime coverage."
+    "status": "mapped = semantic link confirmed by Sol, not automatic assessment or mastery permission; review_required = reviewed but unsafe without part-level mapping or contract changes; unmapped = no coherent grade-1 runtime coverage."
   },
   "counts": {
     "mapped": 9,
-    "review_required": 23,
-    "unmapped": 46
+    "review_required": 10,
+    "unmapped": 59
   },
   "mappings": [
     {
@@ -30,11 +30,11 @@
       "lesson_skills": [
         "счёт предметов"
       ],
-      "status": "mapped",
-      "diagnostic_topic_id": "g1_t01",
-      "skill_id": "g1_counting_core",
-      "item_family": "counting_with_objects",
-      "evidence": "Пересчёт реальных предметов напрямую совпадает со счётом объектов."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Урок проверяет физический пересчёт до 5 по одному предмету. g1_t01 фактически спрашивает сумму двух уже заданных чисел, а практика делает то же; название counting_with_objects не компенсирует смену действия."
     },
     {
       "canonical_topic_id": 1,
@@ -45,11 +45,11 @@
       "lesson_skills": [
         "сравнение количеств"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t01",
-      "skill_id": "g1_counting_core",
-      "item_family": "counting_with_objects",
-      "evidence": "Сравнение количеств связано со счётом, но диагностическая семья проверяет сумму двух чисел, а не сравнение."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сравнение 3 и 5 и разностное сравнение 5−3; g1_t01/g1_counting_core/counting_with_objects не проверяет ни знак сравнения, ни «на сколько»."
     },
     {
       "canonical_topic_id": 1,
@@ -60,11 +60,11 @@
       "lesson_skills": [
         "количество и порядок"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t01",
-      "skill_id": "g1_counting_core",
-      "item_family": "counting_with_objects",
-      "evidence": "Количество связано со счётом, но порядковое место диагностикой g1_t01 не покрывается."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Две цели: количественный и порядковый счёт. В grade-1 runtime нет ordinal family; g1_t01 проверяет сумму, не место в ряду."
     },
     {
       "canonical_topic_id": 2,
@@ -120,11 +120,11 @@
       "lesson_skills": [
         "ноль и состав пяти"
       ],
-      "status": "mapped",
+      "status": "review_required",
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Пропущенные части состава 5 совпадают с number_bond_missing_part; ноль остаётся дополнительным содержанием урока."
+      "evidence": "Две части 5=2+□, 5=0+□ совпадают с g1_t05/g1_number_bond/number_bond_missing_part, но первая часть 3−3=0 проверяет иной результат. Одна тройка не представляет весь ordered assessment."
     },
     {
       "canonical_topic_id": 3,
@@ -135,11 +135,11 @@
       "lesson_skills": [
         "сложение до пяти"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t05",
-      "skill_id": "g1_number_bond",
-      "item_family": "number_bond_missing_part",
-      "evidence": "Обычное сложение до 5 относится к skill g1_number_bond, но не имеет пропущенной части, которую проверяет item_family."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Прямая сумма 2+2 до 5 не является missing part. Альтернатива g1_t03 тоже не годится: его диагностика состоит из сумм с переходом через 10 (g1_t03_q01)."
     },
     {
       "canonical_topic_id": 3,
@@ -150,11 +150,11 @@
       "lesson_skills": [
         "вычитание до пяти"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t05",
-      "skill_id": "g1_number_bond",
-      "item_family": "number_bond_missing_part",
-      "evidence": "Вычитание до 5 относится к теме skill, но диагностическая семья сформулирована только как пропущенная часть суммы."
+      "status": "mapped",
+      "diagnostic_topic_id": "g1_t04",
+      "skill_id": "g1_subtraction_within_10",
+      "item_family": "subtraction_within_10_part_whole",
+      "evidence": "Задача 4−1=3 — однозначное уменьшение в диапазоне до 10; diagnostic и practice g1_t04 проверяют то же действие и диапазон (g1_t04_q01)."
     },
     {
       "canonical_topic_id": 4,
@@ -165,11 +165,11 @@
       "lesson_skills": [
         "прибавление одного"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t05",
-      "skill_id": "g1_number_bond",
-      "item_family": "number_bond_missing_part",
-      "evidence": "Сложение до 5 совпадает с названием runtime-темы, но формат не совпадает с number_bond_missing_part."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "3+1 — прямая сумма без перехода. g1_t05 проверяет missing part, а g1_t03 диагностирует переход через 10, хотя его статическая практика противоречиво выдаёт суммы без перехода. Целостной тройки нет."
     },
     {
       "canonical_topic_id": 4,
@@ -184,7 +184,7 @@
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Урок сравнивает результаты сложения и вычитания; runtime-семья проверяет только одну пропущенную часть."
+      "evidence": "Ordered assessment объединяет сложение, вычитание и сравнение результатов. Нужны как минимум две arithmetic family и отдельное сравнение; один number_bond_missing_part и один skill искажают урок."
     },
     {
       "canonical_topic_id": 4,
@@ -199,7 +199,7 @@
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Диапазон до 5 совпадает, но урок содержит набор прямых действий, а не один number bond."
+      "evidence": "Четыре прямых действия чередуют сложение и вычитание. Их можно сопоставлять только по частям после разделения; g1_t05/number_bond_missing_part не соответствует форме заданий."
     },
     {
       "canonical_topic_id": 5,
@@ -259,7 +259,7 @@
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Состав 6 близок числовым связкам, но runtime g1_t05 назван «до 5» и один его вопрос уже выходит до 6."
+      "evidence": "Состав 6 тематически близок number bond и одно диагностическое задание действительно доходит до 6, но урок требует два наблюдаемых разбиения на непустые группы, а family проверяет одну пропущенную часть числового равенства. Нужен отдельный rubric/family либо разбиение."
     },
     {
       "canonical_topic_id": 6,
@@ -270,11 +270,11 @@
       "lesson_skills": [
         "сложение до семи"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t03",
-      "skill_id": "g1_addition_within_10",
-      "item_family": "addition_within_10_part_whole",
-      "evidence": "Сложение 4+3 не переходит через 10, тогда как все диагностические g1_t03 переходят через 10."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "4+3=7 — сложение без перехода; все diagnostic items g1_t03 переходят через 10. Совпадение со статическим practice при противоположной диагностике не образует надёжного контракта."
     },
     {
       "canonical_topic_id": 6,
@@ -289,7 +289,7 @@
       "diagnostic_topic_id": "g1_t02",
       "skill_id": "g1_number_successor",
       "item_family": "number_successor",
-      "evidence": "Соседство 6 и 7 связано со следующим числом, но урок также требует сравнения и разности."
+      "evidence": "Урок использует соседство 6→7, но оценивает и большее число, и разность 7−6. number_successor покрывает лишь основание рассуждения, не полный ordered assessment."
     },
     {
       "canonical_topic_id": 7,
@@ -304,7 +304,7 @@
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Состав 8 близок числовым связкам, но runtime g1_t05 заявлен для действий до 5."
+      "evidence": "Состав 8 связан с number bond, но требует двух физических разбиений. Diagnostic g1_t05 проверяет одну пропущенную часть и фактически ограничен целыми 3–6; покрытие диапазона 8 и rubric отсутствует."
     },
     {
       "canonical_topic_id": 7,
@@ -315,11 +315,11 @@
       "lesson_skills": [
         "сложение до восьми"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t03",
-      "skill_id": "g1_addition_within_10",
-      "item_family": "addition_within_10_part_whole",
-      "evidence": "Сложение 6+2 не переходит через 10, а диагностический g1_t03 проверяет суммы 11–15."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "6+2=8 не переходит через 10. Diagnostic g1_t03 проверяет только суммы 11–15, поэтому topic и диапазон кандидата не совпадают с уроком."
     },
     {
       "canonical_topic_id": 7,
@@ -330,11 +330,11 @@
       "lesson_skills": [
         "порядок чисел"
       ],
-      "status": "review_required",
+      "status": "mapped",
       "diagnostic_topic_id": "g1_t02",
       "skill_id": "g1_number_successor",
       "item_family": "number_successor",
-      "evidence": "Порядок 8 и 9 близок successor, но урок спрашивает раньше/позже, а не только следующее число."
+      "evidence": "Оба вопроса фиксируют одну и ту же смежную пару 8→9: 8 раньше, 9 позже. Runtime g1_t02 прямо содержит «какое число идёт после 8?» (practice_engine.py)."
     },
     {
       "canonical_topic_id": 8,
@@ -345,11 +345,11 @@
       "lesson_skills": [
         "дополнение до десяти"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t06",
-      "skill_id": "g1_compose_decompose_10",
-      "item_family": "compose_decompose_10",
-      "evidence": "Дополнение 7 до 10 совпадает с названием skill «Состав десятка», но диагностика g1_t06 фактически складывает десятки до 100."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Дополнение 7 до 10 является составом числа 10, но фактический g1_t06 складывает круглые десятки до 100 (g1_t06_q01). compose_decompose_10 здесь имеет иное реальное значение."
     },
     {
       "canonical_topic_id": 8,
@@ -360,11 +360,11 @@
       "lesson_skills": [
         "состав десяти"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t06",
-      "skill_id": "g1_compose_decompose_10",
-      "item_family": "compose_decompose_10",
-      "evidence": "Состав 10 совпадает с названием skill, но не с фактическими вопросами diagnostic g1_t06."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Три missing-part равенства с целым 10 не покрываются ни g1_t06 с круглыми десятками, ни g1_t05 с фактическим диапазоном до 6. Название skill «Состав десятка» недостаточно."
     },
     {
       "canonical_topic_id": 8,
@@ -390,11 +390,11 @@
       "lesson_skills": [
         "задача на увеличение"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t03",
-      "skill_id": "g1_addition_within_10",
-      "item_family": "addition_within_10_part_whole",
-      "evidence": "Задача 4+3 — сложение до 10 без перехода; g1_t03 фактически проверяет переход через 10."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Сюжетная сумма 4+3=7 без перехода. g1_t03 диагностирует переход через 10; отдельного согласованного grade-1 topic для сложения без перехода нет."
     },
     {
       "canonical_topic_id": 9,
@@ -409,7 +409,7 @@
       "diagnostic_topic_id": "g1_t04",
       "skill_id": "g1_subtraction_within_10",
       "item_family": "subtraction_within_10_part_whole",
-      "evidence": "Вычитание 8−2 находится в пределах 10 и совпадает с семейством subtraction_within_10_part_whole."
+      "evidence": "Однозначная задача на уменьшение 8−2=6 в диапазоне до 10; topic, skill, family, diagnostic и practice согласованы по действию и диапазону."
     },
     {
       "canonical_topic_id": 9,
@@ -424,7 +424,7 @@
       "diagnostic_topic_id": null,
       "skill_id": null,
       "item_family": null,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Один урок объединяет 5+1 и 9−4. Вычитание имеет рабочую тройку g1_t04, сложение без перехода — нет; одной тройкой урок описать нельзя.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t03",
@@ -548,7 +548,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "8+5 буквально присутствует в диагностическом g1_t07; стратегия — переход через 10."
+      "evidence": "Урок и решение — 8+5, разложение 5 на 2 и 3, дополнение 8 до 10. g1_t07_q01 задаёт ровно 8+5=13 (диагностика); контракт skill включает это family (контракт)."
     },
     {
       "canonical_topic_id": 12,
@@ -563,7 +563,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "7+6 и 9+5 буквально присутствуют в g1_t07; весь урок про переход через 10."
+      "evidence": "Все три суммы переходят через 10; 7+6 и 9+5 буквально присутствуют в g1_t07, а 5+7 имеет тот же диапазон и стратегию."
     },
     {
       "canonical_topic_id": 12,
@@ -578,7 +578,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "Объяснение 9+6 проверяет ту же стратегию дополнения до 10; item_family совпадает по смыслу."
+      "evidence": "Рубрика требует именно разложение 6 на 1+5 и переход 9+1=10, 10+5=15. Это тот же предметный паттерн carry-addition. Статус не делает rubric автоматически оцениваемой и не разрешает mastery."
     },
     {
       "canonical_topic_id": 13,
@@ -593,7 +593,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "6+8 требует перехода через 10 и соответствует диагностической теме g1_t07."
+      "evidence": "6+8=14 находится в том же диапазоне 11–17 и требует дополнения до 10; topic и family совпадают по действию и стратегии."
     },
     {
       "canonical_topic_id": 13,
@@ -608,7 +608,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "8+7 буквально присутствует в g1_t07; другие примеры также переходят через 10."
+      "evidence": "Все три суммы — однозначное сложение с переходом в пределах 20; 8+7 буквально есть в diagnostic g1_t07, остальные сохраняют тот же паттерн."
     },
     {
       "canonical_topic_id": 13,
@@ -623,7 +623,7 @@
       "diagnostic_topic_id": "g1_t07",
       "skill_id": "g1_compose_decompose_10",
       "item_family": "addition_within_10_part_whole",
-      "evidence": "Оба способа 7+8 используют дополнение до 10; это содержание g1_t07."
+      "evidence": "Оба требуемых способа для 7+8 — дополнение одного слагаемого до 10; число и стратегия лежат в точном runtime topic. Рубрика остаётся только наблюдаемым lesson assessment."
     },
     {
       "canonical_topic_id": 14,
@@ -638,7 +638,7 @@
       "diagnostic_topic_id": null,
       "skill_id": null,
       "item_family": null,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Ordered assessment объединяет predecessor 10, successor 10 и 5−5=0. number_successor покрывает только одну часть, а single-family mapping исказит повторение.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t02",
@@ -671,7 +671,7 @@
       "diagnostic_topic_id": "g1_t05",
       "skill_id": "g1_number_bond",
       "item_family": "number_bond_missing_part",
-      "evidence": "Сложение 3+2 относится к действиям до 5, но урок дополнительно требует проверку обратным действием."
+      "evidence": "Цель — не только 3+2=5, а обязательная проверка пересчётом или обратным 5−2=3. Ни number_bond_missing_part, ни numeric addition family не оценивают способ проверки; нужен rubric/composite contract."
     },
     {
       "canonical_topic_id": 14,
@@ -686,7 +686,7 @@
       "diagnostic_topic_id": null,
       "skill_id": null,
       "item_family": null,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Три части принадлежат разным семействам: сложение без перехода, вычитание до 10, сложение с переходом. Допустима только part-level карта после разделения.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t03",
@@ -948,11 +948,11 @@
       "lesson_skills": [
         "сложение без перехода"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t06",
-      "skill_id": "g1_compose_decompose_10",
-      "item_family": "compose_decompose_10",
-      "evidence": "Сложение без перехода совпадает с названием g1_t06, но диагностика проверяет только круглые десятки, а урок — 24+35."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "24+35 требует сложения десятков и единиц. g1_t06/compose_decompose_10 проверяет лишь суммы круглых десятков, поэтому не покрывает единицы и полный алгоритм."
     },
     {
       "canonical_topic_id": 20,
@@ -963,11 +963,11 @@
       "lesson_skills": [
         "практика без перехода"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t06",
-      "skill_id": "g1_compose_decompose_10",
-      "item_family": "compose_decompose_10",
-      "evidence": "Сложение двузначных без перехода шире диагностических примеров с одними десятками."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "Все три примера складывают двузначные числа по двум разрядам; диагностические и practice items g1_t06 содержат только круглые десятки. Диапазон ответа до 79 не доказывает совпадение skill."
     },
     {
       "canonical_topic_id": 20,
@@ -978,11 +978,11 @@
       "lesson_skills": [
         "задача на сумму до ста"
       ],
-      "status": "review_required",
-      "diagnostic_topic_id": "g1_t06",
-      "skill_id": "g1_compose_decompose_10",
-      "item_family": "compose_decompose_10",
-      "evidence": "20+13 — сложение без перехода, но диагностическое покрытие g1_t06 ограничено круглыми десятками."
+      "status": "unmapped",
+      "diagnostic_topic_id": null,
+      "skill_id": null,
+      "item_family": null,
+      "evidence": "20+13 включает три единицы и понимание двузначного числа; runtime g1_t06 не проверяет ненулевые единицы. Совпадает лишь общий заголовок «без перехода»."
     },
     {
       "canonical_topic_id": 21,
@@ -1257,105 +1257,45 @@
   ],
   "review_required": [
     {
-      "lesson_id": "g1-t01-l02",
-      "canonical_topic_id": 1,
-      "evidence": "Сравнение количеств связано со счётом, но диагностическая семья проверяет сумму двух чисел, а не сравнение.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t01-l03",
-      "canonical_topic_id": 1,
-      "evidence": "Количество связано со счётом, но порядковое место диагностикой g1_t01 не покрывается.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t03-l02",
+      "lesson_id": "g1-t03-l01",
       "canonical_topic_id": 3,
-      "evidence": "Обычное сложение до 5 относится к skill g1_number_bond, но не имеет пропущенной части, которую проверяет item_family.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t03-l03",
-      "canonical_topic_id": 3,
-      "evidence": "Вычитание до 5 относится к теме skill, но диагностическая семья сформулирована только как пропущенная часть суммы.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t04-l01",
-      "canonical_topic_id": 4,
-      "evidence": "Сложение до 5 совпадает с названием runtime-темы, но формат не совпадает с number_bond_missing_part.",
+      "evidence": "Две части 5=2+□, 5=0+□ совпадают с g1_t05/g1_number_bond/number_bond_missing_part, но первая часть 3−3=0 проверяет иной результат. Одна тройка не представляет весь ordered assessment.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t04-l02",
       "canonical_topic_id": 4,
-      "evidence": "Урок сравнивает результаты сложения и вычитания; runtime-семья проверяет только одну пропущенную часть.",
+      "evidence": "Ordered assessment объединяет сложение, вычитание и сравнение результатов. Нужны как минимум две arithmetic family и отдельное сравнение; один number_bond_missing_part и один skill искажают урок.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t04-l03",
       "canonical_topic_id": 4,
-      "evidence": "Диапазон до 5 совпадает, но урок содержит набор прямых действий, а не один number bond.",
+      "evidence": "Четыре прямых действия чередуют сложение и вычитание. Их можно сопоставлять только по частям после разделения; g1_t05/number_bond_missing_part не соответствует форме заданий.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t06-l01",
       "canonical_topic_id": 6,
-      "evidence": "Состав 6 близок числовым связкам, но runtime g1_t05 назван «до 5» и один его вопрос уже выходит до 6.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t06-l02",
-      "canonical_topic_id": 6,
-      "evidence": "Сложение 4+3 не переходит через 10, тогда как все диагностические g1_t03 переходят через 10.",
+      "evidence": "Состав 6 тематически близок number bond и одно диагностическое задание действительно доходит до 6, но урок требует два наблюдаемых разбиения на непустые группы, а family проверяет одну пропущенную часть числового равенства. Нужен отдельный rubric/family либо разбиение.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t06-l03",
       "canonical_topic_id": 6,
-      "evidence": "Соседство 6 и 7 связано со следующим числом, но урок также требует сравнения и разности.",
+      "evidence": "Урок использует соседство 6→7, но оценивает и большее число, и разность 7−6. number_successor покрывает лишь основание рассуждения, не полный ordered assessment.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t07-l01",
       "canonical_topic_id": 7,
-      "evidence": "Состав 8 близок числовым связкам, но runtime g1_t05 заявлен для действий до 5.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t07-l02",
-      "canonical_topic_id": 7,
-      "evidence": "Сложение 6+2 не переходит через 10, а диагностический g1_t03 проверяет суммы 11–15.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t07-l03",
-      "canonical_topic_id": 7,
-      "evidence": "Порядок 8 и 9 близок successor, но урок спрашивает раньше/позже, а не только следующее число.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t08-l01",
-      "canonical_topic_id": 8,
-      "evidence": "Дополнение 7 до 10 совпадает с названием skill «Состав десятка», но диагностика g1_t06 фактически складывает десятки до 100.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t08-l02",
-      "canonical_topic_id": 8,
-      "evidence": "Состав 10 совпадает с названием skill, но не с фактическими вопросами diagnostic g1_t06.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t09-l01",
-      "canonical_topic_id": 9,
-      "evidence": "Задача 4+3 — сложение до 10 без перехода; g1_t03 фактически проверяет переход через 10.",
+      "evidence": "Состав 8 связан с number bond, но требует двух физических разбиений. Diagnostic g1_t05 проверяет одну пропущенную часть и фактически ограничен целыми 3–6; покрытие диапазона 8 и rubric отсутствует.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t09-l03",
       "canonical_topic_id": 9,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Один урок объединяет 5+1 и 9−4. Вычитание имеет рабочую тройку g1_t04, сложение без перехода — нет; одной тройкой урок описать нельзя.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t03",
@@ -1378,7 +1318,7 @@
     {
       "lesson_id": "g1-t14-l01",
       "canonical_topic_id": 14,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Ordered assessment объединяет predecessor 10, successor 10 и 5−5=0. number_successor покрывает только одну часть, а single-family mapping исказит повторение.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t02",
@@ -1401,13 +1341,13 @@
     {
       "lesson_id": "g1-t14-l02",
       "canonical_topic_id": 14,
-      "evidence": "Сложение 3+2 относится к действиям до 5, но урок дополнительно требует проверку обратным действием.",
+      "evidence": "Цель — не только 3+2=5, а обязательная проверка пересчётом или обратным 5−2=3. Ни number_bond_missing_part, ни numeric addition family не оценивают способ проверки; нужен rubric/composite contract.",
       "candidates": []
     },
     {
       "lesson_id": "g1-t14-l03",
       "canonical_topic_id": 14,
-      "evidence": "Урок объединяет несколько разных runtime-смыслов; один идентификатор исказит оценку.",
+      "evidence": "Три части принадлежат разным семействам: сложение без перехода, вычитание до 10, сложение с переходом. Допустима только part-level карта после разделения.",
       "candidates": [
         {
           "diagnostic_topic_id": "g1_t03",
@@ -1434,27 +1374,24 @@
           "reason": "6+2 — сложение в малом диапазоне, но runtime g1_t05 ограничен до 5."
         }
       ]
-    },
-    {
-      "lesson_id": "g1-t20-l01",
-      "canonical_topic_id": 20,
-      "evidence": "Сложение без перехода совпадает с названием g1_t06, но диагностика проверяет только круглые десятки, а урок — 24+35.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t20-l02",
-      "canonical_topic_id": 20,
-      "evidence": "Сложение двузначных без перехода шире диагностических примеров с одними десятками.",
-      "candidates": []
-    },
-    {
-      "lesson_id": "g1-t20-l03",
-      "canonical_topic_id": 20,
-      "evidence": "20+13 — сложение без перехода, но диагностическое покрытие g1_t06 ограничено круглыми десятками.",
-      "candidates": []
     }
   ],
   "unmapped": [
+    {
+      "lesson_id": "g1-t01-l01",
+      "canonical_topic_id": 1,
+      "evidence": "Урок проверяет физический пересчёт до 5 по одному предмету. g1_t01 фактически спрашивает сумму двух уже заданных чисел, а практика делает то же; название counting_with_objects не компенсирует смену действия."
+    },
+    {
+      "lesson_id": "g1-t01-l02",
+      "canonical_topic_id": 1,
+      "evidence": "Сравнение 3 и 5 и разностное сравнение 5−3; g1_t01/g1_counting_core/counting_with_objects не проверяет ни знак сравнения, ни «на сколько»."
+    },
+    {
+      "lesson_id": "g1-t01-l03",
+      "canonical_topic_id": 1,
+      "evidence": "Две цели: количественный и порядковый счёт. В grade-1 runtime нет ordinal family; g1_t01 проверяет сумму, не место в ряду."
+    },
     {
       "lesson_id": "g1-t02-l01",
       "canonical_topic_id": 2,
@@ -1469,6 +1406,16 @@
       "lesson_id": "g1-t02-l03",
       "canonical_topic_id": 2,
       "evidence": "Пространственные позиции отсутствуют среди grade-1 diagnostic topics и skills."
+    },
+    {
+      "lesson_id": "g1-t03-l02",
+      "canonical_topic_id": 3,
+      "evidence": "Прямая сумма 2+2 до 5 не является missing part. Альтернатива g1_t03 тоже не годится: его диагностика состоит из сумм с переходом через 10 (g1_t03_q01)."
+    },
+    {
+      "lesson_id": "g1-t04-l01",
+      "canonical_topic_id": 4,
+      "evidence": "3+1 — прямая сумма без перехода. g1_t05 проверяет missing part, а g1_t03 диагностирует переход через 10, хотя его статическая практика противоречиво выдаёт суммы без перехода. Целостной тройки нет."
     },
     {
       "lesson_id": "g1-t05-l01",
@@ -1486,9 +1433,34 @@
       "evidence": "Объёмные тела отсутствуют среди grade-1 diagnostic topics и skills."
     },
     {
+      "lesson_id": "g1-t06-l02",
+      "canonical_topic_id": 6,
+      "evidence": "4+3=7 — сложение без перехода; все diagnostic items g1_t03 переходят через 10. Совпадение со статическим practice при противоположной диагностике не образует надёжного контракта."
+    },
+    {
+      "lesson_id": "g1-t07-l02",
+      "canonical_topic_id": 7,
+      "evidence": "6+2=8 не переходит через 10. Diagnostic g1_t03 проверяет только суммы 11–15, поэтому topic и диапазон кандидата не совпадают с уроком."
+    },
+    {
+      "lesson_id": "g1-t08-l01",
+      "canonical_topic_id": 8,
+      "evidence": "Дополнение 7 до 10 является составом числа 10, но фактический g1_t06 складывает круглые десятки до 100 (g1_t06_q01). compose_decompose_10 здесь имеет иное реальное значение."
+    },
+    {
+      "lesson_id": "g1-t08-l02",
+      "canonical_topic_id": 8,
+      "evidence": "Три missing-part равенства с целым 10 не покрываются ни g1_t06 с круглыми десятками, ни g1_t05 с фактическим диапазоном до 6. Название skill «Состав десятка» недостаточно."
+    },
+    {
       "lesson_id": "g1-t08-l03",
       "canonical_topic_id": 8,
       "evidence": "Прямой и обратный счёт до 10 не совпадает с successor и не покрывается другим grade-1 runtime skill."
+    },
+    {
+      "lesson_id": "g1-t09-l01",
+      "canonical_topic_id": 9,
+      "evidence": "Сюжетная сумма 4+3=7 без перехода. g1_t03 диагностирует переход через 10; отдельного согласованного grade-1 topic для сложения без перехода нет."
     },
     {
       "lesson_id": "g1-t10-l01",
@@ -1594,6 +1566,21 @@
       "lesson_id": "g1-t19-l03",
       "canonical_topic_id": 19,
       "evidence": "Разряды и чтение чисел до 100 отсутствуют среди grade-1 runtime skills."
+    },
+    {
+      "lesson_id": "g1-t20-l01",
+      "canonical_topic_id": 20,
+      "evidence": "24+35 требует сложения десятков и единиц. g1_t06/compose_decompose_10 проверяет лишь суммы круглых десятков, поэтому не покрывает единицы и полный алгоритм."
+    },
+    {
+      "lesson_id": "g1-t20-l02",
+      "canonical_topic_id": 20,
+      "evidence": "Все три примера складывают двузначные числа по двум разрядам; диагностические и practice items g1_t06 содержат только круглые десятки. Диапазон ответа до 79 не доказывает совпадение skill."
+    },
+    {
+      "lesson_id": "g1-t20-l03",
+      "canonical_topic_id": 20,
+      "evidence": "20+13 включает три единицы и понимание двузначного числа; runtime g1_t06 не проверяет ненулевые единицы. Совпадает лишь общий заголовок «без перехода»."
     },
     {
       "lesson_id": "g1-t21-l01",
@@ -1759,5 +1746,45 @@
       ],
       "status": "content_match"
     }
-  ]
+  ],
+  "semantic_review": {
+    "reviewer": "GPT-5.6 Sol",
+    "reviewed_on": "2026-09-10",
+    "source_commit": "23b44e7df7f93f910274beaed3dee5b163816692",
+    "reviewed_lesson_ids": [
+      "g1-t01-l01",
+      "g1-t01-l02",
+      "g1-t01-l03",
+      "g1-t03-l01",
+      "g1-t03-l02",
+      "g1-t03-l03",
+      "g1-t04-l01",
+      "g1-t04-l02",
+      "g1-t04-l03",
+      "g1-t06-l01",
+      "g1-t06-l02",
+      "g1-t06-l03",
+      "g1-t07-l01",
+      "g1-t07-l02",
+      "g1-t07-l03",
+      "g1-t08-l01",
+      "g1-t08-l02",
+      "g1-t09-l01",
+      "g1-t09-l02",
+      "g1-t09-l03",
+      "g1-t12-l01",
+      "g1-t12-l02",
+      "g1-t12-l03",
+      "g1-t13-l01",
+      "g1-t13-l02",
+      "g1-t13-l03",
+      "g1-t14-l01",
+      "g1-t14-l02",
+      "g1-t14-l03",
+      "g1-t20-l01",
+      "g1-t20-l02",
+      "g1-t20-l03"
+    ],
+    "report": "docs/audit/grade1-topic-identity.md"
+  }
 }
