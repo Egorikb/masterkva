@@ -12,3 +12,4 @@ __pycache__
 backend/data/knowledge_bases/**/raw/
 backend/data/knowledge_bases/**/llamaindex_storage/
 backend/data/china_textbooks_junior/*.pdf
+backend/data/user_states.json
