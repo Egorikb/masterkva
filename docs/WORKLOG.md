@@ -1,6 +1,6 @@
 # MasterKva — рабочая память проекта
 
-Обновлено: **2026-09-10**. Здесь — проверенные результаты и текущие ограничения. Конкретные будущие поручения: [ORCHESTRATION](ORCHESTRATION.md); подробности эталона: [GRADE1_REFERENCE](GRADE1_REFERENCE.md).
+Обновлено: **2026-09-11**. Здесь — проверенные результаты и текущие ограничения. Конкретные будущие поручения: [ORCHESTRATION](ORCHESTRATION.md); подробности эталона: [GRADE1_REFERENCE](GRADE1_REFERENCE.md).
 
 ## Правила ведения
 
@@ -20,8 +20,8 @@
 - **Backend:** компактный FastAPI MVP, `backend/main.py`; frontend — Next.js. Типовые порты 8001 и 3000.
 - **1 класс:** версия 2.0, 26 тем, 26 разобранных примеров, 78 заданий. 24 exact, 33 ordered, 21 rubric; 111 проверяемых частей, 79 арифметических выражений.
 - **Источник:** верхний китайский том найден и сверен по разделам — 42 задания. Нижний том не подтверждён — 36 заданий явно unverified. Это авторская адаптация приёмов, не буквальный перевод всех упражнений.
-- **Оценка:** чистая функция lesson_assessment готова и проверена; реальная практика пока не выдаёт эти уроки и не вызывает её.
-- **D1:** техническая и смысловая приёмка завершены. После проверки Sol карта содержит 9 mapped / 10 review_required / 59 unmapped. Первая подтверждённая цепочка для реализации B1 — `g1-t12-l01` v2.0; её автоматический выбор и mastery ещё не подключены.
+- **Оценка:** чистая функция lesson_assessment готова и проверена; локальный B1 вызывает её для `g1-t12-l01` v2.0 через реальный Panda chat, но штатный HTTP/pytest-прогон в полной среде ещё не выполнен.
+- **D1/B1:** D1 принят: 9 mapped / 10 review_required / 59 unmapped. Узкий B1 для `g1-t12-l01` v2.0 реализован локальным patch без fallback и без mastery; публикация и независимая приёмка открыты.
 - **2–9 классы:** предыдущая структурная миграция сохранена; предметная готовность не подтверждена.
 - **Чужие изменения:** user_states.json; параллельная настройка Notion в README, .vscode и scripts. Их не включать в коммит данного этапа.
 
@@ -129,6 +129,41 @@ Astra изучил проект, заметки и три независимых
 **Повторная проверка после решений Sol:** D1-валидатор — OK, 9 / 10 / 59; `py_compile` и оба валидатора эталона — OK с прежним ограничением источников. Подтверждены 32 уникальных решения, согласованность производных списков, неизменность исходных 46 unmapped и 51 ссылка на доказательства. `git diff --check` — без ошибок.
 
 **Публикация приёмки:** коммит `bc48cb5` отправлен в `origin/codex/d1-grade1-topic-identity-2026-09-10`; push подтверждён. Создан [PR #2](https://github.com/Egorikb/masterkva/pull/2) в `codex/active-orchestration-2026-09-09`. GitHub подтвердил правильные head/base, четыре ожидаемых файла, OPEN и MERGEABLE; удалённые CI-проверки к PR не привязаны. Слияние не выполнялось. Следующая задача — реализация узкого B1 по условиям аудита.
+
+## Результат 2026-09-11: B1 — узкий runtime `g1-t12-l01` v2.0
+
+**Статус:** реализация и автономная проверка завершены локально; штатная приёмка, GitHub-публикация и независимая проверка не выполнены.
+
+**Что реализовано:**
+
+- В `POST /api/v1/plugins/panda/chat` добавлен режим `curricular` с действиями `start`, `answer`, `hint`, `advance`. Старый контракт остаётся обратно совместимым.
+- Runtime принимает только точную пару `g1-t12-l01` + `2.0`. Допуск требует единственную строку D1 со статусом `mapped`, точные `g1_t07`, `g1_compose_decompose_10`, `addition_within_10_part_whole`, соответствующий diagnostic-вопрос, registry и contract. Любое несовпадение завершается ошибкой; случайного или legacy fallback нет.
+- Начальный и последующие ответы ребёнку содержат только текущий prompt и безопасное состояние части. `expected`, `expected_answers`, `solution_steps`, `teacher_note`, ответ 13 и доказательства mapping не выдаются.
+- Проверка выполняется серверной `assess_lesson`. Клиентские `part_index` и `part_complete` не входят в модель запроса и не управляют переходом. Подсказка — отдельное действие без попытки; неверный ответ не раскрывает решение.
+- Один верный ответ завершает этот exact-урок, но не выдаёт mastery и не запускает promotion. Для ordered-предъявления предусмотрен серверный gate `advance` после завершения текущей части.
+- В общем practice path выбор из diagnostic pool исправлен с `topic_id OR item_family` на точное `topic_id AND item_family`, когда доступны оба значения. `DiagnosticEngine` больше не теряет `item_family` при нормализации и формировании weak topic.
+- Frontend TypeScript-контракт расширен для curricular-режима; поля `answer` и `topic_id` в child-safe current practice стали необязательными.
+
+**Файлы:** `backend/deeptutor/services/curricular_lesson_runtime.py`; `backend/deeptutor/api/routers/plugins_api.py`; `backend/deeptutor/services/practice_engine.py`; `backend/deeptutor/services/diagnostic_engine.py`; `frontend/contracts/panda.ts`; `tests/services/test_curricular_lesson_runtime.py`; `tests/api/test_panda_curricular_b1.py`; эта запись и `MEMORY.md`.
+
+**Проверено в архивной копии:**
+
+- `py_compile` изменённых Python-файлов и двух новых файлов тестов — OK.
+- Автономный deterministic runner — **23/23 passed**: exact pair, 13/12, child-safe payload, hint, server-owned transition, запрет подделки progress, отсутствие mastery, fail-closed для wrong version / unknown / review_required / unmapped / topic-family / skill-contract и прямой вызов реальной функции `panda_chat`.
+- `python3 backend/scripts/validate_grade1_topic_identity.py` — OK: 26 тем, 78 уроков, 9 / 10 / 59; `user_states.json` отсутствует в diff.
+- `python3 backend/scripts/validate_adapted_lessons.py` — OK для 1–9.
+- `python3 backend/scripts/validate_grade1_reference.py` — OK; 14 unit_verified / 12 unverified / 1 missing book.
+- `git diff --check`, Python syntax, TypeScript syntax через Node strip-types и скан изменённых файлов на типовые секреты — OK.
+
+**Не выполнено и почему:**
+
+- `pytest` и FastAPI TestClient не запускались: в изолированной среде нет `pytest`, `fastapi` и `openai`. В репозиторий добавлены 22 штатных pytest-теста; API-логика дополнительно вызвана напрямую с тестовыми заглушками только для отсутствующих внешних импортов. Это не заменяет HTTP-прогон в полной среде.
+- Полный `frontend` typecheck не запускался: архив не содержит `frontend/node_modules`, а доступный пакет TypeScript содержит только version API. Синтаксис изменённого контракта проверен.
+- `validate_grade1_reference.py --verify-sources` остановился на ожидаемом ограничении архива: отсутствует локальный source book `cn_pep_g1_upper_2022`. Внутренняя проверка reference без source-файла прошла.
+- Исходный архив не содержит `.git`; его имя указывает базу `0d53e1f`, но соответствие этому SHA здесь нельзя доказать через Git. Commit, push и PR не создавались. Notion WORKLOG по прежнему handle недоступен; обновлён этот локальный источник истины.
+- `backend/data/user_states.json` отсутствовал в архиве, не читался, не изменялся и не включён в patch.
+
+**Следующий шаг:** применить patch в чистой ветке от подтверждённого `0d53e1f`, установить `backend/requirements.txt`, выполнить новые pytest-тесты вместе с `test_panda_chat_mvp_contract.py` и релевантными service/API regression tests, затем полный backend/frontend gate. Только после зелёного штатного прогона — commit, push, draft PR и независимая приёмка Sol; при blockers исправить B1 до перехода к B2.
 
 ## Учебный корпус
 

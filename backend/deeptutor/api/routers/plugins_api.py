@@ -4,11 +4,16 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from deeptutor.services.curricular_lesson_runtime import (
+    CurriculumResolutionError,
+    ResolvedCurricularLesson,
+    curricular_lesson_runtime,
+)
 from deeptutor.services.diagnostic_engine import DiagnosticEngine, diagnostic_engine
 from deeptutor.services.error_taxonomy import error_taxonomy
 from deeptutor.services.learning_rag import learning_rag
@@ -44,6 +49,9 @@ class ChatRequest(BaseModel):
     name: str | None = None
     grade: int | None = Field(default=None, ge=0)
     mode: str | None = None
+    lesson_id: str | None = None
+    content_version: str | None = None
+    action: Literal["start", "answer", "hint", "advance"] | None = None
 
 
 DEFAULT_STATE: dict[str, Any] = {
@@ -68,6 +76,8 @@ DEFAULT_STATE: dict[str, Any] = {
     "current_skill_mode": None,
     "current_topic_id": None,
     "current_lesson_id": None,
+    "current_content_version": None,
+    "curricular_session": None,
     "diagnosis_result_id": None,
     "diagnosis_confidence": None,
     "detected_gaps": [],
@@ -727,6 +737,229 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     return state
 
 
+def _curricular_public_state(state: dict[str, Any]) -> dict[str, Any]:
+    """Return only child-facing curricular state; mapping evidence stays server-side."""
+    session = dict(state.get("curricular_session") or {})
+    practice = dict(state.get("current_practice") or {})
+    feedback = state.get("practice_feedback")
+    return {
+        "phase": "curricular",
+        "weak_topic": None,
+        "current_practice": practice or None,
+        "practice_feedback": dict(feedback) if isinstance(feedback, dict) else None,
+        "report": None,
+        "curricular": {
+            "lesson_id": session.get("lesson_id"),
+            "content_version": session.get("content_version"),
+            "part_index": session.get("part_index", 0),
+            "part_count": session.get("part_count", 0),
+            "part_complete": bool(session.get("part_complete", False)),
+            "awaiting_advance": bool(session.get("awaiting_advance", False)),
+            "lesson_complete": bool(session.get("lesson_complete", False)),
+            "mastery_awarded": False,
+        },
+    }
+
+
+def _curricular_response(text: str, state: dict[str, Any]) -> dict[str, Any]:
+    practice = state.get("current_practice") or {}
+    visual = _question_visual(practice) if practice and practice.get("requires_image") else None
+    return {"text": text, "visual": visual, "state": _curricular_public_state(state)}
+
+
+def _resolve_curricular_session(
+    state: dict[str, Any],
+    request: ChatRequest,
+) -> tuple[ResolvedCurricularLesson, dict[str, Any]]:
+    session = dict(state.get("curricular_session") or {})
+    if not session:
+        raise HTTPException(status_code=409, detail={"code": "curricular_session_not_started"})
+
+    lesson_id = str(session.get("lesson_id") or "")
+    content_version = str(session.get("content_version") or "")
+    if request.lesson_id is not None and request.lesson_id.strip() != lesson_id:
+        raise HTTPException(status_code=409, detail={"code": "lesson_session_mismatch"})
+    if request.content_version is not None and request.content_version.strip() != content_version:
+        raise HTTPException(status_code=409, detail={"code": "lesson_session_mismatch"})
+    try:
+        resolved = curricular_lesson_runtime.resolve(lesson_id, content_version)
+    except CurriculumResolutionError as exc:
+        raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+    return resolved, session
+
+
+def _start_curricular_lesson(user_id: str, request: ChatRequest) -> dict[str, Any]:
+    try:
+        resolved = curricular_lesson_runtime.resolve(
+            str(request.lesson_id or ""),
+            str(request.content_version or ""),
+        )
+        practice = curricular_lesson_runtime.child_part(resolved, 0)
+    except CurriculumResolutionError as exc:
+        raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+
+    practice["attempts"] = 0
+    session = {
+        "lesson_id": resolved.lesson_id,
+        "content_version": resolved.content_version,
+        "assessment_kind": resolved.assessment_kind,
+        "part_index": 0,
+        "part_count": resolved.part_count,
+        "attempts": 0,
+        "part_complete": False,
+        "awaiting_advance": False,
+        "lesson_complete": False,
+    }
+    state = update_user_state(
+        user_id,
+        {
+            "phase": "curricular",
+            "path_choice": "curricular",
+            "in_learning": True,
+            "learning_mode_active": True,
+            "current_lesson_id": resolved.lesson_id,
+            "current_content_version": resolved.content_version,
+            "curricular_session": session,
+            "current_practice": practice,
+            "practice_feedback": None,
+            "weak_topic": None,
+            "report": None,
+            "current_skill_id": None,
+            "current_skill_version": None,
+            "current_skill_mode": None,
+            "current_topic_id": None,
+            "mastery_check_pending": False,
+            "promotion_eligible": False,
+        },
+    )
+    return _curricular_response(practice["question"], state)
+
+
+def _answer_curricular_part(
+    user_id: str,
+    request: ChatRequest,
+    resolved: ResolvedCurricularLesson,
+    session: dict[str, Any],
+) -> dict[str, Any]:
+    if session.get("lesson_complete"):
+        return _curricular_response("Урок уже завершён.", get_user_state(user_id))
+    if session.get("part_complete"):
+        raise HTTPException(status_code=409, detail={"code": "part_already_complete"})
+
+    part_index = session.get("part_index", 0)
+    try:
+        result = curricular_lesson_runtime.assess_part(resolved, part_index, request.message)
+    except CurriculumResolutionError as exc:
+        raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+
+    attempts = int(session.get("attempts") or 0) + 1
+    status = str(result.get("status") or "invalid_input")
+    part_complete = status == "correct"
+    lesson_complete = part_complete and (
+        resolved.assessment_kind == "exact" or int(part_index) == resolved.part_count - 1
+    )
+    awaiting_advance = part_complete and not lesson_complete
+    session.update(
+        {
+            "attempts": attempts,
+            "part_complete": part_complete,
+            "awaiting_advance": awaiting_advance,
+            "lesson_complete": lesson_complete,
+        }
+    )
+    practice = curricular_lesson_runtime.child_part(resolved, int(part_index))
+    practice["attempts"] = attempts
+    feedback = {
+        "status": status,
+        "part_index": int(part_index),
+        "attempts": attempts,
+        "part_complete": part_complete,
+        "lesson_complete": lesson_complete,
+        "mastery_awarded": False,
+    }
+    state = update_user_state(
+        user_id,
+        {
+            "curricular_session": session,
+            "current_practice": practice,
+            "practice_feedback": feedback,
+            "mastery_check_pending": False,
+            "promotion_eligible": False,
+        },
+    )
+    if status == "correct":
+        text = "Верно! Урок завершён." if lesson_complete else "Верно! Можно перейти к следующей части."
+    elif status == "needs_review":
+        text = "Ответ сохранён для проверки."
+    elif status == "incorrect":
+        text = "Пока не получилось. Попробуй ещё раз."
+    else:
+        text = "Нужен один ответ на текущую часть."
+    return _curricular_response(text, state)
+
+
+def _advance_curricular_part(
+    user_id: str,
+    resolved: ResolvedCurricularLesson,
+    session: dict[str, Any],
+) -> dict[str, Any]:
+    if session.get("lesson_complete"):
+        return _curricular_response("Урок уже завершён.", get_user_state(user_id))
+    if not session.get("part_complete"):
+        raise HTTPException(status_code=409, detail={"code": "current_part_not_complete"})
+
+    current_index = int(session.get("part_index") or 0)
+    next_index = current_index + 1
+    if next_index >= resolved.part_count:
+        session.update({"lesson_complete": True, "awaiting_advance": False})
+        state = update_user_state(user_id, {"curricular_session": session})
+        return _curricular_response("Урок завершён.", state)
+
+    try:
+        practice = curricular_lesson_runtime.child_part(resolved, next_index)
+    except CurriculumResolutionError as exc:
+        raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+    practice["attempts"] = 0
+    session.update(
+        {
+            "part_index": next_index,
+            "attempts": 0,
+            "part_complete": False,
+            "awaiting_advance": False,
+        }
+    )
+    state = update_user_state(
+        user_id,
+        {
+            "curricular_session": session,
+            "current_practice": practice,
+            "practice_feedback": None,
+        },
+    )
+    return _curricular_response(practice["question"], state)
+
+
+def _handle_curricular_chat(user_id: str, request: ChatRequest, state: dict[str, Any]) -> dict[str, Any]:
+    action = request.action
+    if action == "start" or (
+        action is None and request.mode == "curricular" and request.lesson_id
+    ):
+        return _start_curricular_lesson(user_id, request)
+
+    resolved, session = _resolve_curricular_session(state, request)
+    if action in (None, "answer"):
+        return _answer_curricular_part(user_id, request, resolved, session)
+    if action == "hint":
+        try:
+            hint = curricular_lesson_runtime.hint(resolved, session.get("part_index", 0))
+        except CurriculumResolutionError as exc:
+            raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+        return _curricular_response(hint, state)
+    if action == "advance":
+        return _advance_curricular_part(user_id, resolved, session)
+    raise HTTPException(status_code=422, detail={"code": "unsupported_curricular_action"})
+
+
 @router.post("/panda/chat")
 async def panda_chat(request: ChatRequest) -> dict[str, Any]:
     user_id = request.user_id
@@ -750,6 +983,13 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
 
     if state.get("phase") == "paused":
         return _resume_paused_learning(user_id, state)
+
+    if (
+        request.mode == "curricular"
+        or request.action is not None
+        or state.get("phase") == "curricular"
+    ):
+        return _handle_curricular_chat(user_id, request, state)
 
     if not state.get("name"):
         return _panda_response(
