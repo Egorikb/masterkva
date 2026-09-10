@@ -402,7 +402,7 @@ export default function ParentPortalPage() {
           <div className="grid gap-4 md:grid-cols-3">
             {plans.map((plan) => (
               <Card 
-                key={plan?.id || `key-${Date.now()}`}
+                key={plan.id}
                 className={cn(
                   "relative",
                   plan.popular && "border-primary shadow-lg",

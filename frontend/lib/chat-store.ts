@@ -24,20 +24,13 @@ const getBeltLevel = (correctAnswers: number): BeltLevel => {
 };
 
 export const useChatStore = create<ChatStore>((set) => ({
-  mode: 'kungfu' as LearningMode,
-  setMode: (mode) => set({ mode: mode || 'kungfu' }),
+  mode: null,
+  setMode: (mode) => set({ mode }),
   messages: [],
-  addMessage: (message: ChatMessage) => set((state) => {
-    // Ensure message has unique ID
-    const messageWithId = message.id ? message : { 
-      ...message, 
-      id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 9)}` 
-    };
-    return { 
-      messages: [...state.messages, messageWithId],
-      currentVisualData: message.visualData || state.currentVisualData
-    };
-  }),
+  addMessage: (message) => set((state) => ({ 
+    messages: [...state.messages, message],
+    currentVisualData: message.visualData || state.currentVisualData
+  })),
   clearMessages: () => set({ messages: [], currentVisualData: null }),
   progress: {
     qiEnergy: 0,

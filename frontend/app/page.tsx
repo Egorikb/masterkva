@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PandaSensei } from "@/components/panda-sensei";
+import { useAuthStore } from "@/lib/auth-store";
 import { 
   BookOpen, 
   GraduationCap, 
@@ -59,6 +60,7 @@ const modes = [
 ];
 
 export default function LandingPage() {
+  const { isAuthenticated } = useAuthStore();
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -82,10 +84,15 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/dashboard">
+            {isAuthenticated ? (
+              <Link href="/dashboard">
+                <Button variant="outline" size="sm">Кабинет</Button>
+              </Link>
+            ) : null}
+            <Link href="/login">
               <Button variant="ghost" size="sm">Войти</Button>
             </Link>
-            <Link href="/dashboard">
+            <Link href="/signup">
               <Button size="sm" className="bg-primary hover:bg-primary/90">
                 Начать бесплатно
               </Button>
@@ -127,7 +134,7 @@ export default function LandingPage() {
                 решать задачи методами CPA и барных моделей в стиле Кунг-фу.
               </p>
               <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-                <Link href="/dashboard">
+                <Link href="/signup">
                   <Button size="lg" className="w-full bg-primary px-8 hover:bg-primary/90 sm:w-auto">
                     Попробовать бесплатно
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -310,7 +317,7 @@ export default function LandingPage() {
                   Присоединяйтесь к тысячам учеников, которые уже улучшили свои 
                   математические навыки с Мастером Кватом.
                 </p>
-                <Link href="/dashboard">
+                <Link href="/signup">
                   <Button size="lg" variant="secondary" className="bg-white px-8 text-primary hover:bg-white/90">
                     Начать бесплатно
                     <ArrowRight className="ml-2 h-5 w-5" />

@@ -1,0 +1,262 @@
+{
+  "defaults": {
+    "default_kb": null,
+    "rag_provider": "llamaindex",
+    "search_mode": "hybrid"
+  },
+  "knowledge_bases": {
+    "math_1_class": {
+      "path": "math_1_class",
+      "description": "Knowledge base: math_1_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T13:40:01.780073",
+      "progress": {
+        "stage": "completed",
+        "message": "Successfully processed 0 files!",
+        "percent": 0,
+        "current": 0,
+        "total": 0,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T13:40:01.774514",
+        "task_id": "kb_upload_20260414_133959_f32b8d1b"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "text-embedding-3-small",
+      "embedding_dim": 3072,
+      "embedding_mismatch": true
+    },
+    "math_2_class": {
+      "path": "math_2_class",
+      "description": "Knowledge base: math_2_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:29:58.017128",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:29:58.016483"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_3_class": {
+      "path": "math_3_class",
+      "description": "Knowledge base: math_3_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:30:35.869052",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:30:35.868001"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_4_class": {
+      "path": "math_4_class",
+      "description": "Knowledge base: math_4_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:31:08.019939",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:31:08.018938"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_5_class": {
+      "path": "math_5_class",
+      "description": "Knowledge base: math_5_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:31:41.741356",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:31:41.740594"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_6_class": {
+      "path": "math_6_class",
+      "description": "Knowledge base: math_6_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:32:16.031147",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:32:16.030205"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_7_class": {
+      "path": "math_7_class",
+      "description": "Knowledge base: math_7_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:32:56.924400",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:32:56.923681"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_8_class": {
+      "path": "math_8_class",
+      "description": "Knowledge base: math_8_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:33:31.667683",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:33:31.666550"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "math_9_class": {
+      "path": "math_9_class",
+      "description": "Knowledge base: math_9_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:34:04.858119",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:34:04.856935"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "science_1_class": {
+      "path": "science_1_class",
+      "description": "Knowledge base: science_1_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:36:41.954615",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:36:41.953809"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "science_2_class": {
+      "path": "science_2_class",
+      "description": "Knowledge base: science_2_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:36:48.586535",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:36:48.585690"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    },
+    "science_3_class": {
+      "path": "science_3_class",
+      "description": "Knowledge base: science_3_class",
+      "status": "ready",
+      "updated_at": "2026-04-14T16:36:55.105881",
+      "progress": {
+        "stage": "completed",
+        "message": "Knowledge base initialization complete!",
+        "percent": 100,
+        "current": 1,
+        "total": 1,
+        "file_name": "",
+        "error": null,
+        "timestamp": "2026-04-14T16:36:55.104958"
+      },
+      "rag_provider": "llamaindex",
+      "needs_reindex": true,
+      "embedding_model": "nomic-embed-text",
+      "embedding_dim": 768,
+      "embedding_mismatch": true
+    }
+  }
+}

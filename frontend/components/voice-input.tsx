@@ -5,6 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface SpeechRecognitionLike {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onstart: (() => void) | null;
+  onresult: ((event: any) => void) | null;
+  onerror: ((event: any) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+}
+
+type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
+
 interface VoiceInputProps {
   onTranscript: (text: string) => void;
 }
@@ -26,9 +39,19 @@ export function VoiceInput({ onTranscript }: VoiceInputProps) {
   const startListening = useCallback(() => {
     if (!isSupported) return;
 
-    const SpeechRecognition =
-      window.webkitSpeechRecognition || window.SpeechRecognition;
-    const recognition = new SpeechRecognition();
+    const SpeechRecognitionImpl =
+      (window as Window & {
+        webkitSpeechRecognition?: SpeechRecognitionCtor;
+        SpeechRecognition?: SpeechRecognitionCtor;
+      }).webkitSpeechRecognition ??
+      (window as Window & {
+        webkitSpeechRecognition?: SpeechRecognitionCtor;
+        SpeechRecognition?: SpeechRecognitionCtor;
+      }).SpeechRecognition;
+
+    if (!SpeechRecognitionImpl) return;
+
+    const recognition = new SpeechRecognitionImpl();
 
     recognition.lang = "ru-RU";
     recognition.continuous = false;
@@ -39,7 +62,7 @@ export function VoiceInput({ onTranscript }: VoiceInputProps) {
       setTranscript("");
     };
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    recognition.onresult = (event: any) => {
       let interimTranscript = "";
       let finalTranscript = "";
 
@@ -60,7 +83,7 @@ export function VoiceInput({ onTranscript }: VoiceInputProps) {
       }
     };
 
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+    recognition.onerror = (event: any) => {
       console.error("[v0] Speech recognition error:", event.error);
       setIsListening(false);
       setTranscript("");
@@ -169,6 +192,7 @@ export function VoiceInput({ onTranscript }: VoiceInputProps) {
 // Add type declarations for Web Speech API
 declare global {
   interface Window {
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition?: SpeechRecognitionCtor;
+    SpeechRecognition?: SpeechRecognitionCtor;
   }
 }

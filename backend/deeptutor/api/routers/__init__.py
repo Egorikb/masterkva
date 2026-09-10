@@ -1,1 +1,1 @@
-# Init file for routers
+"""FastAPI routers for the MasterKva backend."""

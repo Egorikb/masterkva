@@ -1,27 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+
+const BACKEND_AUDIO_BASE_URL =
+  process.env.BACKEND_AUDIO_BASE_URL ?? 'http://127.0.0.1:8001/audio_storage';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ filename: string }> }
 ) {
   const { filename } = await params;
-  
-  // Path to backend audio storage
-  const audioDir = '/home/egor/ai-agent/workspace/deeptutor_analyzed/audio_storage';
-  const filePath = path.join(audioDir, filename);
-  
-  if (!fs.existsSync(filePath)) {
-    return new NextResponse('Not Found', { status: 404 });
+  const url = `${BACKEND_AUDIO_BASE_URL.replace(/\/$/, '')}/${encodeURIComponent(filename)}`;
+
+  try {
+    const upstream = await fetch(url, { cache: 'no-store' });
+    if (!upstream.ok) {
+      return new NextResponse('Not Found', { status: 404 });
+    }
+
+    const audio = await upstream.arrayBuffer();
+    return new NextResponse(audio, {
+      headers: {
+        'Content-Type': upstream.headers.get('content-type') ?? 'audio/ogg',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  } catch {
+    return new NextResponse('Audio service unavailable', { status: 502 });
   }
-  
-  const fileBuffer = fs.readFileSync(filePath);
-  
-  return new NextResponse(fileBuffer, {
-    headers: {
-      'Content-Type': 'audio/ogg',
-      'Cache-Control': 'public, max-age=3600',
-    },
-  });
 }

@@ -1,0 +1,813 @@
+{
+  "version": "v2",
+  "mode": "shadow",
+  "skills": [
+    {
+      "skill_id": "g1_counting_core",
+      "name": "Счёт предметов",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t01"
+      ],
+      "topic_names": [
+        "Подготовка к счёту",
+        "Счёт до 10"
+      ],
+      "prerequisites": [],
+      "next_skills": [
+        "g1_number_successor"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_counting_core.v1"
+    },
+    {
+      "skill_id": "g1_number_successor",
+      "name": "Следующее число",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t02"
+      ],
+      "topic_names": [
+        "Следующее число"
+      ],
+      "prerequisites": [
+        "g1_counting_core"
+      ],
+      "next_skills": [
+        "g1_addition_within_10"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_number_successor.v1"
+    },
+    {
+      "skill_id": "g1_addition_within_10",
+      "name": "Сложение до 10",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t03"
+      ],
+      "topic_names": [
+        "Сложение с переходом"
+      ],
+      "prerequisites": [
+        "g1_number_successor"
+      ],
+      "next_skills": [
+        "g1_subtraction_within_10"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_addition_within_10.v1"
+    },
+    {
+      "skill_id": "g1_subtraction_within_10",
+      "name": "Вычитание до 10",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t04"
+      ],
+      "topic_names": [
+        "Вычитание в пределах 10"
+      ],
+      "prerequisites": [
+        "g1_addition_within_10"
+      ],
+      "next_skills": [
+        "g1_number_bond"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_subtraction_within_10.v1"
+    },
+    {
+      "skill_id": "g1_number_bond",
+      "name": "Числовые связки",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t05"
+      ],
+      "topic_names": [
+        "Сложение и вычитание до 5"
+      ],
+      "prerequisites": [
+        "g1_subtraction_within_10"
+      ],
+      "next_skills": [
+        "g1_compose_decompose_10"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_number_bond.v1"
+    },
+    {
+      "skill_id": "g1_compose_decompose_10",
+      "name": "Состав десятка",
+      "grade": 1,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g1_t06",
+        "g1_t07"
+      ],
+      "topic_names": [
+        "Сложение до 100 без перехода",
+        "Сложение с переходом через 10"
+      ],
+      "prerequisites": [
+        "g1_number_bond"
+      ],
+      "next_skills": [
+        "g2_addition_core"
+      ],
+      "mode": "shadow",
+      "contract_id": "g1_compose_decompose_10.v1"
+    },
+    {
+      "skill_id": "g2_addition_core",
+      "name": "Сложение двузначных",
+      "grade": 2,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g2_t01"
+      ],
+      "topic_names": [
+        "Сложение двузначных чисел"
+      ],
+      "prerequisites": [
+        "g1_compose_decompose_10"
+      ],
+      "next_skills": [
+        "g2_subtraction_core"
+      ],
+      "mode": "active",
+      "contract_id": "g2_addition_core.v1"
+    },
+    {
+      "skill_id": "g2_subtraction_core",
+      "name": "Вычитание двузначных",
+      "grade": 2,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g2_t02",
+        "g2_t03"
+      ],
+      "topic_names": [
+        "Сложение и вычитание до 100",
+        "Вычитание с переходом"
+      ],
+      "prerequisites": [
+        "g2_addition_core"
+      ],
+      "next_skills": [
+        "g2_multiplication_intro"
+      ],
+      "mode": "shadow",
+      "contract_id": "g2_subtraction_core.v1"
+    },
+    {
+      "skill_id": "g2_multiplication_intro",
+      "name": "Введение в умножение",
+      "grade": 2,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g2_t04"
+      ],
+      "topic_names": [
+        "Умножение — повторяющееся сложение"
+      ],
+      "prerequisites": [
+        "g2_subtraction_core"
+      ],
+      "next_skills": [
+        "g3_multiplication_tables"
+      ],
+      "mode": "shadow",
+      "contract_id": "g2_multiplication_intro.v1"
+    },
+    {
+      "skill_id": "g2_division_intro",
+      "name": "Введение в деление",
+      "grade": 2,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g2_t05"
+      ],
+      "topic_names": [
+        "Деление — равные группы"
+      ],
+      "prerequisites": [
+        "g2_multiplication_intro"
+      ],
+      "next_skills": [
+        "g3_division_basics"
+      ],
+      "mode": "shadow",
+      "contract_id": "g2_division_intro.v1"
+    },
+    {
+      "skill_id": "g2_measurement_length",
+      "name": "Измерение длины",
+      "grade": 2,
+      "domain": "measurement",
+      "topic_ids": [
+        "g2_t06"
+      ],
+      "topic_names": [
+        "Сантиметры и дециметры"
+      ],
+      "prerequisites": [
+        "g2_subtraction_core"
+      ],
+      "next_skills": [
+        "g3_time_measurement_core"
+      ],
+      "mode": "shadow",
+      "contract_id": "g2_measurement_length.v1"
+    },
+    {
+      "skill_id": "g3_time_measurement_core",
+      "name": "Время и измерения",
+      "grade": 3,
+      "domain": "measurement",
+      "topic_ids": [
+        "g3_t01",
+        "g3_t02"
+      ],
+      "topic_names": [
+        "Время (часы, минуты, секунды)",
+        "Большие единицы длины"
+      ],
+      "prerequisites": [
+        "g2_measurement_length",
+        "g2_addition_core"
+      ],
+      "next_skills": [
+        "g3_multiplication_tables"
+      ],
+      "mode": "shadow",
+      "contract_id": "g3_time_measurement_core.v1"
+    },
+    {
+      "skill_id": "g3_multiplication_tables",
+      "name": "Таблица умножения",
+      "grade": 3,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g3_t03",
+        "g3_t04"
+      ],
+      "topic_names": [
+        "Таблица умножения",
+        "Деление через умножение"
+      ],
+      "prerequisites": [
+        "g2_multiplication_intro",
+        "g3_time_measurement_core"
+      ],
+      "next_skills": [
+        "g3_division_basics"
+      ],
+      "mode": "shadow",
+      "contract_id": "g3_multiplication_tables.v1"
+    },
+    {
+      "skill_id": "g3_division_basics",
+      "name": "Деление — основы",
+      "grade": 3,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g3_t05"
+      ],
+      "topic_names": [
+        "Деление с остатком"
+      ],
+      "prerequisites": [
+        "g3_multiplication_tables"
+      ],
+      "next_skills": [
+        "g3_fractions_intro"
+      ],
+      "mode": "shadow",
+      "contract_id": "g3_division_basics.v1"
+    },
+    {
+      "skill_id": "g3_fractions_intro",
+      "name": "Введение в дроби",
+      "grade": 3,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g3_t06"
+      ],
+      "topic_names": [
+        "Дроби — части целого"
+      ],
+      "prerequisites": [
+        "g3_division_basics"
+      ],
+      "next_skills": [
+        "g4_fractions_operations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g3_fractions_intro.v1"
+    },
+    {
+      "skill_id": "g3_geometry_2d",
+      "name": "Геометрия — фигуры",
+      "grade": 3,
+      "domain": "geometry",
+      "topic_ids": [
+        "g3_t07"
+      ],
+      "topic_names": [
+        "Плоские фигуры и их свойства"
+      ],
+      "prerequisites": [
+        "g3_time_measurement_core"
+      ],
+      "next_skills": [
+        "g4_area_perimeter"
+      ],
+      "mode": "shadow",
+      "contract_id": "g3_geometry_2d.v1"
+    },
+    {
+      "skill_id": "g4_fractions_operations",
+      "name": "Дроби — операции",
+      "grade": 4,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g4_t01",
+        "g4_t02"
+      ],
+      "topic_names": [
+        "Сложение и вычитание дробей",
+        "Сравнение дробей"
+      ],
+      "prerequisites": [
+        "g3_fractions_intro"
+      ],
+      "next_skills": [
+        "g4_decimals_intro"
+      ],
+      "mode": "shadow",
+      "contract_id": "g4_fractions_operations.v1"
+    },
+    {
+      "skill_id": "g4_decimals_intro",
+      "name": "Десятичные дроби",
+      "grade": 4,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g4_t03"
+      ],
+      "topic_names": [
+        "Десятичные дроби — введение"
+      ],
+      "prerequisites": [
+        "g4_fractions_operations"
+      ],
+      "next_skills": [
+        "g5_decimals_operations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g4_decimals_intro.v1"
+    },
+    {
+      "skill_id": "g4_area_perimeter",
+      "name": "Площадь и периметр",
+      "grade": 4,
+      "domain": "geometry",
+      "topic_ids": [
+        "g4_t04"
+      ],
+      "topic_names": [
+        "Площадь прямоугольника",
+        "Периметр"
+      ],
+      "prerequisites": [
+        "g3_geometry_2d",
+        "g3_multiplication_tables"
+      ],
+      "next_skills": [
+        "g5_area_advanced"
+      ],
+      "mode": "shadow",
+      "contract_id": "g4_area_perimeter.v1"
+    },
+    {
+      "skill_id": "g4_large_numbers",
+      "name": "Большие числа",
+      "grade": 4,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g4_t05"
+      ],
+      "topic_names": [
+        "Большие числа (до 100 млн)"
+      ],
+      "prerequisites": [
+        "g4_decimals_intro"
+      ],
+      "next_skills": [
+        "g5_decimals_operations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g4_large_numbers.v1"
+    },
+    {
+      "skill_id": "g5_decimals_operations",
+      "name": "Десятичные — операции",
+      "grade": 5,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g5_t01"
+      ],
+      "topic_names": [
+        "Сложение и вычитание десятичных"
+      ],
+      "prerequisites": [
+        "g4_decimals_intro"
+      ],
+      "next_skills": [
+        "g5_fractions_advanced"
+      ],
+      "mode": "shadow",
+      "contract_id": "g5_decimals_operations.v1"
+    },
+    {
+      "skill_id": "g5_fractions_advanced",
+      "name": "Дроби — продвинутые",
+      "grade": 5,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g5_t02",
+        "g5_t03"
+      ],
+      "topic_names": [
+        "Умножение и деление дробей",
+        "Смешанные числа"
+      ],
+      "prerequisites": [
+        "g5_decimals_operations"
+      ],
+      "next_skills": [
+        "g5_simple_equations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g5_fractions_advanced.v1"
+    },
+    {
+      "skill_id": "g5_simple_equations",
+      "name": "Простые уравнения",
+      "grade": 5,
+      "domain": "algebra",
+      "topic_ids": [
+        "g5_t04"
+      ],
+      "topic_names": [
+        "Простые уравнения"
+      ],
+      "prerequisites": [
+        "g5_fractions_advanced"
+      ],
+      "next_skills": [
+        "g6_linear_equations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g5_simple_equations.v1"
+    },
+    {
+      "skill_id": "g5_area_advanced",
+      "name": "Площадь — продвинутая",
+      "grade": 5,
+      "domain": "geometry",
+      "topic_ids": [
+        "g5_t05"
+      ],
+      "topic_names": [
+        "Площадь треугольника и параллелограмма"
+      ],
+      "prerequisites": [
+        "g4_area_perimeter"
+      ],
+      "next_skills": [
+        "g6_volume"
+      ],
+      "mode": "shadow",
+      "contract_id": "g5_area_advanced.v1"
+    },
+    {
+      "skill_id": "g6_linear_equations",
+      "name": "Линейные уравнения",
+      "grade": 6,
+      "domain": "algebra",
+      "topic_ids": [
+        "g6_t01"
+      ],
+      "topic_names": [
+        "Линейные уравнения"
+      ],
+      "prerequisites": [
+        "g5_simple_equations"
+      ],
+      "next_skills": [
+        "g6_proportions"
+      ],
+      "mode": "shadow",
+      "contract_id": "g6_linear_equations.v1"
+    },
+    {
+      "skill_id": "g6_proportions",
+      "name": "Пропорции и отношения",
+      "grade": 6,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g6_t02"
+      ],
+      "topic_names": [
+        "Пропорции и масштаб"
+      ],
+      "prerequisites": [
+        "g6_linear_equations"
+      ],
+      "next_skills": [
+        "g7_percent"
+      ],
+      "mode": "shadow",
+      "contract_id": "g6_proportions.v1"
+    },
+    {
+      "skill_id": "g6_volume",
+      "name": "Объём тела",
+      "grade": 6,
+      "domain": "geometry",
+      "topic_ids": [
+        "g6_t03"
+      ],
+      "topic_names": [
+        "Объём прямоугольного параллелепипеда"
+      ],
+      "prerequisites": [
+        "g5_area_advanced"
+      ],
+      "next_skills": [
+        "g7_geometry_advanced"
+      ],
+      "mode": "shadow",
+      "contract_id": "g6_volume.v1"
+    },
+    {
+      "skill_id": "g6_rational_numbers",
+      "name": "Рациональные числа",
+      "grade": 6,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g6_t04"
+      ],
+      "topic_names": [
+        "Положительные и отрицательные числа"
+      ],
+      "prerequisites": [
+        "g6_linear_equations"
+      ],
+      "next_skills": [
+        "g7_rational_operations"
+      ],
+      "mode": "shadow",
+      "contract_id": "g6_rational_numbers.v1"
+    },
+    {
+      "skill_id": "g7_rational_operations",
+      "name": "Рациональные — операции",
+      "grade": 7,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g7_t01"
+      ],
+      "topic_names": [
+        "Все операции с рациональными числами"
+      ],
+      "prerequisites": [
+        "g6_rational_numbers"
+      ],
+      "next_skills": [
+        "g7_linear_equations_advanced"
+      ],
+      "mode": "shadow",
+      "contract_id": "g7_rational_operations.v1"
+    },
+    {
+      "skill_id": "g7_linear_equations_advanced",
+      "name": "Уравнения — продвинутые",
+      "grade": 7,
+      "domain": "algebra",
+      "topic_ids": [
+        "g7_t02"
+      ],
+      "topic_names": [
+        "Системы уравнений"
+      ],
+      "prerequisites": [
+        "g7_rational_operations"
+      ],
+      "next_skills": [
+        "g8_quadratic"
+      ],
+      "mode": "shadow",
+      "contract_id": "g7_linear_equations_advanced.v1"
+    },
+    {
+      "skill_id": "g7_percent",
+      "name": "Проценты",
+      "grade": 7,
+      "domain": "arithmetic",
+      "topic_ids": [
+        "g7_t03"
+      ],
+      "topic_names": [
+        "Проценты и вычисления"
+      ],
+      "prerequisites": [
+        "g6_proportions"
+      ],
+      "next_skills": [
+        "g8_statistics_basic"
+      ],
+      "mode": "shadow",
+      "contract_id": "g7_percent.v1"
+    },
+    {
+      "skill_id": "g7_geometry_advanced",
+      "name": "Геометрия — 7 класс",
+      "grade": 7,
+      "domain": "geometry",
+      "topic_ids": [
+        "g7_t04"
+      ],
+      "topic_names": [
+        "Углы и треугольники"
+      ],
+      "prerequisites": [
+        "g6_volume"
+      ],
+      "next_skills": [
+        "g8_trigonometry_intro"
+      ],
+      "mode": "shadow",
+      "contract_id": "g7_geometry_advanced.v1"
+    },
+    {
+      "skill_id": "g8_quadratic",
+      "name": "Квадратные уравнения",
+      "grade": 8,
+      "domain": "algebra",
+      "topic_ids": [
+        "g8_t01"
+      ],
+      "topic_names": [
+        "Квадратные уравнения"
+      ],
+      "prerequisites": [
+        "g7_linear_equations_advanced"
+      ],
+      "next_skills": [
+        "g8_functions"
+      ],
+      "mode": "shadow",
+      "contract_id": "g8_quadratic.v1"
+    },
+    {
+      "skill_id": "g8_functions",
+      "name": "Функции",
+      "grade": 8,
+      "domain": "algebra",
+      "topic_ids": [
+        "g8_t02"
+      ],
+      "topic_names": [
+        "Линейные функции"
+      ],
+      "prerequisites": [
+        "g8_quadratic"
+      ],
+      "next_skills": [
+        "g9_quadratic_functions"
+      ],
+      "mode": "shadow",
+      "contract_id": "g8_functions.v1"
+    },
+    {
+      "skill_id": "g8_trigonometry_intro",
+      "name": "Тригонометрия — введение",
+      "grade": 8,
+      "domain": "geometry",
+      "topic_ids": [
+        "g8_t03"
+      ],
+      "topic_names": [
+        "Синус, косинус, тангенс"
+      ],
+      "prerequisites": [
+        "g7_geometry_advanced"
+      ],
+      "next_skills": [
+        "g9_trigonometry"
+      ],
+      "mode": "shadow",
+      "contract_id": "g8_trigonometry_intro.v1"
+    },
+    {
+      "skill_id": "g8_statistics_basic",
+      "name": "Статистика — основы",
+      "grade": 8,
+      "domain": "statistics",
+      "topic_ids": [
+        "g8_t04"
+      ],
+      "topic_names": [
+        "Среднее, медиана, мода"
+      ],
+      "prerequisites": [
+        "g7_percent"
+      ],
+      "next_skills": [
+        "g9_probability"
+      ],
+      "mode": "shadow",
+      "contract_id": "g8_statistics_basic.v1"
+    },
+    {
+      "skill_id": "g9_quadratic_functions",
+      "name": "Квадратичные функции",
+      "grade": 9,
+      "domain": "algebra",
+      "topic_ids": [
+        "g9_t01"
+      ],
+      "topic_names": [
+        "Квадратичные функции и графики"
+      ],
+      "prerequisites": [
+        "g8_functions"
+      ],
+      "next_skills": [],
+      "mode": "shadow",
+      "contract_id": "g9_quadratic_functions.v1"
+    },
+    {
+      "skill_id": "g9_trigonometry",
+      "name": "Тригонометрия",
+      "grade": 9,
+      "domain": "geometry",
+      "topic_ids": [
+        "g9_t02"
+      ],
+      "topic_names": [
+        "Тригонометрические тождества"
+      ],
+      "prerequisites": [
+        "g8_trigonometry_intro"
+      ],
+      "next_skills": [],
+      "mode": "shadow",
+      "contract_id": "g9_trigonometry.v1"
+    },
+    {
+      "skill_id": "g9_probability",
+      "name": "Вероятность",
+      "grade": 9,
+      "domain": "statistics",
+      "topic_ids": [
+        "g9_t03"
+      ],
+      "topic_names": [
+        "Вероятность и комбинаторика"
+      ],
+      "prerequisites": [
+        "g8_statistics_basic"
+      ],
+      "next_skills": [],
+      "mode": "shadow",
+      "contract_id": "g9_probability.v1"
+    },
+    {
+      "skill_id": "g9_sequences_series",
+      "name": "Последовательности",
+      "grade": 9,
+      "domain": "algebra",
+      "topic_ids": [
+        "g9_t04"
+      ],
+      "topic_names": [
+        "Арифметическая и геометрическая прогрессии"
+      ],
+      "prerequisites": [
+        "g9_quadratic_functions"
+      ],
+      "next_skills": [],
+      "mode": "shadow",
+      "contract_id": "g9_sequences_series.v1"
+    }
+  ]
+}

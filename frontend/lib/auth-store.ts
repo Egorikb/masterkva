@@ -38,6 +38,7 @@ interface AuthStore {
   subscription: Subscription;
   isAuthenticated: boolean;
   isParentView: boolean;
+  hasHydrated: boolean;
   
   login: (email: string, password: string) => Promise<boolean>;
   signup: (email: string, password: string, name: string, role: UserRole) => Promise<boolean>;
@@ -47,6 +48,7 @@ interface AuthStore {
   addQiEnergy: (amount: number) => void;
   unlockGrade: (grade: number) => void;
   completeLesson: () => void;
+  setHasHydrated: (hydrated: boolean) => void;
 }
 
 const getBeltLevel = (correctAnswers: number): 'white' | 'yellow' | 'green' | 'black' => {
@@ -64,6 +66,7 @@ export const useAuthStore = create<AuthStore>()(
       subscription: { plan: 'free', status: 'active' },
       isAuthenticated: false,
       isParentView: false,
+      hasHydrated: false,
 
       login: async (email: string, _password: string) => {
         // Simulated login - in production, call your auth API
@@ -189,6 +192,8 @@ export const useAuthStore = create<AuthStore>()(
           }
         };
       }),
+
+      setHasHydrated: (hydrated) => set({ hasHydrated: hydrated }),
     }),
     {
       name: 'master-kwatt-auth',
@@ -198,6 +203,9 @@ export const useAuthStore = create<AuthStore>()(
         subscription: state.subscription,
         isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => () => {
+        useAuthStore.setState({ hasHydrated: true });
+      },
     }
   )
 );

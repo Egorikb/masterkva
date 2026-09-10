@@ -197,7 +197,7 @@ export default function AchievementsPage() {
 
           return (
             <motion.div
-              key={achievement?.id || `key-${Date.now()}`}
+              key={achievement.id}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.05 * index }}

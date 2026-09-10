@@ -1,0 +1,3155 @@
+{
+  "version": "v2",
+  "contracts": [
+    {
+      "id": "g1_counting_core.v1",
+      "skill_id": "g1_counting_core",
+      "name": "Счёт предметов",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "counting_with_objects"
+        ],
+        "detectable_errors": [
+          "counting_with_objects_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "counting_with_objects_error"
+        ],
+        "remediation_by_error": {
+          "counting_with_objects_error": "ten_frame"
+        },
+        "default_remediation": "ten_frame"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "ten_frame",
+        "targets": {
+          "counting_with_objects": "ten_frame"
+        }
+      },
+      "visual_policy": {
+        "template": "ten_frame",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g1_number_successor.v1",
+      "skill_id": "g1_number_successor",
+      "name": "Следующее число",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "number_successor"
+        ],
+        "detectable_errors": [
+          "number_successor_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "number_successor_error"
+        ],
+        "remediation_by_error": {
+          "number_successor_error": "number_line"
+        },
+        "default_remediation": "number_line"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_line",
+        "targets": {
+          "number_successor": "number_line"
+        }
+      },
+      "visual_policy": {
+        "template": "number_line",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g1_addition_within_10.v1",
+      "skill_id": "g1_addition_within_10",
+      "name": "Сложение до 10",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "addition_within_10_part_whole"
+        ],
+        "detectable_errors": [
+          "addition_within_10_part_whole_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "addition_within_10_part_whole_error"
+        ],
+        "remediation_by_error": {
+          "addition_within_10_part_whole_error": "number_bond"
+        },
+        "default_remediation": "number_bond"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_bond",
+        "targets": {
+          "addition_within_10_part_whole": "number_bond"
+        }
+      },
+      "visual_policy": {
+        "template": "number_bond",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g1_subtraction_within_10.v1",
+      "skill_id": "g1_subtraction_within_10",
+      "name": "Вычитание до 10",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "subtraction_within_10_part_whole"
+        ],
+        "detectable_errors": [
+          "subtraction_within_10_part_whole_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "subtraction_within_10_part_whole_error"
+        ],
+        "remediation_by_error": {
+          "subtraction_within_10_part_whole_error": "number_bond"
+        },
+        "default_remediation": "number_bond"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_bond",
+        "targets": {
+          "subtraction_within_10_part_whole": "number_bond"
+        }
+      },
+      "visual_policy": {
+        "template": "number_bond",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g1_number_bond.v1",
+      "skill_id": "g1_number_bond",
+      "name": "Числовые связки",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "number_bond_missing_part"
+        ],
+        "detectable_errors": [
+          "number_bond_missing_part_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "number_bond_missing_part_error"
+        ],
+        "remediation_by_error": {
+          "number_bond_missing_part_error": "number_bond"
+        },
+        "default_remediation": "number_bond"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_bond",
+        "targets": {
+          "number_bond_missing_part": "number_bond"
+        }
+      },
+      "visual_policy": {
+        "template": "number_bond",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g1_compose_decompose_10.v1",
+      "skill_id": "g1_compose_decompose_10",
+      "name": "Состав десятка",
+      "grade": 1,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "addition_within_10_part_whole",
+          "compose_decompose_10"
+        ],
+        "detectable_errors": [
+          "addition_within_10_part_whole_error",
+          "compose_decompose_10_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "addition_within_10_part_whole_error",
+          "compose_decompose_10_error"
+        ],
+        "remediation_by_error": {
+          "addition_within_10_part_whole_error": "number_bond",
+          "compose_decompose_10_error": "number_bond"
+        },
+        "default_remediation": "number_bond"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "number_bond",
+        "targets": {
+          "addition_within_10_part_whole": "number_bond",
+          "compose_decompose_10": "number_bond"
+        }
+      },
+      "visual_policy": {
+        "template": "number_bond",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 1,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g2_addition_core.v1",
+      "skill_id": "g2_addition_core",
+      "name": "Сложение двузначных",
+      "grade": 2,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "addition_carry"
+        ],
+        "detectable_errors": [
+          "addition_carry_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "addition_carry_error"
+        ],
+        "remediation_by_error": {
+          "addition_carry_error": "base_ten_blocks"
+        },
+        "default_remediation": "base_ten_blocks"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "base_ten_blocks",
+        "targets": {
+          "addition_carry": "base_ten_blocks"
+        }
+      },
+      "visual_policy": {
+        "template": "base_ten_blocks",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "active",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g2_subtraction_core.v1",
+      "skill_id": "g2_subtraction_core",
+      "name": "Вычитание двузначных",
+      "grade": 2,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "subtraction_carry",
+          "subtraction_within_10_part_whole"
+        ],
+        "detectable_errors": [
+          "subtraction_carry_error",
+          "subtraction_within_10_part_whole_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "subtraction_carry_error",
+          "subtraction_within_10_part_whole_error"
+        ],
+        "remediation_by_error": {
+          "subtraction_carry_error": "base_ten_blocks",
+          "subtraction_within_10_part_whole_error": "number_bond"
+        },
+        "default_remediation": "base_ten_blocks"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "base_ten_blocks",
+        "targets": {
+          "subtraction_carry": "base_ten_blocks",
+          "subtraction_within_10_part_whole": "number_bond"
+        }
+      },
+      "visual_policy": {
+        "template": "base_ten_blocks",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g2_multiplication_intro.v1",
+      "skill_id": "g2_multiplication_intro",
+      "name": "Введение в умножение",
+      "grade": 2,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "multiplication_intro"
+        ],
+        "detectable_errors": [
+          "multiplication_intro_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "multiplication_intro_error"
+        ],
+        "remediation_by_error": {
+          "multiplication_intro_error": "array_matrix"
+        },
+        "default_remediation": "array_matrix"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "array_matrix",
+        "targets": {
+          "multiplication_intro": "array_matrix"
+        }
+      },
+      "visual_policy": {
+        "template": "array_matrix",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g2_division_intro.v1",
+      "skill_id": "g2_division_intro",
+      "name": "Введение в деление",
+      "grade": 2,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "division_intro"
+        ],
+        "detectable_errors": [
+          "division_intro_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "division_intro_error"
+        ],
+        "remediation_by_error": {
+          "division_intro_error": "division_groups"
+        },
+        "default_remediation": "division_groups"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "division_groups",
+        "targets": {
+          "division_intro": "division_groups"
+        }
+      },
+      "visual_policy": {
+        "template": "division_groups",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g2_measurement_length.v1",
+      "skill_id": "g2_measurement_length",
+      "name": "Измерение длины",
+      "grade": 2,
+      "domain": "measurement",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "measurement_length"
+        ],
+        "detectable_errors": [
+          "measurement_length_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "measurement_length_error"
+        ],
+        "remediation_by_error": {
+          "measurement_length_error": "place_value_chart"
+        },
+        "default_remediation": "place_value_chart"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "place_value_chart",
+        "targets": {
+          "measurement_length": "place_value_chart"
+        }
+      },
+      "visual_policy": {
+        "template": "place_value_chart",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 2,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g3_time_measurement_core.v1",
+      "skill_id": "g3_time_measurement_core",
+      "name": "Время и измерения",
+      "grade": 3,
+      "domain": "measurement",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "measurement_large_units",
+          "time_unit_conversion"
+        ],
+        "detectable_errors": [
+          "measurement_large_units_error",
+          "time_unit_conversion_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "measurement_large_units_error",
+          "time_unit_conversion_error"
+        ],
+        "remediation_by_error": {
+          "measurement_large_units_error": "place_value_chart",
+          "time_unit_conversion_error": "clock_face"
+        },
+        "default_remediation": "place_value_chart"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "place_value_chart",
+        "targets": {
+          "measurement_large_units": "place_value_chart",
+          "time_unit_conversion": "clock_face"
+        }
+      },
+      "visual_policy": {
+        "template": "place_value_chart",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g3_multiplication_tables.v1",
+      "skill_id": "g3_multiplication_tables",
+      "name": "Таблица умножения",
+      "grade": 3,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "division_via_multiplication",
+          "multiplication_tables"
+        ],
+        "detectable_errors": [
+          "division_via_multiplication_error",
+          "multiplication_tables_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "division_via_multiplication_error",
+          "multiplication_tables_error"
+        ],
+        "remediation_by_error": {
+          "division_via_multiplication_error": "division_groups",
+          "multiplication_tables_error": "array_matrix"
+        },
+        "default_remediation": "division_groups"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "division_groups",
+        "targets": {
+          "division_via_multiplication": "division_groups",
+          "multiplication_tables": "array_matrix"
+        }
+      },
+      "visual_policy": {
+        "template": "division_groups",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g3_division_basics.v1",
+      "skill_id": "g3_division_basics",
+      "name": "Деление — основы",
+      "grade": 3,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "division_with_remainder"
+        ],
+        "detectable_errors": [
+          "division_with_remainder_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "division_with_remainder_error"
+        ],
+        "remediation_by_error": {
+          "division_with_remainder_error": "division_groups"
+        },
+        "default_remediation": "division_groups"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "division_groups",
+        "targets": {
+          "division_with_remainder": "division_groups"
+        }
+      },
+      "visual_policy": {
+        "template": "division_groups",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g3_fractions_intro.v1",
+      "skill_id": "g3_fractions_intro",
+      "name": "Введение в дроби",
+      "grade": 3,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "fractions_intro"
+        ],
+        "detectable_errors": [
+          "fractions_intro_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "fractions_intro_error"
+        ],
+        "remediation_by_error": {
+          "fractions_intro_error": "fraction_bars"
+        },
+        "default_remediation": "fraction_bars"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "fraction_bars",
+        "targets": {
+          "fractions_intro": "fraction_bars"
+        }
+      },
+      "visual_policy": {
+        "template": "fraction_bars",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g3_geometry_2d.v1",
+      "skill_id": "g3_geometry_2d",
+      "name": "Геометрия — фигуры",
+      "grade": 3,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "conceptual"
+        ],
+        "item_families": [
+          "geometry_2d"
+        ],
+        "detectable_errors": [
+          "geometry_2d_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "geometry_2d_error"
+        ],
+        "remediation_by_error": {
+          "geometry_2d_error": "geoboard_dynamic"
+        },
+        "default_remediation": "geoboard_dynamic"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "geoboard_dynamic",
+        "targets": {
+          "geometry_2d": "geoboard_dynamic"
+        }
+      },
+      "visual_policy": {
+        "template": "geoboard_dynamic",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 3,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g4_fractions_operations.v1",
+      "skill_id": "g4_fractions_operations",
+      "name": "Дроби — операции",
+      "grade": 4,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "fractions_addition",
+          "fractions_comparison"
+        ],
+        "detectable_errors": [
+          "fractions_addition_error",
+          "fractions_comparison_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "fractions_addition_error",
+          "fractions_comparison_error"
+        ],
+        "remediation_by_error": {
+          "fractions_addition_error": "fraction_bars",
+          "fractions_comparison_error": "fraction_bars"
+        },
+        "default_remediation": "fraction_bars"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "fraction_bars",
+        "targets": {
+          "fractions_addition": "fraction_bars",
+          "fractions_comparison": "fraction_bars"
+        }
+      },
+      "visual_policy": {
+        "template": "fraction_bars",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 4,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g4_decimals_intro.v1",
+      "skill_id": "g4_decimals_intro",
+      "name": "Десятичные дроби",
+      "grade": 4,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "decimals_intro"
+        ],
+        "detectable_errors": [
+          "decimals_intro_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "decimals_intro_error"
+        ],
+        "remediation_by_error": {
+          "decimals_intro_error": "place_value_chart"
+        },
+        "default_remediation": "place_value_chart"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "place_value_chart",
+        "targets": {
+          "decimals_intro": "place_value_chart"
+        }
+      },
+      "visual_policy": {
+        "template": "place_value_chart",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 4,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g4_area_perimeter.v1",
+      "skill_id": "g4_area_perimeter",
+      "name": "Площадь и периметр",
+      "grade": 4,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "area_perimeter"
+        ],
+        "detectable_errors": [
+          "area_perimeter_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "area_perimeter_error"
+        ],
+        "remediation_by_error": {
+          "area_perimeter_error": "area_model_grid"
+        },
+        "default_remediation": "area_model_grid"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "area_model_grid",
+        "targets": {
+          "area_perimeter": "area_model_grid"
+        }
+      },
+      "visual_policy": {
+        "template": "area_model_grid",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 4,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g4_large_numbers.v1",
+      "skill_id": "g4_large_numbers",
+      "name": "Большие числа",
+      "grade": 4,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "large_numbers"
+        ],
+        "detectable_errors": [
+          "large_numbers_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "large_numbers_error"
+        ],
+        "remediation_by_error": {
+          "large_numbers_error": "place_value_chart"
+        },
+        "default_remediation": "place_value_chart"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "place_value_chart",
+        "targets": {
+          "large_numbers": "place_value_chart"
+        }
+      },
+      "visual_policy": {
+        "template": "place_value_chart",
+        "age_band": "junior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 3,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 4,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g5_decimals_operations.v1",
+      "skill_id": "g5_decimals_operations",
+      "name": "Десятичные — операции",
+      "grade": 5,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "decimals_operations"
+        ],
+        "detectable_errors": [
+          "decimals_operations_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "decimals_operations_error"
+        ],
+        "remediation_by_error": {
+          "decimals_operations_error": "place_value_chart"
+        },
+        "default_remediation": "place_value_chart"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "place_value_chart",
+        "targets": {
+          "decimals_operations": "place_value_chart"
+        }
+      },
+      "visual_policy": {
+        "template": "place_value_chart",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 5,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g5_fractions_advanced.v1",
+      "skill_id": "g5_fractions_advanced",
+      "name": "Дроби — продвинутые",
+      "grade": 5,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "fractions_multiplication",
+          "mixed_numbers"
+        ],
+        "detectable_errors": [
+          "fractions_multiplication_error",
+          "mixed_numbers_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "fractions_multiplication_error",
+          "mixed_numbers_error"
+        ],
+        "remediation_by_error": {
+          "fractions_multiplication_error": "fraction_bars",
+          "mixed_numbers_error": "fraction_bars"
+        },
+        "default_remediation": "fraction_bars"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "fraction_bars",
+        "targets": {
+          "fractions_multiplication": "fraction_bars",
+          "mixed_numbers": "fraction_bars"
+        }
+      },
+      "visual_policy": {
+        "template": "fraction_bars",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 5,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g5_simple_equations.v1",
+      "skill_id": "g5_simple_equations",
+      "name": "Простые уравнения",
+      "grade": 5,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "simple_equations"
+        ],
+        "detectable_errors": [
+          "simple_equations_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "simple_equations_error"
+        ],
+        "remediation_by_error": {
+          "simple_equations_error": "balance_scale_equation"
+        },
+        "default_remediation": "balance_scale_equation"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "balance_scale_equation",
+        "targets": {
+          "simple_equations": "balance_scale_equation"
+        }
+      },
+      "visual_policy": {
+        "template": "balance_scale_equation",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 5,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g5_area_advanced.v1",
+      "skill_id": "g5_area_advanced",
+      "name": "Площадь — продвинутая",
+      "grade": 5,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "area_triangle"
+        ],
+        "detectable_errors": [
+          "area_triangle_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "area_triangle_error"
+        ],
+        "remediation_by_error": {
+          "area_triangle_error": "cut_and_drag_parallelogram"
+        },
+        "default_remediation": "cut_and_drag_parallelogram"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "cut_and_drag_parallelogram",
+        "targets": {
+          "area_triangle": "cut_and_drag_parallelogram"
+        }
+      },
+      "visual_policy": {
+        "template": "cut_and_drag_parallelogram",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 5,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g6_linear_equations.v1",
+      "skill_id": "g6_linear_equations",
+      "name": "Линейные уравнения",
+      "grade": 6,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "linear_equations"
+        ],
+        "detectable_errors": [
+          "linear_equations_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "linear_equations_error"
+        ],
+        "remediation_by_error": {
+          "linear_equations_error": "balance_scale_equation"
+        },
+        "default_remediation": "balance_scale_equation"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "balance_scale_equation",
+        "targets": {
+          "linear_equations": "balance_scale_equation"
+        }
+      },
+      "visual_policy": {
+        "template": "balance_scale_equation",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 6,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g6_proportions.v1",
+      "skill_id": "g6_proportions",
+      "name": "Пропорции и отношения",
+      "grade": 6,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "proportions"
+        ],
+        "detectable_errors": [
+          "proportions_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "proportions_error"
+        ],
+        "remediation_by_error": {
+          "proportions_error": "ratio_table"
+        },
+        "default_remediation": "ratio_table"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "ratio_table",
+        "targets": {
+          "proportions": "ratio_table"
+        }
+      },
+      "visual_policy": {
+        "template": "ratio_table",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 6,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g6_volume.v1",
+      "skill_id": "g6_volume",
+      "name": "Объём тела",
+      "grade": 6,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "volume"
+        ],
+        "detectable_errors": [
+          "volume_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "volume_error"
+        ],
+        "remediation_by_error": {
+          "volume_error": "net_of_solid"
+        },
+        "default_remediation": "net_of_solid"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "net_of_solid",
+        "targets": {
+          "volume": "net_of_solid"
+        }
+      },
+      "visual_policy": {
+        "template": "net_of_solid",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 6,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g6_rational_numbers.v1",
+      "skill_id": "g6_rational_numbers",
+      "name": "Рациональные числа",
+      "grade": 6,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "rational_numbers"
+        ],
+        "detectable_errors": [
+          "rational_numbers_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "rational_numbers_error"
+        ],
+        "remediation_by_error": {
+          "rational_numbers_error": "double_number_line"
+        },
+        "default_remediation": "double_number_line"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "double_number_line",
+        "targets": {
+          "rational_numbers": "double_number_line"
+        }
+      },
+      "visual_policy": {
+        "template": "double_number_line",
+        "age_band": "middle",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 6,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g7_rational_operations.v1",
+      "skill_id": "g7_rational_operations",
+      "name": "Рациональные — операции",
+      "grade": 7,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "rational_operations"
+        ],
+        "detectable_errors": [
+          "rational_operations_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "rational_operations_error"
+        ],
+        "remediation_by_error": {
+          "rational_operations_error": "double_number_line"
+        },
+        "default_remediation": "double_number_line"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "double_number_line",
+        "targets": {
+          "rational_operations": "double_number_line"
+        }
+      },
+      "visual_policy": {
+        "template": "double_number_line",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 7,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g7_linear_equations_advanced.v1",
+      "skill_id": "g7_linear_equations_advanced",
+      "name": "Уравнения — продвинутые",
+      "grade": 7,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "systems_of_equations"
+        ],
+        "detectable_errors": [
+          "systems_of_equations_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "systems_of_equations_error"
+        ],
+        "remediation_by_error": {
+          "systems_of_equations_error": "balance_scale_equation"
+        },
+        "default_remediation": "balance_scale_equation"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "balance_scale_equation",
+        "targets": {
+          "systems_of_equations": "balance_scale_equation"
+        }
+      },
+      "visual_policy": {
+        "template": "balance_scale_equation",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 7,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g7_percent.v1",
+      "skill_id": "g7_percent",
+      "name": "Проценты",
+      "grade": 7,
+      "domain": "arithmetic",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "percent"
+        ],
+        "detectable_errors": [
+          "percent_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "percent_error"
+        ],
+        "remediation_by_error": {
+          "percent_error": "percent_grid_10x10"
+        },
+        "default_remediation": "percent_grid_10x10"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "percent_grid_10x10",
+        "targets": {
+          "percent": "percent_grid_10x10"
+        }
+      },
+      "visual_policy": {
+        "template": "percent_grid_10x10",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 7,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g7_geometry_advanced.v1",
+      "skill_id": "g7_geometry_advanced",
+      "name": "Геометрия — 7 класс",
+      "grade": 7,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "conceptual"
+        ],
+        "item_families": [
+          "angles_triangles"
+        ],
+        "detectable_errors": [
+          "angles_triangles_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "angles_triangles_error"
+        ],
+        "remediation_by_error": {
+          "angles_triangles_error": "geoboard_dynamic"
+        },
+        "default_remediation": "geoboard_dynamic"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "geoboard_dynamic",
+        "targets": {
+          "angles_triangles": "geoboard_dynamic"
+        }
+      },
+      "visual_policy": {
+        "template": "geoboard_dynamic",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 7,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g8_quadratic.v1",
+      "skill_id": "g8_quadratic",
+      "name": "Квадратные уравнения",
+      "grade": 8,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "quadratic"
+        ],
+        "detectable_errors": [
+          "quadratic_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "quadratic_error"
+        ],
+        "remediation_by_error": {
+          "quadratic_error": "algebra_tiles"
+        },
+        "default_remediation": "algebra_tiles"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "algebra_tiles",
+        "targets": {
+          "quadratic": "algebra_tiles"
+        }
+      },
+      "visual_policy": {
+        "template": "algebra_tiles",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 8,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g8_functions.v1",
+      "skill_id": "g8_functions",
+      "name": "Функции",
+      "grade": 8,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "linear_functions"
+        ],
+        "detectable_errors": [
+          "linear_functions_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "linear_functions_error"
+        ],
+        "remediation_by_error": {
+          "linear_functions_error": "cartesian_graph_slider"
+        },
+        "default_remediation": "cartesian_graph_slider"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "cartesian_graph_slider",
+        "targets": {
+          "linear_functions": "cartesian_graph_slider"
+        }
+      },
+      "visual_policy": {
+        "template": "cartesian_graph_slider",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 8,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g8_trigonometry_intro.v1",
+      "skill_id": "g8_trigonometry_intro",
+      "name": "Тригонометрия — введение",
+      "grade": 8,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "trigonometry"
+        ],
+        "detectable_errors": [
+          "trigonometry_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "trigonometry_error"
+        ],
+        "remediation_by_error": {
+          "trigonometry_error": "geoboard_dynamic"
+        },
+        "default_remediation": "geoboard_dynamic"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "geoboard_dynamic",
+        "targets": {
+          "trigonometry": "geoboard_dynamic"
+        }
+      },
+      "visual_policy": {
+        "template": "geoboard_dynamic",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 8,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g8_statistics_basic.v1",
+      "skill_id": "g8_statistics_basic",
+      "name": "Статистика — основы",
+      "grade": 8,
+      "domain": "statistics",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "data"
+        ],
+        "item_families": [
+          "statistics"
+        ],
+        "detectable_errors": [
+          "statistics_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "statistics_error"
+        ],
+        "remediation_by_error": {
+          "statistics_error": "part_part_whole_bar"
+        },
+        "default_remediation": "part_part_whole_bar"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "part_part_whole_bar",
+        "targets": {
+          "statistics": "part_part_whole_bar"
+        }
+      },
+      "visual_policy": {
+        "template": "part_part_whole_bar",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 8,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g9_quadratic_functions.v1",
+      "skill_id": "g9_quadratic_functions",
+      "name": "Квадратичные функции",
+      "grade": 9,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "quadratic_functions"
+        ],
+        "detectable_errors": [
+          "quadratic_functions_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "quadratic_functions_error"
+        ],
+        "remediation_by_error": {
+          "quadratic_functions_error": "cartesian_graph_slider"
+        },
+        "default_remediation": "cartesian_graph_slider"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "cartesian_graph_slider",
+        "targets": {
+          "quadratic_functions": "cartesian_graph_slider"
+        }
+      },
+      "visual_policy": {
+        "template": "cartesian_graph_slider",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 9,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g9_trigonometry.v1",
+      "skill_id": "g9_trigonometry",
+      "name": "Тригонометрия",
+      "grade": 9,
+      "domain": "geometry",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "trig_identities"
+        ],
+        "detectable_errors": [
+          "trig_identities_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "trig_identities_error"
+        ],
+        "remediation_by_error": {
+          "trig_identities_error": "geoboard_dynamic"
+        },
+        "default_remediation": "geoboard_dynamic"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "geoboard_dynamic",
+        "targets": {
+          "trig_identities": "geoboard_dynamic"
+        }
+      },
+      "visual_policy": {
+        "template": "geoboard_dynamic",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 9,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g9_probability.v1",
+      "skill_id": "g9_probability",
+      "name": "Вероятность",
+      "grade": 9,
+      "domain": "statistics",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "data"
+        ],
+        "item_families": [
+          "probability"
+        ],
+        "detectable_errors": [
+          "probability_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "probability_error"
+        ],
+        "remediation_by_error": {
+          "probability_error": "percent_grid_10x10"
+        },
+        "default_remediation": "percent_grid_10x10"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "percent_grid_10x10",
+        "targets": {
+          "probability": "percent_grid_10x10"
+        }
+      },
+      "visual_policy": {
+        "template": "percent_grid_10x10",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 9,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    },
+    {
+      "id": "g9_sequences_series.v1",
+      "skill_id": "g9_sequences_series",
+      "name": "Последовательности",
+      "grade": 9,
+      "domain": "algebra",
+      "coverage": {
+        "status": "partial",
+        "diagnostic": "ready",
+        "lesson": "ready",
+        "practice": "ready",
+        "visual": "ready"
+      },
+      "diagnostic": {
+        "required": true,
+        "item_types": [
+          "numeric"
+        ],
+        "item_families": [
+          "sequences"
+        ],
+        "detectable_errors": [
+          "sequences_error"
+        ]
+      },
+      "error_model": {
+        "types": [
+          "sequences_error"
+        ],
+        "remediation_by_error": {
+          "sequences_error": "function_table"
+        },
+        "default_remediation": "function_table"
+      },
+      "remediation": {
+        "required": true,
+        "default_path": "function_table",
+        "targets": {
+          "sequences": "function_table"
+        }
+      },
+      "visual_policy": {
+        "template": "function_table",
+        "age_band": "senior",
+        "diagnosis": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "board_off": "off",
+        "board_learning": "on",
+        "board_remediation": "limited"
+      },
+      "board_policy": {
+        "diagnostic": "off",
+        "learning": "on",
+        "remediation": "limited",
+        "default": "off"
+      },
+      "mastery_gate": {
+        "type": "streak",
+        "correct": 4,
+        "window": 5
+      },
+      "mode": "shadow",
+      "validation": {
+        "required": true,
+        "grade_band": 9,
+        "diagnosis_hint_policy": "none",
+        "board_policy_locked": true,
+        "mastery_owned_by_backend": true,
+        "required_sections": [
+          "coverage",
+          "diagnostic",
+          "remediation",
+          "visual_policy",
+          "mastery_gate"
+        ]
+      }
+    }
+  ]
+}

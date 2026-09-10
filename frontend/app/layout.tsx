@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Nunito, Source_Code_Pro } from 'next/font/google'
+import { Nunito, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -7,9 +7,9 @@ const nunito = Nunito({
   subsets: ["latin", "cyrillic"],
   variable: "--font-nunito"
 });
-const sourceCodePro = Source_Code_Pro({ 
+const geistMono = Geist_Mono({ 
   subsets: ["latin"],
-  variable: "--font-source-code-pro"
+  variable: "--font-geist-mono"
 });
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className="bg-background">
-      <body className={`${nunito.variable} ${sourceCodePro.variable} font-sans antialiased`}>
+      <body className={`${nunito.variable} ${geistMono.variable} font-sans antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

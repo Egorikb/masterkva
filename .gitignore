@@ -1,15 +1,18 @@
-node_modules/
-.next/
-.venv/
-__pycache__/
-.pytest_cache/
-.tmp/
-*.tsbuildinfo
+.next
+node_modules
+*.log
 .env
-.env.local
-.env.backup
-.secrets.baseline
-backend.log
-audio_storage/
-dist/
-build/
+.env.*
+__pycache__
+.pytest_cache
+.DS_Store
+
+# Local textbook sources and generated vector indexes. Keep locally; publish
+# manifests/curated JSON instead of large binary or machine-generated files.
+backend/data/knowledge_bases/**/raw/
+backend/data/knowledge_bases/**/llamaindex_storage/
+backend/data/china_textbooks_junior/*.pdf
+backend/data/user_states.json
+
+# Локальная конфигурация среды
+.vscode/

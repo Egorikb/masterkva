@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "canonical_source": "full",
+  "description": "Canonical curriculum map for runtime and material QA. Compact grade_N.json files are legacy summaries; grade_N_full.json files are authoritative topic maps.",
+  "grades": {
+    "1": "grade_1_full.json",
+    "2": "grade_2_full.json",
+    "3": "grade_3_full.json",
+    "4": "grade_4_full.json",
+    "5": "grade_5_full.json",
+    "6": "grade_6_full.json",
+    "7": "grade_7_full.json",
+    "8": "grade_8_full.json",
+    "9": "grade_9_full.json"
+  }
+}

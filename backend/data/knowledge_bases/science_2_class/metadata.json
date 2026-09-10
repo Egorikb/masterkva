@@ -1,0 +1,9 @@
+{
+  "name": "science_2_class",
+  "created_at": "2026-04-14 16:36:43",
+  "description": "Knowledge base: science_2_class",
+  "version": "1.0",
+  "rag_provider": "llamaindex",
+  "needs_reindex": false,
+  "last_updated": "2026-04-14 16:36:48"
+}

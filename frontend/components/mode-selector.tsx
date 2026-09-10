@@ -20,13 +20,6 @@ const modes = [
     description: "Быстрые объяснения для домашних заданий по всем предметам",
     gradient: "from-gold to-gold-light",
   },
-  {
-    id: "review" as LearningMode,
-    title: "📝 Повторение",
-    icon: BookOpen,
-    description: "Тесты и задания для закрепления знаний",
-    gradient: "from-purple to-purple-light",
-  },
 ];
 
 export function ModeSelector() {
@@ -59,7 +52,7 @@ export function ModeSelector() {
             <div className="grid gap-6 md:grid-cols-2">
               {modes.map((modeOption, index) => (
                 <motion.button
-                  key={modeOption?.id || `mode-${index}`}
+                  key={modeOption.id}
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 + index * 0.1 }}

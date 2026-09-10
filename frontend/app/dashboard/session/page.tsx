@@ -37,6 +37,7 @@ const beltNames = {
 function SessionContent() {
   const searchParams = useSearchParams();
   const grade = searchParams.get("grade");
+  const parsedGrade = grade ? Number.parseInt(grade, 10) : null;
   const modeParam = searchParams.get("mode");
   
   const { studentProfile, updateStudentProfile } = useAuthStore();
@@ -51,12 +52,12 @@ function SessionContent() {
     }
   }, [modeParam, setMode]);
 
-  // Update last session grade
+  // Update last session grade only when it actually changes
   useEffect(() => {
-    if (grade && studentProfile) {
-      updateStudentProfile({ lastSessionGrade: parseInt(grade) });
+    if (parsedGrade && studentProfile?.lastSessionGrade !== parsedGrade) {
+      updateStudentProfile({ lastSessionGrade: parsedGrade });
     }
-  }, [grade, updateStudentProfile]);
+  }, [parsedGrade, studentProfile?.lastSessionGrade, updateStudentProfile]);
 
   const handleModeSelect = (newMode: "kungfu" | "homework") => {
     setMode(newMode);
@@ -69,7 +70,24 @@ function SessionContent() {
     clearMessages();
   };
 
-  if (!studentProfile) return null;
+  if (!studentProfile) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center p-6 text-center">
+        <h1 className="mb-2 text-2xl font-bold text-foreground">Кабинет ещё не готов</h1>
+        <p className="mb-6 max-w-md text-muted-foreground">
+          Сначала войди или зарегистрируйся, чтобы открыть личный кабинет и диалог с учителем.
+        </p>
+        <div className="flex gap-3">
+          <Link href="/login">
+            <Button>Войти</Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="outline">Создать аккаунт</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // Mode selection screen
   if (!selectedMode && !mode) {
@@ -184,7 +202,7 @@ function SessionContent() {
 
           {/* Right: Belt Level */}
           <motion.div
-            key={studentProfile?.beltLevel || 'white'}
+            key={studentProfile.beltLevel}
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className={`flex items-center gap-2 rounded-full border-2 px-3 py-1 ${beltColors[studentProfile.beltLevel]}`}

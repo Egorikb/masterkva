@@ -50,7 +50,24 @@ export default function DashboardPage() {
     black: "from-gray-800 to-gray-900 text-white",
   };
 
-  if (!studentProfile) return null;
+  if (!studentProfile) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center p-6 text-center">
+        <h1 className="mb-2 text-2xl font-bold text-foreground">Кабинет ещё не готов</h1>
+        <p className="mb-6 max-w-md text-muted-foreground">
+          Авторизуйся, чтобы увидеть свой прогресс, свитки и вход в диалог с учителем.
+        </p>
+        <div className="flex gap-3">
+          <Link href="/login">
+            <Button>Войти</Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="outline">Создать аккаунт</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 lg:p-8">

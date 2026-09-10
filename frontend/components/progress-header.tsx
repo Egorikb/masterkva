@@ -74,7 +74,7 @@ export function ProgressHeader() {
 
         {/* Right: Belt Level */}
         <motion.div
-          key={progress?.beltLevel}
+          key={progress.beltLevel}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className={`flex items-center gap-2 rounded-full border-2 px-4 py-1.5 ${beltColors[progress.beltLevel]}`}

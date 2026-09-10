@@ -3,156 +3,24 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, User, Bot } from "lucide-react";
+import { useChatStore } from "@/lib/chat-store";
+import { useAuthStore } from "@/lib/auth-store";
+import { postPandaChat } from "@/lib/api/panda-client";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { VoiceInput } from "./voice-input";
 import { AchievementPopup } from "./achievement-popup";
-import { useChatStore } from "@/lib/chat-store";
-import type { ChatMessage } from "@/lib/types";
-
-// Conversation flow states (State Machine v2.0)
-type FlowState = "greeting" | "name" | "grade" | "goal" | "diagnostic" | "teaching" | "topic";
-
-// SYSTEM PROMPT v2.0
-const SYSTEM_PROMPT = `Ты — Мастер Кват, мудрая Панда, наставник по математике 🐼
-
-CPA МЕТОД (обязателен):
-- Конкретное: предметы, фрукты, яблоки
-- Образное: картинки, схемы  
-- Абстрактное: цифры, формулы
-
-Тон: мудрый, терпеливый.
-
-ОБУЧЕНИЕ (НОВАЯ ЛОГИКА):
-- Показывай страницу учебника (картинку)
-- 3 верных ПОДРЯД → след. страница
-- 2 ошибки → сначала этой страницы (Grade)
-- Каждая тема = новая страница учебника. Используй метафоры: "свитки знаний", "энергия Ци".
-Язык: строго русский. Стиль: короткие сообщения. Максимум 1 предложение. Используй простые слова.
-ВСЕГДА давай следующий пример ПОСЛЕ подтверждения ответа. Не останавливай диалог. Всегда продолжай объяснение сам, не жди ответа ребёнка.Максимум 1 предложение. Используй простые слова..
-
-Темы: Numbers 1-10, Numbers 11-20, Geometry, Addition, Subtraction, CPA Method, Time/Clock, Position, Review
-
-СТЕЙТ МАШИНА:
-Этап А - Привет → Имя → Класс → Выбор: Курс или Тема
-Этап Б - Диагностика: 2 ошибки = точка старта
-Этап В - Обучение: с первого параграфа уровня
-Этап Г - Конкретная тема: сначала
-Этап Д - Повторный визит
-
-В диагностике (Этап Б):
-- Начинай с "Повторение" (тема 9), класс 1
-- 2 ошибки подряд = точка старта (остановись)
-- НЕ предлагай 4 варианта выбора
-
-АНАЛИТИКА: После каждого ответа ученика записывай в консоль JSON:
-{ "current_level": "grade X", "strong_topics": [...], "weak_spots": [...], "session_goal": "diagnostic|learning", "recommendation": "..." }`;
-
-const getVisualUrl = (grade: number, topic: string) => {
-  const topicMap: Record<string, string> = {
-    "addition": "094",
-    "subtraction": "095",
-    "multiplication": "096",
-    "division": "097",
-    "geometry": "034",
-    "numbers": "019",
-  };
-  const page = topicMap[topic] || "094";
-  return `/images/${grade}/${page}`;
-};
-
-// Diagonstic questions by topic
-const DIAGNOSTIC_QUESTIONS = {
-  // Grade 1: Сложение и вычитание
-  1: [
-    { q: "Сколько будет 3 + 2?", a: "5" },
-    { q: "Сколько будет 7 - 4?", a: "3" },
-    { q: "Сколько будет 5 + 3?", a: "8" },
-    // Additional (after error)
-    { q: "Сколько будет 6 + 2?", a: "8" },
-    { q: "Сколько будет 9 - 5?", a: "4" },
-  ],
-  // Grade 2: Умножение
-  2: [
-    { q: "Сколько будет 2 × 3?", a: "6" },
-    { q: "Сколько будет 4 × 2?", a: "8" },
-    { q: "Сколько будет 3 × 3?", a: "9" },
-    { q: "Сколько будет 5 × 2?", a: "10" },
-    { q: "Сколько будет 6 × 2?", a: "12" },
-  ],
-  // Grade 3: Деление
-  3: [
-    { q: "Сколько будет 6 ÷ 2?", a: "3" },
-    { q: "Сколько будет 8 ÷ 4?", a: "2" },
-    { q: "Сколько будет 9 ÷ 3?", a: "3" },
-    { q: "Сколько будет 10 ÷ 2?", a: "5" },
-    { q: "Сколько будет 12 ÷ 3?", a: "4" },
-  ],
-  // Grade 4: Многозначные
-  4: [
-    { q: "Сколько будет 23 + 17?", a: "40" },
-    { q: "Сколько будет 45 - 28?", a: "17" },
-    { q: "Сколько будет 12 × 4?", a: "48" },
-    { q: "Сколько будет 56 ÷ 7?", a: "8" },
-    { q: "Сколько будет 15 + 25?", a: "40" },
-  ],
-  // Grade 5: Дроби и проценты
-  5: [
-    { q: "Сколько будет 1/2 + 1/4?", a: "3/4" },
-    { q: "Сколько будет 25% от 100?", a: "25" },
-    { q: "Сколько будет 0.5 + 0.3?", a: "0.8" },
-    { q: "Сколько будет 50% от 200?", a: "100" },
-    { q: "Сколько будет 3/4 - 1/4?", a: "1/2" },
-  ],
-  // Grade 6: Проценты и уравнения
-  6: [
-    { q: "Сколько будет 10% от 150?", a: "15" },
-    { q: "Сколько будет 20% от 250?", a: "50" },
-    { q: "Чему равен x: x + 5 = 12?", a: "7" },
-    { q: "Чему равен x: x × 3 = 18?", a: "6" },
-    { q: "Сколько будет 30% от 100?", a: "30" },
-  ],
-};
+import type { ChatMessage, ApiResponse, QuestionVisualSection } from "@/lib/types";
+import type { PandaChatResponse } from "@/contracts/panda";
 
 export function ChatInterface() {
   const [input, setInput] = useState("");
   const [showAchievement, setShowAchievement] = useState(false);
   const [achievementText, setAchievementText] = useState("");
-  
-  // State Machine State
-  const [flowState, setFlowState] = useState<FlowState>("greeting");
-  const [studentName, setStudentName] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("studentName") || "";
-    }
-    return "";
-  });
-  const [studentGrade, setStudentGrade] = useState<number | null>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("studentGrade");
-      return saved ? parseInt(saved) : null;
-    }
-    return null;
-  });
-  const [selectedGoal, setSelectedGoal] = useState<"course" | "topic" | null>(null);
-  
-  // Diagnostic state
-  const [diagnosticErrors, setDiagnosticErrors] = useState(0);
-  const [diagnosticGrade, setDiagnosticGrade] = useState(1);
-  const [diagnosticQuestion, setDiagnosticQuestion] = useState(0);
-  const [attemptMode, setAttemptMode] = useState<"normal" | "extra">("normal");
-
-  // Analytics for parent report
-  const [strongTopics, setStrongTopics] = useState<string[]>([]);
-  const [weakSpots, setWeakSpots] = useState<string[]>([]);
-
-  // Auto-focus input on load
-  useEffect(() => {
-    const timer = setTimeout(() => inputRef.current?.focus(), 100);
-    return () => clearTimeout(timer);
-  }, [])
-  
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const welcomeShownRef = useRef(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const initialTurnStartedRef = useRef<"kungfu" | "homework" | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   
   const { 
     messages, 
@@ -161,431 +29,232 @@ export function ChatInterface() {
     setIsLoading,
     mode,
     addQiEnergy,
-    setCurrentVisualData
+    setCurrentVisualData,
+    clearMessages,
   } = useChatStore();
-  
-  const scrollToBottom = useCallback(() => {
+
+  const { user, studentProfile, addQiEnergy: addAuthQiEnergy, updateStudentProfile } = useAuthStore();
+
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, scrollToBottom]);
+  }, [messages]);
 
-  // Этап А: Первое знакомство - Приветствие
   useEffect(() => {
-    if (!welcomeShownRef.current && messages.length === 0) {
-      const welcomeMsg = studentName 
-        ? `Привет, ${studentName}! Рад твоему возвращению в наш зал. 🥋\n\nПродолжим с того места в свитке, где остановились?`
-        : "Привет, мой юный друг! Я твой наставник Панда. 🐼\n\nКак мне называть тебя в нашем зале математических искусств?";
-      addMessage({
-        id: "welcome",
-        role: "assistant",
-        content: welcomeMsg,
-        timestamp: new Date(),
-      });
-      welcomeShownRef.current = true;
-      setFlowState(studentName ? "goal" : "name");
-    }
-  }, [messages.length, addMessage, studentName]);
-
-  // Call Backend (Python) via localhost:8001
-  const callBackend = async (userMessage: string): Promise<string> => {
-    // Get or create user_id from localStorage (сохраняем навсегда)
-    let userId = localStorage.getItem('user_email');
-    if (!userId) {
-      // Новый пользователь - создаём уникальный ID
-      userId = `guest_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
-      localStorage.setItem('user_email', userId);
-    }
-
-    // Также читаем name и grade если есть
-    const savedName = localStorage.getItem('studentName') || null;
-    const savedGrade = localStorage.getItem('studentGrade') || null;
-
-    const response = await fetch("http://localhost:8001/api/v1/plugins/panda/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: userId,
-        message: userMessage,
-        name: savedName,
-        grade: savedGrade ? parseInt(savedGrade) : null
-      })
-    });
-
-    if (!response.ok) {
-      console.error("Backend error:", response.status);
-      return "Извини, произошла ошибка связи с наставником. Попробуй ещё раз!";
-    }
-
-    const data = await response.json();
-    if (data.text) {
-      // Парсим [VISUAL] тег из ответа
-      const visualMatch = data.text.match(/\[VISUAL\](.*?)\[\/VISUAL\]/s);
-      if (visualMatch) {
-        try {
-          const visualData = JSON.parse(visualMatch[1]);
-          
-          // CPA компонент - приоритет!
-          if (visualData.type === "cpa_component") {
-            console.log("[CPA] Component:", visualData.component);
-            localStorage.setItem("cpa_component", JSON.stringify(visualData));
-            localStorage.setItem("currentVisualData", visualData.fallback_image || "");
-            setCurrentVisualData(null);
-          } else {
-            // Fallback - страница учебника
-            const newUrl = `/api/images/${visualData.grade}/${visualData.page}`;
-            console.log("[VISUAL] Updating blackboard:", newUrl);
-            localStorage.setItem("blackboard_grade", String(visualData.grade));
-            localStorage.setItem("blackboard_topic", visualData.page);
-            localStorage.setItem("currentVisualData", newUrl);
-            setCurrentVisualData(null);
-          }
-        } catch (e) {
-          console.error("[VISUAL] Parse error:", e);
-        }
-      }
-      return data.text;
-    }
-    return "Извини, произошла ошибка. Попробуй ещё раз!";
-  };
-
-  // Handle diagnostic check
-  const checkDiagnosticAnswer = (answer: string): boolean => {
-    const questions = DIAGNOSTIC_QUESTIONS[diagnosticGrade as keyof typeof DIAGNOSTIC_QUESTIONS];
-    const q = questions[diagnosticQuestion];
-    return q && (answer.trim() === q.a || answer.trim().includes(q.a));
-  };
+    textareaRef.current?.focus();
+  }, [messages.length, isLoading, mode]);
 
   const sendMessage = useCallback(async (content: string) => {
-    if (!content.trim() || isLoading) {
-      setInput("");
-      return;
-    }
+    if (!content.trim() || isLoading) return;
 
-    // State Machine Logic
-    const typos: Record<string, string> = {
-      "lfdfq": "давай",
-      "lfdf": "да",
-      "ghbdtn": "привет",
-      "vtyz": "ты",
-      "pkden": "иди",
-      "tujh": "егор",
-      "lfdeg": "егор",
-    };
-    let userInput = content.trim();
-    // Replace × with * and \ with x for math
-    userInput = userInput.replace(/×/g, "*").replace(/\\/g, "x");
-    // Auto-correct typos
-    Object.keys(typos).forEach(key => {
-      if (userInput.toLowerCase().includes(key)) {
-        userInput = typos[key];
-      }
-    });
-    
-    // Этап А - Получение имени (с валидацией)
-    if (flowState === "name") {
-      // Блокируем приветствия
-      const greetings = ["привет","ghbdtn","hi","hello","hey","хай","прив","123"];
-      if (greetings.includes(userInput.toLowerCase())) {
-        addMessage({
-          id: Date.now().toString(),
-          role: "user",
-          content: userInput,
-          timestamp: new Date(),
-        });
-        addMessage({
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: "Это приветствие, а не имя! 🐼 Как тебя звать? Напиши своё имя!",
-          timestamp: new Date(),
-        });
-        setInput("");
-          return;
-      }
-      setStudentName(userInput.trim());
-          const cappedName = userInput.trim().charAt(0).toUpperCase() + userInput.trim().slice(1);
-      localStorage.setItem("studentName", cappedName);
-      addMessage({
-        id: Date.now().toString(),
-        role: "user",
-        content: userInput,
-        timestamp: new Date(),
-      });
-      addMessage({
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: `Отлично, ${cappedName}! 🐼\n\nВ каком классе ты оттачиваешь свое мастерство в школе?`,
-        timestamp: new Date(),
-      });
-      setFlowState("grade");
-      setInput("");
-      setInput("");
-          return;
-    }
-    
-    // Этап А - Получение класса
-    if (flowState === "grade") {
-      const grade = parseInt(userInput.replace(/класс/gi, "").trim());
-      if (!isNaN(grade) && grade >= 1 && grade <= 6) {
-        setStudentGrade(grade);
-        localStorage.setItem("studentGrade", grade.toString());
-        addMessage({
-          id: Date.now().toString(),
-          role: "user",
-          content: userInput,
-          timestamp: new Date(),
-        });
-        addMessage({
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: `Отлично! Ты учишься в ${grade} классе. 🐼\n\nМы начнём полный Путь Мастера (курс) или тебе нужно укрепить конкретную тему сегодня?`,
-          timestamp: new Date(),
-        });
-        setFlowState("goal");
-        setInput("");
-          return;
-      }
-    }
-    
-    // Этап А - Выбор курса или темы
-    if (flowState === "goal") {
-      const isCourse = userInput.toLowerCase().includes("курс") || 
-                      userInput.toLowerCase().includes("путь") ||
-                      userInput.toLowerCase().includes("полн");
-      const isTopic = userInput.toLowerCase().includes("конкрет") ||
-                      userInput.toLowerCase().includes("тему") ||
-                      userInput.toLowerCase().includes("одну");
-      
-      if (isCourse || isTopic) {
-        addMessage({
-          id: Date.now().toString(),
-          role: "user",
-          content: userInput,
-          timestamp: new Date(),
-        });
-        setSelectedGoal(isCourse ? "course" : "topic");
-        
-        if (isCourse) {
-          // Начинаем диагностику (Этап Б)
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Чтобы подобрать правильный свиток, я проверю твой текущий уровень. Не бойся ошибок — это часть пути! 🐼\n\nНачнём с первого задания:\n\n![image](${getVisualUrl(1, "numbers")})\n\n${DIAGNOSTIC_QUESTIONS[1]?.[0]?.q || "Сколько будет 3 + 2?"}`,
-            timestamp: new Date(),
-          });
-          setInput("");
-        setFlowState("diagnostic");
-          setDiagnosticQuestion(0);
-          setDiagnosticErrors(0);
-          console.log("DEBUG: Setting visual to", getVisualUrl(1, "numbers"));
-          setCurrentVisualData(getVisualUrl(1, "numbers"));
-            localStorage.setItem("currentVisualData", getVisualUrl(1, "numbers"));
-          setInput("");
-          return;
-          setInput("");
-          return;
-        } else {
-          // Конкретная тема (Этап Г)
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Какую тему хочешь укрепить? Например: сложение, вычитание, дроби, геометрия...`,
-            timestamp: new Date(),
-          });
-          setFlowState("topic");
-          setInput("");
-          return;
-        }
-      }
-    }
-    
-    // Этап Б - Диагностика (новая логика: 3 правильных = +1 Grade, ошибка = 2 доп. попытки)
-    if (flowState === "diagnostic") {
-      const gradeQuestions = DIAGNOSTIC_QUESTIONS[diagnosticGrade as keyof typeof DIAGNOSTIC_QUESTIONS] || [];
-      const isCorrect = checkDiagnosticAnswer(userInput);
-      
-      addMessage({
-        id: Date.now().toString(),
-        role: "user",
-        content: userInput,
-        timestamp: new Date(),
-      });
-      
-      if (isCorrect) {
-        if (attemptMode === "extra") {
-          // Дополнительные примеры - ВЕРНО! Переходим на след. уровень
-          const nextGrade = Math.min(diagnosticGrade + 1, 6);
-          if (nextGrade >= 6) {
-            // Достигли максимума
-            addMessage({
-              id: (Date.now() + 1).toString(),
-              role: "assistant",
-              content: `Великолепно! 🐼 Ты прошёл все уровни!\n\nТвой уровень — 6 класс!\n\nНачинаем обучение!`,
-              timestamp: new Date(),
-            });
-            setStudentGrade(6);
-            setInput("");
-        setFlowState("teaching");
-            setInput("");
-            setInput("");
-          return;
-          }
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Верно! 🐼 Переходим к ${nextGrade} классу!\n\n${DIAGNOSTIC_QUESTIONS[nextGrade as keyof typeof DIAGNOSTIC_QUESTIONS]?.[0]?.q || ""}`,
-            timestamp: new Date(),
-          });
-          setDiagnosticGrade(nextGrade);
-          setCurrentVisualData(getVisualUrl(nextGrade, "numbers"));
-          setDiagnosticQuestion(0);
-          setAttemptMode("normal");
-          setInput("");
-          setInput("");
-          return;
-        }
-        
-        // Обычный режим - следующий вопрос
-        const nextQ = diagnosticQuestion + 1;
-        if (nextQ < 3) {
-          // Ещё есть вопросы этого уровня
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: "addMessage({...\n\n" + gradeQuestions[nextQ]?.q,
-            timestamp: new Date(),
-          });
-          setDiagnosticQuestion(nextQ);
-        } else {
-          // 3 верных ответа - переходим на следующий уровень
-          const nextGrade = Math.min(diagnosticGrade + 1, 6);
-          if (nextGrade >= 6) {
-            addMessage({
-              id: (Date.now() + 1).toString(),
-              role: "assistant",
-              content: `Великолепно! 🐼 Ты прошёл все уровни!\n\nТвой уровень — 6 класс!\n\nНачинаем обучение!`,
-              timestamp: new Date(),
-            });
-            setStudentGrade(6);
-            setInput("");
-        setFlowState("teaching");
-            setInput("");
-            setInput("");
-          return;
-          }
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Отлично! 🐼 Переходим к ${nextGrade} классу!\n\n${DIAGNOSTIC_QUESTIONS[nextGrade as keyof typeof DIAGNOSTIC_QUESTIONS]?.[0]?.q}`,
-            timestamp: new Date(),
-          });
-          setDiagnosticGrade(nextGrade);
-          setCurrentVisualData(getVisualUrl(nextGrade, "numbers"));
-          setDiagnosticQuestion(0);
-        }
-      } else {
-        // Ошибка!
-        if (attemptMode === "normal") {
-          // Даём 2 дополнительных примера
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: "Ты уверен в своём расчёте? Попробуй направить свою Ци ещё раз! 🐼\n\n" + gradeQuestions[3]?.q,
-            timestamp: new Date(),
-          });
-          setAttemptMode("extra");
-          setDiagnosticQuestion(3);
-        } else {
-          // Второй дополнительный пример тоже неверный - ТОЧКА СТАРТА
-          addMessage({
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Хорошая попытка! 🐼 Это твоя точка старта.\n\nТвой уровень — ${diagnosticGrade} класс.\n\nНачинаем обучение с этого места!`,
-            timestamp: new Date(),
-          });
-          setStudentGrade(diagnosticGrade);
-          setInput("");
-        setFlowState("teaching");
-          setInput("");
-          setInput("");
-          return;
-        }
-      }
-      setInput("");
-          return;
-    }
-    
-    // Этап Г - Конкретная тема
-    if (flowState === "topic") {
-      addMessage({
-        id: Date.now().toString(),
-        role: "user",
-        content: userInput,
-        timestamp: new Date(),
-      });
-      addMessage({
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: `Отлично! Найду материал по "${userInput}" и начну с самого начала. 🐼\n\nДавай разберём эту тему вместе!`,
-        timestamp: new Date(),
-      });
-      setInput("");
-        setFlowState("teaching");
-      setInput("");
-          return;
-    }
-    
-    // По умолчанию - используем DeepSeek
+    const trimmed = content.trim();
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: "user",
-      content: userInput,
+      content: trimmed,
       timestamp: new Date(),
     };
+
     addMessage(userMessage);
-    setIsLoading(true);
     setInput("");
+    setIsLoading(true);
 
     try {
-      const raw = await callBackend(userInput);
-      const responseContent = raw.replace(/\*\*/g, "").replace(/\*/g, "");
-      
-      const assistantMessage: ChatMessage = {
+      const profile = studentProfile;
+      const grade = profile?.lastSessionGrade ?? profile?.currentGrade ?? null;
+      const response: PandaChatResponse = await postPandaChat({
+        user_id: user?.id ?? profile?.userId ?? "anonymous-student",
+        message: trimmed,
+        name: user?.name ?? null,
+        grade,
+        mode,
+      });
+
+      const visualData = normalizePandaVisual(response.visual, response.text);
+      const assistantChunks = response.text
+        .split(/\n\s*\n/)
+        .map((chunk) => chunk.trim())
+        .filter(Boolean);
+      const chunks = assistantChunks.length ? assistantChunks : [response.text.trim()];
+
+      chunks.forEach((chunk, index) => {
+        const assistantMessage: ChatMessage = {
+          id: `${Date.now()}-${index + 1}`,
+          role: "assistant",
+          content: chunk,
+          audioUrl: undefined,
+          visualData: index === chunks.length - 1 ? visualData : undefined,
+          timestamp: new Date(),
+        };
+        addMessage(assistantMessage);
+      });
+
+      if (visualData) {
+        setCurrentVisualData(visualData);
+      }
+
+      const state = response.state;
+      if (state?.actual_grade && profile && !profile.lastSessionGrade) {
+        updateStudentProfile({ lastSessionGrade: state.actual_grade });
+      }
+
+      if (state?.weak_topic) {
+        updateStudentProfile({
+          weakTopics: Array.from(new Set([...(profile?.weakTopics ?? []), state.weak_topic.topic])),
+          lastSessionGrade: state.actual_grade ?? profile?.lastSessionGrade,
+        });
+      }
+
+      if (state?.report?.practice_result === "success") {
+        addQiEnergy(5);
+        addAuthQiEnergy(5);
+      }
+    } catch (error) {
+      console.error("[chat] Error sending message:", error);
+      const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: responseContent,
-        timestamp: new Date(),
-      };
-      
-      addMessage(assistantMessage);
-    } catch (error) {
-      console.error("Chat error:", error);
-      const errorMessage: ChatMessage = {
-        id: (Date.now() + 2).toString(),
-        role: "assistant",
-        content: "Ошибка! Попробуй ещё раз.",
+        content: "Не удалось связаться с учителем. Проверь, запущен ли backend на 8001.",
         timestamp: new Date(),
       };
       addMessage(errorMessage);
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, addMessage, setIsLoading, messages, flowState, studentName, studentGrade, diagnosticQuestion, diagnosticErrors]);
+  }, [isLoading, addMessage, setIsLoading, setCurrentVisualData, user, studentProfile, updateStudentProfile, addQiEnergy, addAuthQiEnergy, mode]);
+
+  useEffect(() => {
+    if (!mode) {
+      initialTurnStartedRef.current = null;
+      return;
+    }
+
+    if (messages.length > 0 || isLoading) return;
+    if (initialTurnStartedRef.current === mode) return;
+
+    initialTurnStartedRef.current = mode;
+    void sendMessage(mode === "kungfu" ? "диагностика" : "начни урок с вопроса");
+  }, [mode, messages.length, isLoading, sendMessage]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(input);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input);
+    }
+  };
+
+  const normalizePandaVisual = (visual: any, text: string): ChatMessage["visualData"] => {
+    const extractCountingFromText = (sourceText: string) => {
+      const lower = sourceText.toLowerCase();
+      const numbers = Array.from(sourceText.matchAll(/\d+/g), (match) => Number(match[0]));
+      if (numbers.length < 2) return undefined;
+      if (!/(кружк|круг|шар|яблок|предмет|точк)/i.test(lower)) return undefined;
+
+      const colors: string[] = [];
+      if (/красн/i.test(lower)) colors.push("red");
+      if (/син/i.test(lower)) colors.push("blue");
+      if (/зелён|зелен/i.test(lower)) colors.push("emerald");
+      if (/желт/i.test(lower)) colors.push("gold");
+      if (/фиолет/i.test(lower)) colors.push("purple");
+
+      return {
+        type: "question" as const,
+        title: "Счёт предметов",
+        prompt: sourceText,
+        cpaVisual: "counting" as const,
+        objects: "кружки",
+        parts: numbers.slice(0, 2),
+        colors: colors.length ? colors.slice(0, 2) : undefined,
+      };
+    };
+
+    if (!visual || typeof visual !== "object") {
+      return extractCountingFromText(text);
+    }
+
+    if (visual.type === "number_bond" && typeof visual.total === "number" && Array.isArray(visual.parts)) {
+      const promptText = text || (typeof visual.prompt === "string" ? visual.prompt : "");
+      const promptLower = promptText.toLowerCase();
+      const operation = /[-−]|выч|убер|остал|минус|отня/i.test(promptLower) ? "subtract" : "add";
+      return {
+        type: "number_bond",
+        total: visual.total,
+        parts: visual.parts,
+        prompt: promptText,
+        title: typeof visual.title === "string" ? visual.title : undefined,
+        operation,
+      };
+    }
+    if (visual.type === "bar_model" && typeof visual.total === "number" && Array.isArray(visual.segments)) {
+      return {
+        type: "bar_model",
+        total: visual.total,
+        segments: visual.segments,
+      };
+    }
+    if (visual.type === "ten_frame" && typeof visual.filled === "number") {
+      return {
+        type: "ten_frame",
+        filled: visual.filled,
+        total: typeof visual.total === "number" ? visual.total : undefined,
+      };
+    }
+    if (visual.type === "question" && typeof visual.prompt === "string") {
+      return {
+        type: "question",
+        title: typeof visual.title === "string" ? visual.title : "Задание",
+        prompt: visual.prompt,
+        cpaVisual: typeof visual.cpaVisual === "string" ? visual.cpaVisual : "unknown",
+        objects: typeof visual.objects === "string" ? visual.objects : undefined,
+        parts: Array.isArray(visual.parts) ? visual.parts.filter((value: unknown): value is number => typeof value === "number") : undefined,
+        colors: Array.isArray(visual.colors) ? visual.colors.filter((value: unknown): value is string => typeof value === "string") : undefined,
+        answer: typeof visual.answer === "string" ? visual.answer : undefined,
+        topic: typeof visual.topic === "string" ? visual.topic : undefined,
+        templateType: typeof visual.templateType === "string" ? visual.templateType : undefined,
+        templateFamily: typeof visual.templateFamily === "string" ? visual.templateFamily : undefined,
+        templateLabel: typeof visual.templateLabel === "string" ? visual.templateLabel : undefined,
+        templateStage: typeof visual.templateStage === "string" ? visual.templateStage : undefined,
+        templateGlyph: typeof visual.templateGlyph === "string" ? visual.templateGlyph : undefined,
+        templateSections: Array.isArray(visual.templateSections)
+          ? visual.templateSections
+              .map((section: QuestionVisualSection) => ({
+                label: typeof section?.label === "string" ? section.label : "",
+                kind: section?.kind === "concrete" || section?.kind === "pictorial" || section?.kind === "abstract"
+                  ? section.kind
+                  : "pictorial",
+                bullets: Array.isArray(section?.bullets)
+                  ? section.bullets.filter((value: unknown): value is string => typeof value === "string")
+                  : [],
+              }))
+              .filter((section: QuestionVisualSection) => section.label && section.bullets.length > 0)
+          : undefined,
+        templateHide: typeof visual.templateHide === "string" ? visual.templateHide : undefined,
+        templateWhy: typeof visual.templateWhy === "string" ? visual.templateWhy : undefined,
+        templateNotes: typeof visual.templateNotes === "string" ? visual.templateNotes : undefined,
+        templatePreview: visual.templatePreview && typeof visual.templatePreview === "object" ? visual.templatePreview : undefined,
+        templateReason: typeof visual.templateReason === "string" ? visual.templateReason : undefined,
+        templateSkills: Array.isArray(visual.templateSkills)
+          ? visual.templateSkills.filter((value: unknown): value is string => typeof value === "string")
+          : undefined,
+      };
+    }
+
+    return extractCountingFromText(text);
+  };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
-      <AchievementPopup 
-        show={showAchievement} 
-        text={achievementText} 
-        onClose={() => setShowAchievement(false)} 
-      />
-      
+    <div className="flex h-full flex-col">
+      {/* Messages area */}
       <div className="flex-1 overflow-y-auto p-4">
-        <>
+        <AnimatePresence initial={false}>
           {messages.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -596,10 +265,14 @@ export function ChatInterface() {
                 <Bot className="h-10 w-10 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-foreground">
-                Welcome to Math Master!
+                {mode === "kungfu" 
+                  ? "Добро пожаловать в кабинет учителя!" 
+                  : "Чем могу помочь?"}
               </h3>
               <p className="max-w-sm text-muted-foreground">
-                Ask me anything!
+                {mode === "kungfu"
+                  ? "Задай вопрос или напиши 'диагностика' — учитель ответит по нашим материалам 1–9 класса."
+                  : "Задай вопрос по любому предмету, и я помогу тебе разобраться."}
               </p>
             </motion.div>
           ) : (
@@ -613,58 +286,159 @@ export function ChatInterface() {
                   message.role === "user" ? "flex-row-reverse" : ""
                 }`}
               >
-                <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                  message.role === "user" 
-                    ? "bg-secondary text-secondary-foreground" 
-                    : "bg-primary text-primary-foreground"
-                }`}>
-                  {message.role === "user" 
-                    ? <User className="h-4 w-4" /> 
-                    : <Bot className="h-4 w-4" />
-                  }
+                <div
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                    message.role === "user"
+                      ? "bg-secondary text-secondary-foreground"
+                      : "bg-primary text-primary-foreground"
+                  }`}
+                >
+                  {message.role === "user" ? (
+                    <User className="h-5 w-5" />
+                  ) : (
+                    <Bot className="h-5 w-5" />
+                  )}
                 </div>
-                <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                  message.role === "user"
-                    ? "bg-secondary text-secondary-foreground"
-                    : "bg-muted text-muted-foreground"
-                }`}>
-                  <div className="whitespace-pre-wrap">{message.content}</div>
-                  <div className="mt-1 text-xs opacity-50">
-                    {message.timestamp?.toLocaleTimeString()}
-                  </div>
+                <div
+                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    message.role === "user"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card border border-border text-card-foreground shadow-sm"
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap">{message.content}</p>
                 </div>
               </motion.div>
             ))
           )}
-          <div ref={messagesEndRef} />
-        </>
+        </AnimatePresence>
+
+        {/* Loading state */}
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-4 flex gap-3"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+              <Bot className="h-5 w-5" />
+            </div>
+            <div className="flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-sm">
+              <motion.span
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="text-muted-foreground"
+              >
+                Мастер размышляет...
+              </motion.span>
+              <div className="flex gap-1">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="h-2 w-2 rounded-full bg-primary"
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                    transition={{
+                      duration: 0.8,
+                      repeat: Infinity,
+                      delay: i * 0.2,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
-      <div className="border-t p-4">
-        <form 
-          onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
-          className="flex gap-2"
-        >
-          <input
-            ref={inputRef}
-            type="text"
+      {/* Input area */}
+      <div className="border-t border-border bg-card p-4">
+        <form onSubmit={handleSubmit} className="flex items-end gap-2">
+          <VoiceInput onTranscript={(text) => sendMessage(text)} />
+          <Textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") sendMessage(input); }}
-            placeholder="Напиши сообщение..."
-            className="flex-1 rounded-full border bg-background px-4 py-2"
-            disabled={isLoading}
+            onKeyDown={handleKeyDown}
+            placeholder="Напиши свой вопрос..."
+            className="min-h-[48px] max-h-[120px] resize-none rounded-xl"
+            autoFocus
           />
-          <button 
+          <Button
             type="submit"
-            disabled={isLoading || !input.trim()}
-            className="rounded-full bg-primary px-4 py-2 text-primary-foreground disabled:opacity-50"
+            size="icon"
+            disabled={!input.trim() || isLoading}
+            className="h-12 w-12 shrink-0 rounded-xl"
           >
-            <Send className="h-4 w-4" />
-          </button>
+            <Send className="h-5 w-5" />
+          </Button>
         </form>
       </div>
+
+      {/* Hidden audio element for TTS */}
+      <audio ref={audioRef} className="hidden" />
+
+      {/* Achievement popup */}
+      <AchievementPopup show={showAchievement} text={achievementText} />
     </div>
   );
+}
+
+// Mock response generator for demo purposes
+function generateMockResponse(content: string, mode: string | null): ApiResponse {
+  const lowerContent = content.toLowerCase();
+  
+  // Check for math-related content
+  if (lowerContent.includes("5+3") || lowerContent.includes("5 + 3")) {
+    return {
+      text: "Отлично! Давай разберём 5 + 3 с помощью связей чисел.\n\nПосмотри на доску — я показал тебе связь между числами. Мы видим, что 5 и 3 вместе дают нам 8.\n\nПредставь, что у тебя 5 яблок в одной руке и 3 в другой. Сколько всего? Правильно, 8! 🎉",
+      visual_data: {
+        type: "number_bond",
+        total: 8,
+        parts: [5, 3],
+      },
+      is_correct: true,
+      qi_bonus: 10,
+    };
+  }
+  
+  if (lowerContent.includes("7+6") || lowerContent.includes("7 + 6")) {
+    return {
+      text: "Хороший вопрос! Давай используем метод десятки.\n\n7 + 6 — это немного сложнее. Посмотри на десятичную рамку на доске.\n\nМы можем разложить 6 на 3 + 3:\n• 7 + 3 = 10 (заполняем рамку)\n• 10 + 3 = 13\n\nОтвет: 13! Ты молодец! 🥋",
+      visual_data: {
+        type: "ten_frame",
+        filled: 13,
+        total: 20,
+      },
+      is_correct: true,
+      qi_bonus: 15,
+    };
+  }
+  
+  if (lowerContent.includes("дроб") || lowerContent.includes("fraction")) {
+    return {
+      text: "Дроби — это части целого! Посмотри на столбиковую модель на доске.\n\nПредставь пиццу, разрезанную на равные части:\n• 1/2 — это половина пиццы\n• 1/4 — это четверть\n\nНа модели видно, как целое делится на части. Какую дробь ты хочешь изучить?",
+      visual_data: {
+        type: "bar_model",
+        total: 1,
+        segments: [
+          { value: 0.5, label: "1/2", color: "jade" },
+          { value: 0.25, label: "1/4", color: "gold" },
+          { value: 0.25, label: "1/4", color: "gold" },
+        ],
+      },
+    };
+  }
+  
+  // Default response
+  if (mode === "kungfu") {
+    return {
+      text: "Интересный вопрос, юный ученик! 🥋\n\nВ методе Кунг-фу мы учимся через понимание, а не зубрёжку. Расскажи мне подробнее — какую математическую задачу ты хочешь решить?\n\nНапример:\n• Сложение и вычитание\n• Умножение и деление\n• Дроби\n• Задачи со словами",
+    };
+  }
+  
+  return {
+    text: "Хороший вопрос! Давай разберёмся вместе.\n\nЧтобы я мог лучше помочь, уточни:\n• По какому предмету задание?\n• Что именно непонятно?\n\nНе стесняйся спрашивать — вместе мы всё решим! 📚",
+  };
 }
