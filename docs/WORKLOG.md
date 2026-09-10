@@ -75,6 +75,8 @@ Astra изучил проект, заметки и три независимых
 
 **Файлы:** grade_1_ru_adapted.json; grade_1_full.json; новый grade_1_sources.json; согласованные записи 1 класса в visual_topic_map.json; lesson_assessment.py; validate_grade1_reference.py; export_grade1_guide.py; два прежних мигратора и общий валидатор; два новых файла тестов; документация и MEMORY.
 
+**Сохранение:** коммит `66dce7b` отправлен в `origin/codex/active-orchestration-2026-09-09`; push подтверждён. README, .vscode, scripts и user_states.json в этот коммит не включены. В корневом историческом docs/ORCHESTRATION.md вне Git-репозитория ACTIVE добавлена ссылка на актуальную очередь.
+
 **Проверки текущего этапа:**
 
 - `python3 backend/scripts/validate_adapted_lessons.py` — OK для 1–9; для 1 класса включает усиленный gate, для 2–9 остаётся структурным.
