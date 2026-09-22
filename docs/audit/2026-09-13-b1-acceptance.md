@@ -41,6 +41,8 @@ PYTHONDONTWRITEBYTECODE=1 timeout 55s python3 -m pytest -q tests -p no:cacheprov
 
 **Решение:** узкий B1 принят. Следующая backend-карточка — B2; эта приёмка не означает готовность всего 1 класса или детского интерфейса. Оформление продолжено 22.09 после перерыва; Python syntax и `git diff --check` повторно успешны, основной тестовый прогон датирован 13.09.
 
+Исправления и доказательства опубликованы 22.09 коммитом `012a2a7` в существующем [PR #3](https://github.com/Egorikb/masterkva/pull/3); push и совпадение SHA подтверждены. PR остаётся OPEN/DRAFT, слияние не выполнялось; привязанных удалённых CI-проверок нет.
+
 ## Передача API для U1
 
 Endpoint: `POST /api/v1/plugins/panda/chat`.
