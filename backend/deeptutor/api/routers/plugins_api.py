@@ -136,6 +136,25 @@ DEFAULT_STATE: dict[str, Any] = {
     },
 }
 
+_LEGACY_STATE_KEYS = (
+    "phase",
+    "path_choice",
+    "in_learning",
+    "learning_mode_active",
+    "current_lesson_id",
+    "current_content_version",
+    "current_practice",
+    "practice_feedback",
+    "weak_topic",
+    "report",
+    "current_skill_id",
+    "current_skill_version",
+    "current_skill_mode",
+    "current_topic_id",
+    "mastery_check_pending",
+    "promotion_eligible",
+)
+
 
 def _fresh_state() -> dict[str, Any]:
     return json.loads(json.dumps(DEFAULT_STATE, ensure_ascii=False))
@@ -430,6 +449,8 @@ def _pause_learning(user_id: str, state: dict[str, Any], message: str) -> dict[s
         },
     )
     text = f"Хорошо, остановимся здесь. Я сохраню место: продолжим с темы «{topic_name}»."
+    if resume_phase == "curricular":
+        return _curricular_response(text, updated)
     return _panda_response(text, updated)
 
 
@@ -450,11 +471,18 @@ def _resume_paused_learning(user_id: str, state: dict[str, Any]) -> dict[str, An
         user_id,
         {
             "phase": resume_phase,
-            "learning_mode_active": resume_phase in {"diagnostic", "practice", "remediation", "explanation", "mastery_check"},
-            "in_learning": resume_phase in {"practice", "remediation", "explanation", "mastery_check"},
+            "learning_mode_active": resume_phase in {"diagnostic", "practice", "remediation", "explanation", "mastery_check", "curricular"},
+            "in_learning": resume_phase in {"practice", "remediation", "explanation", "mastery_check", "curricular"},
             "student_profile": profile,
         },
     )
+
+    if resume_phase == "curricular":
+        practice = state.get("current_practice") or {}
+        return _curricular_response(
+            f"Продолжим урок.\n\n{practice.get('question', '')}".rstrip(),
+            state,
+        )
 
     if resume_phase == "diagnostic":
         question = _current_question(state)
@@ -739,14 +767,49 @@ def _finish_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
 
 def _curricular_public_state(state: dict[str, Any]) -> dict[str, Any]:
     """Return only child-facing curricular state; mapping evidence stays server-side."""
-    session = dict(state.get("curricular_session") or {})
-    practice = dict(state.get("current_practice") or {})
-    feedback = state.get("practice_feedback")
+    raw_session = state.get("curricular_session")
+    session = dict(raw_session) if isinstance(raw_session, dict) else {}
+    stored_practice = state.get("current_practice")
+    raw_practice = dict(stored_practice) if isinstance(stored_practice, dict) else {}
+    practice = {
+        key: raw_practice[key]
+        for key in (
+            "id",
+            "lesson_id",
+            "content_version",
+            "part_index",
+            "part_number",
+            "part_count",
+            "question",
+            "prompt",
+            "requires_image",
+            "source",
+            "attempts",
+        )
+        if key in raw_practice
+    }
+    raw_feedback = state.get("practice_feedback")
+    feedback = (
+        {
+            key: raw_feedback[key]
+            for key in (
+                "status",
+                "part_index",
+                "attempts",
+                "part_complete",
+                "lesson_complete",
+                "mastery_awarded",
+            )
+            if key in raw_feedback
+        }
+        if isinstance(raw_feedback, dict)
+        else None
+    )
     return {
-        "phase": "curricular",
+        "phase": "paused" if state.get("phase") == "paused" else "curricular",
         "weak_topic": None,
         "current_practice": practice or None,
-        "practice_feedback": dict(feedback) if isinstance(feedback, dict) else None,
+        "practice_feedback": feedback,
         "report": None,
         "curricular": {
             "lesson_id": session.get("lesson_id"),
@@ -762,9 +825,10 @@ def _curricular_public_state(state: dict[str, Any]) -> dict[str, Any]:
 
 
 def _curricular_response(text: str, state: dict[str, Any]) -> dict[str, Any]:
-    practice = state.get("current_practice") or {}
+    public_state = _curricular_public_state(state)
+    practice = public_state.get("current_practice") or {}
     visual = _question_visual(practice) if practice and practice.get("requires_image") else None
-    return {"text": text, "visual": visual, "state": _curricular_public_state(state)}
+    return {"text": text, "visual": visual, "state": public_state}
 
 
 def _resolve_curricular_session(
@@ -788,7 +852,7 @@ def _resolve_curricular_session(
     return resolved, session
 
 
-def _start_curricular_lesson(user_id: str, request: ChatRequest) -> dict[str, Any]:
+def _start_curricular_lesson(user_id: str, request: ChatRequest, state: dict[str, Any]) -> dict[str, Any]:
     try:
         resolved = curricular_lesson_runtime.resolve(
             str(request.lesson_id or ""),
@@ -799,6 +863,10 @@ def _start_curricular_lesson(user_id: str, request: ChatRequest) -> dict[str, An
         raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
 
     practice["attempts"] = 0
+    existing_session = state.get("curricular_session") or {}
+    legacy_state = existing_session.get("legacy_state") if isinstance(existing_session, dict) else None
+    if not isinstance(legacy_state, dict):
+        legacy_state = {key: state.get(key) for key in _LEGACY_STATE_KEYS}
     session = {
         "lesson_id": resolved.lesson_id,
         "content_version": resolved.content_version,
@@ -809,6 +877,7 @@ def _start_curricular_lesson(user_id: str, request: ChatRequest) -> dict[str, An
         "part_complete": False,
         "awaiting_advance": False,
         "lesson_complete": False,
+        "legacy_state": legacy_state,
     }
     state = update_user_state(
         user_id,
@@ -833,6 +902,30 @@ def _start_curricular_lesson(user_id: str, request: ChatRequest) -> dict[str, An
         },
     )
     return _curricular_response(practice["question"], state)
+
+
+def _resume_legacy_from_curricular(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
+    session = state.get("curricular_session") or {}
+    legacy_state = session.get("legacy_state") if isinstance(session, dict) else None
+    if not isinstance(legacy_state, dict):
+        raise HTTPException(status_code=409, detail={"code": "legacy_session_unavailable"})
+
+    restored = update_user_state(
+        user_id,
+        {
+            **{key: legacy_state.get(key) for key in _LEGACY_STATE_KEYS},
+            "curricular_session": None,
+        },
+    )
+    practice = restored.get("current_practice") or {}
+    text = "Возвращаемся к прежнему режиму."
+    if practice.get("question"):
+        text = f"{text}\n\n{practice['question']}"
+    return _panda_response(
+        text,
+        restored,
+        visual=_question_visual(practice) if practice.get("requires_image") else None,
+    )
 
 
 def _answer_curricular_part(
@@ -890,7 +983,7 @@ def _answer_curricular_part(
     if status == "correct":
         text = "Верно! Урок завершён." if lesson_complete else "Верно! Можно перейти к следующей части."
     elif status == "needs_review":
-        text = "Ответ сохранён для проверки."
+        text = "Ответ нужно проверить взрослому."
     elif status == "incorrect":
         text = "Пока не получилось. Попробуй ещё раз."
     else:
@@ -944,7 +1037,7 @@ def _handle_curricular_chat(user_id: str, request: ChatRequest, state: dict[str,
     if action == "start" or (
         action is None and request.mode == "curricular" and request.lesson_id
     ):
-        return _start_curricular_lesson(user_id, request)
+        return _start_curricular_lesson(user_id, request, state)
 
     resolved, session = _resolve_curricular_session(state, request)
     if action in (None, "answer"):
@@ -984,11 +1077,10 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
     if state.get("phase") == "paused":
         return _resume_paused_learning(user_id, state)
 
-    if (
-        request.mode == "curricular"
-        or request.action is not None
-        or state.get("phase") == "curricular"
-    ):
+    if state.get("phase") == "curricular" and request.mode in {"kungfu", "homework"}:
+        return _resume_legacy_from_curricular(user_id, state)
+
+    if request.mode == "curricular" or state.get("phase") == "curricular":
         return _handle_curricular_chat(user_id, request, state)
 
     if not state.get("name"):

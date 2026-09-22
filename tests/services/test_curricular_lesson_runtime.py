@@ -6,10 +6,13 @@ from pathlib import Path
 import pytest
 
 import deeptutor.services.curricular_lesson_runtime as runtime_module
+import deeptutor.services.practice_engine as practice_module
 from deeptutor.services.curricular_lesson_runtime import (
     CurriculumResolutionError,
     CurricularLessonRuntime,
+    ResolvedCurricularLesson,
 )
+from deeptutor.services.diagnostic_engine import DiagnosticEngine
 
 
 SOURCE_BY_ATTR = {
@@ -61,6 +64,58 @@ def test_exact_answer_is_assessed_by_server_contract(tmp_path: Path, monkeypatch
     resolved = runtime.resolve("g1-t12-l01", "2.0")
     assert runtime.assess_part(resolved, 0, "13")["status"] == "correct"
     assert runtime.assess_part(resolved, 0, "12")["status"] == "incorrect"
+
+
+def test_changed_expected_in_copied_lesson_changes_assessment(tmp_path: Path, monkeypatch) -> None:
+    runtime = _runtime_with_copied_sources(tmp_path, monkeypatch)
+    data = _json_for("LESSONS_FILE")
+    lesson = next(
+        lesson
+        for semester in (data["semester_1"], data["semester_2"])
+        for topic in semester["topics"]
+        for lesson in topic["lessons"]
+        if lesson["lesson_id"] == "g1-t12-l01"
+    )
+    lesson["assessment"]["parts"][0]["expected"] = ["99"]
+    _replace_json("LESSONS_FILE", data)
+
+    resolved = runtime.resolve("g1-t12-l01", "2.0")
+    assert runtime.assess_part(resolved, 0, "13")["status"] == "incorrect"
+    assert runtime.assess_part(resolved, 0, "99")["status"] == "correct"
+
+
+@pytest.mark.parametrize(
+    ("assessment", "part_index", "response", "status"),
+    [
+        (
+            {
+                "kind": "ordered",
+                "parts": [
+                    {"prompt": "Первая часть", "expected": ["1"]},
+                    {"prompt": "Вторая часть", "expected": ["2"]},
+                ],
+            },
+            0,
+            "1;2",
+            "invalid_input",
+        ),
+        (
+            {"kind": "rubric", "criteria": ["Объясняет ход решения"]},
+            0,
+            "Моё объяснение",
+            "needs_review",
+        ),
+    ],
+)
+def test_assessment_kind_boundaries(assessment, part_index, response, status) -> None:
+    runtime = CurricularLessonRuntime()
+    resolved = ResolvedCurricularLesson(
+        lesson_id="synthetic",
+        content_version="test",
+        lesson={"assessment": assessment, "presentation": {"prompts": ["Первая часть", "Вторая часть"]}},
+        mapping={},
+    )
+    assert runtime.assess_part(resolved, part_index, response)["status"] == status
 
 
 def test_hint_is_separate_from_assessment(tmp_path: Path, monkeypatch) -> None:
@@ -165,3 +220,44 @@ def test_invalid_part_index_never_falls_back(tmp_path: Path, monkeypatch) -> Non
     with pytest.raises(CurriculumResolutionError) as exc:
         runtime.child_part(resolved, 1)
     _assert_code(exc, "part_out_of_range")
+
+
+def test_practice_pool_requires_exact_topic_and_family(monkeypatch) -> None:
+    monkeypatch.setattr(
+        practice_module,
+        "DIAGNOSTIC_QUESTIONS",
+        [
+            {"id": "wrong-topic", "topic_id": "g1_t03", "item_family": "pilot-family"},
+            {"id": "wrong-family", "topic_id": "g1_t07", "item_family": "other-family"},
+            {"id": "exact", "topic_id": "g1_t07", "item_family": "pilot-family"},
+        ],
+    )
+    selected = practice_module._pool_template_for_topic(
+        topic_id="g1_t07",
+        item_family="pilot-family",
+        source_question_id=None,
+        variant=0,
+    )
+    assert selected["id"] == "exact"
+
+
+def test_diagnostic_item_family_survives_normalization_and_weak_topic() -> None:
+    engine = DiagnosticEngine(
+        pool={
+            "questions": [
+                {
+                    "id": "q1",
+                    "grade": 1,
+                    "topic_id": "g1_t07",
+                    "topic": "Сложение",
+                    "question": "8 + 5 = ?",
+                    "answer": "13",
+                    "item_family": "addition_within_10_part_whole",
+                }
+            ]
+        }
+    )
+    question = engine.get_questions_for_grade(1)[0]
+    result = engine.run_diagnostic(1, [{**question, "question_id": question["id"], "is_correct": False}])
+    assert question["item_family"] == "addition_within_10_part_whole"
+    assert result.weak_topics[0]["item_family"] == "addition_within_10_part_whole"
