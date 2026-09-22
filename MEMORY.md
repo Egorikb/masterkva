@@ -2,6 +2,8 @@
 
 Обновлено 2026-09-22. Перед работой читать AGENTS.md и [docs/WORKLOG.md](docs/WORKLOG.md). Поручения моделям: [docs/ORCHESTRATION.md](docs/ORCHESTRATION.md).
 
+Экономный порядок исполнения и отдельные ТЗ моделей: [план завершения](docs/EXECUTION_PLAN_2026-09-22/README.md). Следующий запуск: **Sol/high, карточка B2a**; остальные карточки выдавать по одной из QUEUE. Astra — только спорный узел или итоговая независимая проверка.
+
 - Рабочая база: `/home/egor/workspace_hermes/MasterKva/ACTIVE`.
 - Базовая ветка: `codex/active-orchestration-2026-09-09`; текущая B1: `codex/b1-curricular-runtime-2026-09-11`, [PR #3](https://github.com/Egorikb/masterkva/pull/3). GitHub: Egorikb/masterkva. main с полным DeepTutor не заменять MVP.
 - Backend: FastAPI, `cd backend && uvicorn main:app --host 127.0.0.1 --port 8001`; frontend Next.js на 3000. После изменения кэшируемых диагностических данных нужен перезапуск.
