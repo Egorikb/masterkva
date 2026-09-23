@@ -100,5 +100,5 @@ export interface PandaChatRequest {
   mode?: 'kungfu' | 'homework' | 'curricular' | null;
   lesson_id?: string | null;
   content_version?: string | null;
-  action?: 'start' | 'answer' | 'hint' | 'advance' | null;
+  action?: 'start' | 'answer' | 'hint' | 'rephrase' | 'pause' | 'resume' | 'advance' | null;
 }

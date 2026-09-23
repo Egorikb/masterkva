@@ -51,7 +51,7 @@ class ChatRequest(BaseModel):
     mode: str | None = None
     lesson_id: str | None = None
     content_version: str | None = None
-    action: Literal["start", "answer", "hint", "advance"] | None = None
+    action: Literal["start", "answer", "hint", "rephrase", "pause", "resume", "advance"] | None = None
 
 
 DEFAULT_STATE: dict[str, Any] = {
@@ -507,6 +507,74 @@ def _resume_paused_learning(user_id: str, state: dict[str, Any]) -> dict[str, An
         )
 
     return _panda_response(f"Продолжим с темы «{topic_name}».", state)
+
+
+def _rephrase_question(question: str) -> str:
+    """Reword the current prompt without changing its mathematical data."""
+    text = str(question or "").strip()
+    calculation = re.fullmatch(r"Вычисли\s+(.+?)[.!?]*", text, re.IGNORECASE)
+    if calculation:
+        return f"Найди значение выражения {calculation.group(1).rstrip('.!?')}."
+    expression = re.fullmatch(r"(.+?)\s*=\s*\?", text)
+    if expression:
+        return f"Какое число получится в выражении {expression.group(1).strip()}?"
+    total = re.fullmatch(r"Сколько всего:\s*(.+?)[.!?]*", text, re.IGNORECASE)
+    if total:
+        return f"Найди, сколько получится вместе: {total.group(1).rstrip('.!?')}."
+    successor = re.fullmatch(r"Какое число идёт после\s+(.+?)[.!?]*", text, re.IGNORECASE)
+    if successor:
+        return f"Назови следующее число после {successor.group(1).rstrip('.!?')}."
+    return f"Скажу иначе: {text}" if text else "Скажу иначе: выполни текущий шаг."
+
+
+def _handle_legacy_support_action(user_id: str, state: dict[str, Any], action: str) -> dict[str, Any]:
+    phase = str(state.get("phase") or "chat")
+    question: dict[str, Any] | None = None
+    hint = "Подсказка: начни с первого действия в вопросе и проверь, что означает каждое число."
+
+    if phase == "diagnostic":
+        question = _current_question(state)
+    elif phase == "remediation":
+        remediation = remediation_engine.get_state(user_id)
+        if remediation and remediation.current_step:
+            question = {"question": remediation.current_step.question}
+            hint = _get_scaffolding_visual(remediation)
+    elif phase in {"explanation", "practice", "mastery_check", "check", "report"}:
+        stored = state.get("current_practice")
+        question = dict(stored) if isinstance(stored, dict) else None
+
+    if not question or not str(question.get("question") or "").strip():
+        raise HTTPException(status_code=409, detail={"code": "action_not_available_in_current_phase"})
+
+    text = hint if action == "hint" else _rephrase_question(str(question["question"]))
+    public_state = dict(state)
+    current_practice = public_state.get("current_practice")
+    if isinstance(current_practice, dict):
+        public_state["current_practice"] = {
+            key: value
+            for key, value in current_practice.items()
+            if key not in {"answer", "alternatives"}
+        }
+    diagnostic_sequence = public_state.get("diag_sequence")
+    if isinstance(diagnostic_sequence, list):
+        public_state["diag_sequence"] = [
+            {
+                key: value
+                for key, value in item.items()
+                if key not in {"answer", "alternatives"}
+            }
+            if isinstance(item, dict)
+            else item
+            for item in diagnostic_sequence
+        ]
+    practice_feedback = public_state.get("practice_feedback")
+    if isinstance(practice_feedback, dict):
+        public_state["practice_feedback"] = {
+            key: value
+            for key, value in practice_feedback.items()
+            if key != "correct_answer"
+        }
+    return _panda_response(text, public_state)
 
 
 def _get_scaffolding_visual(remediation) -> str:
@@ -1042,12 +1110,20 @@ def _handle_curricular_chat(user_id: str, request: ChatRequest, state: dict[str,
     resolved, session = _resolve_curricular_session(state, request)
     if action in (None, "answer"):
         return _answer_curricular_part(user_id, request, resolved, session)
-    if action == "hint":
+    if action in {"hint", "rephrase"}:
+        if session.get("lesson_complete"):
+            return _curricular_response("Урок уже завершён.", state)
+        if session.get("part_complete"):
+            raise HTTPException(status_code=409, detail={"code": "part_already_complete"})
         try:
-            hint = curricular_lesson_runtime.hint(resolved, session.get("part_index", 0))
+            if action == "hint":
+                text = curricular_lesson_runtime.hint(resolved, session.get("part_index", 0))
+            else:
+                part = curricular_lesson_runtime.child_part(resolved, session.get("part_index", 0))
+                text = _rephrase_question(str(part["question"]))
         except CurriculumResolutionError as exc:
             raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
-        return _curricular_response(hint, state)
+        return _curricular_response(text, state)
     if action == "advance":
         return _advance_curricular_part(user_id, resolved, session)
     raise HTTPException(status_code=422, detail={"code": "unsupported_curricular_action"})
@@ -1071,17 +1147,54 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
     if request.grade and request.grade > 0 and not state.get("grade"):
         state = update_user_state(user_id, {"grade": request.grade})
 
-    if _is_stop_intent(message):
-        return _pause_learning(user_id, state, message)
+    if request.action == "pause":
+        if state.get("phase") == "paused":
+            raise HTTPException(status_code=409, detail={"code": "already_paused"})
+        pausable_phases = {
+            "diagnostic",
+            "explanation",
+            "practice",
+            "curricular",
+            "remediation",
+            "mastery_check",
+            "check",
+            "report",
+        }
+        if state.get("phase") not in pausable_phases:
+            raise HTTPException(status_code=409, detail={"code": "no_active_learning"})
+        return _pause_learning(user_id, state, message or "pause")
 
     if state.get("phase") == "paused":
+        if request.action == "resume":
+            return _resume_paused_learning(user_id, state)
+        if request.action is not None:
+            raise HTTPException(status_code=409, detail={"code": "resume_required"})
+        if _is_stop_intent(message):
+            return _pause_learning(user_id, state, message)
         return _resume_paused_learning(user_id, state)
+
+    if request.action == "resume":
+        raise HTTPException(status_code=409, detail={"code": "not_paused"})
+
+    if _is_stop_intent(message):
+        return _pause_learning(user_id, state, message)
 
     if state.get("phase") == "curricular" and request.mode in {"kungfu", "homework"}:
         return _resume_legacy_from_curricular(user_id, state)
 
     if request.mode == "curricular" or state.get("phase") == "curricular":
         return _handle_curricular_chat(user_id, request, state)
+
+    if request.action in {"hint", "rephrase"}:
+        return _handle_legacy_support_action(user_id, state, request.action)
+    if request.action in {"start", "advance"}:
+        raise HTTPException(status_code=409, detail={"code": "action_not_available_in_current_phase"})
+    if request.action == "answer" and state.get("phase") not in {
+        "diagnostic",
+        "practice",
+        "remediation",
+    }:
+        raise HTTPException(status_code=409, detail={"code": "action_not_available_in_current_phase"})
 
     if not state.get("name"):
         return _panda_response(
