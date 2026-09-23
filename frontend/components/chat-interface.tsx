@@ -2,24 +2,25 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, User, Bot } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bot, Lightbulb, Pause, Play, RotateCcw, Send, User } from "lucide-react";
 import { useChatStore } from "@/lib/chat-store";
 import { useAuthStore } from "@/lib/auth-store";
-import { postPandaChat } from "@/lib/api/panda-client";
+import { PandaApiError, postPandaChat } from "@/lib/api/panda-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { VoiceInput } from "./voice-input";
 import { AchievementPopup } from "./achievement-popup";
 import type { ChatMessage, ApiResponse, QuestionVisualSection } from "@/lib/types";
-import type { PandaChatResponse } from "@/contracts/panda";
+import type { PandaChatRequest, PandaChatResponse } from "@/contracts/panda";
 
-export function ChatInterface() {
+export function ChatInterface({ initialResponse }: { initialResponse?: PandaChatResponse | null }) {
   const [input, setInput] = useState("");
   const [showAchievement, setShowAchievement] = useState(false);
   const [achievementText, setAchievementText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const initialTurnStartedRef = useRef<"kungfu" | "homework" | null>(null);
+  const restoredResponseRef = useRef<PandaChatResponse | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   
   const { 
@@ -46,6 +47,25 @@ export function ChatInterface() {
   useEffect(() => {
     textareaRef.current?.focus();
   }, [messages.length, isLoading, mode]);
+
+  useEffect(() => {
+    if (!initialResponse) {
+      restoredResponseRef.current = null;
+      return;
+    }
+    if (messages.length > 0 || restoredResponseRef.current === initialResponse) return;
+    restoredResponseRef.current = initialResponse;
+    initialTurnStartedRef.current = mode;
+    const visualData = normalizePandaVisual(initialResponse.visual, initialResponse.text);
+    addMessage({
+      id: `${Date.now()}-restored`,
+      role: "assistant",
+      content: initialResponse.text,
+      visualData,
+      timestamp: new Date(),
+    });
+    if (visualData) setCurrentVisualData(visualData);
+  }, [addMessage, initialResponse, messages.length, mode, setCurrentVisualData]);
 
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim() || isLoading) return;
@@ -132,12 +152,12 @@ export function ChatInterface() {
       return;
     }
 
-    if (messages.length > 0 || isLoading) return;
+    if (initialResponse || messages.length > 0 || isLoading) return;
     if (initialTurnStartedRef.current === mode) return;
 
     initialTurnStartedRef.current = mode;
     void sendMessage(mode === "kungfu" ? "диагностика" : "начни урок с вопроса");
-  }, [mode, messages.length, isLoading, sendMessage]);
+  }, [initialResponse, mode, messages.length, isLoading, sendMessage]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -381,6 +401,228 @@ export function ChatInterface() {
 
       {/* Achievement popup */}
       <AchievementPopup show={showAchievement} text={achievementText} />
+    </div>
+  );
+}
+
+const B1_LESSON = {
+  lesson_id: "g1-t12-l01",
+  content_version: "2.0",
+  title: "Состав числа до 10",
+  subtitle: "Математика · 1 класс",
+} as const;
+
+type PendingAction = {
+  action: NonNullable<PandaChatRequest["action"]> | "return";
+  message: string;
+  requestId: string;
+};
+
+type CurricularLessonInterfaceProps = {
+  userId: string;
+  name: string | null;
+  grade: number | null;
+  onReturn: (response: PandaChatResponse) => void;
+};
+
+function curriculumError(error: unknown): string {
+  if (error instanceof PandaApiError) {
+    if (error.code === "stale_part" || error.code === "stale_session") {
+      return "Занятие уже изменилось на сервере. Вернись к текущему вопросу и попробуй снова.";
+    }
+    return "Учитель не смог выполнить это действие. Попробуй ещё раз.";
+  }
+  return "Не удалось подключиться к учителю. Проверь, что backend запущен на порту 8001.";
+}
+
+export function CurricularLessonInterface({
+  userId,
+  name,
+  grade,
+  onReturn,
+}: CurricularLessonInterfaceProps) {
+  const [response, setResponse] = useState<PandaChatResponse | null>(null);
+  const [answer, setAnswer] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const pendingActionRef = useRef<PendingAction | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const state = response?.state;
+  const curricular = state?.curricular;
+  const currentQuestion = state?.current_practice?.question;
+  const isPaused = state?.phase === "paused";
+  const isComplete = Boolean(curricular?.lesson_complete);
+  const canAnswer = Boolean(response && currentQuestion && !isPaused && !isComplete && !curricular?.awaiting_advance);
+
+  useEffect(() => {
+    if (canAnswer && !isLoading) inputRef.current?.focus();
+  }, [canAnswer, isLoading]);
+
+  const request = async (
+    action: PendingAction["action"],
+    message = "",
+    retry = false,
+  ) => {
+    if (isLoading) return;
+    const pending = retry ? pendingActionRef.current : null;
+    const requestId = pending?.requestId ?? crypto.randomUUID();
+    const requestedAction = pending?.action ?? action;
+    const requestedMessage = pending?.message ?? message;
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const payload: PandaChatRequest = {
+        user_id: userId,
+        name,
+        grade,
+        message: requestedMessage,
+        mode: requestedAction === "return" ? "kungfu" : "curricular",
+        action: requestedAction === "return" ? null : requestedAction,
+        request_id: requestId,
+        lesson_id: B1_LESSON.lesson_id,
+        content_version: B1_LESSON.content_version,
+        session_id: curricular?.session_id ?? null,
+        part_revision: curricular?.part_revision ?? null,
+      };
+      if (requestedAction === "start") {
+        payload.session_id = null;
+        payload.part_revision = null;
+      }
+      const next = await postPandaChat(payload);
+      pendingActionRef.current = null;
+      if (requestedAction === "return") {
+        onReturn(next);
+        return;
+      }
+      setResponse(next);
+      if (requestedAction === "answer") setAnswer("");
+    } catch (requestError) {
+      pendingActionRef.current = { action: requestedAction, message: requestedMessage, requestId };
+      setError(curriculumError(requestError));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const submitAnswer = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (answer.trim()) void request("answer", answer.trim());
+  };
+
+  if (!response) {
+    return (
+      <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col justify-center p-4 sm:p-8">
+        <p className="mb-2 text-sm font-semibold text-primary">Доступный учебный блок</p>
+        <h1 className="text-3xl font-bold text-foreground">{B1_LESSON.subtitle}</h1>
+        <p className="mt-2 text-muted-foreground">Выбери урок. Сейчас проверен и доступен один блок.</p>
+        <section className="mt-6 rounded-3xl border-2 border-primary/30 bg-card p-5 shadow-sm sm:p-7" aria-label="Доступный урок">
+          <p className="text-sm font-medium text-muted-foreground">{B1_LESSON.subtitle}</p>
+          <h2 className="mt-1 text-2xl font-bold">{B1_LESSON.title}</h2>
+          <p className="mt-3 text-muted-foreground">Будем учиться составлять 10 из двух частей. Один вопрос за раз.</p>
+          <Button
+            type="button"
+            size="lg"
+            className="mt-6 min-h-14 w-full text-base sm:w-auto"
+            disabled={isLoading}
+            onClick={() => void request("start")}
+          >
+            <Play className="h-5 w-5" />
+            Начать урок
+          </Button>
+        </section>
+        {isLoading && <p className="mt-4" role="status">Учитель готовит первый вопрос…</p>}
+        {error && <LessonError error={error} onRetry={() => void request("start", "", true)} />}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto flex min-h-full w-full max-w-3xl flex-col p-4 sm:p-6 lg:p-8">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold text-primary">{B1_LESSON.subtitle}</p>
+          <h1 className="text-xl font-bold">{B1_LESSON.title}</h1>
+        </div>
+        <Button type="button" variant="ghost" className="min-h-11" disabled={isLoading} onClick={() => void request("return")}>
+          <ArrowLeft className="h-4 w-4" />
+          Вернуться к прежнему занятию
+        </Button>
+      </header>
+
+      <main className="mt-5 flex flex-1 flex-col justify-center">
+        {isPaused ? (
+          <section className="rounded-3xl border bg-card p-6 text-center shadow-sm">
+            <h2 className="text-2xl font-bold">Урок на паузе</h2>
+            <p className="mt-2 text-muted-foreground">Текущий вопрос сохранён. Когда будешь готов, продолжи.</p>
+            <Button type="button" size="lg" className="mt-5 min-h-14" disabled={isLoading} onClick={() => void request("resume")}>
+              <Play className="h-5 w-5" /> Продолжить
+            </Button>
+          </section>
+        ) : isComplete ? (
+          <section className="rounded-3xl border bg-card p-6 text-center shadow-sm">
+            <h2 className="text-2xl font-bold">Урок завершён</h2>
+            <p className="mt-2 text-muted-foreground">Результат сохранён сервером. Следующий урок пока не открыт.</p>
+          </section>
+        ) : (
+          <>
+            <section className="rounded-3xl border-2 border-primary/25 bg-card p-5 shadow-sm sm:p-8" aria-live="polite">
+              <p className="text-sm font-medium text-muted-foreground">Текущий вопрос</p>
+              <p className="mt-3 text-2xl font-bold leading-relaxed sm:text-3xl">{currentQuestion}</p>
+              {response.text !== currentQuestion && <p className="mt-5 whitespace-pre-wrap text-base leading-relaxed text-muted-foreground">{response.text}</p>}
+            </section>
+
+            {curricular?.awaiting_advance ? (
+              <Button type="button" size="lg" className="mt-5 min-h-14 w-full text-base" disabled={isLoading} onClick={() => void request("advance")}>
+                Следующая часть <ArrowRight className="h-5 w-5" />
+              </Button>
+            ) : (
+              <form className="mt-5" onSubmit={submitAnswer}>
+                <label htmlFor="curricular-answer" className="text-base font-semibold">Твой ответ</label>
+                <Textarea
+                  ref={inputRef}
+                  id="curricular-answer"
+                  value={answer}
+                  onChange={(event) => setAnswer(event.target.value)}
+                  placeholder="Напиши ответ"
+                  className="mt-2 min-h-16 resize-none text-lg"
+                  disabled={!canAnswer || isLoading}
+                />
+                <Button type="submit" size="lg" className="mt-3 min-h-14 w-full text-base" disabled={!answer.trim() || !canAnswer || isLoading}>
+                  <Send className="h-5 w-5" /> Ответить
+                </Button>
+              </form>
+            )}
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <Button type="button" variant="secondary" className="min-h-14 text-base" disabled={!canAnswer || isLoading} onClick={() => void request("hint")}>
+                <Lightbulb className="h-5 w-5" /> Подсказка
+              </Button>
+              <Button type="button" variant="outline" className="min-h-14 text-base" disabled={!canAnswer || isLoading} onClick={() => void request("rephrase")}>
+                Объясни иначе
+              </Button>
+              <Button type="button" variant="outline" className="min-h-14 text-base" disabled={!canAnswer || isLoading} onClick={() => void request("pause")}>
+                <Pause className="h-5 w-5" /> Пауза
+              </Button>
+            </div>
+          </>
+        )}
+      </main>
+
+      {isLoading && <p className="mt-4 text-center text-muted-foreground" role="status">Учитель проверяет…</p>}
+      {error && <LessonError error={error} onRetry={() => void request("start", "", true)} />}
+    </div>
+  );
+}
+
+function LessonError({ error, onRetry }: { error: string; onRetry: () => void }) {
+  return (
+    <div className="mt-4 rounded-2xl border border-destructive/40 bg-destructive/10 p-4" role="alert">
+      <p>{error}</p>
+      <Button type="button" variant="outline" className="mt-3 min-h-11" onClick={onRetry}>
+        <RotateCcw className="h-4 w-4" /> Повторить запрос
+      </Button>
     </div>
   );
 }

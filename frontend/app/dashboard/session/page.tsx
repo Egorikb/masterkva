@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ChatInterface } from "@/components/chat-interface";
+import { ChatInterface, CurricularLessonInterface } from "@/components/chat-interface";
+import type { PandaChatResponse } from "@/contracts/panda";
 import { InteractiveBlackboard } from "@/components/interactive-blackboard";
 import { useAuthStore } from "@/lib/auth-store";
 import { useChatStore } from "@/lib/chat-store";
@@ -40,9 +41,10 @@ function SessionContent() {
   const parsedGrade = grade ? Number.parseInt(grade, 10) : null;
   const modeParam = searchParams.get("mode");
   
-  const { studentProfile, updateStudentProfile } = useAuthStore();
+  const { user, studentProfile, updateStudentProfile } = useAuthStore();
   const { mode, setMode, clearMessages } = useChatStore();
-  const [selectedMode, setSelectedMode] = useState<"kungfu" | "homework" | null>(null);
+  const [selectedMode, setSelectedMode] = useState<"kungfu" | "homework" | "curricular" | null>(null);
+  const [legacyResponse, setLegacyResponse] = useState<PandaChatResponse | null>(null);
 
   // Set the mode from URL param or show selector
   useEffect(() => {
@@ -60,14 +62,29 @@ function SessionContent() {
   }, [parsedGrade, studentProfile?.lastSessionGrade, updateStudentProfile]);
 
   const handleModeSelect = (newMode: "kungfu" | "homework") => {
+    setLegacyResponse(null);
     setMode(newMode);
     setSelectedMode(newMode);
+  };
+
+  const handleCurricularSelect = () => {
+    setMode(null);
+    setSelectedMode("curricular");
+    clearMessages();
   };
 
   const handleBack = () => {
     setMode(null);
     setSelectedMode(null);
     clearMessages();
+    setLegacyResponse(null);
+  };
+
+  const handleCurricularReturn = (response: PandaChatResponse) => {
+    clearMessages();
+    setLegacyResponse(response);
+    setMode("kungfu");
+    setSelectedMode("kungfu");
   };
 
   if (!studentProfile) {
@@ -110,7 +127,22 @@ function SessionContent() {
             Выбери режим обучения
           </p>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleCurricularSelect}
+              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-jade-dark p-6 text-left shadow-lg transition-shadow hover:shadow-xl"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="relative z-10">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="mb-2 text-xl font-bold text-white">Учебный урок</h2>
+                <p className="text-sm text-white/80">Один проверенный урок для 1 класса</p>
+              </div>
+            </motion.button>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -148,6 +180,19 @@ function SessionContent() {
             </motion.button>
           </div>
         </motion.div>
+      </div>
+    );
+  }
+
+  if (selectedMode === "curricular") {
+    return (
+      <div className="min-h-screen bg-background">
+        <CurricularLessonInterface
+          userId={studentProfile.userId}
+          name={user?.name ?? null}
+          grade={1}
+          onReturn={handleCurricularReturn}
+        />
       </div>
     );
   }
@@ -219,7 +264,7 @@ function SessionContent() {
       <main className="flex flex-1 flex-col overflow-hidden lg:flex-row">
         {/* Chat Interface - Left Side (40%) */}
         <section className="flex h-[50vh] flex-col border-b border-border bg-card lg:h-auto lg:w-[40%] lg:border-b-0 lg:border-r">
-          <ChatInterface />
+          <ChatInterface initialResponse={legacyResponse} />
         </section>
 
         {/* Interactive Blackboard - Right Side (60%) */}

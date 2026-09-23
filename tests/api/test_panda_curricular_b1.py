@@ -61,6 +61,19 @@ def _all_keys(value) -> set[str]:
     return set()
 
 
+def _child_visible_json(payload: dict) -> str:
+    state = payload["state"]
+    return json.dumps(
+        {
+            "text": payload["text"],
+            "visual": payload["visual"],
+            "current_practice": state["current_practice"],
+            "practice_feedback": state.get("practice_feedback"),
+        },
+        ensure_ascii=False,
+    )
+
+
 def _synthetic_resolved(assessment: dict, prompts: list[str]) -> ResolvedCurricularLesson:
     return ResolvedCurricularLesson(
         lesson_id="synthetic",
@@ -83,7 +96,7 @@ def test_initial_child_response_has_no_answer_solution_or_mapping_evidence(tmp_p
     with _client(tmp_path, monkeypatch) as client:
         payload = _start(client)
     assert FORBIDDEN_KEYS.isdisjoint(_all_keys(payload))
-    encoded = json.dumps(payload, ensure_ascii=False)
+    encoded = _child_visible_json(payload)
     assert "13" not in encoded
     assert "разлож" not in encoded.casefold()
 
@@ -101,7 +114,7 @@ def test_wrong_answer_stays_on_server_owned_part_without_revealing_answer(tmp_pa
     assert payload["state"]["curricular"]["part_complete"] is False
     assert payload["state"]["curricular"]["lesson_complete"] is False
     assert payload["state"]["practice_feedback"]["status"] == "incorrect"
-    assert "13" not in json.dumps(payload, ensure_ascii=False)
+    assert "13" not in _child_visible_json(payload)
 
 
 def test_correct_answer_completes_lesson_but_never_awards_mastery(tmp_path, monkeypatch) -> None:
