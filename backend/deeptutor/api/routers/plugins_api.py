@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
+from uuid import uuid4
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
@@ -38,6 +40,7 @@ from deeptutor.services.visual_template_service import decorate_question_visual
 
 router = APIRouter()
 STATE_FILE = Path(__file__).resolve().parents[3] / "data" / "user_states.json"
+REQUEST_JOURNAL_LIMIT = 64
 
 practice_engine = PracticeEngine()
 report_service = ReportService()
@@ -52,6 +55,9 @@ class ChatRequest(BaseModel):
     lesson_id: str | None = None
     content_version: str | None = None
     action: Literal["start", "answer", "hint", "rephrase", "pause", "resume", "advance"] | None = None
+    request_id: str | None = None
+    session_id: str | None = None
+    part_revision: int | None = Field(default=None, ge=0)
 
 
 DEFAULT_STATE: dict[str, Any] = {
@@ -78,6 +84,8 @@ DEFAULT_STATE: dict[str, Any] = {
     "current_lesson_id": None,
     "current_content_version": None,
     "curricular_session": None,
+    "session_id": None,
+    "request_journal": [],
     "diagnosis_result_id": None,
     "diagnosis_confidence": None,
     "detected_gaps": [],
@@ -137,6 +145,7 @@ DEFAULT_STATE: dict[str, Any] = {
 }
 
 _LEGACY_STATE_KEYS = (
+    "session_id",
     "phase",
     "path_choice",
     "in_learning",
@@ -238,6 +247,150 @@ def _ensure_state_defaults(state: dict[str, Any]) -> dict[str, Any]:
     merged = _fresh_state()
     merged.update(state or {})
     return merged
+
+
+def _request_identifier(value: str | None, field: str) -> str | None:
+    if value is None:
+        return None
+    normalized = value.strip()
+    if not normalized or len(normalized) > 128:
+        raise HTTPException(status_code=422, detail={"code": f"invalid_{field}"})
+    return normalized
+
+
+def _active_session_id(state: dict[str, Any]) -> str | None:
+    curricular = state.get("curricular_session")
+    if isinstance(curricular, dict) and curricular.get("session_id"):
+        return str(curricular["session_id"])
+    session_id = state.get("session_id")
+    return str(session_id) if session_id else None
+
+
+def _request_fingerprint(request: ChatRequest) -> str:
+    payload = {
+        "action": request.action,
+        "message": request.message.strip(),
+        "mode": request.mode,
+        "lesson_id": request.lesson_id,
+        "content_version": request.content_version,
+        "session_id": request.session_id.strip() if request.session_id else None,
+        "part_revision": request.part_revision,
+        "name": request.name,
+        "grade": request.grade,
+    }
+    encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def _request_journal(state: dict[str, Any]) -> list[dict[str, Any]]:
+    journal = state.get("request_journal")
+    if not isinstance(journal, list):
+        return []
+    return [dict(item) for item in journal if isinstance(item, dict)]
+
+
+def _replay_request(
+    state: dict[str, Any],
+    request_id: str,
+    session_id: str | None,
+    fingerprint: str,
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    for entry in reversed(_request_journal(state)):
+        if entry.get("session_id") != session_id or entry.get("request_id") != request_id:
+            continue
+        if entry.get("fingerprint") != fingerprint:
+            raise HTTPException(status_code=409, detail={"code": "request_id_conflict"})
+        response = entry.get("response")
+        if not isinstance(response, dict):
+            raise HTTPException(status_code=409, detail={"code": "request_replay_unavailable"})
+        replayed = json.loads(json.dumps(response, ensure_ascii=False))
+        replayed["replayed"] = True
+        return replayed
+    return None
+
+
+def _validate_request_position(request: ChatRequest, state: dict[str, Any]) -> None:
+    if request.action == "start":
+        return
+    requested_session_id = _request_identifier(request.session_id, "session_id")
+    current_session_id = _active_session_id(state)
+    if requested_session_id and requested_session_id != current_session_id:
+        raise HTTPException(
+            status_code=409,
+            detail={"code": "stale_session", "session_id": current_session_id},
+        )
+    if request.part_revision is None:
+        return
+    curricular = state.get("curricular_session")
+    current_revision = curricular.get("part_revision") if isinstance(curricular, dict) else None
+    if current_revision != request.part_revision:
+        raise HTTPException(
+            status_code=409,
+            detail={"code": "stale_part", "part_revision": current_revision},
+        )
+
+
+def _response_event_kind(
+    request: ChatRequest,
+    response: dict[str, Any],
+    state_before: dict[str, Any],
+) -> str:
+    explicit = response.get("event_kind")
+    if isinstance(explicit, str) and explicit:
+        return explicit
+    if request.action in {"hint", "rephrase"}:
+        return "help_request"
+    if request.action == "answer":
+        feedback = (response.get("state") or {}).get("practice_feedback") or {}
+        status = feedback.get("status")
+        if status == "invalid_input":
+            return "unparsed_input"
+        if status == "needs_review":
+            return "manual_review"
+        return "math_attempt"
+    if (
+        request.action is None
+        and state_before.get("phase") in {"diagnostic", "practice", "remediation"}
+        and request.message.strip()
+        and not _is_stop_intent(request.message)
+    ):
+        return "math_attempt"
+    return "technical_event"
+
+
+def _record_request_result(
+    user_id: str,
+    request: ChatRequest,
+    request_id: str,
+    fingerprint: str,
+    response: dict[str, Any],
+    state_before: dict[str, Any],
+) -> dict[str, Any]:
+    state = get_user_state(user_id)
+    session_id = _active_session_id(state)
+    if not session_id:
+        return response
+    event_kind = _response_event_kind(request, response, state_before)
+    result = dict(response)
+    result.update({"request_id": request_id, "replayed": False, "event_kind": event_kind})
+    curricular = state.get("curricular_session")
+    journal = _request_journal(state)
+    journal.append(
+        {
+            "session_id": session_id,
+            "request_id": request_id,
+            "fingerprint": fingerprint,
+            "event_kind": event_kind,
+            "lesson_id": curricular.get("lesson_id") if isinstance(curricular, dict) else None,
+            "content_version": curricular.get("content_version") if isinstance(curricular, dict) else None,
+            "part_revision": curricular.get("part_revision") if isinstance(curricular, dict) else None,
+            "response": json.loads(json.dumps(result, ensure_ascii=False)),
+        }
+    )
+    update_user_state(user_id, {"request_journal": journal[-REQUEST_JOURNAL_LIMIT:]})
+    return result
 
 
 def _skill_entry_by_id(skill_id: str | None) -> dict[str, Any] | None:
@@ -621,6 +774,7 @@ def _learning_context_for_topic(grade: int, topic: dict[str, Any] | None) -> lis
 
 def _panda_response(text: str, state: dict[str, Any], visual: dict[str, Any] | None = None) -> dict[str, Any]:
     normalized_state = _ensure_state_defaults(state)
+    normalized_state.pop("request_journal", None)
     normalized_state.setdefault("phase", "chat")
     normalized_state.setdefault("weak_topic", None)
     normalized_state.setdefault("learning_context", None)
@@ -642,6 +796,7 @@ def _start_diagnostic(user_id: str, state: dict[str, Any]) -> dict[str, Any]:
     if not sequence:
         sequence = [diagnostic_engine.get_questions_for_grade(1)[0]] if diagnostic_engine.get_questions_for_grade(1) else []
     diag_state = {
+        "session_id": str(uuid4()),
         "phase": "diagnostic",
         "path_choice": "diagnostic",
         "in_learning": False,
@@ -862,8 +1017,11 @@ def _curricular_public_state(state: dict[str, Any]) -> dict[str, Any]:
             key: raw_feedback[key]
             for key in (
                 "status",
+                "event_kind",
                 "part_index",
                 "attempts",
+                "incorrect_attempts",
+                "support_offered",
                 "part_complete",
                 "lesson_complete",
                 "mastery_awarded",
@@ -874,16 +1032,20 @@ def _curricular_public_state(state: dict[str, Any]) -> dict[str, Any]:
         else None
     )
     return {
+        "session_id": session.get("session_id") or state.get("session_id"),
         "phase": "paused" if state.get("phase") == "paused" else "curricular",
         "weak_topic": None,
         "current_practice": practice or None,
         "practice_feedback": feedback,
         "report": None,
         "curricular": {
+            "session_id": session.get("session_id"),
             "lesson_id": session.get("lesson_id"),
             "content_version": session.get("content_version"),
             "part_index": session.get("part_index", 0),
+            "part_revision": session.get("part_revision", 0),
             "part_count": session.get("part_count", 0),
+            "incorrect_attempts": session.get("incorrect_attempts", 0),
             "part_complete": bool(session.get("part_complete", False)),
             "awaiting_advance": bool(session.get("awaiting_advance", False)),
             "lesson_complete": bool(session.get("lesson_complete", False)),
@@ -936,12 +1098,15 @@ def _start_curricular_lesson(user_id: str, request: ChatRequest, state: dict[str
     if not isinstance(legacy_state, dict):
         legacy_state = {key: state.get(key) for key in _LEGACY_STATE_KEYS}
     session = {
+        "session_id": str(uuid4()),
         "lesson_id": resolved.lesson_id,
         "content_version": resolved.content_version,
         "assessment_kind": resolved.assessment_kind,
         "part_index": 0,
+        "part_revision": 0,
         "part_count": resolved.part_count,
         "attempts": 0,
+        "incorrect_attempts": 0,
         "part_complete": False,
         "awaiting_advance": False,
         "lesson_complete": False,
@@ -950,6 +1115,7 @@ def _start_curricular_lesson(user_id: str, request: ChatRequest, state: dict[str
     state = update_user_state(
         user_id,
         {
+            "session_id": session["session_id"],
             "phase": "curricular",
             "path_choice": "curricular",
             "in_learning": True,
@@ -1013,8 +1179,11 @@ def _answer_curricular_part(
     except CurriculumResolutionError as exc:
         raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
 
-    attempts = int(session.get("attempts") or 0) + 1
     status = str(result.get("status") or "invalid_input")
+    attempts = int(session.get("attempts") or 0) + (0 if status == "invalid_input" else 1)
+    incorrect_attempts = int(session.get("incorrect_attempts") or 0) + (
+        1 if status == "incorrect" else 0
+    )
     part_complete = status == "correct"
     lesson_complete = part_complete and (
         resolved.assessment_kind == "exact" or int(part_index) == resolved.part_count - 1
@@ -1023,6 +1192,7 @@ def _answer_curricular_part(
     session.update(
         {
             "attempts": attempts,
+            "incorrect_attempts": incorrect_attempts,
             "part_complete": part_complete,
             "awaiting_advance": awaiting_advance,
             "lesson_complete": lesson_complete,
@@ -1032,12 +1202,34 @@ def _answer_curricular_part(
     practice["attempts"] = attempts
     feedback = {
         "status": status,
+        "event_kind": (
+            "unparsed_input"
+            if status == "invalid_input"
+            else "manual_review"
+            if status == "needs_review"
+            else "math_attempt"
+        ),
         "part_index": int(part_index),
         "attempts": attempts,
+        "incorrect_attempts": incorrect_attempts,
+        "support_offered": status == "incorrect" and incorrect_attempts >= 3,
         "part_complete": part_complete,
         "lesson_complete": lesson_complete,
         "mastery_awarded": False,
     }
+    if status == "correct":
+        text = "Верно! Урок завершён." if lesson_complete else "Верно! Можно перейти к следующей части."
+    elif status == "needs_review":
+        text = "Ответ нужно проверить взрослому."
+    elif status == "incorrect" and incorrect_attempts >= 3:
+        try:
+            text = curricular_lesson_runtime.support_after_errors(resolved, int(part_index))
+        except CurriculumResolutionError as exc:
+            raise HTTPException(status_code=422, detail={"code": exc.code}) from exc
+    elif status == "incorrect":
+        text = "Пока не получилось. Попробуй ещё раз."
+    else:
+        text = "Я не смог разобрать ответ. Напиши один ответ на текущую часть."
     state = update_user_state(
         user_id,
         {
@@ -1048,14 +1240,6 @@ def _answer_curricular_part(
             "promotion_eligible": False,
         },
     )
-    if status == "correct":
-        text = "Верно! Урок завершён." if lesson_complete else "Верно! Можно перейти к следующей части."
-    elif status == "needs_review":
-        text = "Ответ нужно проверить взрослому."
-    elif status == "incorrect":
-        text = "Пока не получилось. Попробуй ещё раз."
-    else:
-        text = "Нужен один ответ на текущую часть."
     return _curricular_response(text, state)
 
 
@@ -1084,7 +1268,9 @@ def _advance_curricular_part(
     session.update(
         {
             "part_index": next_index,
+            "part_revision": int(session.get("part_revision") or 0) + 1,
             "attempts": 0,
+            "incorrect_attempts": 0,
             "part_complete": False,
             "awaiting_advance": False,
         }
@@ -1129,8 +1315,7 @@ def _handle_curricular_chat(user_id: str, request: ChatRequest, state: dict[str,
     raise HTTPException(status_code=422, detail={"code": "unsupported_curricular_action"})
 
 
-@router.post("/panda/chat")
-async def panda_chat(request: ChatRequest) -> dict[str, Any]:
+async def _dispatch_panda_chat(request: ChatRequest) -> dict[str, Any]:
     user_id = request.user_id
     message = request.message.strip()
 
@@ -1195,6 +1380,17 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         "remediation",
     }:
         raise HTTPException(status_code=409, detail={"code": "action_not_available_in_current_phase"})
+    if (
+        state.get("phase") in {"diagnostic", "practice", "remediation"}
+        and request.action in {None, "answer"}
+        and not message
+    ):
+        response = _panda_response(
+            "Я не смог разобрать ответ. Напиши один ответ на текущий вопрос.",
+            state,
+        )
+        response["event_kind"] = "unparsed_input"
+        return response
 
     if not state.get("name"):
         return _panda_response(
@@ -1726,6 +1922,33 @@ async def panda_chat(request: ChatRequest) -> dict[str, Any]:
         f"Привет, {state['name']}! Напиши 'диагностика', чтобы начать учёбу.",
         state,
     )
+
+
+@router.post("/panda/chat")
+async def panda_chat(request: ChatRequest) -> dict[str, Any]:
+    request_id = _request_identifier(request.request_id, "request_id")
+    requested_session_id = _request_identifier(request.session_id, "session_id")
+    fingerprint = _request_fingerprint(request)
+    state = get_user_state(request.user_id)
+    replay_scope = requested_session_id or _active_session_id(state)
+
+    if request_id:
+        replayed = _replay_request(state, request_id, replay_scope, fingerprint)
+        if replayed is not None:
+            return replayed
+
+    _validate_request_position(request, state)
+    response = await _dispatch_panda_chat(request)
+    if request_id:
+        return _record_request_result(
+            request.user_id,
+            request,
+            request_id,
+            fingerprint,
+            response,
+            state,
+        )
+    return response
 
 
 @router.get("/panda/progress/{user_id}")

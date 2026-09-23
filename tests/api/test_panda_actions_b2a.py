@@ -14,6 +14,7 @@ from fastapi import FastAPI
 import uvicorn
 
 from deeptutor.api.routers import plugins_api
+from deeptutor.services.curricular_lesson_runtime import ResolvedCurricularLesson
 
 
 PILOT_START = {
@@ -167,7 +168,8 @@ def test_curricular_actions_keep_attempts_and_part_under_server_control() -> Non
     assert paused.status_code == 200
     assert paused.json()["state"]["phase"] == "paused"
     assert paused.json()["state"]["current_practice"]["attempts"] == 1
-    assert paused.json()["state"]["curricular"] == started.json()["state"]["curricular"]
+    for key in ("session_id", "lesson_id", "content_version", "part_index", "part_revision"):
+        assert paused.json()["state"]["curricular"][key] == started.json()["state"]["curricular"][key]
 
     assert rejected_answer.status_code == 409
     assert rejected_answer.json()["detail"]["code"] == "resume_required"
@@ -175,7 +177,8 @@ def test_curricular_actions_keep_attempts_and_part_under_server_control() -> Non
     assert resumed.status_code == 200
     assert resumed.json()["state"]["phase"] == "curricular"
     assert resumed.json()["state"]["current_practice"]["attempts"] == 1
-    assert resumed.json()["state"]["curricular"] == started.json()["state"]["curricular"]
+    for key in ("session_id", "lesson_id", "content_version", "part_index", "part_revision"):
+        assert resumed.json()["state"]["curricular"][key] == started.json()["state"]["curricular"][key]
 
     assert correct.status_code == 200
     assert correct.json()["state"]["current_practice"]["attempts"] == 2
@@ -281,3 +284,215 @@ def test_switch_from_curricular_restores_legacy_without_assessing_message() -> N
     assert switched.json()["state"]["current_practice"]["attempts"] == 0
     assert switched.json()["state"]["practice_feedback"] is None
     assert plugins_api.get_user_state(user_id).get("curricular_session") is None
+
+
+def test_curricular_request_ids_deduplicate_conflict_and_offer_reviewed_support() -> None:
+    start_request = {**PILOT_START, "request_id": "b2b-start-1"}
+
+    with _client() as client:
+        started = _post(client, start_request)
+        repeated_start = _post(client, start_request)
+        session_id = started.json()["state"]["session_id"]
+        part_revision = started.json()["state"]["curricular"]["part_revision"]
+        answer = {
+            "user_id": PILOT_START["user_id"],
+            "message": "12",
+            "action": "answer",
+            "request_id": "b2b-answer-1",
+            "session_id": session_id,
+            "part_revision": part_revision,
+        }
+        first_wrong = _post(client, answer)
+        repeated_wrong = _post(client, answer)
+        conflict = _post(client, {**answer, "message": "11"})
+        second_wrong = _post(client, {**answer, "request_id": "b2b-answer-2"})
+        third_wrong = _post(client, {**answer, "request_id": "b2b-answer-3"})
+        unparsed = _post(
+            client,
+            {**answer, "message": "", "request_id": "b2b-empty-1"},
+        )
+        hint = _post(
+            client,
+            {**answer, "message": "", "action": "hint", "request_id": "b2b-hint-1"},
+        )
+        paused = _post(
+            client,
+            {**answer, "message": "", "action": "pause", "request_id": "b2b-pause-1"},
+        )
+        resumed = _post(
+            client,
+            {**answer, "message": "", "action": "resume", "request_id": "b2b-resume-1"},
+        )
+
+    assert started.status_code == 200
+    assert started.json()["replayed"] is False
+    assert repeated_start.status_code == 200
+    assert repeated_start.json()["replayed"] is True
+    assert repeated_start.json()["state"]["session_id"] == session_id
+
+    assert first_wrong.json()["state"]["current_practice"]["attempts"] == 1
+    assert first_wrong.json()["state"]["curricular"]["incorrect_attempts"] == 1
+    assert repeated_wrong.json()["replayed"] is True
+    assert repeated_wrong.json()["state"]["current_practice"]["attempts"] == 1
+    assert conflict.status_code == 409
+    assert conflict.json()["detail"]["code"] == "request_id_conflict"
+    assert second_wrong.json()["state"]["current_practice"]["attempts"] == 2
+
+    third_payload = third_wrong.json()
+    assert third_payload["state"]["current_practice"]["attempts"] == 3
+    assert third_payload["state"]["curricular"]["incorrect_attempts"] == 3
+    assert third_payload["state"]["practice_feedback"]["support_offered"] is True
+    assert "разберём текущий пример" in third_payload["text"]
+    assert "взрослого" in third_payload["text"]
+    assert "Пауза" in third_payload["text"]
+    assert "13" not in third_payload["text"]
+    assert third_payload["state"]["curricular"]["mastery_awarded"] is False
+
+    assert unparsed.json()["event_kind"] == "unparsed_input"
+    assert unparsed.json()["state"]["practice_feedback"]["status"] == "invalid_input"
+    assert unparsed.json()["state"]["current_practice"]["attempts"] == 3
+    assert unparsed.json()["state"]["curricular"]["incorrect_attempts"] == 3
+    assert hint.json()["event_kind"] == "help_request"
+    assert hint.json()["state"]["current_practice"]["attempts"] == 3
+    assert paused.json()["state"]["phase"] == "paused"
+    assert resumed.json()["state"]["phase"] == "curricular"
+    assert resumed.json()["state"]["current_practice"]["attempts"] == 3
+    assert "request_journal" not in json.dumps(
+        [started.json(), third_payload, hint.json(), resumed.json()],
+        ensure_ascii=False,
+    )
+
+
+def test_ordered_retries_and_stale_parts_are_decided_before_dispatch(monkeypatch) -> None:
+    resolved = ResolvedCurricularLesson(
+        lesson_id="synthetic-ordered",
+        content_version="test",
+        lesson={
+            "assessment": {
+                "kind": "ordered",
+                "parts": [
+                    {"prompt": "Первая часть", "expected": ["1"]},
+                    {"prompt": "Вторая часть", "expected": ["2"]},
+                ],
+            },
+            "presentation": {"prompts": ["Первая часть", "Вторая часть"]},
+            "solution_steps": ["Выполни текущую часть."],
+            "hint": "Работай по порядку.",
+        },
+        mapping={},
+    )
+    monkeypatch.setattr(plugins_api.curricular_lesson_runtime, "resolve", lambda *_: resolved)
+    start = {
+        "user_id": "b2b-ordered-child",
+        "message": "начать",
+        "mode": "curricular",
+        "action": "start",
+        "lesson_id": resolved.lesson_id,
+        "content_version": resolved.content_version,
+        "request_id": "ordered-start-1",
+    }
+
+    with _client() as client:
+        started = _post(client, start)
+        session_id = started.json()["state"]["session_id"]
+        first_answer = {
+            "user_id": start["user_id"],
+            "message": "1",
+            "action": "answer",
+            "request_id": "ordered-answer-1",
+            "session_id": session_id,
+            "part_revision": 0,
+        }
+        answered = _post(client, first_answer)
+        advance = {
+            "user_id": start["user_id"],
+            "message": "",
+            "action": "advance",
+            "request_id": "ordered-advance-1",
+            "session_id": session_id,
+            "part_revision": 0,
+        }
+        advanced = _post(client, advance)
+        repeated_advance = _post(client, advance)
+        repeated_answer = _post(client, first_answer)
+        repeated_start = _post(client, start)
+        current_part_after_replays = plugins_api.get_user_state(start["user_id"])[
+            "curricular_session"
+        ]["part_index"]
+        stale = _post(
+            client,
+            {**first_answer, "message": "2", "request_id": "ordered-late-1"},
+        )
+        conflict = _post(client, {**advance, "message": "другое"})
+        next_wrong = _post(
+            client,
+            {
+                **first_answer,
+                "request_id": "ordered-answer-2",
+                "part_revision": 1,
+            },
+        )
+        restarted = _post(client, {**start, "request_id": "ordered-start-2"})
+        stale_session = _post(
+            client,
+            {
+                **first_answer,
+                "request_id": "ordered-old-session",
+                "part_revision": 1,
+            },
+        )
+
+    assert answered.json()["state"]["curricular"]["awaiting_advance"] is True
+    assert advanced.json()["state"]["curricular"]["part_index"] == 1
+    assert advanced.json()["state"]["curricular"]["part_revision"] == 1
+    assert repeated_advance.json()["replayed"] is True
+    assert repeated_advance.json()["state"]["curricular"]["part_index"] == 1
+    assert repeated_answer.json()["replayed"] is True
+    assert repeated_answer.json()["state"]["curricular"]["part_index"] == 0
+    assert repeated_start.json()["replayed"] is True
+    assert current_part_after_replays == 1
+    assert stale.status_code == 409
+    assert stale.json()["detail"]["code"] == "stale_part"
+    assert conflict.status_code == 409
+    assert conflict.json()["detail"]["code"] == "request_id_conflict"
+    assert next_wrong.json()["state"]["current_practice"]["attempts"] == 1
+    assert restarted.json()["state"]["session_id"] != session_id
+    assert stale_session.status_code == 409
+    assert stale_session.json()["detail"]["code"] == "stale_session"
+
+
+def test_blank_legacy_answer_is_not_a_math_error_or_remediation_step() -> None:
+    user_id = "b2b-legacy-empty-child"
+    state = _legacy_state(user_id)
+    state["session_id"] = "legacy-session-1"
+    plugins_api.save_user_states({user_id: state})
+
+    with _client() as client:
+        response = _post(
+            client,
+            {
+                "user_id": user_id,
+                "message": "",
+                "action": "answer",
+                "request_id": "legacy-empty-1",
+                "session_id": state["session_id"],
+            },
+        )
+        repeated = _post(
+            client,
+            {
+                "user_id": user_id,
+                "message": "",
+                "action": "answer",
+                "request_id": "legacy-empty-1",
+                "session_id": state["session_id"],
+            },
+        )
+
+    assert response.status_code == 200
+    assert response.json()["event_kind"] == "unparsed_input"
+    assert response.json()["state"]["phase"] == "practice"
+    assert response.json()["state"]["current_practice"]["attempts"] == 0
+    assert response.json()["state"]["practice_feedback"] is None
+    assert repeated.json()["replayed"] is True
+    assert plugins_api.remediation_engine.get_state(user_id) is None

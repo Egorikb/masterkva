@@ -245,5 +245,25 @@ class CurricularLessonRuntime:
             raise CurriculumResolutionError("hint_unavailable")
         return hint.strip()
 
+    def support_after_errors(self, resolved: ResolvedCurricularLesson, part_index: int) -> str:
+        """Return reviewed scaffolding without exposing the expected final answer."""
+        index = self._validate_part_index(resolved, part_index)
+        assessment = resolved.lesson["assessment"]
+        expected = [] if assessment["kind"] == "rubric" else assessment["parts"][index]["expected"]
+        safe_steps = [
+            step.strip()
+            for step in resolved.lesson.get("solution_steps", [])
+            if isinstance(step, str)
+            and step.strip()
+            and not any(str(answer).casefold() in step.casefold() for answer in expected)
+        ][:2]
+        if not safe_steps:
+            safe_steps = [self.hint(resolved, index)]
+        numbered = "\n".join(f"{number}. {step}" for number, step in enumerate(safe_steps, start=1))
+        return (
+            f"Давай разберём текущий пример по шагам:\n{numbered}\n"
+            "Попробуй ещё раз. Если пока трудно, попроси взрослого помочь или нажми «Пауза»."
+        )
+
 
 curricular_lesson_runtime = CurricularLessonRuntime()
