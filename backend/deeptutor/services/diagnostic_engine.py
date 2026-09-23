@@ -207,6 +207,7 @@ class DiagnosticEngine:
                     "answer": question.get("answer", ""),
                     "answer_type": question.get("answer_type", "text"),
                     "practice_ref": question.get("practice_ref") or topic_id,
+                    "item_family": question.get("item_family"),
                     "alternatives": list(question.get("alternatives", [])),
                     "difficulty": int(question.get("difficulty", 1)),
                     "CPA": dict(question.get("CPA", {})),
@@ -259,6 +260,7 @@ class DiagnosticEngine:
                     "topic_id": answer.get("topic_id") or self._synthetic_topic_id(weak_grade, 1),
                     "topic": answer.get("topic") or "Тема",
                     "source_question_id": answer.get("question_id") or answer.get("id") or answer.get("fallback_id"),
+                    "item_family": answer.get("item_family"),
                     "skill_id": answer.get("skill_id"),
                     "coverage_status": answer.get("coverage_status"),
                 }

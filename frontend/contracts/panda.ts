@@ -3,6 +3,7 @@ export type PandaPhase =
   | "diagnostic"
   | "explanation"
   | "practice"
+  | "curricular"
   | "remediation"
   | "mastery_check"
   | "paused"
@@ -18,21 +19,51 @@ export interface PandaWeakTopic {
 
 export interface PandaCurrentPractice {
   id: string;
-  topic_id: string;
+  topic_id?: string;
+  lesson_id?: string;
+  content_version?: string;
+  part_index?: number;
+  part_number?: number;
+  part_count?: number;
+  prompt?: string;
+  source?: "curriculum" | string;
+  requires_image?: boolean;
   title?: string;
   question: string;
-  answer: string;
+  answer?: string;
   attempts: number;
   alternatives?: string[];
 }
 
 export interface PandaPracticeFeedback {
-  is_correct: boolean;
-  confidence: number;
-  user_answer: string;
-  correct_answer: string;
-  topic_id: string;
+  is_correct?: boolean;
+  confidence?: number;
+  user_answer?: string;
+  correct_answer?: string;
+  topic_id?: string;
   attempts: number;
+  incorrect_attempts?: number;
+  support_offered?: boolean;
+  event_kind?: "math_attempt" | "unparsed_input" | "manual_review";
+  status?: "correct" | "incorrect" | "invalid_input" | "needs_review";
+  part_index?: number;
+  part_complete?: boolean;
+  lesson_complete?: boolean;
+  mastery_awarded?: false;
+}
+
+export interface PandaCurricularState {
+  session_id: string | null;
+  lesson_id: string | null;
+  content_version: string | null;
+  part_index: number;
+  part_revision: number;
+  part_count: number;
+  incorrect_attempts: number;
+  part_complete: boolean;
+  awaiting_advance: boolean;
+  lesson_complete: boolean;
+  mastery_awarded: false;
 }
 
 export interface PandaReport {
@@ -43,12 +74,14 @@ export interface PandaReport {
 }
 
 export interface PandaBackendState {
+  session_id?: string | null;
   phase: PandaPhase;
   actual_grade?: number | null;
   weak_topic: PandaWeakTopic | null;
   current_practice: PandaCurrentPractice | null;
   practice_feedback?: PandaPracticeFeedback | null;
   report: PandaReport | null;
+  curricular?: PandaCurricularState;
 }
 
 export interface PandaVisual {
@@ -64,6 +97,9 @@ export interface PandaChatResponse {
   text: string;
   visual: PandaVisual | null;
   state: PandaBackendState;
+  request_id?: string;
+  replayed?: boolean;
+  event_kind?: "math_attempt" | "help_request" | "technical_event" | "unparsed_input" | "manual_review";
 }
 
 export interface PandaChatRequest {
@@ -71,5 +107,11 @@ export interface PandaChatRequest {
   message: string;
   name: string | null;
   grade: number | null;
-  mode?: 'kungfu' | 'homework' | null;
+  mode?: 'kungfu' | 'homework' | 'curricular' | null;
+  lesson_id?: string | null;
+  content_version?: string | null;
+  action?: 'start' | 'answer' | 'hint' | 'rephrase' | 'pause' | 'resume' | 'advance' | null;
+  request_id?: string | null;
+  session_id?: string | null;
+  part_revision?: number | null;
 }

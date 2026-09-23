@@ -13,6 +13,7 @@ def exact(expected: list[str]) -> dict:
 def test_exact_normalises_case_whitespace_and_bare_decimals_only() -> None:
     assert assess_lesson(exact(["4"]), " 4.0 ")["status"] == "correct"
     assert assess_lesson(exact(["4"]), "4,0")["status"] == "correct"
+    assert assess_lesson(exact(["0"]), "0.0")["status"] == "correct"
     assert assess_lesson(exact(["+4"]), "4")["status"] == "incorrect"
     assert assess_lesson(exact(["14"]), "1 4")["status"] == "incorrect"
     assert assess_lesson(exact(["4 яблока"]), "4.0 яблока")["status"] == "incorrect"
